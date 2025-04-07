@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Welcome! :: Example Documentation</title>
+    <link rel="canonical" href="https://ninjascl.github.io/antora-docs-bootstrap/index.html">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="./_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://ninjascl.github.io/antora-docs-bootstrap">Example Documentation</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" autofocus>
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-explore is-active" data-panel="explore">
+  <div class="context">
+    <span class="title">Example Documentation</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="index.html">Example Documentation</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link is-current"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Welcome!</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Example using <em>UML</em> and <em>Emoji</em>.</p>
+</div>
+<div class="paragraph">
+<p><span class="emoji"><img src="https://cdn.jsdelivr.net/npm/twemoji@latest/2/svg/1f43b.svg" alt="bear" width="85px" height="85px"></span></p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-baf677473c05c2e246abe12b3e474d20eb0a9b3d.svg" alt="Diagram">
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">// File: app.js
+const User = ({
+    username:'clsource'
+});</code></pre>
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-21f878623b950ab57f15e97aa4b6cadd389088be.svg" alt="Diagram">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antora-demo-site-and-playbook-project"><a class="anchor" href="#antora-demo-site-and-playbook-project"></a>Antora Demo Site and Playbook Project</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This is the playbook project for the Antora demo site.
+You can view the site produced by the Antora playbook (<em class="path">antora-playbook.yml</em>) stored in this project at <a href="https://antora.gitlab.io/demo/docs-site" class="bare">https://antora.gitlab.io/demo/docs-site</a>.</p>
+</div>
+<div class="paragraph">
+<p>You can also use this project and the demo documentation components to generate the demo site on your own computer
+To use the demo materials and generate the demo site locally, follow the steps in the <a href="https://docs.antora.org/antora/latest/install-and-run-quickstart/">Antora quickstart</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antora-playbook"><a class="anchor" href="#antora-playbook"></a>Antora Playbook</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An <a href="https://docs.antora.org/antora/latest/playbook/">Antora playbook</a> is responsible for generating a documentation site.
+It contains the instructions a user wants to relay to the Antora site generator.
+These instructions include the content Antora should collect and the UI it should apply to the generated site.</p>
+</div>
+<div class="paragraph">
+<p>The file <em class="path">antora-playbook.yml</em> in this repository is the playbook used to produce the demo site.
+It tells Antora where to find the Component A and Component B remote content repositories and default UI.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="generate-the-demo-site"><a class="anchor" href="#generate-the-demo-site"></a>Generate the Demo Site</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After cloning this playbook project repository to your computer or setting up your own playbook for the demo site (see the <a href="https://docs.antora.org/antora/latest/install-and-run-quickstart/">Antora quickstart</a> for instructions) you can generate the demo site by <a href="https://docs.antora.org/antora/latest/run-antora/">running Antora</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="copyright-and-license"><a class="anchor" href="#copyright-and-license"></a>Copyright and License</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Copyright &#169; 2017-present by OpenDevise Inc. and the individual contributors to Antora.</p>
+</div>
+<div class="paragraph">
+<p>Use of this software is granted under the terms of the <a href="https://www.mozilla.org/en-US/MPL/2.0/">Mozilla Public License Version 2.0</a> (MPL-2.0).
+See <a href="LICENSE" class="bare">LICENSE</a> to find the full license text.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="authors"><a class="anchor" href="#authors"></a>Authors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Development of Antora is led and sponsored by <a href="https://opendevise.com">OpenDevise Inc</a>.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="./_/js/site.js" data-ui-root-path="./_"></script>
+<script async src="./_/js/vendor/highlight.js"></script>
+<script src="./_/js/vendor/lunr.js"></script>
+<script src="./_/js/search-ui.js" id="search-ui-script" data-site-root-path="." data-snippet-length="100" data-stylesheet="./_/css/search.css"></script>
+<script async src="./search-index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+:fn-ninjas: footnote:[https://ninjas.cl]
+
+= Antora Docs Bootstrap
+
+This is a simple configuration for creating documentation with https://docs.antora.org/[Antora Docs].
+
+It includes:
+
+- Dockerfile (podman)
+- Kroki (Plant UML and others)
+- Search
+
+== Commands
+
+- `make build`: Compiles Antora Docs.
+- `make install`: Builds the Dockerfile.
+- `make server`: Starts a new server for the html version. (requires python3).
+
+== License
+
+Created with ❤️ by https://ninjas.cl[Camilo Castro] and https://github.com/NinjasCL/antora-docs-bootstrap/graphs/contributors[contributors]footnote:[https://github.com/NinjasCL/antora-docs-bootstrap/graphs/contributors]. for https://ninjas.cl[Ninjas.cl]{fn-ninjas}.
+
+This document is licensed with http://creativecommons.org/licenses/by-nc-sa/4.0/[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International]footnote:[http://creativecommons.org/licenses/by-nc-sa/4.0/]
+
+http://creativecommons.org/licenses/by-nc-sa/4.0/[image:https://raw.githubusercontent.com/NinjasCL/asciidoc-book-template/main/resources/images/by-nc-sa.svg[Licencia Creative Commons]]
+
+Source code licensed with https://opensource.org/licenses/BSD-2-Clause[BSD-2]footnote:[https://opensource.org/licenses/BSD-2-Clause].
+
+== 🤩 Credits
+
+++++
+<p>
+  Made with <i class="fa fa-heart">&#9829;</i> by
+  <a href="https://ninjas.cl">
+    Ninjas.cl
+  </a>.
+</p>
+++++
+
+
+See Also: https://github.com/NinjasCL/asciidoc-book-template/tree/main[Asciidoc Book Template]
