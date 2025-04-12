@@ -52,45 +52,90 @@ Enum post_status {
 Ref: posts.user_id > users.id // many-to-one
 ----
 
+[vegalite]
+----
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+  "description": "A simple bar chart with embedded data.",
+  "data": {
+    "values": [
+      {"a": "A", "b": 28}, {"a": "B", "b": 55}, {"a": "C", "b": 43},
+      {"a": "D", "b": 91}, {"a": "E", "b": 81}, {"a": "F", "b": 53},
+      {"a": "G", "b": 19}, {"a": "H", "b": 87}, {"a": "I", "b": 52}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {"field": "a", "type": "ordinal"},
+    "y": {"field": "b", "type": "quantitative"}
+  }
+}
+----
 
-== Antora Demo Site and Playbook Project
-:url-project: https://antora.org
-:url-org: https://gitlab.com/antora
-:url-group: {url-org}/demo
-:url-repo: {url-group}/docs-site
-:url-demo-playbook: {url-repo}/blob/main/antora-playbook.yml
-:url-antora-docs: https://docs.antora.org/antora/latest
-:url-docs-quickstart: {url-antora-docs}/install-and-run-quickstart/
-:url-docs-playbook: {url-antora-docs}/playbook/
-:url-docs-run: {url-antora-docs}/run-antora/
-:url-opendevise: https://opendevise.com
+== Asciimath using explicit block and macro names
+:stem: latexmath
+:a: a
+:b: b
+:sqroot: sqrt
+:expr: sqrt(9) = 3
 
-This is the playbook project for the Antora demo site.
-You can view the site produced by the Antora playbook ([.path]_antora-playbook.yml_) stored in this project at https://antora.gitlab.io/demo/docs-site.
+== Configuration
 
-You can also use this project and the demo documentation components to generate the demo site on your own computer
-To use the demo materials and generate the demo site locally, follow the steps in the {url-docs-quickstart}[Antora quickstart].
+* The `:stem:` attribute in the document header specifies latexmath.
+* In these examples, use of asciimath is signaled using the explicit '`asciimath`' block and macro name notation.
 
-== Antora Playbook
+== Examples
 
-An {url-docs-playbook}[Antora playbook] is responsible for generating a documentation site.
-It contains the instructions a user wants to relay to the Antora site generator.
-These instructions include the content Antora should collect and the UI it should apply to the generated site.
+=== Asciimath block
 
-The file [.path]_antora-playbook.yml_ in this repository is the playbook used to produce the demo site.
-It tells Antora where to find the Component A and Component B remote content repositories and default UI.
+A matrix followed by some square roots can be written as 
 
-== Generate the Demo Site
+[asciimath]
+++++
+[[a,b],[c,d]]((n),(k))
+sqrt(4) = 2
+sqrt(9) = 3
+++++
 
-After cloning this playbook project repository to your computer or setting up your own playbook for the demo site (see the {url-docs-quickstart}[Antora quickstart] for instructions) you can generate the demo site by {url-docs-run}[running Antora].
+=== Inline in a paragraph
 
-== Copyright and License
+Some text might suddenly need to show some matrix calculations, such as asciimath:[[[a,b\],[c,d\]\]((n),(k))].
 
-Copyright (C) 2017-present by OpenDevise Inc. and the individual contributors to Antora.
+=== Inline, using attribute substitution
 
-Use of this software is granted under the terms of the https://www.mozilla.org/en-US/MPL/2.0/[Mozilla Public License Version 2.0] (MPL-2.0).
-See link:LICENSE[] to find the full license text.
+If you are not interested in exciting formulae such as asciimath:a[[[{a},{b}\],[c,d\]\]((n),(k))], perhaps you would find the more mundane asciimath:a[{sqroot}(4) = 2] or even asciimath:a[{expr}] more to your taste.
 
-== Authors
+=== Lists
 
-Development of Antora is led and sponsored by {url-opendevise}[OpenDevise Inc].
+
+* A matrix can be written as asciimath:[[[a,b\],[c,d\]\]((n),(k))].
+** A square root looks like asciimath:[sqrt(4) = 2]
+* Another square root looks like asciimath:[sqrt(9) = 3]
+
+=== Section headings
+
+== A matrix can be written as asciimath:[[[a,b\],[c,d\]\]((n),(k))].
+
+=== A square root looks like asciimath:[sqrt(4) = 2].
+
+==== Another square root looks like asciimath:[sqrt(9) = 3].
+
+=== Tables
+
+
+.Math Table
+[cols="3*",options="header,footer"]
+|===
+|Header matrix: asciimath:[[[a,b\],[c,d\]\]((n),(k))]
+|Header square root: asciimath:[sqrt(4) = 2]
+|Header square root: asciimath:[sqrt(9) = 3]
+
+|A matrix can be written as asciimath:[[[a,b\],[c,d\]\]((n),(k))].
+|A square root looks like asciimath:[sqrt(4) = 2]
+|Another square root looks like asciimath:[sqrt(9) = 3]
+
+|Footer matrix: asciimath:[[[a,b\],[c,d\]\]((n),(k))]
+|Footer square root: asciimath:[sqrt(4) = 2]
+|Footer square root: asciimath:[sqrt(9) = 3]
+
+|===

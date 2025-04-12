@@ -1,6 +1,6 @@
 site:
-  title: Example Documentation
-  url: https://ninjascl.github.io/antora-docs-bootstrap
+  title: Electrónica, Robótica e IOT con Elixir
+  url: https://elixircl.github.io/elixir-robotics
   start_page: "ROOT::index.adoc"
 
 content:
@@ -17,6 +17,7 @@ asciidoc:
   extensions:
     - asciidoctor-emoji
     - asciidoctor-kroki
+    - '@djencks/asciidoctor-mathjax'
   attributes:
     kroki-fetch-diagram: true
     experimental: ''
@@ -25,7 +26,8 @@ asciidoc:
     page-pagination: ''
     highlightjs-theme: monokai
     highlightjs-languages: js, elixir, sql, yaml, html, css
-    
+    stem: latexmath
+
 ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable

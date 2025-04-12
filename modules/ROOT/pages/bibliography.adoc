@@ -1,0 +1,3 @@
+= Bibliografía
+
+include::../../fundamentals/pages/bibliography.adoc[]

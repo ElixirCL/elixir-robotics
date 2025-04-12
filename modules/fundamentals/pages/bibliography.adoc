@@ -1,0 +1,2 @@
+- Electrones en Acción: Electrónica y Arduinos para tus propios Inventos. (2019, September 29). Retrieved from https://www.coursera.org/learn/electrones-en-accion
+- Khan Academy: Ingeniería eléctrica. (2017, February 23). Retrieved from https://es.khanacademy.org/science/electrical-engineering

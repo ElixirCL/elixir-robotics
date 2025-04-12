@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://ninjascl.github.io/antora-docs-bootstrap/index.html</loc>
-<lastmod>2025-04-03T15:42:33.342Z</lastmod>
+<loc>https://elixircl.github.io/elixir-robotics/bibliography.html</loc>
+<lastmod>2025-04-12T19:57:19.041Z</lastmod>
+</url>
+<url>
+<loc>https://elixircl.github.io/elixir-robotics/fundamentals/bibliography.html</loc>
+<lastmod>2025-04-12T19:57:19.041Z</lastmod>
+</url>
+<url>
+<loc>https://elixircl.github.io/elixir-robotics/fundamentals/electricity.html</loc>
+<lastmod>2025-04-12T19:57:19.041Z</lastmod>
+</url>
+<url>
+<loc>https://elixircl.github.io/elixir-robotics/fundamentals/introduction.html</loc>
+<lastmod>2025-04-12T19:57:19.041Z</lastmod>
+</url>
+<url>
+<loc>https://elixircl.github.io/elixir-robotics/ic555/nav.html</loc>
+<lastmod>2025-04-12T19:57:19.041Z</lastmod>
+</url>
+<url>
+<loc>https://elixircl.github.io/elixir-robotics/index.html</loc>
+<lastmod>2025-04-12T19:57:19.041Z</lastmod>
 </url>
 </urlset>

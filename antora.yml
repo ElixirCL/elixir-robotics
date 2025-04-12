@@ -1,5 +1,6 @@
 name: ROOT
 version: ~
-title: Example Documentation
+title: Electrónica, Robótica e IOT con Elixir
 nav:
   - modules/ROOT/nav.adoc
+  - modules/fundamentals/nav.adoc
