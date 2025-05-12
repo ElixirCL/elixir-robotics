@@ -1,0 +1,48 @@
+= PlatformIO IDE
+
+_PlatformIO_ es una herramienta profesional para ingenieros de sistemas incrustados y 
+desarrolladores de software que crean aplicaciones para productos incrustados. 
+Es multiplataforma, compatible con múltiples arquitecturas y _frameworks_ de desarrollo.
+_PlatformIO_ es una herramienta imprescindible para ingenieros profesionales de sistemas 
+incrustados que desarrollan soluciones en más de una plataforma específica. 
+Además, al contar con una arquitectura descentralizada, _PlatformIO_ ofrece tanto a 
+desarrolladores nuevos como a los ya establecidos una vía rápida de integración 
+para desarrollar productos listos para el mercado, reduciendo el tiempo total de 
+comercialización.
+
+La principal razón que aleja a muchas personas del mundo de los sistemas incrustados es el 
+proceso complicado para configurar el entorno de desarrollo para un MCU o placa específica:
+
+- Toolchains, entornos de desarrollo (IDE) propietarios del fabricante 
+(que a veces no son gratuitos) y, además, la necesidad de contar con una computadora 
+con un sistema operativo compatible con ese software.
+
+- Múltiples plataformas de hardware (MCUs, placas) requieren diferentes 
+toolchains, IDEs, etc., lo que implica invertir tiempo en aprender nuevos entornos de 
+desarrollo.
+
+- Dificultad para encontrar bibliotecas adecuadas y ejemplos de código que muestren 
+cómo usar sensores, actuadores y otros componentes populares.
+
+- Compartir proyectos incrustados entre miembros del equipo, independientemente del 
+sistema operativo que prefieran usar.
+
+**¿Cómo funciona?**
+
+. Los usuarios seleccionan la(s) placa(s) que les interesan en el archivo `“platformio.ini”` (archivo de configuración del proyecto).
+. Con base en esta lista de placas, _PlatformIO_ descarga automáticamente los toolchains necesarios e instala todo lo requerido.
+. Los usuarios desarrollan el código, y _PlatformIO_ se encarga de que sea compilado, preparado y cargado en todas las placas seleccionadas.
+
+== Editores
+
+_PlatformIO_ está disponible para una multitud de editores. Entre los cuales
+se puede nombrar:
+
+- https://docs.platformio.org/en/latest/integration/ide/emacs.html[Emacs]
+- https://docs.platformio.org/en/latest/integration/ide/vim.html[Vim]
+- https://docs.platformio.org/en/latest/integration/ide/vscode.html#ide-vscode[VSCode]
+
+Se recomienda el uso de _VSCode_
+
+.PlatformIO para VSCode
+image::platformio-ide-vscode.png[]

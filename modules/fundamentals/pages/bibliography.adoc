@@ -1,2 +1,6 @@
 - Electrones en Acción: Electrónica y Arduinos para tus propios Inventos. (2019, September 29). Retrieved from https://www.coursera.org/learn/electrones-en-accion
 - Khan Academy: Ingeniería eléctrica. (2017, February 23). Retrieved from https://es.khanacademy.org/science/electrical-engineering
+- Vieito, E. (2024, June 20). Historia del lenguaje de programación C: ¿por qué sigue estando tan presente? Retrieved from https://dinahosting.com/blog/historia-del-lenguaje-de-programacion-c-por-que-sigue-estando-tan-presente/
+- Microside. (n.d.). Retrieved from https://docs.microside.com/practicas/pic-c-compiler-ccs/pic16f887-or-pic16f877a/1-blink-led
+- PIC Assembly Code Examples. (2017, March 28). Retrieved from https://www.teachmemicro.com/pic-microcontroller-tutorials/pic-assembly-code-examples/#blink
+- Historia e Introducción de C++ | Aula Virtual. (n.d.). Retrieved from https://aulavirtual.fio.unam.edu.ar/mod/book/view.php?id=47577

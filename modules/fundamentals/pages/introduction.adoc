@@ -44,10 +44,51 @@ de compuertas lógicas, literalmente. En cambio, nosotros podemos
 usar procesadores analógicos, que pueden incluir, por ejemplo, un par
 de operaciones matemáticas y puede ser suficiente para hacer algo. 
 
+.Tipos de Procesador
+|====
+|Ítem|Descripción
+
+|Circuito Integrado (IC) | Un circuito integrado (CI), también conocido como chip o microchip, 
+es una estructura de pequeñas dimensiones de material semiconductor, habitualmente silicio. (https://es.wikipedia.org/wiki/Circuito_integrado[IC, Wikipedia]).
+Uno de los más comunes es el temporizador IC 555, 
+que se utiliza en la generación de temporizadores, pulsos y oscilaciones. 
+El 555 puede ser utilizado para proporcionar retardos de tiempo, como un oscilador, y como un 
+circuito integrado flip flop. (https://es.wikipedia.org/wiki/Circuito_integrado_555[IC555, Wikipedia]).
+Si bien no es un procesador, es un componente importante de ellos y se pueden realizar múltiples proyectos
+solo usando este microchip.
+
+|Procesador Analógico | Los ejemplos de procesamiento analógico de señales incluyen: el filtro pasa banda y filtro 
+pasa bajos, entre otros filtros de señales para baja frecuencia y radio frecuencia, 
+los controles de volumen, graves y agudos en equipos de música, y los controles de contraste y brillo 
+en los televisores. El procesamiento analógico de la señal incluye elementos comunes como 
+capacitores, resistencias, inductores, transistores o circuitos integrados. (https://es.wikipedia.org/wiki/Procesamiento_anal%C3%B3gico_de_se%C3%B1ales[Procesador Analógico, Wikipedia]).
+
+| Procesador Digital No Programable | 
+Un procesador digital no programable es un dispositivo digital que realiza tareas específicas 
+sin la posibilidad de ser reprogramado por el usuario. En otras palabras, su función está definida por 
+su hardware y no por software o instrucciones que puedan ser modificadas. 
+Ejemplos: FPGAs (Field-Programmable Gate Arrays), ASICs (Application-Specific Integrated Circuits), Procesadores de Señales Digitales (DSP).
+(https://es.wikipedia.org/wiki/Procesador_de_se%C3%B1ales_digitales[DSP, Wikipedia]).
+
+| Procesador Digital Programable |
+Un procesador digital programable (PDSP) es un microprocesador de propósito general, diseñado específicamente para aplicaciones de procesamiento de señales digitales (DSP). Estos procesadores permiten realizar operaciones numéricas a alta velocidad sobre señales digitales, como audio, 
+video o datos de sensores, para tareas como filtrado, ecualización, compresión, entre otras. (https://es.wikipedia.org/wiki/Procesador_de_se%C3%B1ales_digitales[DSP, Wikipedia])
+
+| Microcontrolador |
+La principal diferencia entre un microprocesador y un microcontrolador radica en su diseño y aplicación. 
+Un microprocesador es un procesador de propósito general que se utiliza en computadoras y otros 
+dispositivos que requieren potencia de cálculo considerable. Los microcontroladores, por otro lado, 
+son circuitos integrados que integran un procesador, memoria y periféricos en un solo chip, 
+diseñados para aplicaciones específicas e incrustadas. (https://aws.amazon.com/es/compare/the-difference-between-microprocessors-microcontrollers/[Microcontrolador vs Microprocesador, AWS])
+Entre ellos el màs popular es el _PIC16f877a_, un microcontrolador de 8 bits de la familia PIC 
+ideal para proyectos simples, debido a su arquitectura de 8 bits, 18 pines, y un 
+conjunto de instrucciones RISC muy amigable para memorizar y fácil de entender. (https://es.wikipedia.org/wiki/PIC16F87X[PIC1687X, Wikipedia])
+
+|====
 
 === Actuadores y Transductores
 
-Luego tenemos actuadores y transductores
+Luego tenemos actuadores y transductores (dispositivo que transforma una forma de energía en otra)
 que nos permiten realizar acciones. Tenemos de diverso tipo, sonido,
 por ejemplo, un parlante; transductores de luz como, por ejemplo, encender una luz que
 indique algo, o pueden ser también una pantalla donde yo puedo mirar algo, y esto
@@ -96,3 +137,5 @@ Actuador --> Actuador: acción
 
 @enduml
 ----
+
+include::scientists.adoc[]

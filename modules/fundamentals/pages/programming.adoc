@@ -1,0 +1,95 @@
+= Lenguajes de Programación
+
+Entre los distintos lenguajes de programación disponibles para elaborar proyectos
+de Electrónica, Robótica e IOT se pueden mencionar los siguientes.
+
+== Assembler
+
+Uno de los lenguajes de bajo nivel más emblemáticos. Se recomienda para entornos
+de recursos muy limitados y donde la eficiencia sea escencial. 
+Es especialmente bueno para usarlo junto al microcontrolador _PIC16f877a_.
+
+Si bien usar *C* es posible para reemplazar a *Assembler* en una gran variedad de
+casos de uso, el utilizar *Assembler* permite una granularidad exacta y fina 
+sobre el uso de memoria del microcontrolador, logrando programas que puedan
+exprimir todo el potencial del mismo.
+
+.Encender un Led para _PIC16f877a_, fuente: ("PIC Assembly Code Examples" 2017)
+[source, asm]
+----
+list p=16f84a
+include 
+COUNT1 EQU 08h
+COUNT2 EQU 09h
+
+org 0x00
+goto start
+
+start bsf STATUS, RP0 ;bank 1
+movlw 0xFE
+movwf TRISB ;set all PORTB input except for RB0
+bcf STATUS, RP0 ;bank 0
+
+main bsf PORTB, 0 ;make RB0 high
+call delay ;delay subroutine
+bcf PORTB, 0 ;make RB0 low
+goto main
+
+delay
+loop1 decfsz COUNT1,1 ;decrement COUNT1 variable until zero
+goto loop1
+decfsz COUNT2,1 ;decrement COUNT2, if not zero, go back to loop1
+goto loop1
+return
+end
+----
+
+== C y C++
+
+El lenguaje de programación C es uno de los lenguajes de programación más antiguos y populares. 
+Fue desarrollado por Dennis Ritchie en los laboratorios Bell en la década de 1970 como parte del sistema operativo UNIX. 
+Desde entonces, ha sido ampliamente utilizado en una variedad de aplicaciones, desde sistemas operativos hasta aplicaciones de usuario y juegos.
+
+C es conocido por su eficiencia y su capacidad para acceder directamente a las funciones del 
+sistema operativo y al hardware de la computadora. Es un lenguaje de programación de 
+nivel medio, lo que significa que combina características de lenguajes de 
+programación de bajo nivel, como la capacidad de manipular directamente la memoria, 
+con características de lenguajes de alto nivel, como estructuras de datos avanzadas y 
+abstracciones de programación.
+
+Uno de los aspectos más destacados de C es su sintaxis clara y concisa, 
+lo que lo hace relativamente fácil de leer y escribir. Sin embargo, también es un lenguaje poderoso y 
+flexible que permite a los programadores realizar una amplia variedad de tareas, desde el desarrollo de 
+sistemas operativos hasta la creación de aplicaciones de usuario. (Vieito, 2024)
+
+C\++ fue creado por Bjarne Stroustrup en 1979 como una extensión del lenguaje C, 
+con la intención de añadir mecanismos orientados a objetos. 
+Inicialmente llamado "C con clases", posteriormente se adoptó el nombre C++ en 1983. 
+El objetivo era combinar la eficiencia de C con la capacidad de modelar problemas 
+complejos usando objetos. ("Historia e Introducción de C++" n.d.)
+
+.Encender un Led para _PIC16f877a_, fuente: ("Microside" n.d.)
+[source, c]
+----
+#include <16F877A.h>                // Incluye el microcontrolador con el que se va a trabajar 
+#use delay(clock=20Mhz, crystal)    // Tipo de oscilador y frecuencia dependiendo del microcontrolador 
+
+#define LED PIN_A1                  // Pin donde está conectado el LED del X-TRAINER
+
+void main(void) {
+   set_tris_a(0xFD);                // Pin RA1 como salida
+     
+   while(1) {
+      output_HIGH (LED);            // Cambio de estado en el pin RA1
+      delay_ms (500);               // Retardo
+      output_LOW (LED);             // Cambio de estado en el pin RA1     
+      delay_ms (500) ;              // Retardo
+   }
+}
+----
+
+== Ada
+
+== Erlang y Elixir
+
+== Otros

@@ -5,32 +5,33 @@ site:
 
 content:
   sources:
-  - url: .
-    branches: HEAD
-    start_path: .
+    - url: .
+      branches: HEAD
+      start_path: .
 
 antora:
   extensions:
-    - require: '@antora/lunr-extension'
+    - require: "@antora/lunr-extension"
 
 asciidoc:
   extensions:
     - asciidoctor-emoji
     - asciidoctor-kroki
-    - '@djencks/asciidoctor-mathjax'
+    - "@djencks/asciidoctor-mathjax"
   attributes:
     kroki-fetch-diagram: true
-    experimental: ''
-    idprefix: ''
-    idseparator: '-'
-    page-pagination: ''
+    experimental: ""
+    idprefix: ""
+    idseparator: "-"
+    page-pagination: ""
     highlightjs-theme: monokai
-    highlightjs-languages: js, elixir, sql, yaml, html, css
+    highlightjs-languages: js, elixir, sql, yaml, html, css, asm, c, ada
     stem: latexmath
 
 ui:
   bundle:
-    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    # https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    url: ui-bundle/
     snapshot: true
   # https://gitlab.com/antora/antora-ui-default/-/tree/master/src/partials
   supplemental_files: supplemental-ui/

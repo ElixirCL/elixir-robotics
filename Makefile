@@ -1,4 +1,4 @@
-.PHONY: install build server watch
+.PHONY: install build server sh antora.build
 BUILD=docker
 CONTAINER_LABEL=local/antora:elixir-robotics
 
@@ -7,13 +7,14 @@ install i:
 
 build b:
 	@rm -rf docs/
-	${BUILD} run -v .:/antora:z --rm -t ${CONTAINER_LABEL} antora-playbook.yml
+	${BUILD} run -v .:/antora:z -t ${CONTAINER_LABEL} antora-playbook.yml --stacktrace
 	@touch docs/.nojekyll
 
 server s:
-	@make build
 	@cd docs && python3 -m http.server
 
-# https://github.com/sachaos/viddy
-watch w:
-	@viddy ${BUILD} run -v .:/antora:z --rm -t ${CONTAINER_LABEL} antora-playbook.yml
+sh:
+	${BUILD} run -it --entrypoint /bin/sh -v .:/antora:z -t ${CONTAINER_LABEL}
+
+antora.build ab:
+	antora antora-playbook.yml --stacktrace

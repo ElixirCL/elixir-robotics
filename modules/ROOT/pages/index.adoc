@@ -1,2 +1,12 @@
-= Robótica e IOT con Elixir
+= Electrónica, Robótica e IOT con Elixir
 
+En este material se encuentran los contenidos
+vistos en las clases de Electrónica y Robótica e IOT
+para la https://www.uvm.cl[Universidad de Viña del Mar].
+
+Luego de ver los fundamentos de electrónica y electricidad, 
+se da un vistazo general a las distintas herramientas disponibles
+para proyectos de electrónica, robótica e IOT.
+
+El proyecto final consta de utilizar la plataforma Nerves y Elixir
+para construir un robot controlado remotamente.

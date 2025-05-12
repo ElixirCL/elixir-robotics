@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/fundamentals/signals.html">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../bibliography.html">Bibliografía</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/meshtastic.html">Meshtastic</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/lorawan.html">LoRaWan</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/sigfox.html">Sigfox</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/zigbee.html">Zigbee</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">PIC16f877a</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../pic16f877a/pic16f877a.html">PIC16f877a</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Arduino</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../arduino/arduino.html">Arduino</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">ESP32</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/gladiators.html">Proyecto: Gladiadores Robots</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Raspberry PI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/project.html">Proyecto: Mesero Robot</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/fundamentals/pages/signals.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<div class="sect1">
+<h2 id="señales-eléctricas"><a class="anchor" href="#señales-eléctricas"></a>Señales Eléctricas</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La electricidad puede ser considerada,
+a grandes rasgos, casi como un fluido. Antiguamente se pensaba que había, de hecho, 2 tipos de electricidad,
+positiva y negativa. Luego Benjamin Franklin
+describió a la electricidad como un fluido de un solo tipo y el exceso
+o déficit de este fluido podía ser considerado como que es
+carga positiva o carga negativa. La verdad es que estuvo bastante
+cerca con su apreciación. Y una de las mejores analogías
+para los circuitos eléctricos son los circuitos hidráulicos. Es solo una analogía,
+no siempre funciona bien, pero sirve para empezar a entender
+mejor cómo funciona la electricidad.</p>
+</div>
+<div class="paragraph">
+<p>En un rio,
+el agua pasa de una altura mayor a una altura menor y a medida que se
+mueve cada partícula de agua, cada molécula de agua
+va perdiendo energía. De la misma forma, cargas positivas que salen desde
+el terminal positivo de la batería van perdiendo energía hasta que entran
+finalmente por el terminal negativo.</p>
+</div>
+<div class="paragraph">
+<p>Las cantidades físicas sobre las que
+se fundamenta todo lo que sabemos son voltaje y corriente. El voltaje se designa con la
+letra <strong>V</strong> y se mide en volts. (Es como si fuera la altura del
+agua en un circuito hidráulico), tiene que ver con la energía
+en los portadores de carga. En un circuito eléctrico el
+voltaje 0 es arbitrario. Y nosotros definimos el voltaje 0 donde más convenga y ese
+voltaje 0 le llamamos tierra. Entonces, esa tierra es
+la referencia arbitraria en torno a la cual medimos el voltaje.</p>
+</div>
+<div class="paragraph">
+<p>Y luego está la corriente,
+que se relaciona con el flujo o caudal en un circuito hidráulico,
+tiene que ver con cuánta agua circula por una sección dada del
+río en un momento determinado. Tiene que ver con cuántos portadores de
+carga cruzan una sección del circuito en un tiempo determinado y se mide de manera
+absoluta, a diferencia del voltaje, que se mide en relación a una tierra,
+la corriente se mide de manera absoluta.</p>
+</div>
+<div class="sect2">
+<h3 id="voltaje"><a class="anchor" href="#voltaje"></a>Voltaje</h3>
+<div class="paragraph">
+<p>El voltaje también
+se le llama tensión. A mayor voltaje en un punto, mayor energía tienen los
+portadores de carga en ese punto. Los portadores de carga con mayor energía
+pueden realizar más trabajo útil. Por ejemplo,
+pueden mover un motor más rápidamente o pueden encender una luz
+con mayor intensidad. Si 2 objetos con voltajes
+diferentes llegaran a tocarse producirían un cortocircuito
+y corriente. Es decir, si tenemos 2 voltajes diferentes
+que se tocan, hay corriente entre ellos.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/volts.png" alt="volts">
+</div>
+<div class="title">Figure 1. Fuentes de Voltaje</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Símbolo</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="_images/vc.png" alt="vc">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Es el símbolo
+más genérico para una fuente de voltaje en un circuito. Comunmente suele ser una fuente de poder. Es una buena práctica dibujar los signos + y - dentro del círculo.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="_images/vvariable.svg" alt="vvariable">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Este símbolo se utiliza cuando hay fuentes alternas. Es el símbolo para una fuente de voltaje variable. El garabato dentro del círculo sugiere que este símbolo en particular representa un generador de onda sinusoidal.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="_images/vbattery.png" alt="vbattery">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Este símbolo se utiliza para baterías. La línea horizontal más larga en el símbolo representa la terminal positiva de la batería y la línea horizontal más corta representa la terminal negativa.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="corriente"><a class="anchor" href="#corriente"></a>Corriente</h3>
+<div class="paragraph">
+<p>La corriente es el flujo de portadores
+de carga en un circuito. Cuando hay corriente los portadores
+van cambiando su nivel de energía, cambian de voltaje, es decir, cuando van circulando por un circuito
+con corriente pierden energía. De la misma forma, que las moléculas
+de agua en el lecho de un río, cuando fluyen van perdiendo energía. Esa diferencia de energía
+realmente no se pierde sino que se convierte en otras formas de energía. La corriente fluye a través
+de conductores eléctricos, dispositivos electrónicos, motores,
+luces y objetos en general.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ccurrent.svg" alt="ccurrent">
+</div>
+<div class="title">Figure 2. Símbolo de Corriente</div>
+</div>
+<div class="paragraph">
+<p>Es el símbolo más común para la corriente constante.
+La flecha indica la dirección del flujo positivo de la corriente.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="señales"><a class="anchor" href="#señales"></a>Señales</h3>
+<div class="paragraph">
+<p>Las señales eléctricas llevan información. En general las señales típicamente
+son de voltaje y no de corriente, varían en el tiempo.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/amplitudgraph.png" alt="amplitudgraph">
+</div>
+<div class="title">Figure 3. Gráfico de Voltaje en el Tiempo</div>
+</div>
+<div class="paragraph">
+<p>El gráfico muestra la amplitud (el punto más alto que llega el voltaje)
+que medimos en volts versus tiempo (segundos). En el segundo 0, 1,
+2, 3, 4, 5, 6, etcétera, tenemos una señal que va
+variando de manera continua, es decir que tiene un voltaje que
+varía de manera continua. Las señales tienen una parte variable
+y una parte que es constante. La parte variable le llamamos AC
+y la parte constante le llamamos DC. DC viene de <em>"direct current"</em>
+o corriente directa. Mientras que la parte AC
+viene por corriente alterna. La parte DC de una señal es el
+promedio de la señal en el tiempo. Si nosotros tomamos una señal en
+el tiempo y promediamos su valor, el valor promedio de la señal es la parte
+DC y la parte AC es todo lo que sobra. Por lo tanto, si sumamos parte DC más
+parte AC tendremos la señal completa.</p>
+</div>
+<div class="paragraph">
+<p>Las señales varían y tienen
+frecuencia y período. Entonces las señales variables
+pueden ser descompuestas en una suma de señales fundamentales
+de diferentes frecuencias. Descomponerlas en sus frecuencias fundamentales resulta
+sumamente útil para el análisis. Diferentes señales
+a diferentes frecuencias nos permiten componer
+cualquier otra señal. Por lo tanto,
+cualquier señal que se nos ocurra puede ser descompuesta en
+diferentes frecuencias.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/sinussignal.png" alt="sinussignal">
+</div>
+<div class="title">Figure 4. Señal Sinusoidal</div>
+</div>
+<div class="paragraph">
+<p>Para describir esta señal en
+el tiempo usamos funciones. En este caso <code>A(t)</code> (A de t). <code>A sub 0</code> es la amplitud (El valor
+máximo al que llega esta señal). La constante <code>2π</code> (2 * pi, es necesaria) y luego viene <code>ƒ</code> (frecuencia) y <code>t</code> (el tiempo),
+sumado a <code>Φ</code> (phi, la cantidad de desfase respecto a un valor cero).</p>
+</div>
+<div class="paragraph">
+<p>El tiempo y la frecuencia tiene que ver con cuántos
+ciclos (períodos) ocurren en una unidad de tiempo.
+Un ciclo se puede considerar desde un punto inicial a su amplitud máxima,
+su amplitud mínima y volver al punto inicial. Lo que se demore la señal en cumplir un ciclo
+lo consideramos como <code>t</code>. Este <code>t</code> se mide en segundos.</p>
+</div>
+<div class="paragraph">
+<p>La frecuencia es <span class="steminline"> <svg style="vertical-align: -1.577ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.127ex" height="4.613ex" role="img" focusable="false" viewBox="0 -1342 940 2039"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mstyle"><g data-mml-node="mfrac"><g data-mml-node="mn" transform="translate(220,676)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="mi" transform="translate(289.5,-686)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><rect width="700" height="60" x="120" y="220"></rect></g></g></g></g></svg> </span>. Por lo tanto este <code>ƒ</code> va a ser
+1 partido por el período. Luego <code>Φ</code> es el desfase y
+tiene que ver con cuánto más adelante o atrás está esta
+señal respecto de un 0.</p>
+</div>
+<div class="paragraph">
+<p>Existen 3 valores
+importantes en una señal sinusoidal, amplitud, frecuencia y fase. Y si nosotros sumamos
+muchas señales sinusoidales terminamos con cualquier señal
+arbitraria que se nos pueda ocurrir. Las señales eléctricas también pueden
+realizar acciones, no solamente nos permiten procesar información.</p>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

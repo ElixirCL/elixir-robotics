@@ -1,0 +1,80 @@
+== Energía y Potencia
+
+Los portadores de carga (electrones) tienen
+diferente nivel de energía. Cuando un portador de carga circula por
+un circuito puede ganar o perder energía. Imaginemos una carga positiva que está circulando
+a través de un circuito. Cada vez que la carga pasa por
+la ampolleta, pierde energía. No es que la pierda realmente, sino que esta se convierte en calor y, eventualmente, en luz. 
+Cuando esa carga perdió energía,
+sigue circulando allí, y la batería le aumenta la energía y hace que
+la carga pueda seguir circulando, perder energía, crecer en energía,
+perder energía, etcéra. 
+
+.Circuito de Ampolleta
+image::circuitlight.png[]
+
+Y esto es un poco parecido
+a una montaña rusa, donde un motor permite que un carro
+suba hasta una cierta altura, que es como una batería que
+está haciendo subir esta carga, hasta un cierto
+potencial y, luego, ese carro cae. La energía que llevaba, es decir, la energía potencial, se convierte en calor. 
+
+=== Medición de Energía
+
+La energía en el circuito es una propiedad
+física que podemos medir, es cuantificable y que describe el estado de un sistema,
+o de un objeto, o de un circuito. En un sistema eléctrico, mecánico,
+químico, nuclear, etcétera. No confundir energía con "buenas vibras", la energía es medible todo el tiempo. 
+
+Existen diferentes
+formas de medir energía. La típica unidad que usamos es el *Joule*. Pero hay otras formas, por ejemplo,
+quienes cuentan calorías, cuentan la energía que consumen. La energía puede ser transformada
+en otros tipos de energía y puede producir trabajo útil. 
+
+La *potencia* es la velocidad a la
+cual la energía va cambiando, ya sea convirtiéndose
+desde un sistema a otro, transformándose entre
+diferentes formas de energía. siendo consumida o generada. Por ejemplo, el motor del auto puede desarrollar una
+cierta potencia, como 100 HP (horse power, caballos de potencia). HP es una medida de potencia. 
+
+La medida que usamos en
+electricidad es el *Watt*. Un motor de un auto puede producir una
+cierta cantidad de watts, por ejemplo, 100 kilowatts. Y la energía que requiere ese auto para
+funcionar viene desde el combustible que trae energía química, que
+luego se va convirtiendo en movimiento. Esa energía química se puede
+medir en joules. 
+
+Es posible calcular la potencia de un
+componente de un circuito electrónico como el producto entre voltaje y corriente. 
+
+asciimath:[Potencia = "Voltaje" * "Corriente"]
+
+La corriente en un componente por
+el voltaje en sus terminales, el producto entre ambos me da la potencia
+que está siendo consumida o entregada por ese componente y la energía es la
+acumulación de esa potencia en el tiempo. Por lo tanto, la energía es la integral,
+en el tiempo, de una potencia. 
+
+asciimath:["Energia" = int("Potencia" * "Tiempo")]
+
+=== Almacenamiento de Energía
+
+La energía eléctrica puede ser almacenada
+en baterías y en otros medios. Hay diversas opciones de batería, que es la forma más común que tenemos
+para almacenar energía eléctrica. 
+
+.Tipos de Baterías
+|====
+|Imagen|Tipo|Descripción
+
+| - | Alcalina | No se
+pueden recargar (muy peligroso) y generalmente
+tienen del orden de 1.5 volts por celda.
+| - | Recargables (NiMH, NiCd) | Están las baterías recargables de
+Niquel-Hidruro metálico o Niquel-Cadmio que tienen del orden de
+1.2 volts por celda.
+| - | Plomo ácido o gel | Típicamente 6 volts o 12 volts, sirven para encender un auto, por ejemplo.
+| - | Ión-Litio o polímero de Litio| Tienen 3.7 volts por celda. Éstas son las que se utilizan,
+por ejemplo, en muchos teléfonos celulares o computadores. Las baterías de polímero de
+litio tienen una mayor capacidad que las de ión-litio, pero son un poco más peligrosas de manejar.
+|====

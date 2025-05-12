@@ -73,12 +73,95 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos</span>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="introduction.html">Introducción a la Electrónica</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/meshtastic.html">Meshtastic</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/lorawan.html">LoRaWan</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/sigfox.html">Sigfox</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/zigbee.html">Zigbee</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">PIC16f877a</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../pic16f877a/pic16f877a.html">PIC16f877a</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Arduino</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../arduino/arduino.html">Arduino</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">ESP32</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/gladiators.html">Proyecto: Gladiadores Robots</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Raspberry PI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/project.html">Proyecto: Mesero Robot</a>
   </li>
 </ul>
   </li>
@@ -106,6 +189,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Fundamentos</li>
     <li><a href="introduction.html">Introducción a la Electrónica</a></li>
   </ul>
 </nav>
@@ -171,11 +255,69 @@ de compuertas lógicas, literalmente. En cambio, nosotros podemos
 usar procesadores analógicos, que pueden incluir, por ejemplo, un par
 de operaciones matemáticas y puede ser suficiente para hacer algo.</p>
 </div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Tipos de Procesador</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Ítem</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Circuito Integrado (IC)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Un circuito integrado (CI), también conocido como chip o microchip,
+es una estructura de pequeñas dimensiones de material semiconductor, habitualmente silicio. (<a href="https://es.wikipedia.org/wiki/Circuito_integrado">IC, Wikipedia</a>).
+Uno de los más comunes es el temporizador IC 555,
+que se utiliza en la generación de temporizadores, pulsos y oscilaciones.
+El 555 puede ser utilizado para proporcionar retardos de tiempo, como un oscilador, y como un
+circuito integrado flip flop. (<a href="https://es.wikipedia.org/wiki/Circuito_integrado_555">IC555, Wikipedia</a>).
+Si bien no es un procesador, es un componente importante de ellos y se pueden realizar múltiples proyectos
+solo usando este microchip.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Procesador Analógico</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Los ejemplos de procesamiento analógico de señales incluyen: el filtro pasa banda y filtro
+pasa bajos, entre otros filtros de señales para baja frecuencia y radio frecuencia,
+los controles de volumen, graves y agudos en equipos de música, y los controles de contraste y brillo
+en los televisores. El procesamiento analógico de la señal incluye elementos comunes como
+capacitores, resistencias, inductores, transistores o circuitos integrados. (<a href="https://es.wikipedia.org/wiki/Procesamiento_anal%C3%B3gico_de_se%C3%B1ales">Procesador Analógico, Wikipedia</a>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Procesador Digital No Programable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Un procesador digital no programable es un dispositivo digital que realiza tareas específicas
+sin la posibilidad de ser reprogramado por el usuario. En otras palabras, su función está definida por
+su hardware y no por software o instrucciones que puedan ser modificadas.
+Ejemplos: FPGAs (Field-Programmable Gate Arrays), ASICs (Application-Specific Integrated Circuits), Procesadores de Señales Digitales (DSP).
+(<a href="https://es.wikipedia.org/wiki/Procesador_de_se%C3%B1ales_digitales">DSP, Wikipedia</a>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Procesador Digital Programable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Un procesador digital programable (PDSP) es un microprocesador de propósito general, diseñado específicamente para aplicaciones de procesamiento de señales digitales (DSP). Estos procesadores permiten realizar operaciones numéricas a alta velocidad sobre señales digitales, como audio,
+video o datos de sensores, para tareas como filtrado, ecualización, compresión, entre otras. (<a href="https://es.wikipedia.org/wiki/Procesador_de_se%C3%B1ales_digitales">DSP, Wikipedia</a>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Microcontrolador</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La principal diferencia entre un microprocesador y un microcontrolador radica en su diseño y aplicación.
+Un microprocesador es un procesador de propósito general que se utiliza en computadoras y otros
+dispositivos que requieren potencia de cálculo considerable. Los microcontroladores, por otro lado,
+son circuitos integrados que integran un procesador, memoria y periféricos en un solo chip,
+diseñados para aplicaciones específicas e incrustadas. (<a href="https://aws.amazon.com/es/compare/the-difference-between-microprocessors-microcontrollers/">Microcontrolador vs Microprocesador, AWS</a>)
+Entre ellos el màs popular es el <em>PIC16f877a</em>, un microcontrolador de 8 bits de la familia PIC
+ideal para proyectos simples, debido a su arquitectura de 8 bits, 18 pines, y un
+conjunto de instrucciones RISC muy amigable para memorizar y fácil de entender. (<a href="https://es.wikipedia.org/wiki/PIC16F87X">PIC1687X, Wikipedia</a>)</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="actuadores-y-transductores"><a class="anchor" href="#actuadores-y-transductores"></a>Actuadores y Transductores</h3>
 <div class="paragraph">
-<p>Luego tenemos actuadores y transductores
+<p>Luego tenemos actuadores y transductores (dispositivo que transforma una forma de energía en otra)
 que nos permiten realizar acciones. Tenemos de diverso tipo, sonido,
 por ejemplo, un parlante; transductores de luz como, por ejemplo, encender una luz que
 indique algo, o pueden ser también una pantalla donde yo puedo mirar algo, y esto
@@ -210,13 +352,76 @@ solo la electricidad es capaz de otorgar.</p>
 <div class="paragraph">
 <p>El siguiente esquema presenta el funcionamiento de un sistema electrónico en general. Los sensores son los que nos permiten <strong>capturar</strong> señales del mundo físico; el procesador, que nos permite <strong>procesar</strong> estas señales y, luego, los actuadores, que nos permiten <strong>actuar</strong> sobre el mundo físico.</p>
 </div>
-<div class="imageblock kroki">
+<div class="listingblock kroki-error">
+<div class="title">Esquema General de Sistema Electrónico</div>
 <div class="content">
-<img src="_images/diag-a17cb3b494e7971efc4acbad9ab7fb1fc9a70159.svg" alt="Esquema General de Sistema Electrónico">
+<pre>@startuml
+
+autonumber
+
+Sensor -&gt; Procesador: señal
+
+activate Procesador
+Procesador -&gt; Procesador: procesamiento
+Procesador -&gt; Actuador: señal
+
+activate Actuador
+Actuador --&gt; Actuador: acción
+
+
+@enduml</pre>
 </div>
-<div class="title">Figure 1. Esquema General de Sistema Electrónico</div>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="científicos-destacados"><a class="anchor" href="#científicos-destacados"></a>Científicos Destacados</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La siguiente es una pequeña lista de los científicos que dan nombre
+a las distintas unidades que se utilizan en electrónica y electricidad.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nombre</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Descripción</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/Alessandro_Volta">Alessandro Volta</a> (18 de febrero de 1745, 5 de marzo de 1827)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un químico y físico italiano​ famoso principalmente por el descubrimiento del metano en 1776 y la invención y desarrollo de la pila eléctrica en 1799. La unidad de fuerza electromotriz del Sistema Internacional de Unidades ha llevado el nombre de voltio en su honor desde 1881.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/Andr%C3%A9-Marie_Amp%C3%A8re">André-Marie Ampère</a> (20 de enero de 1775, 10 de junio de 1836)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un matemático y físico francés. Formuló en 1827 la teoría de la electrodinámica, esencial al desarrollo del electromagnetismo, inventó el solenoide, e imaginó la primera teoría microscópica del magnetismo de materiales y una teoría del magnetismo terrestre. El amperio (en francés ampère) se llama así en su honor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/James_Prescott_Joule">James Prescott Joule</a> (24 de diciembre de 1818, 11 de octubre de 1889)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un físico inglés, conocido sobre todo por sus investigaciones en termodinámica. Descubrió su relación con el trabajo mecánico, lo cual le condujo a la teoría de la energía. La unidad internacional de energía, calor y trabajo, el joule, fue bautizada en su honor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/Michael_Faraday">Michael Faraday</a> (22 de septiembre de 1791, 25 de agosto de 1867)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un científico británico que estudió el electromagnetismo y la electroquímica. Sus principales descubrimientos incluyen la inducción electromagnética, el diamagnetismo y la electrólisis. La unidad nombrada en su honor se denomina faradio, La cual es la unidad de capacidad eléctrica del Sistema Internacional de Unidades (SI).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/Heinrich_Rudolf_Hertz">Heinrich Rudolf Hertz</a> (22 de febrero de 1857, 1 de enero de 1894)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un físico alemán que descubrió el efecto fotoeléctrico, la propagación de las ondas electromagnéticas y las formas para producirlas y detectarlas. La unidad de medida de la frecuencia, el hercio (Hertz, en la mayoría de los idiomas), lleva ese nombre en su honor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/James_Watt">James Watt</a> (19 de enero de 1736, 25 de agosto de 1819)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un ingeniero mecánico, inventor y químico escocés. El vatio o watt​ (símbolo: W) es la unidad para la potencia. Es igual a 1 julio por segundo (1 J/s).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/Georg_Simon_Ohm">Georg Simon Ohm</a> (16 de marzo de 1789, 6 de julio de 1854)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un físico y matemático alemán que aportó a la teoría de la electricidad la ley de Ohm. Conocido principalmente por su investigación sobre las corrientes eléctricas. La unidad de resistencia eléctrica, el ohmio, recibe este nombre en su honor.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <nav class="pagination">

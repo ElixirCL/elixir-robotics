@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lenguajes de Programación :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/fundamentals/programming.html">
+    <link rel="prev" href="ic555.html">
+    <link rel="next" href="../tools/platformio.html">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../bibliography.html">Bibliografía</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ic555.html">IC555</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/meshtastic.html">Meshtastic</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/lorawan.html">LoRaWan</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/sigfox.html">Sigfox</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/zigbee.html">Zigbee</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">PIC16f877a</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../pic16f877a/pic16f877a.html">PIC16f877a</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Arduino</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../arduino/arduino.html">Arduino</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">ESP32</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/gladiators.html">Proyecto: Gladiadores Robots</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Raspberry PI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/project.html">Proyecto: Mesero Robot</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Fundamentos</li>
+    <li><a href="programming.html">Lenguajes de Programación</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/fundamentals/pages/programming.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Lenguajes de Programación</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Entre los distintos lenguajes de programación disponibles para elaborar proyectos
+de Electrónica, Robótica e IOT se pueden mencionar los siguientes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="assembler"><a class="anchor" href="#assembler"></a>Assembler</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Uno de los lenguajes de bajo nivel más emblemáticos. Se recomienda para entornos
+de recursos muy limitados y donde la eficiencia sea escencial.
+Es especialmente bueno para usarlo junto al microcontrolador <em>PIC16f877a</em>.</p>
+</div>
+<div class="paragraph">
+<p>Si bien usar <strong>C</strong> es posible para reemplazar a <strong>Assembler</strong> en una gran variedad de
+casos de uso, el utilizar <strong>Assembler</strong> permite una granularidad exacta y fina
+sobre el uso de memoria del microcontrolador, logrando programas que puedan
+exprimir todo el potencial del mismo.</p>
+</div>
+<div class="listingblock">
+<div class="title">Encender un Led para <em>PIC16f877a</em>, fuente: ("PIC Assembly Code Examples" 2017)</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">list p=16f84a
+include
+COUNT1 EQU 08h
+COUNT2 EQU 09h
+
+org 0x00
+goto start
+
+start bsf STATUS, RP0 ;bank 1
+movlw 0xFE
+movwf TRISB ;set all PORTB input except for RB0
+bcf STATUS, RP0 ;bank 0
+
+main bsf PORTB, 0 ;make RB0 high
+call delay ;delay subroutine
+bcf PORTB, 0 ;make RB0 low
+goto main
+
+delay
+loop1 decfsz COUNT1,1 ;decrement COUNT1 variable until zero
+goto loop1
+decfsz COUNT2,1 ;decrement COUNT2, if not zero, go back to loop1
+goto loop1
+return
+end</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="c-y-c"><a class="anchor" href="#c-y-c"></a>C y C++</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El lenguaje de programación C es uno de los lenguajes de programación más antiguos y populares.
+Fue desarrollado por Dennis Ritchie en los laboratorios Bell en la década de 1970 como parte del sistema operativo UNIX.
+Desde entonces, ha sido ampliamente utilizado en una variedad de aplicaciones, desde sistemas operativos hasta aplicaciones de usuario y juegos.</p>
+</div>
+<div class="paragraph">
+<p>C es conocido por su eficiencia y su capacidad para acceder directamente a las funciones del
+sistema operativo y al hardware de la computadora. Es un lenguaje de programación de
+nivel medio, lo que significa que combina características de lenguajes de
+programación de bajo nivel, como la capacidad de manipular directamente la memoria,
+con características de lenguajes de alto nivel, como estructuras de datos avanzadas y
+abstracciones de programación.</p>
+</div>
+<div class="paragraph">
+<p>Uno de los aspectos más destacados de C es su sintaxis clara y concisa,
+lo que lo hace relativamente fácil de leer y escribir. Sin embargo, también es un lenguaje poderoso y
+flexible que permite a los programadores realizar una amplia variedad de tareas, desde el desarrollo de
+sistemas operativos hasta la creación de aplicaciones de usuario. (Vieito, 2024)</p>
+</div>
+<div class="paragraph">
+<p>C++ fue creado por Bjarne Stroustrup en 1979 como una extensión del lenguaje C,
+con la intención de añadir mecanismos orientados a objetos.
+Inicialmente llamado "C con clases", posteriormente se adoptó el nombre C++ en 1983.
+El objetivo era combinar la eficiencia de C con la capacidad de modelar problemas
+complejos usando objetos. ("Historia e Introducción de C++" n.d.)</p>
+</div>
+<div class="listingblock">
+<div class="title">Encender un Led para <em>PIC16f877a</em>, fuente: ("Microside" n.d.)</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include &lt;16F877A.h&gt;                // Incluye el microcontrolador con el que se va a trabajar
+#use delay(clock=20Mhz, crystal)    // Tipo de oscilador y frecuencia dependiendo del microcontrolador
+
+#define LED PIN_A1                  // Pin donde está conectado el LED del X-TRAINER
+
+void main(void) {
+   set_tris_a(0xFD);                // Pin RA1 como salida
+
+   while(1) {
+      output_HIGH (LED);            // Cambio de estado en el pin RA1
+      delay_ms (500);               // Retardo
+      output_LOW (LED);             // Cambio de estado en el pin RA1
+      delay_ms (500) ;              // Retardo
+   }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ada"><a class="anchor" href="#ada"></a>Ada</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="erlang-y-elixir"><a class="anchor" href="#erlang-y-elixir"></a>Erlang y Elixir</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="otros"><a class="anchor" href="#otros"></a>Otros</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="ic555.html">IC555</a></span>
+  <span class="next"><a href="../tools/platformio.html">PlatformIO IDE</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

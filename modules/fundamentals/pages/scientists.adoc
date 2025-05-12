@@ -1,0 +1,15 @@
+== Científicos Destacados
+
+La siguiente es una pequeña lista de los científicos que dan nombre
+a las distintas unidades que se utilizan en electrónica y electricidad.
+
+|====
+| Nombre | Descripción
+| https://es.wikipedia.org/wiki/Alessandro_Volta[Alessandro Volta] (18 de febrero de 1745, 5 de marzo de 1827)| Fue un químico y físico italiano​ famoso principalmente por el descubrimiento del metano en 1776 y la invención y desarrollo de la pila eléctrica en 1799. La unidad de fuerza electromotriz del Sistema Internacional de Unidades ha llevado el nombre de voltio en su honor desde 1881. 
+| https://es.wikipedia.org/wiki/Andr%C3%A9-Marie_Amp%C3%A8re[André-Marie Ampère] (20 de enero de 1775, 10 de junio de 1836) | Fue un matemático y físico francés. Formuló en 1827 la teoría de la electrodinámica, esencial al desarrollo del electromagnetismo, inventó el solenoide, e imaginó la primera teoría microscópica del magnetismo de materiales y una teoría del magnetismo terrestre. El amperio (en francés ampère) se llama así en su honor.
+| https://es.wikipedia.org/wiki/James_Prescott_Joule[James Prescott Joule] (24 de diciembre de 1818, 11 de octubre de 1889) | Fue un físico inglés, conocido sobre todo por sus investigaciones en termodinámica. Descubrió su relación con el trabajo mecánico, lo cual le condujo a la teoría de la energía. La unidad internacional de energía, calor y trabajo, el joule, fue bautizada en su honor.
+| https://es.wikipedia.org/wiki/Michael_Faraday[Michael Faraday] (22 de septiembre de 1791, 25 de agosto de 1867) | Fue un científico británico que estudió el electromagnetismo y la electroquímica. Sus principales descubrimientos incluyen la inducción electromagnética, el diamagnetismo y la electrólisis. La unidad nombrada en su honor se denomina faradio, La cual es la unidad de capacidad eléctrica del Sistema Internacional de Unidades (SI). 
+| https://es.wikipedia.org/wiki/Heinrich_Rudolf_Hertz[Heinrich Rudolf Hertz] (22 de febrero de 1857, 1 de enero de 1894) |  Fue un físico alemán que descubrió el efecto fotoeléctrico, la propagación de las ondas electromagnéticas y las formas para producirlas y detectarlas. La unidad de medida de la frecuencia, el hercio (Hertz, en la mayoría de los idiomas), lleva ese nombre en su honor. 
+| https://es.wikipedia.org/wiki/James_Watt[James Watt] (19 de enero de 1736, 25 de agosto de 1819) | Fue un ingeniero mecánico, inventor y químico escocés. El vatio o watt​ (símbolo: W) es la unidad para la potencia. Es igual a 1 julio por segundo (1 J/s).
+| https://es.wikipedia.org/wiki/Georg_Simon_Ohm[Georg Simon Ohm] (16 de marzo de 1789, 6 de julio de 1854) | Fue un físico y matemático alemán que aportó a la teoría de la electricidad la ley de Ohm. Conocido principalmente por su investigación sobre las corrientes eléctricas. La unidad de resistencia eléctrica, el ohmio, recibe este nombre en su honor.
+|====
