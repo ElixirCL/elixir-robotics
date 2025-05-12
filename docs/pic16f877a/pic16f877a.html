@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>PIC16f877a :: Electrónica, Robótica e IOT con Elixir</title>
+    <title>PIC16F877A :: Electrónica, Robótica e IOT con Elixir</title>
     <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/pic16f877a/pic16f877a.html">
     <link rel="prev" href="../communication/zigbee.html">
     <link rel="next" href="../arduino/arduino.html">
@@ -125,7 +125,7 @@
     <span class="nav-text">PIC16f877a</span>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="pic16f877a.html">PIC16f877a</a>
+    <a class="nav-link" href="pic16f877a.html">PIC16F877A</a>
   </li>
 </ul>
   </li>
@@ -190,7 +190,7 @@
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
     <li>PIC16f877a</li>
-    <li><a href="pic16f877a.html">PIC16f877a</a></li>
+    <li><a href="pic16f877a.html">PIC16F877A</a></li>
   </ul>
 </nav>
 <div class="edit-this-page"><a href="file:///antora/./modules/pic16f877a/pages/pic16f877a.adoc">Edit this Page</a></div>
@@ -200,8 +200,377 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">PIC16f877a</h1>
+<h1 class="page">PIC16F877A</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>El <em>PIC16F877A</em> es un microcontrolador de 8 bits desarrollado por Microchip Technology, lanzado a finales de los años 90 como parte de la familia PIC16. Tiene un bajo consumo de energía y alta capacidad para aplicaciones incrustadas, de acuerdo con su datasheet, cuenta con un procesador RISC de 20MHZ de velocidad de la CPU y 200ns de tiempos de ejecución de instrucción.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="características"><a class="anchor" href="#características"></a>Características</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Cuenta con 3 temporizadores (Timer0, Timer1 y Timer2), que permiten gestionar eventos y medir el paso del tiempo.</p>
+</li>
+<li>
+<p>Módulo <strong>Capture</strong>: Permite capturar el temporizador ante algún evento con una resolución de <strong>12,5 ns</strong>.</p>
+</li>
+<li>
+<p>Módulo <strong>Compare</strong>: Permite comparar 2 valores de un máximo de 16 bits con una resolución de <strong>200 ns</strong>.</p>
+</li>
+<li>
+<p><strong>PWM</strong> (Modulación de Ancho de Pulso): Se encarga de enviar una señal de salida de ciclo variable, con una resolución de <strong>máximo 10 bits</strong>.</p>
+</li>
+<li>
+<p><strong>SSP</strong> (Puerto serie síncrono) permite comunicación entre dispositvos con los siguientes protocolos:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>SSI</strong> (Serial Peripheral Interface) permiote la comunicación entre sensores, memorias y pantallas.</p>
+</li>
+<li>
+<p><strong>I2C™</strong> (Inter-Integrated Circuit) permite la comunicación maestro-esclavo, como al querer conectar multiples dispositivos a un bus de datos.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>USART/SCI</strong> (Receptor/Transmisor Asíncrono y Síncrono Universal) permite la comunicación serial de forma asincronica con otros dispositivos.</p>
+</li>
+<li>
+<p><strong>PSP</strong> (Puerto esclavo paralelo) permite la comunicaicón en paralelo de instrucciones lectura, escritura y selección de chip.</p>
+</li>
+<li>
+<p><strong>BOR</strong> (Brown-out reset) protege al dispositivo en caso de caídas de tensión.</p>
+</li>
+<li>
+<p>RISC CPU: procesadores que están diseñados para ejecutar un número reducido de tipos de instrucciones que les permite operar a una velocidad más elevada (Solé, R. 2021) <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/44pin.jpg" alt="_PIC16F877A_ 44 Pinout" width="400">
+</div>
+<div class="title">Figure 1. Diagrama del microcontrolador 44 pins <em>PIC16F877A</em></div>
+</div>
+<div class="paragraph">
+<p><em>Fuente: Microchip Technology</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/40pin.jpg" alt="PIC16F18855" width="400">
+</div>
+<div class="title">Figure 2. Diagrama del microcontrolador 40 pins <em>PIC16F877A</em></div>
+</div>
+<div class="paragraph">
+<p><em>Fuente: Microchip Technology</em></p>
+</div>
+<div class="paragraph">
+<p>A continuación, se describen las características básicas de acuerdo con Microchip Technology <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup> del microcontrolador <em>PIC16F877A</em></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Característica</th>
+<th class="tableblock halign-left valign-top">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tamaño de memoria de programa (KB)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAM (byte)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">368</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data EEPROM (bytes)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Canitdad pines</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">40 o 44</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Voltage Max. de operación (V)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5.5</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Voltage Min. de operación (V)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="diferencias-entre-un-microcontrolador-y-un-microprocesador"><a class="anchor" href="#diferencias-entre-un-microcontrolador-y-un-microprocesador"></a>Diferencias entre un Microcontrolador y un Microprocesador</h3>
+<div class="paragraph">
+<p>A diferencia de los microprocesadores, el <em>PIC16F877A</em> (el cual es un microcontrolador) no consta de un sistema operativo para su funcionamiento. En lugar de eso, está diseñado para ejecutar directamente código incrustado escrito en lenguajes como C o ensamblador, sin necesidad de capas intermedias de software.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Característica</th>
+<th class="tableblock halign-left valign-top">Microcontrolador (ej: <em>PIC16F877A</em>)</th>
+<th class="tableblock halign-left valign-top">Microprocesador</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integración</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Incluye CPU, memoria, I/O y periféricos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Solo contiene la unidad central de proceso (CPU)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Propósito</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aplicaciones incrustadas específicas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Computadoras generales o sistemas complejos</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Programación</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fácil de programar con lenguajes simples</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requiere sistema operativo y software complejo</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Costo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bajo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alto</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Consumo de energía</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bajo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generalmente más alto</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Los microcontroladores como el <em>PIC16F877A</em> están optimizados para tareas específicas, mientras que los microprocesadores son más potentes pero requieren más componentes externos y recursos.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="usos-del-pic16f877a"><a class="anchor" href="#usos-del-pic16f877a"></a>Usos del <em>PIC16F877A</em></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El <em>PIC16F877A</em> tiene usos en sistemas incrustados donde se requiere bajo consumo energético, una programación simplificada en C++ o assembly. Entre sus usos más comunes se encuentran:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Automatización industrial (control de motores, monitoreo de sensores)</p>
+</li>
+<li>
+<p>Domótica (control de luces, cerraduras, temperatura)</p>
+</li>
+<li>
+<p>Equipos médicos portátiles</p>
+</li>
+<li>
+<p>Electrónica de consumo (juguetes inteligentes, electrodomésticos)</p>
+</li>
+<li>
+<p>Sistemas educativos para enseñanza de programación y electrónica básica</p>
+</li>
+<li>
+<p>Prototipos de IoT cuando se combinan con módulos de comunicación externa</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="entorno-de-programación"><a class="anchor" href="#entorno-de-programación"></a>Entorno de programación</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para poder programar al <em>PIC16F877A</em> se utiliza el <strong>IDE MPLAB ® Xpress IDE</strong> ofrecido por Microship Technology <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup>  , siendo una herramienta que aporta flexibilidad, permitiendo programar, depurar y cargar el código al <em>PIC16F877A</em>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mplab.avif" alt="MPLAB" width="200">
+</div>
+<div class="title">Figure 3. Logo de MPLAB</div>
+</div>
+<div class="paragraph">
+<p><em>Fuente: Microchip Technology</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ejemplos-de-aplicación"><a class="anchor" href="#ejemplos-de-aplicación"></a>Ejemplos de Aplicación</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Los ejemplos a demostrar en este informe son obtenidos del libro <sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup> de Carlos Ruiz Zamarreño.</p>
+</div>
+<div class="sect2">
+<h3 id="control-de-un-led-por-pulsador"><a class="anchor" href="#control-de-un-led-por-pulsador"></a>Control de un LED por pulsador</h3>
+<div class="paragraph">
+<p>Dentro de MCC se crea el nombre del proyecto (menú File &#8594; media de microcontroladores) con el nombre <strong>LED PULSADOR</strong>, luego en la ventasna Project Resources se asigna los terminales RA0 y RA5 como salida y entrada digital respectivamente, tal como muestra la figura 4.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/MCC_PINS.png" alt="MPLAB" width="400">
+</div>
+<div class="title">Figure 4. Asignación de terminales</div>
+</div>
+<div class="paragraph">
+<p><em>Fuente: MPLAB Xpress</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/rename.png" alt="Cambio_nombre_terminales" width="400">
+</div>
+<div class="title">Figure 5. Cambio de nombre terminales</div>
+</div>
+<div class="paragraph">
+<p><em>Fuente: MPLAB Xpress</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/control.png" alt="clock_control" width="400">
+</div>
+<div class="title">Figure 6. Figure 6: Ajuste de reloj interno</div>
+</div>
+<div class="paragraph">
+<p><em>Fuente: MPLAB Xpress</em></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include "mcc_generated_files/system/system.h"
 
+/*
+    Main application
+*/
+
+int main(void)
+{
+    SYSTEM_Initialize();
+      while(1)
+    {
+        if(PULSADOR_GetValue()==0) LED0_Toggle();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Codigo en assembly para una funcionalidad similar, según Agkopian <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup>:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-avrasm hljs" data-lang="avrasm">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;Copyright (c) 2013 Manolis Agkopian		    ;
+;See the file LICENCE for copying permission.	    ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+	PROCESSOR '16F876A'
+	INCLUDE &lt;P16F876A.INC&gt;
+
+	__CONFIG _XT_OSC &amp; _WDT_OFF &amp; _PWRTE_OFF &amp; _CP_OFF &amp; _LVP_OFF &amp; _BODEN_OFF
+
+DL_CNT EQU 0x20 ;DELAY COUNTER: COUNTS THE INTERUPS FROM TMR0
+
+	ORG 0x0000
+	GOTO INIT
+	ORG 0x0004
+	GOTO TMR_CNT
+
+INIT:
+	BSF STATUS, RP0 ;SELECT BANK 01
+	MOVLW B'11000111' ; PSA = 1/256 (THE TIMER WILL COUNT ONCE EVERY 256 CYCLES)
+	MOVWF OPTION_REG ;AND USE INTERNAL INSTRUCTION CYCLE CLOCK
+
+	BCF TRISB, 0 ;SET PB0 AS OUTPUT
+	BCF STATUS, RP0 ;SELECT BANK 00
+
+	BCF PORTB, 0
+
+	MOVLW B'11100000' ;ENABLE TIMER 0 INTERUPT
+	CLRF TMR0
+	MOVWF INTCON
+
+	MOVLW 0x0F ;256 * 256 * 15 = ABOUT 1S
+	MOVWF DL_CNT ;SO WE SET THE DELAY COUNTER TO COUNT 15 INTERUPTS
+
+MAIN:
+	GOTO $ ;DO NOTHING, JUST WAIT FOR AN INTERUPT
+
+TMR_CNT:
+	BCF INTCON, GIE ;DISABLE ALL INTERUPTS
+	BCF INTCON, TMR0IF ;CLEAR TMR0 OVERFLOW FLAG
+
+	DECFSZ DL_CNT ;WHEN THE DELAY COUNTER BECOMES ZERO
+	GOTO CONTINUE
+
+	BTFSC PORTB, 0 ;THEN IF PB0 IS SET
+	GOTO CLR_PB0 ;CLEAR IT
+
+	BSF PORTB, 0 ;ELSE IF IS CLEARED, THEN SET IT
+	GOTO CONTINUE_0
+
+CLR_PB0:
+	BCF PORTB, 0
+
+CONTINUE_0:
+	MOVLW 0x0F ;RESET THE DELAY COUNTER
+	MOVWF DL_CNT
+
+CONTINUE:
+	BSF INTCON, GIE ;RENABLE THE INTERUPTS
+	RETFIE
+
+	END</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/clc.png" alt="clc" width="400">
+</div>
+<div class="title">Figure 7. Ajuste CLC</div>
+</div>
+<div class="paragraph">
+<p><em>Fuente: MPLAB Xpress</em></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusión"><a class="anchor" href="#conclusión"></a>Conclusión</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El microcontrolador <em>PIC16F877A</em> es una excelente opción para desarrolladores en busqueda de soluciones económicas y versátiles para sistemas incrustados. Sus periféricos integrados, bajo consumo de energía y facilidad de programación lo hacen ideal tanto para aplicaciones industriales como educativas.</p>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<hr>
+<div class="footnote" id="_footnotedef_1">
+<a href="#_footnoteref_1">1</a>. Solé, R. (2021). "RISC: La arquitectura de procesadores usada por ARM para cambiar el mercado". <a href="https://www.profesionalreview.com/2021/07/17/que-es-risc/#Que_es_RISC" class="bare">https://www.profesionalreview.com/2021/07/17/que-es-risc/#Que_es_RISC</a>
+</div>
+<div class="footnote" id="_footnotedef_2">
+<a href="#_footnoteref_2">2</a>. Microchip Technology. (s.f.). "PIC16F18855". <a href="https://www.microchip.com/en-us/product/pic16f18855#Overview" class="bare">https://www.microchip.com/en-us/product/pic16f18855#Overview</a>
+</div>
+<div class="footnote" id="_footnotedef_3">
+<a href="#_footnoteref_3">3</a>. Microchip Technology. (s.f.). "MPLAB® Xpress Cloud-Based IDE". <a href="https://www.microchip.com/en-us/tools-resources/develop/mplab-xpress" class="bare">https://www.microchip.com/en-us/tools-resources/develop/mplab-xpress</a>
+</div>
+<div class="footnote" id="_footnotedef_4">
+<a href="#_footnoteref_4">4</a>. Ruiz, C. (2021). "Programación de microcontroladores PIC paso a paso". <a href="https://feriachilenadellibro.cl/producto/9786075387413-programacion-de-microcontroladores-pic-paso-a-paso/" class="bare">https://feriachilenadellibro.cl/producto/9786075387413-programacion-de-microcontroladores-pic-paso-a-paso/</a>
+</div>
+<div class="footnote" id="_footnotedef_5">
+<a href="#_footnoteref_5">5</a>. Agkopian, M. (2016). "pic-assembly-examples". <a href="https://github.com/magkopian/pic-assembly-examples/blob/master/led%20blink%20with%20TMR0%20and%20TMR1/TMR0_DELAY.asm" class="bare">https://github.com/magkopian/pic-assembly-examples/blob/master/led%20blink%20with%20TMR0%20and%20TMR1/TMR0_DELAY.asm</a>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="../communication/zigbee.html">Zigbee</a></span>
   <span class="next"><a href="../arduino/arduino.html">Arduino</a></span>
