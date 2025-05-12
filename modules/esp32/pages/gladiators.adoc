@@ -27,10 +27,10 @@ video::5-5-2025-uvm.mp4[]
 |====
 
 .Diagrama de conexión entre componentes
-image:gladiator_diagram.png[]
+image:images/gladiator_diagram.png[]
 
 .Figura de Lego a elección
-image:gladiador-lego.webp[]
+image:images/gladiador-lego.webp[]
 
 [NOTE]
 ====
