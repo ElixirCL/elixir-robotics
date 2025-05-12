@@ -4,7 +4,7 @@ El objetivo es crear un "Gladiador Robot" controlado por un smartphone via Wifi,
 este debe ser capaz de reventar un globo. El ganador es quien reviente el globo del oponente.
 
 .Alumnos de Robótica UVM 2025 con su Gladiador
-image:../images/gladiador.jpg[]
+image:gladiador.jpg[]
 
 .Combate de Gladiadores Robot
 video::5-5-2025-uvm.mp4[]
@@ -27,10 +27,10 @@ video::5-5-2025-uvm.mp4[]
 |====
 
 .Diagrama de conexión entre componentes
-image:../images/gladiator_diagram.png[]
+image:gladiator_diagram.png[]
 
 .Figura de Lego a elección
-image:../images/gladiador-lego.webp[]
+image:gladiador-lego.webp[]
 
 [NOTE]
 ====
