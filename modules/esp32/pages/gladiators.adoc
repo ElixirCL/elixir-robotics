@@ -51,10 +51,10 @@ const char* ssid = "RobotESP32";
 const char* password = "12345678";
 
 // Pines del L298N
-const int IN1 = 26;
-const int IN2 = 27;
-const int IN3 = 14;
-const int IN4 = 12;
+const int IN1 = 16;
+const int IN2 = 17;
+const int IN3 = 18;
+const int IN4 = 19;
 
 WebServer server(80);
 
