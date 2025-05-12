@@ -15,7 +15,7 @@ video::5-5-2025-uvm.mp4[]
 | Ítem | Descripción | ¿Donde adquirir?
 
 | ESP32 (Wifi) + Smartphone | Principal componente. Se programará para enviar señales a los servomotores y crear un servidor web para ser controlado via Smartphone. | https://altronics.cl/tarjeta-esp32-microusb
-| 2 Servomotores | Principal fuente de movimiento del gladiador. La elección del servomotor y su necesidad de voltaje es a criterio del equipo.| https://altronics.cl/motor-gear-dc
+| 2 motores DC 3 a 12V | Principal fuente de movimiento del gladiador. La elección del motor y su necesidad de voltaje es a criterio del equipo (mayor velocidad = mayor voltaje).| https://articulo.mercadolibre.cl/MLC-923623185-motor-dc-coche-gear-amarillo-3v-12v-_JM
 | L298N | Permite controlar dos motores de corriente continua o un motor paso a paso bipolar de hasta 2 amperes.| https://altronics.cl/modulo-puente-h-l298
 | Chasis + Ruedas de Goma + Porta Pilas | Principal fuente de poder y marco para armar. Alimentación entre 6v a 12v. 9v recomendado. | https://altronics.cl/kit-chasis-2wd-1
 | Gladiador de Lego (A elección). | Mini figura de lego versión dungeons and dragons o similar. | https://www.tiendalego.cl/products/dungeons-dragons-71047?variant=41690791805046
