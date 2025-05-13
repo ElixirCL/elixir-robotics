@@ -183,6 +183,77 @@ CONTINUE:
 image::clc.png[alt="clc", width=400]
 _Fuente: MPLAB Xpress_
 
+== Comparación entre PIC16F877A y PIC18F4550
+
+También hay opciones más modernas como el https://ww1.microchip.com/downloads/en/devicedoc/39632c.pdf[PIC18F4550] que tiene mayor capacidad de procesamiento y memoria interna.
+
+Se puede realizar una comparación entre las opciones en el https://www.microchip.com/maps/microcontroller.aspx[sitio web de Microchip].
+
+
+Ambos son microcontroladores de 8 bits de Microchip, pero pertenecen a diferentes familias y niveles de capacidad. 
+
+.Características
+[cols="1,1,1", options="header"]
+|===
+| Característica              | PIC16F877A                     | PIC18F4550
+| Arquitectura                | PIC16 (Mid-range)              | PIC18 (High-end 8-bit)
+| Velocidad de reloj          | Hasta 20 MHz                   | Hasta 48 MHz (con PLL)
+| Instrucciones por ciclo     | 1 cada 4 ciclos                | 1 por ciclo (en la mayoría)
+| Número de instrucciones     | 35                             | 75+
+|===
+
+.Memoria
+[cols="1,1,1", options="header"]
+|===
+| Tipo de Memoria             | PIC16F877A                      | PIC18F4550
+| Flash (programa)            | 14 KB                           | 32 KB
+| RAM                         | 368 bytes                       | 2 KB
+| EEPROM                      | 256 bytes                       | 256 bytes
+|===
+
+.Periféricos y Funcionalidades
+[cols="1,1,1", options="header"]
+|===
+| Funcionalidad               | PIC16F877A                      | PIC18F4550
+| Puertos I/O                 | 33                              | 35
+| Timers                      | 3 (8 y 16 bits)                 | 4 (8 y 16 bits)
+| ADC                         | 10-bit, 8 canales               | 10-bit, 13 canales
+| PWM                         | 2 canales                       | 2 canales
+| USART / UART                | 1                               | 1
+| SPI / I2C                   | Sí                              | Sí (mejorado)
+| USB                         | No                              | Sí (USB 2.0 Full-Speed)
+| Interrupciones              | Básico                          | Avanzado (prioridades)
+|===
+
+.Ventajas de Cada Uno
+[cols="1,1,1", options="header"]
+|===
+| Comparación                 | PIC16F877A                      | PIC18F4550
+| Facilidad de uso            | Muy fácil para principiantes    | Más complejo, más potente
+| Costo                       | Más barato                      | Un poco más caro
+| Capacidad de procesamiento  | Limitada                        | Superior
+| USB integrado               | ❌ No                            | ✅ Sí
+| Tamaño de programa          | 14 KB                           | 32 KB
+|===
+
+*Usa el PIC16F877A si:*
+
+- Estás empezando con microcontroladores.
+- Tu proyecto es simple (sensores, control básico).
+- No necesitas USB ni mucha memoria.
+
+*Usa el PIC18F4550 si:*
+
+- Necesitas mayor velocidad y complejidad.
+- Requieres comunicación USB integrada.
+- Trabajas con interfaces humanas, data logging, etc.
+
 == Conclusión
 
-El microcontrolador _PIC16F877A_ es una excelente opción para desarrolladores en busqueda de soluciones económicas y versátiles para sistemas incrustados. Sus periféricos integrados, bajo consumo de energía y facilidad de programación lo hacen ideal tanto para aplicaciones industriales como educativas.
+El microcontrolador _PIC16F877A_ es una excelente opción para desarrolladores en busqueda de soluciones económicas y 
+versátiles para sistemas incrustados. Sus periféricos integrados, bajo consumo de energía y facilidad de programación lo hacen ideal 
+tanto para aplicaciones industriales como educativas.
+
+La principal ventaja frente a otras soluciones es que existe una garantía de que el 
+programa se puede almacenar en la memoria flash o eeprom 
+por 40 años o más.

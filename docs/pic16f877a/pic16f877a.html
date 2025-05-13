@@ -547,10 +547,231 @@ CONTINUE:
 </div>
 </div>
 <div class="sect1">
+<h2 id="comparación-entre-pic16f877a-y-pic18f4550"><a class="anchor" href="#comparación-entre-pic16f877a-y-pic18f4550"></a>Comparación entre PIC16F877A y PIC18F4550</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>También hay opciones más modernas como el <a href="https://ww1.microchip.com/downloads/en/devicedoc/39632c.pdf">PIC18F4550</a> que tiene mayor capacidad de procesamiento y memoria interna.</p>
+</div>
+<div class="paragraph">
+<p>Se puede realizar una comparación entre las opciones en el <a href="https://www.microchip.com/maps/microcontroller.aspx">sitio web de Microchip</a>.</p>
+</div>
+<div class="paragraph">
+<p>Ambos son microcontroladores de 8 bits de Microchip, pero pertenecen a diferentes familias y niveles de capacidad.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Características</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Característica</th>
+<th class="tableblock halign-left valign-top">PIC16F877A</th>
+<th class="tableblock halign-left valign-top">PIC18F4550</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Arquitectura</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PIC16 (Mid-range)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PIC18 (High-end 8-bit)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Velocidad de reloj</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hasta 20 MHz</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hasta 48 MHz (con PLL)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instrucciones por ciclo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1 cada 4 ciclos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1 por ciclo (en la mayoría)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Número de instrucciones</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">35</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">75+</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Memoria</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tipo de Memoria</th>
+<th class="tableblock halign-left valign-top">PIC16F877A</th>
+<th class="tableblock halign-left valign-top">PIC18F4550</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Flash (programa)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14 KB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">368 bytes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 KB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EEPROM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 bytes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">256 bytes</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Periféricos y Funcionalidades</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Funcionalidad</th>
+<th class="tableblock halign-left valign-top">PIC16F877A</th>
+<th class="tableblock halign-left valign-top">PIC18F4550</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Puertos I/O</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">33</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">35</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Timers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 (8 y 16 bits)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 (8 y 16 bits)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10-bit, 8 canales</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10-bit, 13 canales</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PWM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 canales</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 canales</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USART / UART</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPI / I2C</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sí</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sí (mejorado)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sí (USB 2.0 Full-Speed)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interrupciones</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Básico</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Avanzado (prioridades)</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Ventajas de Cada Uno</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Comparación</th>
+<th class="tableblock halign-left valign-top">PIC16F877A</th>
+<th class="tableblock halign-left valign-top">PIC18F4550</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Facilidad de uso</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muy fácil para principiantes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Más complejo, más potente</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Costo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Más barato</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Un poco más caro</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Capacidad de procesamiento</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limitada</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Superior</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USB integrado</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">❌ No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">✅ Sí</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tamaño de programa</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14 KB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32 KB</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Usa el PIC16F877A si:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Estás empezando con microcontroladores.</p>
+</li>
+<li>
+<p>Tu proyecto es simple (sensores, control básico).</p>
+</li>
+<li>
+<p>No necesitas USB ni mucha memoria.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Usa el PIC18F4550 si:</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Necesitas mayor velocidad y complejidad.</p>
+</li>
+<li>
+<p>Requieres comunicación USB integrada.</p>
+</li>
+<li>
+<p>Trabajas con interfaces humanas, data logging, etc.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="conclusión"><a class="anchor" href="#conclusión"></a>Conclusión</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>El microcontrolador <em>PIC16F877A</em> es una excelente opción para desarrolladores en busqueda de soluciones económicas y versátiles para sistemas incrustados. Sus periféricos integrados, bajo consumo de energía y facilidad de programación lo hacen ideal tanto para aplicaciones industriales como educativas.</p>
+<p>El microcontrolador <em>PIC16F877A</em> es una excelente opción para desarrolladores en busqueda de soluciones económicas y
+versátiles para sistemas incrustados. Sus periféricos integrados, bajo consumo de energía y facilidad de programación lo hacen ideal
+tanto para aplicaciones industriales como educativas.</p>
+</div>
+<div class="paragraph">
+<p>La principal ventaja frente a otras soluciones es que existe una garantía de que el
+programa se puede almacenar en la memoria flash o eeprom
+por 40 años o más.</p>
 </div>
 </div>
 </div>
