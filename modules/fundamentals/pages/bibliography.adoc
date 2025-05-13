@@ -4,3 +4,4 @@
 - Microside. (n.d.). Retrieved from https://docs.microside.com/practicas/pic-c-compiler-ccs/pic16f887-or-pic16f877a/1-blink-led
 - PIC Assembly Code Examples. (2017, March 28). Retrieved from https://www.teachmemicro.com/pic-microcontroller-tutorials/pic-assembly-code-examples/#blink
 - Historia e Introducción de C++ | Aula Virtual. (n.d.). Retrieved from https://aulavirtual.fio.unam.edu.ar/mod/book/view.php?id=47577
+- Welcome to AtomVM! — AtomVM 0.7.0-dev+git.65f16e87 documentation. (n.d.). Retrieved from https://www.atomvm.net/doc/master/welcome-to-atomvm.html#why-erlang-elixir

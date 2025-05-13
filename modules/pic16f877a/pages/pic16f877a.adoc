@@ -111,7 +111,7 @@ int main(void)
 
 .Codigo en assembly para una funcionalidad similar, según Agkopian footnote:[Agkopian, M. (2016). "pic-assembly-examples". https://github.com/magkopian/pic-assembly-examples/blob/master/led%20blink%20with%20TMR0%20and%20TMR1/TMR0_DELAY.asm]:		    
 
-[source, avrasm]
+[source, armasm]
 ----
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

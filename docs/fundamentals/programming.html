@@ -227,7 +227,7 @@ exprimir todo el potencial del mismo.</p>
 <div class="listingblock">
 <div class="title">Encender un Led para <em>PIC16f877a</em>, fuente: ("PIC Assembly Code Examples" 2017)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-avrasm hljs" data-lang="avrasm">list p=16f84a
+<pre class="highlightjs highlight"><code class="language-armasm hljs" data-lang="armasm">list p=16f84a
 include
 COUNT1 EQU 08h
 COUNT2 EQU 09h
@@ -316,13 +316,77 @@ void main(void) {
 <div class="sect1">
 <h2 id="erlang-y-elixir"><a class="anchor" href="#erlang-y-elixir"></a>Erlang y Elixir</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>El <em>ESP32</em> típico viene con 520 KB de RAM y 4 MB de almacenamiento flash, aproximadamente las especificaciones de una computadora de escritorio de mediados de los años 80.
+Además, la mayoría de los entornos de microcontroladores no admiten APIs POSIX nativas para interactuar con un sistema operativo y, en muchos casos, las abstracciones comunes de un sistema operativo,
+como procesos, hilos o archivos, simplemente no están disponibles.</p>
+</div>
+<div class="paragraph">
+<p>Sin embargo, dado que la <em>BEAM</em> proporciona un entorno de multitarea con planificación preventiva (pre-emptive), muchas de las abstracciones comunes de los sistemas operativos, especialmente las relacionadas con hilos y concurrencia, simplemente no son necesarias.
+Como lenguajes orientados a la concurrencia, Erlang y Elixir admiten “procesos” ligeros, con el paso de mensajes como mecanismo para la comunicación entre procesos (de Erlang), multitarea con planificación preventiva, y asignación de memoria y recolección de basura por proceso.</p>
+</div>
+<div class="paragraph">
+<p>En muchos aspectos, el modelo de programación de Erlang y Elixir se asemeja más al de un sistema operativo con múltiples procesos concurrentes ejecutándose en él, donde los procesos del sistema operativo son unidades individuales de ejecución, se comunican mediante el paso de mensajes (señales) y no comparten estado entre sí.</p>
+</div>
+<div class="paragraph">
+<p>Esto contrasta con la mayoría de los lenguajes de programación populares en la actualidad (C, C++, Java, Python, etc.), que utilizan abstracciones de hilos para lograr concurrencia dentro de un único espacio de memoria, y que, por lo tanto,
+requieren especial atención en los casos en que múltiples CPUs operan sobre una región de memoria compartida, lo cual exige el uso de hilos, bloqueos, semáforos, etc.</p>
+</div>
+<div class="paragraph">
+<p>La <em>BEAM</em> permite desarrollar aplicaciones en dispositivos pequeños (AtomVM).
+Esto hace que escribir código concurrente para microcontroladores (por ejemplo, una aplicación que lea datos de sensores,
+atienda solicitudes HTTP y actualice el reloj del sistema, todo al mismo tiempo) sea increíblemente simple y natural,
+mucho más fácil que escribir programas concurrentes en C, C++ o incluso, por ejemplo, en MicroPython
+(“Welcome to AtomVM! — AtomVM Documentation,” n.d.).</p>
+</div>
+<div class="listingblock">
+<div class="title">Ejemplo de Blinky en Erlang</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-erlang hljs" data-lang="erlang">-module(blinky).
+-export([start/0]).
 
+-define(PIN, 2).
+
+start() -&gt;
+    gpio:set_pin_mode(?PIN, output),
+    loop(?PIN, low).
+
+loop(Pin, Level) -&gt;
+    io:format("Setting pin ~p ~p~n", [Pin, Level]),
+    gpio:digital_write(Pin, Level),
+    timer:sleep(1000),
+    loop(Pin, toggle(Level)).
+
+toggle(high) -&gt;
+    low;
+toggle(low) -&gt;
+    high.</code></pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="otros"><a class="anchor" href="#otros"></a>Otros</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>Existen otras alternativas válidas como:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://micropython.org/">MicroPython</a>.</p>
+</li>
+<li>
+<p><a href="https://www.espruino.com/">Espruino</a>.</p>
+</li>
+<li>
+<p><a href="https://picoruby.github.io/">PicoRuby</a>.</p>
+</li>
+<li>
+<p><a href="https://tinygo.org/">TinyGo</a>.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <nav class="pagination">
