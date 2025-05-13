@@ -24,8 +24,8 @@ asciidoc:
     idprefix: ""
     idseparator: "-"
     page-pagination: ""
-    highlightjs-theme: monokai
-    highlightjs-languages: js, elixir, sql, yaml, html, css, asm, c, ada
+    #highlightjs-theme: monokai
+    #highlightjs-languages: js, elixir, sql, yaml, html, css, asm, c, ada
     stem: latexmath
 
 ui:

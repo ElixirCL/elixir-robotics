@@ -9,6 +9,7 @@
     <link rel="next" href="electricity.html">
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
   </head>
   <body class="article">
 <header class="header">
@@ -193,10 +194,10 @@
     <li><a href="introduction.html">Introducción a la Electrónica</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="file:///antora/./modules/fundamentals/pages/introduction.adoc">Edit this Page</a></div>
+<div class="edit-this-page"><a href="file:///antora/./modules/fundamentals/pages/introduction.adoc">Editar esta página</a></div>
 </div>
   <div class="content">
-<aside class="toc sidebar" data-title="Contents" data-levels="2">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
@@ -352,25 +353,11 @@ solo la electricidad es capaz de otorgar.</p>
 <div class="paragraph">
 <p>El siguiente esquema presenta el funcionamiento de un sistema electrónico en general. Los sensores son los que nos permiten <strong>capturar</strong> señales del mundo físico; el procesador, que nos permite <strong>procesar</strong> estas señales y, luego, los actuadores, que nos permiten <strong>actuar</strong> sobre el mundo físico.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Esquema General de Sistema Electrónico</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>@startuml
-
-autonumber
-
-Sensor -&gt; Procesador: señal
-
-activate Procesador
-Procesador -&gt; Procesador: procesamiento
-Procesador -&gt; Actuador: señal
-
-activate Actuador
-Actuador --&gt; Actuador: acción
-
-
-@enduml</pre>
+<img src="_images/diag-a17cb3b494e7971efc4acbad9ab7fb1fc9a70159.svg" alt="Esquema General de Sistema Electrónico">
 </div>
+<div class="title">Figure 1. Esquema General de Sistema Electrónico</div>
 </div>
 </div>
 </div>
@@ -433,11 +420,13 @@ a las distintas unidades que se utilizan en electrónica y electricidad.</p>
 </main>
 </div>
 <footer class="footer">
-  <p>This page was built using the Antora default UI.</p>
-  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
 </footer>
 <script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
 <script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
 <script src="../_/js/vendor/lunr.js"></script>
 <script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
 <script async src="../search-index.js"></script>

@@ -15,7 +15,7 @@ sobre el uso de memoria del microcontrolador, logrando programas que puedan
 exprimir todo el potencial del mismo.
 
 .Encender un Led para _PIC16f877a_, fuente: ("PIC Assembly Code Examples" 2017)
-[source, asm]
+[source, avrasm]
 ----
 list p=16f84a
 include 
