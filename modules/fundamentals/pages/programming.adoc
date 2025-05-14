@@ -131,8 +131,8 @@ Los tipos de punto fijo pueden sustituirse fácilmente por tipos de punto flotan
 procesador de punto flotante. Las operaciones con punto fijo utilizan el procesador de 
 enteros del hardware y no requieren espacio de memoria para una mantisa y un exponente.
 
-Ada cuenta con facilidades integradas para enlazarse con bibliotecas en C o C\++, 
-lo que permite que los programas en Ada interactúen con bibliotecas del procesador escritas en C o C\++.
+Ada cuenta con facilidades integradas para enlazarse con bibliotecas en C o C+\+, 
+lo que permite que los programas en Ada interactúen con bibliotecas del procesador escritas en C.
 
 Ada facilita la programación incrustada con menos esfuerzo por parte del programador que el 
 requerido para implementar los mismos datos y comportamientos usando C.
