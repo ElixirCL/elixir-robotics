@@ -90,6 +90,128 @@ void main(void) {
 
 == Ada
 
+En la década de 1970, el Departamento de Defensa de los Estados Unidos (DOD) sufrió una explosión en la cantidad de lenguajes de programación, 
+con diferentes proyectos utilizando distintos dialectos no estándar o subconjuntos/superconjuntos de lenguajes. 
+El DOD decidió resolver este problema emitiendo una solicitud de propuestas para un lenguaje de programación común y moderno. 
+La propuesta ganadora fue presentada por Jean Ichbiah, de CII Honeywell-Bull.
+
+El primer estándar de Ada se publicó en 1983; posteriormente fue revisado y mejorado en 1995, 2005, 2012 y 2022, 
+con cada revisión incorporando características nuevas y útiles.
+
+Ada es un lenguaje de programación muy bien diseñado y una excelente alternativa a C, C++ y Rust, 
+en el sentido de que toma las grandes y monolíticas características de otros lenguajes y las descompone en sus partes constituyentes, 
+de modo que puedes elegir qué porciones de esas características deseas usar. 
+
+Ada descompone la programación orientada a objetos en características separadas como: encapsulamiento, reutilización, herencia, y despacho dinámico.
+En Ada, puedes optar por cada una de esas cosas por separado, dependiendo de para qué necesitas la "programación orientada a objetos". 
+Esto contrasta mucho con Java, donde escribes la palabra clave “class” y todo eso viene incluido automáticamente.
+
+Hoy en día, Ada se utiliza ampliamente en sistemas incrustados en tiempo real, muchos de los cuales son críticos para la seguridad. 
+Aunque Ada puede usarse como un lenguaje de propósito general, realmente destaca en aplicaciones de bajo nivel:
+
+- Sistemas incrustados con requisitos de poca memoria (no se permite recolector de basura).
+- Interfaz directa con hardware.
+- Sistemas en tiempo real, ya sean blandos o estrictos.
+- Programación de sistemas de bajo nivel.
+
+Algunos dominios específicos donde se utiliza Ada incluyen el
+aeroespacial y defensa, aviación civil, ferrocarriles, entre muchos otros.
+
+Ada es una excelente alternativa para la programación de microcontroladores del tipo 
+http://inspirel.com/articles/Ada_On_Cortex.html[ARM Cortex-M] como Arduino.
+
+Los sistemas incrustados que carecen de una unidad de punto flotante representan un problema para los programadores en C, 
+ya que las dos clasificaciones de tipos primitivos en C son tipos enteros y tipos de punto flotante. 
+La ausencia de un procesador de punto flotante en un sistema incrustado requiere que todas las representaciones y operaciones en punto 
+flotante se implementen por software en lugar de hardware. Esta limitación incrementa el tamaño del software de 
+punto flotante en C y reduce la velocidad de cálculo de las operaciones de punto flotante.
+
+Ada proporciona tipos enteros, tipos de punto flotante y tipos de punto fijo. 
+Los tipos de punto fijo pueden sustituirse fácilmente por tipos de punto flotante en sistemas que carecen de un 
+procesador de punto flotante. Las operaciones con punto fijo utilizan el procesador de 
+enteros del hardware y no requieren espacio de memoria para una mantisa y un exponente.
+
+Ada cuenta con facilidades integradas para enlazarse con bibliotecas en C o C++, 
+lo que permite que los programas en Ada interactúen con bibliotecas del procesador escritas en C o C++.
+
+Ada facilita la programación incrustada con menos esfuerzo por parte del programador que el 
+requerido para implementar los mismos datos y comportamientos usando C.
+
+(“Ada Core Documentation",” n.d.)
+
+.Encender un Led con Ada, fuente: https://github.com/kylelk/blink-example/
+[source, ada]
+----
+with GPIO;
+with Ada.Text_IO;
+
+procedure main is
+   package TIO renames Ada.Text_IO;
+
+   Pin_Num     : constant GPIO.Pin_Number := 0;
+   Button_Pin  : constant GPIO.Pin_Number := 1;
+   Blink_Delay : constant Float           := 0.25;
+
+   type LED_Modes is (LED_Off, LED_Blink, LED_On);
+
+   task type Blinking_Light is
+      entry Mode (Mode_Value : LED_Modes);
+   end Blinking_Light;
+
+   task body Blinking_Light is
+      Current_Mode : LED_Modes := LED_Off;
+   begin
+      loop
+         select
+            accept Mode (Mode_Value : LED_Modes) do
+               Current_Mode := Mode_Value;
+            end Mode;
+         else
+            if Current_Mode = LED_Off then
+               GPIO.Digital_Write (Pin_Num, GPIO.Low);
+
+            elsif Current_Mode = LED_Blink then
+               GPIO.Digital_Write (Pin_Num, GPIO.High);
+               delay Duration (Blink_Delay);
+               GPIO.Digital_Write (Pin_Num, GPIO.Low);
+               delay Duration (Blink_Delay);
+
+            elsif Current_Mode = LED_On then
+               GPIO.Digital_Write (Pin_Num, GPIO.High);
+            end if;
+
+         end select;
+      end loop;
+   end Blinking_Light;
+
+   Light      : Blinking_Light;
+   Light_Mode : LED_Modes := LED_Off;
+   Down_Press : Boolean   := True;
+
+   procedure Button_Clicked is
+   begin
+      if Down_Press then
+         TIO.Put_Line ("button clicked " & LED_Modes'Image (Light_Mode));
+         Light.Mode (Light_Mode);
+         if Light_Mode = LED_Modes'Last then
+            Light_Mode := LED_Modes'First;
+         else
+            Light_Mode := LED_Modes'Val (LED_Modes'Pos (Light_Mode) + 1);
+         end if;
+      end if;
+      Down_Press := not Down_Press;
+   end Button_Clicked;
+
+begin
+   GPIO.Setup;
+   GPIO.Pin_Mode (Pin_Num, GPIO.Output);
+   GPIO.Pin_Mode (Button_Pin, GPIO.Input);
+
+   -- register button callback
+   GPIO.Pin_Interrupt (Button_Pin, GPIO.Edge_Both, Button_Clicked'Access);
+end main;
+----
+
 == Erlang y Elixir
 
 El _ESP32_ típico viene con 520 KB de RAM y 4 MB de almacenamiento flash, aproximadamente las especificaciones de una computadora de escritorio de mediados de los años 80. 
@@ -142,3 +264,4 @@ Existen otras alternativas válidas como:
 - https://www.espruino.com/[Espruino].
 - https://picoruby.github.io/[PicoRuby].
 - https://tinygo.org/[TinyGo].
+- https://docs.rust-embedded.org/book/index.html[Embedded Rust].
