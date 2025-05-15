@@ -2,4 +2,5 @@
 
 include::../../fundamentals/pages/bibliography.adoc[]
 include::../../tools/pages/bibliography.adoc[]
+include::../../ne555/pages/bibliography.adoc[]
 include::../../pic16f877a/pages/bibliography.adoc[]

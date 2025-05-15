@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>PIC16F877A :: Electrónica, Robótica e IOT con Elixir</title>
+    <title>PIC16F877a :: Electrónica, Robótica e IOT con Elixir</title>
     <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/pic16f877a/pic16f877a.html">
-    <link rel="prev" href="../communication/zigbee.html">
+    <link rel="prev" href="../ne555/ic555.html">
     <link rel="next" href="../arduino/arduino.html">
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../_/css/site.css">
@@ -84,22 +84,64 @@
     <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../fundamentals/ic555.html">IC555</a>
-  </li>
-  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Herramientas</span>
+    <span class="nav-text">IC555</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+    <a class="nav-link" href="../ne555/ic555.html">IC555</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">PIC16f877a</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="pic16f877a.html">PIC16F877a</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Arduino</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../arduino/arduino.html">Arduino</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">ESP32</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/esp32.html">ESP32</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+    <a class="nav-link" href="../esp32/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/gladiators.html">Proyecto: Gladiadores Robots</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Raspberry PI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/project.html">Proyecto: Mesero Robot</a>
   </li>
 </ul>
   </li>
@@ -123,46 +165,13 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">PIC16f877a</span>
-<ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="pic16f877a.html">PIC16F877A</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Arduino</span>
+    <span class="nav-text">Herramientas</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../arduino/arduino.html">Arduino</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">ESP32</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../esp32/atomvm.html">AtomVM</a>
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../esp32/gladiators.html">Proyecto: Gladiadores Robots</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Raspberry PI</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../raspberry/raspberry.html">Raspberry Pi</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../raspberry/nerves.html">Nerves</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../raspberry/project.html">Proyecto: Mesero Robot</a>
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
   </li>
 </ul>
   </li>
@@ -191,7 +200,7 @@
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
     <li>PIC16f877a</li>
-    <li><a href="pic16f877a.html">PIC16F877A</a></li>
+    <li><a href="pic16f877a.html">PIC16F877a</a></li>
   </ul>
 </nav>
 <div class="edit-this-page"><a href="file:///antora/./modules/pic16f877a/pages/pic16f877a.adoc">Editar esta página</a></div>
@@ -201,11 +210,11 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">PIC16F877A</h1>
+<h1 class="page">PIC16F877a</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>El <em>PIC16F877A</em> es un microcontrolador de 8 bits desarrollado por Microchip Technology, lanzado a finales de los años 90 como parte de la familia PIC16. Tiene un bajo consumo de energía y alta capacidad para aplicaciones incrustadas, de acuerdo con su datasheet, cuenta con un procesador RISC de 20MHZ de velocidad de la CPU y 200ns de tiempos de ejecución de instrucción.</p>
+<p>El <em>PIC16F877a</em> es un microcontrolador de 8 bits desarrollado por Microchip Technology, lanzado a finales de los años 90 como parte de la familia PIC16. Tiene un bajo consumo de energía y alta capacidad para aplicaciones incrustadas, de acuerdo con su datasheet, cuenta con un procesador RISC de 20MHZ de velocidad de la CPU y 200ns de tiempos de ejecución de instrucción.</p>
 </div>
 </div>
 </div>
@@ -255,9 +264,9 @@
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="_images/44pin.jpg" alt="_PIC16F877A_ 44 Pinout" width="400">
+<img src="_images/44pin.jpg" alt="_PIC16F877a_ 44 Pinout" width="400">
 </div>
-<div class="title">Figure 1. Diagrama del microcontrolador 44 pins <em>PIC16F877A</em></div>
+<div class="title">Figure 1. Diagrama del microcontrolador 44 pins <em>PIC16F877a</em></div>
 </div>
 <div class="paragraph">
 <p><em>Fuente: Microchip Technology</em></p>
@@ -266,13 +275,13 @@
 <div class="content">
 <img src="_images/40pin.jpg" alt="PIC16F18855" width="400">
 </div>
-<div class="title">Figure 2. Diagrama del microcontrolador 40 pins <em>PIC16F877A</em></div>
+<div class="title">Figure 2. Diagrama del microcontrolador 40 pins <em>PIC16F877a</em></div>
 </div>
 <div class="paragraph">
 <p><em>Fuente: Microchip Technology</em></p>
 </div>
 <div class="paragraph">
-<p>A continuación, se describen las características básicas de acuerdo con Microchip Technology <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup> del microcontrolador <em>PIC16F877A</em></p>
+<p>A continuación, se describen las características básicas de acuerdo con Microchip Technology <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup> del microcontrolador <em>PIC16F877a</em></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -315,7 +324,7 @@
 <div class="sect2">
 <h3 id="diferencias-entre-un-microcontrolador-y-un-microprocesador"><a class="anchor" href="#diferencias-entre-un-microcontrolador-y-un-microprocesador"></a>Diferencias entre un Microcontrolador y un Microprocesador</h3>
 <div class="paragraph">
-<p>A diferencia de los microprocesadores, el <em>PIC16F877A</em> (el cual es un microcontrolador) no consta de un sistema operativo para su funcionamiento. En lugar de eso, está diseñado para ejecutar directamente código incrustado escrito en lenguajes como C o ensamblador, sin necesidad de capas intermedias de software.</p>
+<p>A diferencia de los microprocesadores, el <em>PIC16F877a</em> (el cual es un microcontrolador) no consta de un sistema operativo para su funcionamiento. En lugar de eso, está diseñado para ejecutar directamente código incrustado escrito en lenguajes como C o ensamblador, sin necesidad de capas intermedias de software.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -326,7 +335,7 @@
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Característica</th>
-<th class="tableblock halign-left valign-top">Microcontrolador (ej: <em>PIC16F877A</em>)</th>
+<th class="tableblock halign-left valign-top">Microcontrolador (ej: <em>PIC16F877a</em>)</th>
 <th class="tableblock halign-left valign-top">Microprocesador</th>
 </tr>
 </thead>
@@ -359,16 +368,16 @@
 </tbody>
 </table>
 <div class="paragraph">
-<p>Los microcontroladores como el <em>PIC16F877A</em> están optimizados para tareas específicas, mientras que los microprocesadores son más potentes pero requieren más componentes externos y recursos.</p>
+<p>Los microcontroladores como el <em>PIC16F877a</em> están optimizados para tareas específicas, mientras que los microprocesadores son más potentes pero requieren más componentes externos y recursos.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="usos-del-pic16f877a"><a class="anchor" href="#usos-del-pic16f877a"></a>Usos del <em>PIC16F877A</em></h2>
+<h2 id="usos-del-pic16f877a"><a class="anchor" href="#usos-del-pic16f877a"></a>Usos del <em>PIC16F877a</em></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>El <em>PIC16F877A</em> tiene usos en sistemas incrustados donde se requiere bajo consumo energético, una programación simplificada en C++ o assembly. Entre sus usos más comunes se encuentran:</p>
+<p>El <em>PIC16F877a</em> tiene usos en sistemas incrustados donde se requiere bajo consumo energético, una programación simplificada en C++ o assembly. Entre sus usos más comunes se encuentran:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -398,7 +407,7 @@
 <h2 id="entorno-de-programación"><a class="anchor" href="#entorno-de-programación"></a>Entorno de programación</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Para poder programar al <em>PIC16F877A</em> se utiliza el <strong>IDE MPLAB ® Xpress IDE</strong> ofrecido por Microship Technology <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup>  , siendo una herramienta que aporta flexibilidad, permitiendo programar, depurar y cargar el código al <em>PIC16F877A</em>.</p>
+<p>Para poder programar al <em>PIC16F877a</em> se utiliza el <strong>IDE MPLAB ® Xpress IDE</strong> ofrecido por Microship Technology <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup>  , siendo una herramienta que aporta flexibilidad, permitiendo programar, depurar y cargar el código al <em>PIC16F877a</em>.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -547,7 +556,7 @@ CONTINUE:
 </div>
 </div>
 <div class="sect1">
-<h2 id="comparación-entre-pic16f877a-y-pic18f4550"><a class="anchor" href="#comparación-entre-pic16f877a-y-pic18f4550"></a>Comparación entre PIC16F877A y PIC18F4550</h2>
+<h2 id="comparación-entre-pic16f877a-y-pic18f4550"><a class="anchor" href="#comparación-entre-pic16f877a-y-pic18f4550"></a>Comparación entre PIC16F877a y PIC18F4550</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>También hay opciones más modernas como el <a href="https://ww1.microchip.com/downloads/en/devicedoc/39632c.pdf">PIC18F4550</a> que tiene mayor capacidad de procesamiento y memoria interna.</p>
@@ -568,7 +577,7 @@ CONTINUE:
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Característica</th>
-<th class="tableblock halign-left valign-top">PIC16F877A</th>
+<th class="tableblock halign-left valign-top">PIC16F877a</th>
 <th class="tableblock halign-left valign-top">PIC18F4550</th>
 </tr>
 </thead>
@@ -605,7 +614,7 @@ CONTINUE:
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Tipo de Memoria</th>
-<th class="tableblock halign-left valign-top">PIC16F877A</th>
+<th class="tableblock halign-left valign-top">PIC16F877a</th>
 <th class="tableblock halign-left valign-top">PIC18F4550</th>
 </tr>
 </thead>
@@ -637,7 +646,7 @@ CONTINUE:
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Funcionalidad</th>
-<th class="tableblock halign-left valign-top">PIC16F877A</th>
+<th class="tableblock halign-left valign-top">PIC16F877a</th>
 <th class="tableblock halign-left valign-top">PIC18F4550</th>
 </tr>
 </thead>
@@ -694,7 +703,7 @@ CONTINUE:
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Comparación</th>
-<th class="tableblock halign-left valign-top">PIC16F877A</th>
+<th class="tableblock halign-left valign-top">PIC16F877a</th>
 <th class="tableblock halign-left valign-top">PIC18F4550</th>
 </tr>
 </thead>
@@ -727,7 +736,7 @@ CONTINUE:
 </tbody>
 </table>
 <div class="paragraph">
-<p><strong>Usa el PIC16F877A si:</strong></p>
+<p><strong>Usa el PIC16F877a si:</strong></p>
 </div>
 <div class="ulist">
 <ul>
@@ -764,7 +773,7 @@ CONTINUE:
 <h2 id="conclusión"><a class="anchor" href="#conclusión"></a>Conclusión</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>El microcontrolador <em>PIC16F877A</em> es una excelente opción para desarrolladores en busqueda de soluciones económicas y
+<p>El microcontrolador <em>PIC16F877a</em> es una excelente opción para desarrolladores en busqueda de soluciones económicas y
 versátiles para sistemas incrustados. Sus periféricos integrados, bajo consumo de energía y facilidad de programación lo hacen ideal
 tanto para aplicaciones industriales como educativas.</p>
 </div>
@@ -794,7 +803,7 @@ por 40 años o más.</p>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../communication/zigbee.html">Zigbee</a></span>
+  <span class="prev"><a href="../ne555/ic555.html">IC555</a></span>
   <span class="next"><a href="../arduino/arduino.html">Arduino</a></span>
 </nav>
 </article>

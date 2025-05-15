@@ -1,6 +1,6 @@
-= PIC16F877A
+= PIC16F877a
 
-El _PIC16F877A_ es un microcontrolador de 8 bits desarrollado por Microchip Technology, lanzado a finales de los años 90 como parte de la familia PIC16. Tiene un bajo consumo de energía y alta capacidad para aplicaciones incrustadas, de acuerdo con su datasheet, cuenta con un procesador RISC de 20MHZ de velocidad de la CPU y 200ns de tiempos de ejecución de instrucción.
+El _PIC16F877a_ es un microcontrolador de 8 bits desarrollado por Microchip Technology, lanzado a finales de los años 90 como parte de la familia PIC16. Tiene un bajo consumo de energía y alta capacidad para aplicaciones incrustadas, de acuerdo con su datasheet, cuenta con un procesador RISC de 20MHZ de velocidad de la CPU y 200ns de tiempos de ejecución de instrucción.
 
 == Características
 * Cuenta con 3 temporizadores (Timer0, Timer1 y Timer2), que permiten gestionar eventos y medir el paso del tiempo.
@@ -16,15 +16,15 @@ El _PIC16F877A_ es un microcontrolador de 8 bits desarrollado por Microchip Tech
 
 * RISC CPU: procesadores que están diseñados para ejecutar un número reducido de tipos de instrucciones que les permite operar a una velocidad más elevada (Solé, R. 2021) footnote:[Solé, R. (2021). "RISC: La arquitectura de procesadores usada por ARM para cambiar el mercado". https://www.profesionalreview.com/2021/07/17/que-es-risc/#Que_es_RISC].
 
-.Diagrama del microcontrolador 44 pins _PIC16F877A_
-image::44pin.jpg[alt="_PIC16F877A_ 44 Pinout", width=400]
+.Diagrama del microcontrolador 44 pins _PIC16F877a_
+image::44pin.jpg[alt="_PIC16F877a_ 44 Pinout", width=400]
 _Fuente: Microchip Technology_
 
-.Diagrama del microcontrolador 40 pins _PIC16F877A_
+.Diagrama del microcontrolador 40 pins _PIC16F877a_
 image::40pin.jpg[alt="PIC16F18855", width=400]
 _Fuente: Microchip Technology_
 
-A continuación, se describen las características básicas de acuerdo con Microchip Technology footnote:[Microchip Technology. (s.f.). "PIC16F18855". https://www.microchip.com/en-us/product/pic16f18855#Overview] del microcontrolador _PIC16F877A_
+A continuación, se describen las características básicas de acuerdo con Microchip Technology footnote:[Microchip Technology. (s.f.). "PIC16F18855". https://www.microchip.com/en-us/product/pic16f18855#Overview] del microcontrolador _PIC16F877a_
 
 [cols="1,1", options="header"]
 |===
@@ -39,11 +39,11 @@ A continuación, se describen las características básicas de acuerdo con Micro
 
 === Diferencias entre un Microcontrolador y un Microprocesador
 
-A diferencia de los microprocesadores, el _PIC16F877A_ (el cual es un microcontrolador) no consta de un sistema operativo para su funcionamiento. En lugar de eso, está diseñado para ejecutar directamente código incrustado escrito en lenguajes como C o ensamblador, sin necesidad de capas intermedias de software.
+A diferencia de los microprocesadores, el _PIC16F877a_ (el cual es un microcontrolador) no consta de un sistema operativo para su funcionamiento. En lugar de eso, está diseñado para ejecutar directamente código incrustado escrito en lenguajes como C o ensamblador, sin necesidad de capas intermedias de software.
 
 [cols="1,1,1", options="header"]
 |===
-| Característica               | Microcontrolador (ej: _PIC16F877A_) | Microprocesador
+| Característica               | Microcontrolador (ej: _PIC16F877a_) | Microprocesador
 | Integración                 | Incluye CPU, memoria, I/O y periféricos | Solo contiene la unidad central de proceso (CPU)
 | Propósito                   | Aplicaciones incrustadas específicas | Computadoras generales o sistemas complejos
 | Programación                | Fácil de programar con lenguajes simples | Requiere sistema operativo y software complejo
@@ -51,11 +51,11 @@ A diferencia de los microprocesadores, el _PIC16F877A_ (el cual es un microcontr
 | Consumo de energía          | Bajo | Generalmente más alto
 |===
 
-Los microcontroladores como el _PIC16F877A_ están optimizados para tareas específicas, mientras que los microprocesadores son más potentes pero requieren más componentes externos y recursos.
+Los microcontroladores como el _PIC16F877a_ están optimizados para tareas específicas, mientras que los microprocesadores son más potentes pero requieren más componentes externos y recursos.
 
-== Usos del _PIC16F877A_
+== Usos del _PIC16F877a_
 
-El _PIC16F877A_ tiene usos en sistemas incrustados donde se requiere bajo consumo energético, una programación simplificada en C++ o assembly. Entre sus usos más comunes se encuentran:
+El _PIC16F877a_ tiene usos en sistemas incrustados donde se requiere bajo consumo energético, una programación simplificada en C++ o assembly. Entre sus usos más comunes se encuentran:
 
 * Automatización industrial (control de motores, monitoreo de sensores)
 * Domótica (control de luces, cerraduras, temperatura)
@@ -65,7 +65,7 @@ El _PIC16F877A_ tiene usos en sistemas incrustados donde se requiere bajo consum
 * Prototipos de IoT cuando se combinan con módulos de comunicación externa
 
 == Entorno de programación
-Para poder programar al _PIC16F877A_ se utiliza el **IDE MPLAB ® Xpress IDE** ofrecido por Microship Technology footnote:[Microchip Technology. (s.f.). "MPLAB® Xpress Cloud-Based IDE". https://www.microchip.com/en-us/tools-resources/develop/mplab-xpress]  , siendo una herramienta que aporta flexibilidad, permitiendo programar, depurar y cargar el código al _PIC16F877A_.
+Para poder programar al _PIC16F877a_ se utiliza el **IDE MPLAB ® Xpress IDE** ofrecido por Microship Technology footnote:[Microchip Technology. (s.f.). "MPLAB® Xpress Cloud-Based IDE". https://www.microchip.com/en-us/tools-resources/develop/mplab-xpress]  , siendo una herramienta que aporta flexibilidad, permitiendo programar, depurar y cargar el código al _PIC16F877a_.
 
 .Logo de MPLAB
 image::mplab.avif[alt="MPLAB", width=200]
@@ -183,7 +183,7 @@ CONTINUE:
 image::clc.png[alt="clc", width=400]
 _Fuente: MPLAB Xpress_
 
-== Comparación entre PIC16F877A y PIC18F4550
+== Comparación entre PIC16F877a y PIC18F4550
 
 También hay opciones más modernas como el https://ww1.microchip.com/downloads/en/devicedoc/39632c.pdf[PIC18F4550] que tiene mayor capacidad de procesamiento y memoria interna.
 
@@ -195,7 +195,7 @@ Ambos son microcontroladores de 8 bits de Microchip, pero pertenecen a diferente
 .Características
 [cols="1,1,1", options="header"]
 |===
-| Característica              | PIC16F877A                     | PIC18F4550
+| Característica              | PIC16F877a                     | PIC18F4550
 | Arquitectura                | PIC16 (Mid-range)              | PIC18 (High-end 8-bit)
 | Velocidad de reloj          | Hasta 20 MHz                   | Hasta 48 MHz (con PLL)
 | Instrucciones por ciclo     | 1 cada 4 ciclos                | 1 por ciclo (en la mayoría)
@@ -205,7 +205,7 @@ Ambos son microcontroladores de 8 bits de Microchip, pero pertenecen a diferente
 .Memoria
 [cols="1,1,1", options="header"]
 |===
-| Tipo de Memoria             | PIC16F877A                      | PIC18F4550
+| Tipo de Memoria             | PIC16F877a                      | PIC18F4550
 | Flash (programa)            | 14 KB                           | 32 KB
 | RAM                         | 368 bytes                       | 2 KB
 | EEPROM                      | 256 bytes                       | 256 bytes
@@ -214,7 +214,7 @@ Ambos son microcontroladores de 8 bits de Microchip, pero pertenecen a diferente
 .Periféricos y Funcionalidades
 [cols="1,1,1", options="header"]
 |===
-| Funcionalidad               | PIC16F877A                      | PIC18F4550
+| Funcionalidad               | PIC16F877a                      | PIC18F4550
 | Puertos I/O                 | 33                              | 35
 | Timers                      | 3 (8 y 16 bits)                 | 4 (8 y 16 bits)
 | ADC                         | 10-bit, 8 canales               | 10-bit, 13 canales
@@ -228,7 +228,7 @@ Ambos son microcontroladores de 8 bits de Microchip, pero pertenecen a diferente
 .Ventajas de Cada Uno
 [cols="1,1,1", options="header"]
 |===
-| Comparación                 | PIC16F877A                      | PIC18F4550
+| Comparación                 | PIC16F877a                      | PIC18F4550
 | Facilidad de uso            | Muy fácil para principiantes    | Más complejo, más potente
 | Costo                       | Más barato                      | Un poco más caro
 | Capacidad de procesamiento  | Limitada                        | Superior
@@ -236,7 +236,7 @@ Ambos son microcontroladores de 8 bits de Microchip, pero pertenecen a diferente
 | Tamaño de programa          | 14 KB                           | 32 KB
 |===
 
-*Usa el PIC16F877A si:*
+*Usa el PIC16F877a si:*
 
 - Estás empezando con microcontroladores.
 - Tu proyecto es simple (sensores, control básico).
@@ -250,7 +250,7 @@ Ambos son microcontroladores de 8 bits de Microchip, pero pertenecen a diferente
 
 == Conclusión
 
-El microcontrolador _PIC16F877A_ es una excelente opción para desarrolladores en busqueda de soluciones económicas y 
+El microcontrolador _PIC16F877a_ es una excelente opción para desarrolladores en busqueda de soluciones económicas y 
 versátiles para sistemas incrustados. Sus periféricos integrados, bajo consumo de energía y facilidad de programación lo hacen ideal 
 tanto para aplicaciones industriales como educativas.
 

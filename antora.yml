@@ -4,9 +4,10 @@ title: Electrónica, Robótica e IOT con Elixir
 nav:
   - modules/ROOT/nav.adoc
   - modules/fundamentals/nav.adoc
-  - modules/tools/nav.adoc
-  - modules/communication/nav.adoc
+  - modules/ne555/nav.adoc
   - modules/pic16f877a/nav.adoc
   - modules/arduino/nav.adoc
   - modules/esp32/nav.adoc
   - modules/raspberry/nav.adoc
+  - modules/communication/nav.adoc
+  - modules/tools/nav.adoc

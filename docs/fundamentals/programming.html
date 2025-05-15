@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Lenguajes de Programación :: Electrónica, Robótica e IOT con Elixir</title>
     <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/fundamentals/programming.html">
-    <link rel="prev" href="ic555.html">
-    <link rel="next" href="../tools/platformio.html">
+    <link rel="prev" href="electricity.html">
+    <link rel="next" href="../ne555/ic555.html">
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -83,9 +83,6 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="electricity.html">Fundamentos de Electricidad</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="ic555.html">IC555</a>
-  </li>
   <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="programming.html">Lenguajes de Programación</a>
   </li>
@@ -93,13 +90,58 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Herramientas</span>
+    <span class="nav-text">IC555</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+    <a class="nav-link" href="../ne555/ic555.html">IC555</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">PIC16f877a</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../pic16f877a/pic16f877a.html">PIC16F877a</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Arduino</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../arduino/arduino.html">Arduino</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">ESP32</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/esp32.html">ESP32</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+    <a class="nav-link" href="../esp32/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/gladiators.html">Proyecto: Gladiadores Robots</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Raspberry PI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/project.html">Proyecto: Mesero Robot</a>
   </li>
 </ul>
   </li>
@@ -123,46 +165,13 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">PIC16f877a</span>
+    <span class="nav-text">Herramientas</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../pic16f877a/pic16f877a.html">PIC16F877A</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Arduino</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../arduino/arduino.html">Arduino</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">ESP32</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../esp32/atomvm.html">AtomVM</a>
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../esp32/gladiators.html">Proyecto: Gladiadores Robots</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
-    <span class="nav-text">Raspberry PI</span>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../raspberry/raspberry.html">Raspberry Pi</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../raspberry/nerves.html">Nerves</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../raspberry/project.html">Proyecto: Mesero Robot</a>
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
   </li>
 </ul>
   </li>
@@ -537,8 +546,8 @@ toggle(low) -&gt;
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="ic555.html">IC555</a></span>
-  <span class="next"><a href="../tools/platformio.html">PlatformIO IDE</a></span>
+  <span class="prev"><a href="electricity.html">Fundamentos de Electricidad</a></span>
+  <span class="next"><a href="../ne555/ic555.html">IC555</a></span>
 </nav>
 </article>
   </div>

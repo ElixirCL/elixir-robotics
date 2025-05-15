@@ -29,9 +29,6 @@ video::5-5-2025-uvm.mp4[]
 .Diagrama de conexión entre componentes
 image:gladiator_diagram.png[]
 
-.Figura de Lego a elección
-image:gladiador-lego.webp[]
-
 [NOTE]
 ====
 La posición del globo depende de cada gladiador. 
@@ -182,3 +179,6 @@ const char* password = "12345678";
 Esta red permite enviar comandos de dirección al hacer click en los enlaces.
 Se deja como ejercicio adicional la creación de una interfaz más adecuada para 
 el control del robot, como un joystick virtual o físico.
+
+.Figura de Lego a elección
+image:gladiador-lego.webp[]

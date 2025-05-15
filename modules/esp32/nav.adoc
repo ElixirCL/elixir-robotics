@@ -1,3 +1,4 @@
 .ESP32
+* xref:esp32.adoc[]
 * xref:atomvm.adoc[]
 * xref:gladiators.adoc[]

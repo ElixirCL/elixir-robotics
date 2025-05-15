@@ -1,5 +1,4 @@
 .Fundamentos
 * xref:introduction.adoc[]
 * xref:electricity.adoc[]
-* xref:ic555.adoc[]
 * xref:programming.adoc[]

@@ -1,0 +1,4 @@
+- Dahl, Ø. N. (2021, June 4). Build an Atari Punk Console this evening. Retrieved from https://www.build-electronic-circuits.com/atari-punk-console/
+- Dahl, Ø. N. (2024a, April 6). 555 timer Metronome Circuit. Retrieved from https://www.build-electronic-circuits.com/555-timer-metronome-circuit/
+- Dahl, Ø. N. (2024, April 6). 555 Timer Railroad Lights. Retrieved from https://www.build-electronic-circuits.com/555-timer-railroad-lights/
+- Hispavila. (2001, April 6). EL IC-555 – HISPAVILA.COM. Retrieved from https://www.hispavila.com/el-ic-555/
