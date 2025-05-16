@@ -29,6 +29,23 @@ video::5-5-2025-uvm.mp4[]
 .Diagrama de conexión entre componentes
 image:gladiator_diagram.png[]
 
+.Tabla de conexiones
+[cols=5*]
+|===
+| ESP32 MONTADO EN PLACA| MOTOR AC1 | MOTOR AC2 | L298N | Batería
+^|Pin 16 | |  ^| IN1 |
+^|Pin 17 |  |  ^| IN2 |
+^|Pin 18 |  |  ^| IN3 |
+^|Pin 19 |  |  ^| IN4 |
+| ^| (+) |  ^| OUT1 |
+| ^| (-) |  ^| OUT2 |
+| |  ^| (+) ^| OUT3 |
+| |  ^| (-) ^| OUT4 |
+||  |  ^| IN12V ^| (+)
+||  |  ^| GND ^| (-) 
+^|Jack de carga|  |  |  ^| (+)(-) 
+|===
+
 [NOTE]
 ====
 La posición del globo depende de cada gladiador. 
