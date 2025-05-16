@@ -14,7 +14,7 @@ El _PIC16F877a_ es un microcontrolador de 8 bits desarrollado por Microchip Tech
 * *PSP* (Puerto esclavo paralelo) permite la comunicaicón en paralelo de instrucciones lectura, escritura y selección de chip.
 * *BOR* (Brown-out reset) protege al dispositivo en caso de caídas de tensión.
 
-* RISC CPU: procesadores que están diseñados para ejecutar un número reducido de tipos de instrucciones que les permite operar a una velocidad más elevada (Solé, R. 2021) footnote:[Solé, R. (2021). "RISC: La arquitectura de procesadores usada por ARM para cambiar el mercado". https://www.profesionalreview.com/2021/07/17/que-es-risc/#Que_es_RISC].
+* RISC CPU: procesadores que están diseñados para ejecutar un número reducido de tipos de instrucciones que les permite operar a una velocidad más elevada (Solé, R. 2021).
 
 .Diagrama del microcontrolador 44 pins _PIC16F877a_
 image::44pin.jpg[alt="_PIC16F877a_ 44 Pinout", width=400]
@@ -24,7 +24,7 @@ _Fuente: Microchip Technology_
 image::40pin.jpg[alt="PIC16F18855", width=400]
 _Fuente: Microchip Technology_
 
-A continuación, se describen las características básicas de acuerdo con Microchip Technology footnote:[Microchip Technology. (s.f.). "PIC16F18855". https://www.microchip.com/en-us/product/pic16f18855#Overview] del microcontrolador _PIC16F877a_
+A continuación, se describen las características básicas de acuerdo con Microchip Technology (Microchip, s.f.) del microcontrolador _PIC16F877a_
 
 [cols="1,1", options="header"]
 |===
@@ -65,7 +65,7 @@ El _PIC16F877a_ tiene usos en sistemas incrustados donde se requiere bajo consum
 * Prototipos de IoT cuando se combinan con módulos de comunicación externa
 
 == Entorno de programación
-Para poder programar al _PIC16F877a_ se utiliza el **IDE MPLAB ® Xpress IDE** ofrecido por Microship Technology footnote:[Microchip Technology. (s.f.). "MPLAB® Xpress Cloud-Based IDE". https://www.microchip.com/en-us/tools-resources/develop/mplab-xpress]  , siendo una herramienta que aporta flexibilidad, permitiendo programar, depurar y cargar el código al _PIC16F877a_.
+Para poder programar al _PIC16F877a_ se utiliza el **IDE MPLAB ® Xpress IDE** ofrecido por Microship Technology (Microchip, s.f.)  , siendo una herramienta que aporta flexibilidad, permitiendo programar, depurar y cargar el código al _PIC16F877a_.
 
 .Logo de MPLAB
 image::mplab.avif[alt="MPLAB", width=200]
@@ -73,7 +73,7 @@ _Fuente: Microchip Technology_
 
 == Ejemplos de Aplicación
 
-Los ejemplos a demostrar en este informe son obtenidos del libro footnote:[Ruiz, C. (2021). "Programación de microcontroladores PIC paso a paso". https://feriachilenadellibro.cl/producto/9786075387413-programacion-de-microcontroladores-pic-paso-a-paso/] de Carlos Ruiz Zamarreño.
+Los ejemplos a demostrar son obtenidos del texto de bibliografía (Ruiz, 2021).
 
 === Control de un LED por pulsador
 
@@ -109,7 +109,7 @@ int main(void)
 }
 ----
 
-.Codigo en assembly para una funcionalidad similar, según Agkopian footnote:[Agkopian, M. (2016). "pic-assembly-examples". https://github.com/magkopian/pic-assembly-examples/blob/master/led%20blink%20with%20TMR0%20and%20TMR1/TMR0_DELAY.asm]:		    
+.Codigo en assembly para una funcionalidad similar (Agkopian, 2016):		    
 
 [source, armasm]
 ----

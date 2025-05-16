@@ -1,0 +1,12 @@
+= Blibliografía
+
+*Agkopian, M. (2016).* _"pic-assembly-examples"_. https://github.com/magkopian/pic-assembly-examples/blob/master/led%20blink%20with%20TMR0%20and%20TMR1/TMR0_DELAY.asm
+
+*Microchip Technology. (s.f.).* _"MPLAB® Xpress Cloud-Based IDE"_. https://www.microchip.com/en-us/tools-resources/develop/mplab-xpress
+Como recargas batería para optimizar el proceso
+
+*Microchip Technology. (s.f.).* _"PIC16F18855"_. https://www.microchip.com/en-us/product/pic16f18855#Overview
+
+*Ruiz, C. (2021).* _"Programación de microcontroladores PIC paso a paso"_. Macrocombo
+
+*Solé, R. (2021).* _"RISC: La arquitectura de procesadores usada por ARM para cambiar el mercado"_. https://www.profesionalreview.com/2021/07/17/que-es-risc/#Que_es_RISC
