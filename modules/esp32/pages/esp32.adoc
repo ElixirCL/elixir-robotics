@@ -42,11 +42,16 @@ image:esp32functions.png[https://es.wikipedia.org/wiki/ESP32#/media/Archivo:Espr
 - Voltaje de operación de 2.3V a 3.6V
 - Temperatura de operación de -40°C a +125°C
 
+== ESP32-DevKit
+
 La placa de desarrollo *ESP32-C6-DevKit Dual Tipo C* es una solución avanzada y 
 versátil para el desarrollo de aplicaciones IoT y dispositivos conectados. 
-Basada en el microcontrolador ESP32-C6 de Espressif Systems, esta placa ofrece una serie de mejoras en 
+Basada en el microcontrolador ESP32-C6 de https://www.espressif.com/en/products/socs/esp32[Espressif Systems], esta placa ofrece una serie de mejoras en 
 conectividad y rendimiento, haciéndola ideal para una amplia gama de aplicaciones desde sistemas de monitoreo 
 remoto hasta soluciones industriales y de hogar inteligente.
+
+.ESP32 DevKit Tipo C
+image:esp32devkit.jpg[]
 
 *Características Destacadas*
 
@@ -57,5 +62,6 @@ remoto hasta soluciones industriales y de hogar inteligente.
 - Diseño Robusto: Con una temperatura de funcionamiento de -40 ℃ a 85 ℃, la placa está diseñada para operar en condiciones ambientales extremas, asegurando fiabilidad en entornos industriales y exteriores.
 - Antena Integrada: Incluye una antena PCB integrada, que optimiza la conectividad sin necesidad de componentes externos adicionales.
 - Conectividad Tipo C: La placa está equipada con un puerto USB Tipo C, facilitando la conexión y la programación, y proporcionando una interfaz moderna y eficiente.
+
 
 Disponibilidad en: https://www.mechatronicstore.cl/esp32-c6-devkit-pro-tipo-c/
