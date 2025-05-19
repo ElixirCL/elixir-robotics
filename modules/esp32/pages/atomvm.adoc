@@ -92,9 +92,9 @@ Podrías aplicar estas tecnologías en proyectos como:
 
 === Proyecto ejemplo: Sistema de riego automático inteligente
 
-*ESP32 con AtomVM mide la humedad del suelo.
-*Si la humedad es baja, activa una electroválvula.
-*Se comunica vía WiFi con una Raspberry Pi con Nerves, que:
+* ESP32 con AtomVM mide la humedad del suelo.
+* Si la humedad es baja, activa una electroválvula.
+* Se comunica vía WiFi con una Raspberry Pi con Nerves, que:
 - Muestra datos en una interfaz web.
 - Permite configurar umbrales de riego.
 - Guarda histórico en una base de  datos.
