@@ -11,3 +11,12 @@ AtomVM es una máquina virtual ligera que permite ejecutar bytecode de Erlang, E
 
 * Ideal para el desarrollo de sistemas embebidos inteligentes y compactos
 
+== Historia
+
+*AtomVM* comenzó su desarrollo en el año 2018 por *Pascal Gigler* con el objetivo de llevar Elixir y Erlang a un hardware más pequeño. La comunidad fue creciendo, sumando desarrolladores que aportaron soporte para nuevos dispositivos y bibliotecas, llegando a poder realizarse proyectos industriales de IoT que necesitaban de un dispositivo con tolerancia a fallos,  y  concurrencia, las cuales tenia  el dispositivo.
+
+== Elixir Nerves
+
+Es un framework para crear firmware de sistemas  embebidos de con *Elixir*  que  corre sobre la maquina virtual de *Erlang* "_*BEAM*_
+
+
