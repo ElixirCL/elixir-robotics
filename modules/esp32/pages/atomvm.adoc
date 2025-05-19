@@ -1,1 +1,13 @@
 = AtomVM
+
+AtomVM es una máquina virtual ligera que permite ejecutar bytecode de Erlang, Elixir y LFE (Lisp Flavored Erlang) en dispositivos embebidos con pocos recursos (como microcontroladores). Su objetivo es hacer posible usar lenguajes del ecosistema BEAM en hardware donde la máquina virtual de Erlang tradicional no puede correr por ser demasiado pesada.
+
+Sus características principales son:
+Permite usar lenguajes funcionales como Elixir en entornos de muy bajo nivel.
+
+Consume muy poca memoria (menos de 500 KB en muchos casos).
+
+Soporta concurrencia ligera y estructuras de datos funcionales.
+
+Ideal para el desarrollo de sistemas embebidos inteligentes y compactos
+
