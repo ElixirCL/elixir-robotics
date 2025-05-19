@@ -17,6 +17,76 @@ AtomVM es una máquina virtual ligera que permite ejecutar bytecode de Erlang, E
 
 == Elixir Nerves
 
-Es un framework para crear firmware de sistemas  embebidos de con *Elixir*  que  corre sobre la maquina virtual de *Erlang* "_*BEAM*_
+Es un framework para crear firmware de sistemas  embebidos de con *Elixir*  que  corre sobre la maquina virtual de *Erlang*: "_*BEAM*_".
+
+Es ideal para trabajar  con dispositivos potentes como *Raspberry Pi, BeagleBone  Black,  etc.* y  permite trabajar con sistemas robustos con interfaces conectadas a hardware real (GPIO, 12C, SPI, etc).
+
+=== Caracteristicas
+
+* Se puede desarrollar tu firmware en Elixir
+* Soporta actualizaciones
+* Tiene integración con *Phoenix* para paneles  de control  web
+* Usa herramientas modernas de *Elixir* como Mix, OTP y  GenServer.
+
+== 🌡️ Ejemplo práctico: Medición ambiental con AtomVM y DHT11
+
+Este ejemplo usa un sensor DHT11 conectado a un ESP32, leyendo temperatura y humedad usando **Elixir sobre AtomVM**.
+
+Requisitos:
+* Microcontrolador ESP32 con AtomVM cargado.
+* Sensor DHT11 conectado al pin GPIO 4 (puedes cambiarlo).
+* Módulo nativo `avm_dht` disponible en el firmware de AtomVM.
+
+=== 📄 Código fuente en Elixir
+
+[source,elixir]
+----
+defmodule DHTReader do
+  @dht_pin 4
+
+  def start do
+    IO.puts("Iniciando lectura del sensor DHT11...")
+
+    loop()
+  end
+
+  defp loop do
+    case :avm_dht.read(@dht_pin, :dht11) do
+      {:ok, temperature, humidity} ->
+        IO.puts("Temperatura: #{temperature} °C")
+        IO.puts("Humedad: #{humidity} %")
+
+      {:error, reason} ->
+        IO.puts("Error al leer sensor: #{inspect(reason)}")
+    end
+
+    :timer.sleep(5000)  // Espera 5 segundos
+    loop()
+  end
+end
+
+DHTReader.start()
+----
+
+=== 🔌 Conexiones del sensor DHT11 al ESP32
+
+[cols="2,2", options="header"]
+|===
+| Sensor DHT11 | ESP32
+| VCC          | 3.3V
+| DATA         | GPIO 4
+| GND          | GND
+|===
+
+=== ⚙️ Instrucciones
+
+. Compila el archivo con `elixirc dht_reader.ex`.
+. Sube el archivo `.beam` al ESP32 con las herramientas de AtomVM.
+. Asegúrate de incluir el módulo nativo `avm_dht` en tu firmware.
+. El ESP32 imprimirá por consola la temperatura y humedad cada 5 segundos.
+
+TIP: Puedes modificar el pin cambiando `@dht_pin 4` por el GPIO que estés usando.
+
+
 
 
