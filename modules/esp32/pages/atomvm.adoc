@@ -85,7 +85,49 @@ DHTReader.start()
 . Asegúrate de incluir el módulo nativo `avm_dht` en tu firmware.
 . El ESP32 imprimirá por consola la temperatura y humedad cada 5 segundos.
 
-NOTE: Otros sistemas más complejos como sistemas de domotica como un control  de luces, persianas o alarmas.
+NOTE: Estp sumado Elixir Nerves se pueden hacer otros sistemas más complejos como sistemas de domotica, sistemas industriales, estaciones meteorológicas con panel, etc.
+
+== ¿Cómo se puede usar en un proyecto?
+Podrías aplicar estas tecnologías en proyectos como:
+
+=== Proyecto ejemplo: Sistema de riego automático inteligente
+
+*ESP32 con AtomVM mide la humedad del suelo.
+*Si la humedad es baja, activa una electroválvula.
+*Se comunica vía WiFi con una Raspberry Pi con Nerves, que:
+
+Muestra datos en una interfaz web.
+
+Permite configurar umbrales de riego.
+
+Guarda histórico en una base de datos.
+
+Este sistema permite combinar lo mejor de ambos mundos:
+
+Microcontroladores pequeños y eficientes (ESP32 con AtomVM).
+
+Sistemas completos y robustos (Raspberry con Nerves).
+
+== ¿Qué hardware se recomienda?
+=== Para AtomVM (microcontroladores):
+- ESP32
+- ESP32-S2 o ESP32-C3
+-  STM32 (más potente, pero más complejo de programar).
+-  Placas con mínimo 512 KB de RAM y 2 MB de Flash.
+
+=== Para Nerves:
+-  Raspberry Pi 3 o 4 (mejor soporte).
+- BeagleBone Black.
+- GRiSP (especial para Elixir, ejecuta directamente BEAM sin sistema operativo).
+- Cualquier SBC (single board computer) compatible con Linux y GPIO.
+
+== Ventajas de usar Elixir + AtomVM/Nerves
+
+* Código funcional, fácil de razonar y mantener.
+* Alta concurrencia con procesos ligeros.
+* Alta tolerancia a fallos (modelo de actores de Erlang).
+* Ideal para IoT, domótica, robots, monitoreo industrial y sistemas distribuidos.
+* Usas el mismo lenguaje para la nube y el hardware.
 
 
 
