@@ -37,7 +37,7 @@ Requisitos:
 * Sensor DHT11 conectado al pin GPIO 4 (puedes cambiarlo).
 * Módulo nativo `avm_dht` disponible en el firmware de AtomVM.
 
-=== 📄 Código fuente en Elixir
+=== Código fuente en Elixir
 
 [source,elixir]
 ----
@@ -68,7 +68,7 @@ end
 DHTReader.start()
 ----
 
-=== 🔌 Conexiones del sensor DHT11 al ESP32
+=== Conexiones del sensor DHT11 al ESP32
 
 [cols="2,2", options="header"]
 |===
@@ -78,14 +78,16 @@ DHTReader.start()
 | GND          | GND
 |===
 
-=== ⚙️ Instrucciones
+=== Instrucciones
 
 . Compila el archivo con `elixirc dht_reader.ex`.
 . Sube el archivo `.beam` al ESP32 con las herramientas de AtomVM.
 . Asegúrate de incluir el módulo nativo `avm_dht` en tu firmware.
 . El ESP32 imprimirá por consola la temperatura y humedad cada 5 segundos.
 
-TIP: Puedes modificar el pin cambiando `@dht_pin 4` por el GPIO que estés usando.
+NOTE: Otros sistemas más complejos como sistemas de domotica como un control  de luces, persianas o alarmas.
+
+
 
 
 
