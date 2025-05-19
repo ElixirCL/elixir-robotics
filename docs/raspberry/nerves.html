@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Nerves :: Electrónica, Robótica e IOT con Elixir</title>
+    <title>Elixir Nerves :: Electrónica, Robótica e IOT con Elixir</title>
     <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/raspberry/nerves.html">
     <link rel="prev" href="raspberry.html">
     <link rel="next" href="project.html">
@@ -108,6 +108,15 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ada</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../ada/ada.html">Lenguaje de programación Ada</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
     <span class="nav-text">Arduino</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
@@ -138,7 +147,7 @@
     <a class="nav-link" href="raspberry.html">Raspberry Pi</a>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="nerves.html">Nerves</a>
+    <a class="nav-link" href="nerves.html">Elixir Nerves</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="project.html">Proyecto: Mesero Robot</a>
@@ -153,7 +162,7 @@
     <a class="nav-link" href="../communication/meshtastic.html">Meshtastic</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../communication/lorawan.html">LoRaWan</a>
+    <a class="nav-link" href="../communication/lorawan.html">lorawan.adoc</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../communication/sigfox.html">Sigfox</a>
@@ -200,7 +209,7 @@
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
     <li>Raspberry PI</li>
-    <li><a href="nerves.html">Nerves</a></li>
+    <li><a href="nerves.html">Elixir Nerves</a></li>
   </ul>
 </nav>
 <div class="edit-this-page"><a href="file:///antora/./modules/raspberry/pages/nerves.adoc">Editar esta página</a></div>
@@ -210,11 +219,164 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Nerves</h1>
+<h1 class="page">Elixir Nerves</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Es un framework para crear firmware de sistemas embebidos de con <strong>Elixir</strong> que
+corre sobre la maquina virtual de <strong>Erlang</strong>: "BEAM".</p>
+</div>
+<div class="paragraph">
+<p>Es ideal para trabajar  con dispositivos potentes como <strong>Raspberry Pi, BeagleBone  Black,  etc.</strong> y
+permite trabajar con sistemas robustos con interfaces conectadas a hardware real (GPIO, 12C, SPI, etc).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="caracteristicas"><a class="anchor" href="#caracteristicas"></a>Caracteristicas</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Se puede desarrollar tu firmware en Elixir</p>
+</li>
+<li>
+<p>Soporta actualizaciones</p>
+</li>
+<li>
+<p>Tiene integración con <strong>Phoenix</strong> para paneles  de control  web</p>
+</li>
+<li>
+<p>Usa herramientas modernas de <strong>Elixir</strong> como Mix, OTP y  GenServer.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="proyecto-ejemplo-sistema-de-riego-automático-inteligente"><a class="anchor" href="#proyecto-ejemplo-sistema-de-riego-automático-inteligente"></a>Proyecto ejemplo: Sistema de riego automático inteligente</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>ESP32 con AtomVM mide la humedad del suelo.</p>
+</li>
+<li>
+<p>Si la humedad es baja, activa una electroválvula.</p>
+</li>
+<li>
+<p>Se comunica vía WiFi con una Raspberry Pi con Nerves, que:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Muestra datos en una interfaz web.</p>
+</li>
+<li>
+<p>Permite configurar umbrales de riego.</p>
+</li>
+<li>
+<p>Guarda histórico en una base de  datos.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Este sistema permite combinar lo mejor de ambos mundos:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Microcontroladores pequeños y eficientes (ESP32 con AtomVM).</p>
+</li>
+<li>
+<p>Sistemas completos y robustos (Raspberry con Nerves).</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="para-atomvm-microcontroladores"><a class="anchor" href="#para-atomvm-microcontroladores"></a>Para AtomVM (microcontroladores):</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>ESP32</p>
+</li>
+<li>
+<p>ESP32-S2 o ESP32-C3</p>
+</li>
+<li>
+<p>STM32 (más potente, pero más complejo de programar).</p>
+</li>
+<li>
+<p>Placas con mínimo 512 KB de RAM y 2 MB de Flash.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="para-nerves"><a class="anchor" href="#para-nerves"></a>Para Nerves</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Raspberry Pi 3 o 4 (mejor soporte).</p>
+</li>
+<li>
+<p>BeagleBone Black.</p>
+</li>
+<li>
+<p>GRiSP (especial para Elixir, ejecuta directamente BEAM sin sistema operativo).</p>
+</li>
+<li>
+<p>Cualquier SBC (single board computer) compatible con Linux y GPIO.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ventajas-de-usar-elixir-atomvmnerves"><a class="anchor" href="#ventajas-de-usar-elixir-atomvmnerves"></a>Ventajas de usar Elixir + AtomVM/Nerves</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Código funcional, fácil de razonar y mantener.</p>
+</li>
+<li>
+<p>Alta concurrencia con procesos ligeros.</p>
+</li>
+<li>
+<p>Alta tolerancia a fallos (modelo de actores de Erlang).</p>
+</li>
+<li>
+<p>Ideal para IoT, domótica, robots,  monitoreo industrial y sistemas distribuidos.</p>
+</li>
+<li>
+<p>Usas el mismo lenguaje para la nube y el hardware.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="sect1">
 <h2 id="elixir-circuits"><a class="anchor" href="#elixir-circuits"></a>Elixir Circuits</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>Elixir Circuits es una colección de bibliotecas Elixir diseñadas para facilitar la interacción con
+hardware, facilitando el control de periféricos y la interacción con sensores.
+Proporciona herramientas para trabajar con diversas interfaces de hardware como GPIO, I2C, SPI y UART.
+Estas bibliotecas permiten a los desarrolladores escribir código Elixir que interactúa directamente con
+el hardware, lo que facilita la creación de sistemas incrustados, dispositivos IoT y más.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="soleil"><a class="anchor" href="#soleil"></a>Soleil</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Soleil, una placa de control de sueño y gestión de energía de código abierto para Raspberry Pi y Nerves.</p>
+</div>
 </div>
 </div>
 <nav class="pagination">

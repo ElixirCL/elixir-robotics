@@ -1,6 +1,4 @@
-# LoRaWAN y el Ecosistema del Internet de las Cosas
-
-## Introducción al Internet de las Cosas (IoT)
+== LoRaWAN
 
 El Internet de las Cosas (IoT) se refiere a la interconexión de dispositivos físicos cotidianos a través de Internet, permitiendo la recopilación y el intercambio de datos. Estos dispositivos, equipados con sensores y software, pueden ser desde electrodomésticos hasta dispositivos médicos o sistemas de ciudades inteligentes. Su objetivo es automatizar procesos y mejorar la eficiencia en diversas áreas.
 
@@ -8,7 +6,7 @@ En 1982, una máquina expendedora de Coca-Cola en la Universidad Carnegie Mellon
 
 Un ejemplo moderno serían las ampolletas inteligentes, que permiten encender o apagar luces y controlar electrodomésticos desde aplicaciones móviles o asistentes inteligentes.
 
-## Internet Industrial de las Cosas (IIoT)
+== Internet Industrial de las Cosas (IIoT)
 
 El Internet Industrial de las Cosas (IIoT) es una extensión del IoT enfocada en el ámbito industrial. Consiste en la integración de sensores, instrumentos y dispositivos autónomos conectados a través de Internet con aplicaciones industriales.
 
@@ -18,7 +16,7 @@ En 2010, el IIoT se perfila como una tendencia revolucionaria, impulsada por la 
 
 Los sistemas SCADA, por ejemplo, permiten monitorear y controlar procesos industriales en tiempo real, como plantas eléctricas o estaciones de tratamiento de aguas, haciendo uso del IoT.
 
-## Protocolos de Comunicación en IoT
+== Protocolos de Comunicación en IoT
 
 - **Bluetooth Low Energy (BLE):** Tecnología inalámbrica de corto alcance y bajo consumo energético, ideal para dispositivos portátiles y aplicaciones de salud. Permite transferencias de datos rápidas en distancias de hasta 10 metros.
 
@@ -28,20 +26,10 @@ Los sistemas SCADA, por ejemplo, permiten monitorear y controlar procesos indust
 
 - **CoAP:** Protocolo de la capa de aplicación basado en UDP. Está diseñado para dispositivos con recursos limitados y es eficiente en aplicaciones donde el bajo consumo energético es clave.
 
-## Impacto y Futuro del IoT y IIoT
+== Impacto y Futuro del IoT y IIoT
 
 El avance del IoT y el IIoT ha transformado profundamente la forma en que interactuamos con la tecnología. Mientras que el IoT mejora la calidad de vida mediante dispositivos inteligentes, el IIoT impulsa la eficiencia operativa en sectores industriales como la manufactura, energía, agricultura y logística.
 
 Protocolos como LoRaWAN, Bluetooth LE, MQTT y CoAP permiten adaptar las comunicaciones según las necesidades específicas, priorizando el bajo consumo energético, la cobertura o la velocidad de transmisión.
 
 En conjunto, estos avances no solo optimizan procesos, sino que abren paso a nuevos modelos de negocio basados en datos en tiempo real. Con una infraestructura adecuada, una estrategia de seguridad sólida y la selección correcta de tecnologías, IoT y IIoT se consolidan como ejes de la transformación digital del presente y futuro.
-
-## Referencias bibliográficas
-- Barrio Andrés, M. (2021). Internet de las cosas (IoT) (3.ª ed.). Editorial Reus. Recuperado de https://www.moisesbarrio.es/libro/internet-de-las-cosas-iot-3-edicion_9788429026092
-- Inria Chile. (2022). Libro blanco: Internet de las cosas (IoT). Recuperado de https://www.inria.cl/sites/default/files/2022-12/libro-blanco-iot-es.pdf
-- Pizarro Peláez, J. (2020). Internet de las cosas (IoT) con ESP. Manual práctico. Ediciones Paraninfo. Recuperado de https://www.paraninfo.es/catalogo/9788428344968/internet-de-las-cosas--iot--con-esp--manual-practico
-- AWS. (s.f.). ¿Qué es LoRaWAN?. https://docs.aws.amazon.com/es_es/iot-wireless/latest/developerguide/what-is-lorawan.html
-- XalDigital. (2023). Tecnologías y protocolos de comunicación de IoT. Recuperado de https://www.xaldigital.com/blog/tecnologias-y-protocolos-de-comunicacion-de-iot/
-
-
-

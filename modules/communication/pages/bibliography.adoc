@@ -1,0 +1,5 @@
+- Barrio Andrés, M. (2021). Internet de las cosas (IoT) (3.ª ed.). Editorial Reus. Recuperado de https://www.moisesbarrio.es/libro/internet-de-las-cosas-iot-3-edicion_9788429026092
+- Inria Chile. (2022). Libro blanco: Internet de las cosas (IoT). Recuperado de https://www.inria.cl/sites/default/files/2022-12/libro-blanco-iot-es.pdf
+- Pizarro Peláez, J. (2020). Internet de las cosas (IoT) con ESP. Manual práctico. Ediciones Paraninfo. Recuperado de https://www.paraninfo.es/catalogo/9788428344968/internet-de-las-cosas--iot--con-esp--manual-practico
+- AWS. (s.f.). ¿Qué es LoRaWAN?. https://docs.aws.amazon.com/es_es/iot-wireless/latest/developerguide/what-is-lorawan.html
+- XalDigital. (2023). Tecnologías y protocolos de comunicación de IoT. Recuperado de https://www.xaldigital.com/blog/tecnologias-y-protocolos-de-comunicacion-de-iot/

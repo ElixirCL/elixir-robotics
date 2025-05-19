@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lenguaje de programación Ada :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/ada/ada.html">
+    <link rel="prev" href="../pic16f877a/pic16f877a.html">
+    <link rel="next" href="../arduino/arduino.html">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../bibliography.html">Bibliografía</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC555</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../ne555/ic555.html">IC555</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">PIC16f877a</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../pic16f877a/pic16f877a.html">PIC16F877a</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ada</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="ada.html">Lenguaje de programación Ada</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Arduino</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../arduino/arduino.html">Arduino</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">ESP32</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/gladiators.html">Proyecto: Gladiadores Robots</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Raspberry PI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/nerves.html">Elixir Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/project.html">Proyecto: Mesero Robot</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/meshtastic.html">Meshtastic</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/lorawan.html">lorawan.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/sigfox.html">Sigfox</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/zigbee.html">Zigbee</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Ada</li>
+    <li><a href="ada.html">Lenguaje de programación Ada</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/ada/pages/ada.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Lenguaje de programación Ada</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="_images/logo.png" alt="Logo de Ada" width="400"></span></p>
+</div>
+<div class="paragraph">
+<p>El desarrollo del lenguaje de programación Ada comenzó en 1974, cuando el Ministerio de Defensa de los Estados Unidos llevó a cabo un estudio para encontrar una solución al problema de la diversidad de lenguajes de programación utilizados en sus sistemas. El objetivo era crear un único lenguaje estándar que permitiera mejorar la portabilidad, mantenibilidad y fiabilidad del software militar. El lenguaje fue oficialmente diseñado bajo encargo del Departamento de Defensa de los EE.UU. durante los años 1970.</p>
+</div>
+<div class="paragraph">
+<p>Ada fue diseñado por Jean Ichbiah y su equipo de CII Honeywell Bull como parte de un concurso organizado por el Departamento de Defensa de los EE.UU.</p>
+</div>
+<div class="paragraph">
+<p>El nombre "Ada" se eligió en honor a Augusta Ada Byron, conocida como Ada Lovelace, considerada la primera programadora de la historia. El lenguaje fue anunciado y patrocinado por el Departamento de Defensa de los EE.UU. en reconocimiento a su contribución pionera en computación.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/ada_lovelace.jpg" alt="Ada Lovelace" width="400"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="características-principales-del-lenguaje"><a class="anchor" href="#características-principales-del-lenguaje"></a>Características principales del lenguaje</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La sintaxis de Ada es clara y muy legible, similar a Pascal, e incluye palabras clave en inglés que facilitan la comprensión del código.</p>
+</div>
+<div class="paragraph">
+<p>Ada es un lenguaje fuertemente tipado y estáticamente tipado, lo que significa que cada variable debe tener un tipo definido en tiempo de compilación, y no se permiten conversiones implícitas entre tipos diferentes, evitando errores comunes en tiempo de ejecución.</p>
+</div>
+<div class="paragraph">
+<p>Fue diseñado pensando en la seguridad y confiabilidad, especialmente para aplicaciones críticas donde los fallos pueden tener consecuencias graves. Incluye verificaciones en tiempo de ejecución, manejo explícito de excepciones y detección temprana de errores gracias a su riguroso sistema de tipos.</p>
+</div>
+<div class="paragraph">
+<p>Ada tiene soporte nativo para programación concurrente, con mecanismos como tareas, protecciones y regiones críticas. También soporta programación orientada a objetos desde Ada 95, permitiendo encapsulamiento, herencia y polimorfismo.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="aplicaciones-y-usos-actuales"><a class="anchor" href="#aplicaciones-y-usos-actuales"></a>Aplicaciones y usos actuales</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="_images/ada_military.jpg" alt="Ada Software Reuse" width="400"></span></p>
+</div>
+<div class="paragraph">
+<p>Ada se utiliza principalmente en industrias donde la seguridad y la fiabilidad son críticas, como la aeroespacial, defensa, transporte ferroviario y sistemas incrustados.</p>
+</div>
+<div class="paragraph">
+<p>Algunos casos más destacados incluyen:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sistemas de control de vuelo de aviones militares y civiles.</p>
+</li>
+<li>
+<p>Software para satélites y misiones espaciales.</p>
+</li>
+<li>
+<p>Sistemas ferroviarios de alta seguridad como los utilizados en trenes de alta velocidad en Europa.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Aunque no es común en proyectos de inteligencia artificial modernos, Ada puede ser usado en componentes críticos dentro de sistemas que integran inteligencia artificial, especialmente cuando se requiere alta fiabilidad o seguridad.</p>
+</div>
+<div class="paragraph">
+<p>En comparación con lenguajes como Python, que domina el campo de la IA por su simplicidad y bibliotecas disponibles, Ada ofrece mayor seguridad y robustez, pero carece de un ecosistema amplio para machine learning o deep learning.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ventajas-y-desventajas"><a class="anchor" href="#ventajas-y-desventajas"></a>Ventajas y desventajas</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Las ventajas de Ada frente a otros lenguajes incluyen:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Verificación de tipos en tiempo de compilación.</p>
+</li>
+<li>
+<p>Soporte integrado para concurrencia.</p>
+</li>
+<li>
+<p>Alta fiabilidad y seguridad.</p>
+</li>
+<li>
+<p>Buen rendimiento en entornos incrustados.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Sus desventajas son:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Curva de aprendizaje más pronunciada.</p>
+</li>
+<li>
+<p>Menos herramientas y comunidades activas comparadas con lenguajes como Python o Java.</p>
+</li>
+<li>
+<p>Poco adoptado fuera de sectores especializados.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ejemplos-básicos-de-código"><a class="anchor" href="#ejemplos-básicos-de-código"></a>Ejemplos básicos de código</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Un ejemplo básico de programa en Ada es el siguiente:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-ada hljs" data-lang="ada">with Ada.Text_IO; use Ada.Text_IO;
+
+procedure Hola_Mundo is
+begin
+   Put_Line("¡Hola Mundo!");
+end Hola_Mundo;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Un programa en Ada consta de una o más unidades de compilación, como procedimientos, funciones o paquetes. La estructura básica incluye una sección de declaración (<code>is</code>) y una sección de ejecución (<code>begin &#8230;&#8203; end</code>).</p>
+</div>
+<div class="paragraph">
+<p>Ejemplo de declaración de tipos, bucles y procedimientos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-ada hljs" data-lang="ada">type Entero is range 1..100;
+
+procedure Ejemplo is
+   I : Entero;
+begin
+   for I in 1..10 loop
+      Put_Line(Integer'Image(I));
+   end loop;
+end Ejemplo;</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ejemplo-avanzado-sistema-de-control-de-vuelo-militar"><a class="anchor" href="#ejemplo-avanzado-sistema-de-control-de-vuelo-militar"></a>Ejemplo avanzado: Sistema de Control de Vuelo Militar</h3>
+<div class="paragraph">
+<p>Este ejemplo simula un sistema de control de vuelo básico, como los usados en aviones militares. Muestra las capacidades de Ada para manejar concurrencia, seguridad de tipos y temporización precisa, características esenciales en aplicaciones críticas.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-ada hljs" data-lang="ada">with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Real_Time; use Ada.Real_Time;
+
+procedure Sistema_Control_Vuelo is
+
+   -- Tipos definidos para mayor seguridad
+   type Altitud is range 0 .. 50_000 with
+      Default_Value =&gt; 0;
+   type Velocidad is range 0 .. 1200 with
+      Default_Value =&gt; 0;
+
+   -- Variables globales simuladas por sensores
+   Ultima_Altitud : Altitud := 0;
+   Ultima_Velocidad : Velocidad := 0;
+
+   -- Tareas concurrentes
+   task Sistema_Sensores;
+   task Sistema_Alarmas;
+   task Sistema_Navegacion;
+
+   -- Implementación de tareas
+
+   task body Sistema_Sensores is
+      Periodo : constant Time_Span := Milliseconds(1000);
+      Next_Release : Time := Clock;
+   begin
+      loop
+         -- Simulamos lecturas aleatorias de sensores
+         Ultima_Altitud := Altitud (Unsigned_32 (Clock) mod 40_000);
+         Ultima_Velocidad := Velocidad (Unsigned_32 (Clock) mod 1000);
+
+         Put_Line ("Sensor actualizado - Altitud: " &amp;
+                    Altitud'Image (Ultima_Altitud) &amp;
+                    " ft | Velocidad: " &amp;
+                    Velocidad'Image (Ultima_Velocidad) &amp; " kt");
+
+         delay until Next_Release + Periodo;
+      end loop;
+   end Sistema_Sensores;
+
+   task body Sistema_Alarmas is
+      Periodo : constant Time_Span := Milliseconds(1500);
+      Next_Release : Time := Clock;
+   begin
+      loop
+         if Ultima_Altitud &lt; 100 then
+            Put_Line ("⚠️ ALARMA: Altitud crítica!");
+         end if;
+
+         if Ultima_Velocidad &gt; 950 then
+            Put_Line ("⚠️ ALARMA: Velocidad excesiva!");
+         end if;
+
+         delay until Next_Release + Periodo;
+      end loop;
+   end Sistema_Alarmas;
+
+   task body Sistema_Navegacion is
+      Periodo : constant Time_Span := Milliseconds(2000);
+      Next_Release : Time := Clock;
+   begin
+      loop
+         Put_Line ("🧭 Navegación activa - Altitud objetivo: 30000 ft");
+         delay until Next_Release + Periodo;
+      end loop;
+   end Sistema_Navegacion;
+
+begin
+   Put_Line ("✈️ Sistema de Control de Vuelo Iniciado...");
+   delay 10.0; -- Simular ejecución durante 10 segundos
+   Put_Line ("🛑 Apagando sistema.");
+end Sistema_Control_Vuelo;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="_images/f16.jpg" alt="F-16 Fighting Falcon" width="400"></span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="versiones-y-evolución"><a class="anchor" href="#versiones-y-evolución"></a>Versiones y evolución</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="_images/evolution.png" alt="Ada logo evolution" width="400"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Ada 83</strong>: Primera versión estándar oficial.</p>
+</li>
+<li>
+<p><strong>Ada 95</strong>: Añadió soporte para programación orientada a objetos y mejoras en concurrencia.</p>
+</li>
+<li>
+<p><strong>Ada 2005</strong>: Ampliaciones menores y soporte para interfaces gráficas.</p>
+</li>
+<li>
+<p><strong>Ada 2012</strong>: Añadido contratos (precondiciones, postcondiciones) para verificar comportamiento.</p>
+</li>
+<li>
+<p><strong>Ada 2022</strong>: Mejoras en la gestión de memoria, concurrencia y seguridad.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="entornos-de-desarrollo-ides-y-compiladores"><a class="anchor" href="#entornos-de-desarrollo-ides-y-compiladores"></a>Entornos de desarrollo (IDEs) y compiladores</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="_images/gnatstudio.png" alt="GNAT Studio IDE" width="400"></span></p>
+</div>
+<div class="paragraph">
+<p>Las herramientas más utilizadas para programar en Ada son:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>GNAT</strong>: Compilador GNU basado en GCC, ampliamente utilizado.</p>
+</li>
+<li>
+<p><strong>GPS (GNAT Programming Studio)</strong>: IDE para desarrollo en Ada.</p>
+</li>
+<li>
+<p>Otras herramientas incluyen análisis estático y depuración específicas para Ada.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="estado-actual-y-futuro"><a class="anchor" href="#estado-actual-y-futuro"></a>Estado actual y futuro</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ada sigue siendo ampliamente utilizado en industrias críticas y es mantenido por la Agencia de Defensa de Sistemas de Software (DSSA) y la comunidad GNAT/GCC.</p>
+</div>
+<div class="paragraph">
+<p>Algunas universidades ofrecen cursos sobre Ada, especialmente en programas enfocados en ingeniería de software seguro o sistemas incrustados.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="curiosidades"><a class="anchor" href="#curiosidades"></a>Curiosidades</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ada ha sido ampliamente utilizado en proyectos militares de alta seguridad, como en sistemas de misiles, aviones de combate y submarinos nucleares, aunque muchos detalles siguen clasificados.</p>
+</div>
+<div class="paragraph">
+<p>El lenguaje fue elegido en 1979 después de un proceso competitivo que evaluó múltiples propuestas. Su diseño fue inspirado en gran parte por el lenguaje Pascal, pero con énfasis en modularidad y seguridad.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusión"><a class="anchor" href="#conclusión"></a>Conclusión</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ada es un lenguaje de programación diseñado específicamente para aplicaciones donde la fiabilidad, seguridad y mantenibilidad son críticas. Su uso extendido en sectores como la defensa, aviación, ferrocarriles de alta velocidad y sistemas incrustados no es casualidad, sino el resultado de su arquitectura orientada a evitar errores comunes durante la ejecución.</p>
+</div>
+<div class="paragraph">
+<p>Gracias a su tipado fuerte y estático, manejo explícito de excepciones y soporte nativo para concurrencia, Ada se convierte en una herramienta poderosa para desarrollar software que opere bajo condiciones extremas o con altos requisitos de seguridad. A diferencia de lenguajes más modernos enfocados en rapidez de desarrollo, Ada prioriza la previsibilidad del comportamiento del sistema.</p>
+</div>
+<div class="paragraph">
+<p>Aunque su adopción en el ámbito comercial ha sido limitada comparado con lenguajes como Python o Java, Ada sigue siendo clave en proyectos donde los fallos pueden tener consecuencias graves. Además, su evolución constante —desde Ada 83 hasta Ada 2022— muestra su capacidad para adaptarse a nuevas necesidades sin perder su esencia.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../pic16f877a/pic16f877a.html">PIC16F877a</a></span>
+  <span class="next"><a href="../arduino/arduino.html">Arduino</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

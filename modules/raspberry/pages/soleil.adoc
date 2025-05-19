@@ -1,0 +1,3 @@
+== Soleil
+
+Soleil, una placa de control de sueño y gestión de energía de código abierto para Raspberry Pi y Nerves.

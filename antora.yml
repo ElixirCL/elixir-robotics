@@ -6,6 +6,7 @@ nav:
   - modules/fundamentals/nav.adoc
   - modules/ne555/nav.adoc
   - modules/pic16f877a/nav.adoc
+  - modules/ada/nav.adoc
   - modules/arduino/nav.adoc
   - modules/esp32/nav.adoc
   - modules/raspberry/nav.adoc

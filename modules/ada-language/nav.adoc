@@ -1,4 +1,0 @@
-= Ada Language Module Navigation
-
-* link:pages/ada.adoc[Ada Language]
-* link:pages/bibliography.adoc[Bibliografía]
