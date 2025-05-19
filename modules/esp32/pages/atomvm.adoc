@@ -127,7 +127,7 @@ Podrías aplicar estas tecnologías en proyectos como:
 
 AtomVM y Elixir Nerves permiten unir el mundo del hardware embebido con la programación funcional moderna. Usarlos en conjunto puede llevar a soluciones más robustas, escalables y fáciles de mantener. Además, estas tecnologías permiten desarrollar soluciones completas de IoT, automatización y monitoreo sin depender de lenguajes más difíciles como C o C++, y aprovechando todo el ecosistema de Elixir.
 
-image: modules/esp32/images/
+image::modules/esp32/images/AtomVM-logo.png[]
 
 == Bibliografía
 - Nerves Framework: Getting Started guide. (2025, February 4). https://daily.dev/blog/nerves-framework-getting-started-guide?utm_source=chatgpt.com
