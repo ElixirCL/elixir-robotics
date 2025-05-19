@@ -28,7 +28,7 @@ Es ideal para trabajar  con dispositivos potentes como *Raspberry Pi, BeagleBone
 * Tiene integración con *Phoenix* para paneles  de control  web
 * Usa herramientas modernas de *Elixir* como Mix, OTP y  GenServer.
 
-== 🌡️ Ejemplo práctico: Medición ambiental con AtomVM y DHT11
+== Ejemplo práctico: Medición ambiental con AtomVM y DHT11
 
 Este ejemplo usa un sensor DHT11 conectado a un ESP32, leyendo temperatura y humedad usando **Elixir sobre AtomVM**.
 
@@ -85,7 +85,7 @@ DHTReader.start()
 . Asegúrate de incluir el módulo nativo `avm_dht` en tu firmware.
 . El ESP32 imprimirá por consola la temperatura y humedad cada 5 segundos.
 
-NOTE: Estp sumado Elixir Nerves se pueden hacer otros sistemas más complejos como sistemas de domotica, sistemas industriales, estaciones meteorológicas con panel, etc.
+NOTE: Estp sumado Elixir Nerves se pueden  hacer otros sistemas más complejos como sistemas de domotica, sistemas industriales, estaciones meteorológicas con panel, etc.
 
 == ¿Cómo se puede usar en un proyecto?
 Podrías aplicar estas tecnologías en proyectos como:
@@ -95,25 +95,19 @@ Podrías aplicar estas tecnologías en proyectos como:
 *ESP32 con AtomVM mide la humedad del suelo.
 *Si la humedad es baja, activa una electroválvula.
 *Se comunica vía WiFi con una Raspberry Pi con Nerves, que:
-
-Muestra datos en una interfaz web.
-
-Permite configurar umbrales de riego.
-
-Guarda histórico en una base de datos.
-
-Este sistema permite combinar lo mejor de ambos mundos:
-
-Microcontroladores pequeños y eficientes (ESP32 con AtomVM).
-
-Sistemas completos y robustos (Raspberry con Nerves).
+- Muestra datos en una interfaz web.
+- Permite configurar umbrales de riego.
+- Guarda histórico en una base de  datos.
+* Este sistema permite combinar lo mejor de ambos mundos:
+- Microcontroladores pequeños y eficientes (ESP32 con AtomVM).
+- Sistemas completos y robustos (Raspberry con Nerves).
 
 == ¿Qué hardware se recomienda?
 === Para AtomVM (microcontroladores):
 - ESP32
 - ESP32-S2 o ESP32-C3
--  STM32 (más potente, pero más complejo de programar).
--  Placas con mínimo 512 KB de RAM y 2 MB de Flash.
+- STM32 (más potente, pero más complejo de programar).
+- Placas con mínimo 512 KB de RAM y 2 MB de Flash.
 
 === Para Nerves:
 -  Raspberry Pi 3 o 4 (mejor soporte).
@@ -126,11 +120,16 @@ Sistemas completos y robustos (Raspberry con Nerves).
 * Código funcional, fácil de razonar y mantener.
 * Alta concurrencia con procesos ligeros.
 * Alta tolerancia a fallos (modelo de actores de Erlang).
-* Ideal para IoT, domótica, robots, monitoreo industrial y sistemas distribuidos.
+* Ideal para IoT, domótica, robots,  monitoreo industrial y sistemas distribuidos.
 * Usas el mismo lenguaje para la nube y el hardware.
 
+== Conclusión
 
+AtomVM y Elixir Nerves permiten unir el mundo del hardware embebido con la programación funcional moderna. Usarlos en conjunto puede llevar a soluciones más robustas, escalables y fáciles de mantener. Además, estas tecnologías permiten desarrollar soluciones completas de IoT, automatización y monitoreo sin depender de lenguajes más difíciles como C o C++, y aprovechando todo el ecosistema de Elixir.
 
+== Bibliografía
+Nerves Framework: Getting Started guide. (2025, February 4). https://daily.dev/blog/nerves-framework-getting-started-guide?utm_source=chatgpt.com
+Sifoni, L. (2023, November 16). Lucas Sifoni - Hello AtomVM — Elixir & Erlang on ESP32. Lucas Sifoni. https://lucassifoni.info/blog/hello-atomvm/?utm_source=chatgpt.com
 
 
 
