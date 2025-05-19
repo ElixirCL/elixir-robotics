@@ -1,0 +1,9 @@
+= Bibliografía
+
+* AdaCore. (2020, 5 de agosto). _About Ada_. https://www.adacore.com/about-ada 
+
+* Colaboradores de Wikipedia. (2024, 23 de agosto). _Ada (lenguaje de programación)_. Wikipedia, la Enciclopedia Libre. https://es.wikipedia.org/wiki/Ada_ (lenguaje_de_programaci%C3%B3n)
+
+* Lenguaje de programación Ada. (2017, 6 de marzo). _EcuRed_. https://www.ecured.cu/index.php?title=Lenguaje_de_programaci%C3%B3n_Ada&oldid=2824858 
+
+* Mayuti. (2024, 8 de diciembre). _Ada Lovelace, la primera programadora de la historia - La BioZona Blog_. La BioZona. https://www.labiozona.com/blog/ada-lovelace/ 
