@@ -127,9 +127,12 @@ Podrías aplicar estas tecnologías en proyectos como:
 
 AtomVM y Elixir Nerves permiten unir el mundo del hardware embebido con la programación funcional moderna. Usarlos en conjunto puede llevar a soluciones más robustas, escalables y fáciles de mantener. Además, estas tecnologías permiten desarrollar soluciones completas de IoT, automatización y monitoreo sin depender de lenguajes más difíciles como C o C++, y aprovechando todo el ecosistema de Elixir.
 
+
 == Bibliografía
-Nerves Framework: Getting Started guide. (2025, February 4). https://daily.dev/blog/nerves-framework-getting-started-guide?utm_source=chatgpt.com
-Sifoni, L. (2023, November 16). Lucas Sifoni - Hello AtomVM — Elixir & Erlang on ESP32. Lucas Sifoni. https://lucassifoni.info/blog/hello-atomvm/?utm_source=chatgpt.com
-
-
-
+- Nerves Framework: Getting Started guide. (2025, February 4). https://daily.dev/blog/nerves-framework-getting-started-guide?utm_source=chatgpt.com
+- Sifoni, L. (2023, November 16). Lucas Sifoni - Hello AtomVM — Elixir & Erlang on ESP32. Lucas Sifoni. https://lucassifoni.info/blog/hello-atomvm/?utm_source=chatgpt.com
+- Universidad EIA -canal institucional-. (2023, September 27). Master Class "ESP32 en la Nube: Conectando microcontroladores a Amazon Web Service [Video]. YouTube. https://www.youtube.com/watch?v=YLP02lzla5U
+- Getting Started Guide — AtomVM 0.7.0-dev+git.65f16e87 documentation. (n.d.). https://www.atomvm.net/doc/master/getting-started-guide.html?utm_source=chatgpt.com
+- Nerves · Elixir school. (n.d.). https://elixirschool.com/es/lessons/misc/nerves?utm_source=chatgpt.com
+- Atomvm. (n.d.). GitHub - atomvm/AtomVM: Tiny Erlang VM. GitHub. https://github.com/atomvm/AtomVM?utm_source=chatgpt.com
+- atomvm.net. (n.d.). AtomVM. AtomVM. https://www.atomvm.net/
