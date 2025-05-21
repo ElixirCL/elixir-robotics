@@ -218,3 +218,20 @@ Puede ser adquirido en https://www.tiendalego.cl/collections/creator-3in1/produc
 image:lego.webp[]
 
 El robot será controlado por una ESP32 que recibirá comandos por USB desde la Raspberry PI.
+
+== Componentes
+
+
+|====
+| Componente | Descripción 
+| 1 Raspberry PI  | Una versión compatible con Nerves y que permita conexión USB (UART) a la ESP32
+| 2 ESP32 Devkit | Un ESP32 para controlar el carro y un ESP32 para controlar el robot
+| 4 Motor DC | Cuatro motores DC de alto torque para movilidad del carro hasta 25 Kg.
+| L298N | Permite controlar al los motores DC.
+| Android Smartphone | Un Smartphone que actue como Hotspot y permita usar Jitsi Meet
+| Baterías | La batería necesaria para alimentar tanto a la Raspberry, ESP32 y Smartphone
+| https://www.noip.com/es-MX[NoIP] | Servicio de DNS dinámico para acceder al servidor de la Raspberry PI 
+|====
+
+
+image:mesero.png[]
