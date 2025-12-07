@@ -138,7 +138,7 @@ Es importante recalcar que el amperaje mínimo necesario es 3 amperes. Menor a e
 para cargar un smartphone, más no para alimentar una _Raspberry PI_.
 
 |====
-|Opción| Imagen | Descripción
+|Opción| Imagen | Descripción
 
 |PowerBank de 30K mAh | image:powerbank.webp[] a| Batería portátil USB capacidad de 30000 mAh.
 
@@ -219,9 +219,7 @@ image:lego.webp[]
 
 El robot será controlado por una ESP32 que recibirá comandos por USB desde la Raspberry PI.
 
-== Componentes
-
-
+.Lista de posibles componentes
 |====
 | Componente | Descripción 
 | 1 Raspberry PI  | Una versión compatible con Nerves y que permita conexión USB (UART) a la ESP32
@@ -233,5 +231,165 @@ El robot será controlado por una ESP32 que recibirá comandos por USB desde la 
 | https://www.noip.com/es-MX[NoIP] | Servicio de DNS dinámico para acceder al servidor de la Raspberry PI 
 |====
 
-
 image:mesero.png[]
+
+== Búho Animatrónico 
+
+Este proyecto grupal tiene como propósito la programación de una figura animatrónica con actuadores (servos), que es 
+controlada a través de un microcontrolador ESP32 y un programa en C++. La figura elegida fue un búho, 
+cuyas alas, cabeza y patas tienen movimiento mediante servomotores.
+
+.Lego Búho (#31125)
+image::lego-buho.webp[https://www.tiendalego.cl/products/criaturas-fantasticas-del-bosque-31125]
+
+.Tabla de Componentes
+|===
+|Componente| Cantidad | Descripción
+
+|ESP32-WROOM | 1 | Microcontrolador principal
+|Servomotor SG90 | 4 | Uno por ala, uno en la cabeza, uno en las patas
+|Fuente de alimentación | 1 | USB 5V (desde computadora o batería externa)
+|Cables Dupont | Varios | Para Conexiones 
+|Bloques tipo LEGO | Varios | Para ensamblar la estructura del búho
+|Protoboard / PCB | 1 | Para conexiones eléctricas (opcional)
+|===
+
+*Acotaciones*
+
+- Se recomienda usar piezas tipo LEGO para facilitar el ajuste de los servos y permitir cambios de diseño de manera sencilla.
+- Se cuidó el peso en el diseño para no sobrecargar los servos, especialmente en las alas.
+- La alimentación por USB 5V es suficiente para los servos, pero se debe evitar hacer movimientos simultáneos prolongados para no sobrecargar la corriente disponible.
+- La estructura fue validada para estabilidad durante los movimientos.
+- El código debe incorporar retardos adecuados y límites de movimiento para evitar daños mecánicos.
+
+.Código fuente del Búho
+[source, cpp]
+----
+#include <ESP32Servo.h>
+
+int pos = 0; 
+Servo izquierdo; 
+Servo derecho; 
+Servo cabeza; 
+Servo poto;
+
+int led = 16;
+bool inicializar = true;
+
+void setup() {
+  Serial.begin(115200);
+  // Pines válidos para ESP32, cambia si usas otros 
+  izquierdo.attach(13, 500, 2500); 
+  derecho.attach(14, 500, 2500);
+  cabeza.attach(15, 500, 2500);
+  poto.attach(18, 500, 2500);
+  pinMode(led, OUTPUT);
+}
+
+void startPosition() { 
+  digitalWrite(led, HIGH); 
+  derecho.write(180); 
+  izquierdo.write(0); 
+  cabeza.write(180); 
+  poto.write(0); 
+  delay(500); 
+  digitalWrite(led, LOW);
+}
+
+void saludar(int velocidad) { 
+  digitalWrite(led, HIGH);
+  for (pos = 90; pos <= 180; pos += 1) {
+    izquierdo.write(pos); 
+    derecho.write(180 - pos); 
+    poto.write(90-pos); 
+    delay(velocidad);
+  }
+  
+  for (pos = 180; pos >= 90; pos -= 1) { 
+    izquierdo.write(pos); 
+    derecho.write(180 - pos); 
+    poto.write(pos-40); 
+    delay(velocidad);
+  }
+  
+  digitalWrite(led, LOW);
+}
+
+void feliz(int velocidad) {
+  digitalWrite(led, HIGH);
+  
+  for (pos = 90; pos <= 180; pos += 1) {
+    izquierdo.write(pos); 
+    derecho.write(180 - pos); 
+    cabeza.write(pos); 
+    delay(velocidad);
+  }
+  
+  for (pos = 180; pos >= 90; pos -= 1) { 
+    izquierdo.write(pos); 
+    derecho.write(180 - pos); 
+    delay(velocidad);
+  }
+  
+  digitalWrite(led, LOW);
+}
+
+void enojar(int velocidad) { 
+  digitalWrite(led, HIGH);
+  for (pos =120; pos <= 180; pos += 1) {
+    cabeza.write(pos);
+    delay(velocidad);
+  }
+  digitalWrite(led, LOW);
+}
+
+// Lectura de los comandos por serial USB
+void leerComandoSerial() {
+  if (Serial.available() <= 0) { 
+    return;
+  }
+  
+  String comando = Serial.readStringUntil('\n');
+  
+  // Elimina espacios y saltos de línea
+  comando.trim(); 
+  
+  if (comando == "saludar") { 
+    cabeza.write(160); 
+    delay(15);
+    saludar(10); 
+    saludar(10); 
+    saludar(10);
+    startPosition();
+  } else if (comando == "enojar") { 
+    startPosition();
+    enojar(10);
+    enojar(10);
+    enojar(10);
+    startPosition();
+  } else if (comando == "resetear") {
+    startPosition();
+  } else if (comando == "feliz") {
+    feliz(5); 
+    feliz(5); 
+    feliz(5); 
+    startPosition();
+  } else {
+    Serial.println("Comando no reconocido.");
+  } 
+}
+
+void loop() { 
+  leerComandoSerial();
+}
+
+----
+
+.Esquemático del Animatrónico
+image::animatronico-esquema.png[]
+
+.Guía de Conexiones
+image::animatronico-conexion.png[]
+
+.Video de Ejemplo de Funcionamiento
+video::animatronico.mp4[]

@@ -1,0 +1,76 @@
+= Proyecto: Videojuego Arcade
+
+Este proyecto tiene por objetivo la creación de un arcade clásico
+de los años 70 y principios de los 80 donde se utilizaban
+displays, pontenciómetros e interrupters en el gabinete para complementar el videojuego. 
+
+En específico se utilizará el juego Speed Race (Taito, 1974) o Monaco GP (Sega, 1979)
+como principal inspiración.
+
+.Speed Race
+++++
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/5jc9_xrD2_M?si=FiIRvA4kTtonmArJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
+
+.Monaco GP
+++++
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/-Sh7S8Ub5AQ?si=UE4aqX_wABc-Mp24" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
+
+.Gameplay Monaco GP
+++++
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/n7Vl6g0RiHI?si=iHBHP6lmPClUBPbZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
+
+== Proyecto
+
+El proyecto consiste en usar los componentes de hardware cual estarán conectados 
+via GPIO o Conexión Serial (ESP32) a una Raspberry PI o Computador con un videojuego creado en PICO8 (https://pico-8.fandom.com/wiki/GPIO) o TIC80 (https://tic80.com/play).
+Se debe crear o seleccionar un juego y habilitar controlarlo con los sensores. Además de mostrar información 
+del juego en los displays segmentados.
+
+.Components de Arcade Posibles
+|====
+|Componente | Cantidad | Descripción
+
+|Potenciometro| 1 | Simula un manubrio de carreras. https://afel.cl/products/potenciometro-500k-ohm
+|Display Segmentado de 4 dígitos| 2 | Muestra el High Score y el Score actual. https://afel.cl/products/display-7-segmentos-4-digitos
+|Display Segmantado de 2 dígitos| 1 | Muestra el tiempo de juego actual. https://afel.cl/products/display-7-segmentos-2-digitos
+|Interruptor MTS-102 3 pines | 1 | Simula una palanca de cambios. https://afel.cl/products/interruptor-mts-102-3-pines
+|Placa de 4 botones| 1 | Simula los pedales de aceleración y fichas. https://afel.cl/products/placa-de-4-botones-independientes-micro-switch
+|====
+
+- Documentación de Pico-8: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#GPIO
+- Serial de Pico-8: https://pico-8.fandom.com/wiki/Serial y http://pico8wiki.com/index.php?title=Serial
+- WiringPI: https://github.com/WiringPi/WiringPi
+- PigPio (WiringPI Alternativa): https://github.com/joan2937/pigpio
+- Keybd Event (Activa teclas desde código en Go): https://github.com/micmonay/keybd_event
+
+== TIC-80
+
+TIC-80 si bien tiene mayor flexibilidad de que PICO-8 al ser de código libre, 
+no tiene funcionalidades para leer o escribir datos en serial o GPIO. Por lo que 
+la opción es lo siguiente:
+
+. Se crea un projecto en ESP32 que lea todos los sensores
+. Se comunica via serial a un demonio creado en un lenguaje de programación como Elixir, Go o Python
+. Este demonio gatilla eventos de teclado para simular presión de botones dentro de TIC-80.
+. TIC-80 escribe en memoria ciertos datos como el Score actual.
+. El demonio lee el archivo del juego y parsea la memoria para mostrar los datos en el display segmentado.
+
+- https://github.com/nesbox/TIC-80/wiki/RAM#persistent-memory
+- https://github.com/nesbox/TIC-80/wiki/poke
+
+== PICO-8
+
+PICO-8 tiene acceso a GPIO (Aunque solo para ciertas versiones de Raspberry PI) y lectura y escritura serial.
+Aunque la lectura serial está limitada a GPIO, la escritura puede ser redireccionada a un archivo.txt.
+Por lo que se puede seguir con el mismo flujo de TIC-80 solo cambiando el archivo de destino y su formato.
+
+. Se crea un projecto en ESP32 que lea todos los sensores
+. Se comunica via serial a un demonio creado en un lenguaje de programación como Elixir, Go o Python
+. Este demonio gatilla eventos de teclado para simular presión de botones dentro de PICO-8.
+. PICO-8 escribe en un archivo de texto serial el Score actual.
+. El demonio lee el archivo y lo parsea para mostrar los datos en el display segmentado.
+
+Ejemplo de Juego: https://www.lexaloffle.com/bbs/?pid=131499#p

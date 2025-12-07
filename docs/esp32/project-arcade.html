@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>AtomVM :: Electrónica, Robótica e IOT con Elixir</title>
-    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/esp32/atomvm.html">
-    <link rel="prev" href="esp32.html">
-    <link rel="next" href="project-gladiators.html">
+    <title>Proyecto: Videojuego Arcade :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/esp32/project-arcade.html">
+    <link rel="prev" href="project-gladiators.html">
+    <link rel="next" href="../raspberry/raspberry.html">
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -131,13 +131,13 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="esp32.html">ESP32</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="atomvm.html">AtomVM</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="project-gladiators.html">Proyecto: Gladiadores Robots</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="project-arcade.html">Proyecto: Videojuego Arcade</a>
   </li>
 </ul>
@@ -212,190 +212,179 @@
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
     <li>ESP32</li>
-    <li><a href="atomvm.html">AtomVM</a></li>
+    <li><a href="project-arcade.html">Proyecto: Videojuego Arcade</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="file:///antora/./modules/esp32/pages/atomvm.adoc">Editar esta página</a></div>
+<div class="edit-this-page"><a href="file:///antora/./modules/esp32/pages/project-arcade.adoc">Editar esta página</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contenidos" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">AtomVM</h1>
+<h1 class="page">Proyecto: Videojuego Arcade</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>AtomVM es una máquina virtual ligera que permite ejecutar bytecode de Erlang, Elixir y LFE
-(Lisp Flavored Erlang) en dispositivos incrustados con pocos recursos (como microcontroladores).
-Su objetivo es hacer posible usar lenguajes del ecosistema BEAM en hardware donde la máquina virtual de
-Erlang tradicional no puede correr por ser demasiado pesada.</p>
+<p>Este proyecto tiene por objetivo la creación de un arcade clásico
+de los años 70 y principios de los 80 donde se utilizaban
+displays, pontenciómetros e interrupters en el gabinete para complementar el videojuego.</p>
 </div>
+<div class="paragraph">
+<p>En específico se utilizará el juego Speed Race (Taito, 1974) o Monaco GP (Sega, 1979)
+como principal inspiración.</p>
+</div>
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/5jc9_xrD2_M?si=FiIRvA4kTtonmArJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/-Sh7S8Ub5AQ?si=UE4aqX_wABc-Mp24" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/n7Vl6g0RiHI?si=iHBHP6lmPClUBPbZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 </div>
 <div class="sect1">
-<h2 id="características-principales"><a class="anchor" href="#características-principales"></a>Características principales</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Permite usar lenguajes funcionales como Elixir en entornos de muy bajo nivel.</p>
-</li>
-<li>
-<p>Consume muy poca memoria (menos de 500 KB en muchos casos).</p>
-</li>
-<li>
-<p>Soporta concurrencia ligera y estructuras de datos funcionales.</p>
-</li>
-<li>
-<p>Ideal para el desarrollo de sistemas incrustados inteligentes y compactos</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="historia"><a class="anchor" href="#historia"></a>Historia</h2>
+<h2 id="proyecto"><a class="anchor" href="#proyecto"></a>Proyecto</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>AtomVM</strong> comenzó su desarrollo en el año 2018 por <strong>Pascal Gigler</strong> con el objetivo de llevar Elixir y Erlang a un hardware más pequeño.
-La comunidad fue creciendo, sumando desarrolladores que aportaron soporte para nuevos dispositivos y bibliotecas,
-llegando a poder realizarse proyectos industriales de IoT que necesitaban de un dispositivo con tolerancia a fallos,  y
-concurrencia, las cuales tenia  el dispositivo.</p>
+<p>El proyecto consiste en usar los componentes de hardware cual estarán conectados
+via GPIO o Conexión Serial (ESP32) a una Raspberry PI o Computador con un videojuego creado en PICO8 (<a href="https://pico-8.fandom.com/wiki/GPIO" class="bare">https://pico-8.fandom.com/wiki/GPIO</a>) o TIC80 (<a href="https://tic80.com/play" class="bare">https://tic80.com/play</a>).
+Se debe crear o seleccionar un juego y habilitar controlarlo con los sensores. Además de mostrar información
+del juego en los displays segmentados.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="ejemplo-práctico-medición-ambiental-con-atomvm-y-dht11"><a class="anchor" href="#ejemplo-práctico-medición-ambiental-con-atomvm-y-dht11"></a>Ejemplo práctico: Medición ambiental con AtomVM y DHT11</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Este ejemplo usa un sensor DHT11 conectado a un ESP32, leyendo temperatura y humedad usando <strong>Elixir sobre AtomVM</strong>.</p>
-</div>
-<div class="paragraph">
-<p>Requisitos:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Microcontrolador ESP32 con AtomVM cargado.</p>
-</li>
-<li>
-<p>Sensor DHT11 conectado al pin GPIO 4 (puedes cambiarlo).</p>
-</li>
-<li>
-<p>Módulo nativo <code>avm_dht</code> disponible en el firmware de AtomVM.</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
-<div class="title">Código fuente en Elixir</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule DHTReader do
-  @dht_pin 4
-
-  def start do
-    IO.puts("Iniciando lectura del sensor DHT11...")
-
-    loop()
-  end
-
-  defp loop do
-    case :avm_dht.read(@dht_pin, :dht11) do
-      {:ok, temperature, humidity} -&gt;
-        IO.puts("Temperatura: #{temperature} °C")
-        IO.puts("Humedad: #{humidity} %")
-
-      {:error, reason} -&gt;
-        IO.puts("Error al leer sensor: #{inspect(reason)}")
-    end
-
-    :timer.sleep(5000)  # Espera 5 segundos
-    loop()
-  end
-end
-
-DHTReader.start()</code></pre>
-</div>
-</div>
-<div class="sect2">
-<h3 id="conexiones-del-sensor-dht11-al-esp32"><a class="anchor" href="#conexiones-del-sensor-dht11-al-esp32"></a>Conexiones del sensor DHT11 al ESP32</h3>
 <table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Components de Arcade Posibles</caption>
 <colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Sensor DHT11</th>
-<th class="tableblock halign-left valign-top">ESP32</th>
+<th class="tableblock halign-left valign-top">Componente</th>
+<th class="tableblock halign-left valign-top">Cantidad</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">VCC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3.3V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Potenciometro</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simula un manubrio de carreras. <a href="https://afel.cl/products/potenciometro-500k-ohm" class="bare">https://afel.cl/products/potenciometro-500k-ohm</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">DATA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GPIO 4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Display Segmentado de 4 dígitos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra el High Score y el Score actual. <a href="https://afel.cl/products/display-7-segmentos-4-digitos" class="bare">https://afel.cl/products/display-7-segmentos-4-digitos</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GND</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Display Segmantado de 2 dígitos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra el tiempo de juego actual. <a href="https://afel.cl/products/display-7-segmentos-2-digitos" class="bare">https://afel.cl/products/display-7-segmentos-2-digitos</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interruptor MTS-102 3 pines</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simula una palanca de cambios. <a href="https://afel.cl/products/interruptor-mts-102-3-pines" class="bare">https://afel.cl/products/interruptor-mts-102-3-pines</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Placa de 4 botones</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simula los pedales de aceleración y fichas. <a href="https://afel.cl/products/placa-de-4-botones-independientes-micro-switch" class="bare">https://afel.cl/products/placa-de-4-botones-independientes-micro-switch</a></p></td>
 </tr>
 </tbody>
 </table>
+<div class="ulist">
+<ul>
+<li>
+<p>Documentación de Pico-8: <a href="https://www.lexaloffle.com/dl/docs/pico-8_manual.html#GPIO" class="bare">https://www.lexaloffle.com/dl/docs/pico-8_manual.html#GPIO</a></p>
+</li>
+<li>
+<p>Serial de Pico-8: <a href="https://pico-8.fandom.com/wiki/Serial" class="bare">https://pico-8.fandom.com/wiki/Serial</a> y <a href="http://pico8wiki.com/index.php?title=Serial" class="bare">http://pico8wiki.com/index.php?title=Serial</a></p>
+</li>
+<li>
+<p>WiringPI: <a href="https://github.com/WiringPi/WiringPi" class="bare">https://github.com/WiringPi/WiringPi</a></p>
+</li>
+<li>
+<p>PigPio (WiringPI Alternativa): <a href="https://github.com/joan2937/pigpio" class="bare">https://github.com/joan2937/pigpio</a></p>
+</li>
+<li>
+<p>Keybd Event (Activa teclas desde código en Go): <a href="https://github.com/micmonay/keybd_event" class="bare">https://github.com/micmonay/keybd_event</a></p>
+</li>
+</ul>
 </div>
-<div class="sect2">
-<h3 id="instrucciones"><a class="anchor" href="#instrucciones"></a>Instrucciones</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="tic-80"><a class="anchor" href="#tic-80"></a>TIC-80</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TIC-80 si bien tiene mayor flexibilidad de que PICO-8 al ser de código libre,
+no tiene funcionalidades para leer o escribir datos en serial o GPIO. Por lo que
+la opción es lo siguiente:</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Compila el archivo con <code>elixirc dht_reader.ex</code>.</p>
+<p>Se crea un projecto en ESP32 que lea todos los sensores</p>
 </li>
 <li>
-<p>Sube el archivo <code>.beam</code> al ESP32 con las herramientas de AtomVM.</p>
+<p>Se comunica via serial a un demonio creado en un lenguaje de programación como Elixir, Go o Python</p>
 </li>
 <li>
-<p>Asegúrate de incluir el módulo nativo <code>avm_dht</code> en tu firmware.</p>
+<p>Este demonio gatilla eventos de teclado para simular presión de botones dentro de TIC-80.</p>
 </li>
 <li>
-<p>El ESP32 imprimirá por consola la temperatura y humedad cada 5 segundos.</p>
+<p>TIC-80 escribe en memoria ciertos datos como el Score actual.</p>
+</li>
+<li>
+<p>El demonio lee el archivo del juego y parsea la memoria para mostrar los datos en el display segmentado.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/nesbox/TIC-80/wiki/RAM#persistent-memory" class="bare">https://github.com/nesbox/TIC-80/wiki/RAM#persistent-memory</a></p>
+</li>
+<li>
+<p><a href="https://github.com/nesbox/TIC-80/wiki/poke" class="bare">https://github.com/nesbox/TIC-80/wiki/poke</a></p>
+</li>
+</ul>
+</div>
 </li>
 </ol>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
+</div>
+</div>
+<div class="sect1">
+<h2 id="pico-8"><a class="anchor" href="#pico-8"></a>PICO-8</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>ESP32 sumado con Elixir Nerves permite crear sistemas más complejos, como sistemas de domotica,
-sistemas industriales, estaciones meteorológicas con panel, etc.</p>
+<p>PICO-8 tiene acceso a GPIO (Aunque solo para ciertas versiones de Raspberry PI) y lectura y escritura serial.
+Aunque la lectura serial está limitada a GPIO, la escritura puede ser redireccionada a un archivo.txt.
+Por lo que se puede seguir con el mismo flujo de TIC-80 solo cambiando el archivo de destino y su formato.</p>
 </div>
-</td>
-</tr>
-</table>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/AtomVM-logo.png" alt="AtomVM logo">
-</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se crea un projecto en ESP32 que lea todos los sensores</p>
+</li>
+<li>
+<p>Se comunica via serial a un demonio creado en un lenguaje de programación como Elixir, Go o Python</p>
+</li>
+<li>
+<p>Este demonio gatilla eventos de teclado para simular presión de botones dentro de PICO-8.</p>
+</li>
+<li>
+<p>PICO-8 escribe en un archivo de texto serial el Score actual.</p>
+</li>
+<li>
+<p>El demonio lee el archivo y lo parsea para mostrar los datos en el display segmentado.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>AtomVM y Elixir Nerves permiten unir el mundo del hardware incrustado con la programación funcional moderna.
-Usarlos en conjunto puede llevar a soluciones más robustas, escalables y fáciles de mantener.
-Además, estas tecnologías permiten desarrollar soluciones completas de IoT, automatización y
-monitoreo sin depender de lenguajes más difíciles como C o C++, y aprovechando todo el ecosistema de Elixir.</p>
-</div>
+<p>Ejemplo de Juego: <a href="https://www.lexaloffle.com/bbs/?pid=131499#p" class="bare">https://www.lexaloffle.com/bbs/?pid=131499#p</a></p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="esp32.html">ESP32</a></span>
-  <span class="next"><a href="project-gladiators.html">Proyecto: Gladiadores Robots</a></span>
+  <span class="prev"><a href="project-gladiators.html">Proyecto: Gladiadores Robots</a></span>
+  <span class="next"><a href="../raspberry/raspberry.html">Raspberry Pi</a></span>
 </nav>
 </article>
   </div>
