@@ -240,7 +240,7 @@ como principal inspiración.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="proyecto"><a class="anchor" href="#proyecto"></a>Proyecto</h2>
+<h2 id="componentes-del-proyecto"><a class="anchor" href="#componentes-del-proyecto"></a>Componentes del Proyecto</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>El proyecto consiste en usar los componentes de hardware cual estarán conectados
@@ -290,22 +290,79 @@ del juego en los displays segmentados.</p>
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>También se puede obtar por un Kit de componentes básicos como</p>
+</div>
+<div class="paragraph">
+<p><a href="https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/" class="bare">https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/</a></p>
+</div>
+<div class="paragraph">
+<p>Componentes del Kit</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Documentación de Pico-8: <a href="https://www.lexaloffle.com/dl/docs/pico-8_manual.html#GPIO" class="bare">https://www.lexaloffle.com/dl/docs/pico-8_manual.html#GPIO</a></p>
+<p>1 placa de desarrollo ESP32</p>
 </li>
 <li>
-<p>Serial de Pico-8: <a href="https://pico-8.fandom.com/wiki/Serial" class="bare">https://pico-8.fandom.com/wiki/Serial</a> y <a href="http://pico8wiki.com/index.php?title=Serial" class="bare">http://pico8wiki.com/index.php?title=Serial</a></p>
+<p>1 x OLED de 0,96 pulgadas</p>
 </li>
 <li>
-<p>WiringPI: <a href="https://github.com/WiringPi/WiringPi" class="bare">https://github.com/WiringPi/WiringPi</a></p>
+<p>1X Protoboard 830pts</p>
 </li>
 <li>
-<p>PigPio (WiringPI Alternativa): <a href="https://github.com/joan2937/pigpio" class="bare">https://github.com/joan2937/pigpio</a></p>
+<p>1 X módulo para evitar obstáculos</p>
 </li>
 <li>
-<p>Keybd Event (Activa teclas desde código en Go): <a href="https://github.com/micmonay/keybd_event" class="bare">https://github.com/micmonay/keybd_event</a></p>
+<p>1 módulo de fotorresistencia</p>
+</li>
+<li>
+<p>1 X Módulo de temperatura y humedad DHT11</p>
+</li>
+<li>
+<p>1 sensor de movimiento PIR de 2/2″</p>
+</li>
+<li>
+<p>1 potenciómetro X (10K)</p>
+</li>
+<li>
+<p>1 cable micro USB</p>
+</li>
+<li>
+<p>30X resistencias (220R/1K/10K)</p>
+</li>
+<li>
+<p>1 zumbador pasivo</p>
+</li>
+<li>
+<p>1 X zumbador activo</p>
+</li>
+<li>
+<p>1 Módulo de relé de doble canal de 5V</p>
+</li>
+<li>
+<p>6X interruptores de botón</p>
+</li>
+<li>
+<p>10 x Cable DuPont</p>
+</li>
+<li>
+<p>10 x cable DuPont de pulgadas</p>
+</li>
+<li>
+<p>10 x Cable DuPont</p>
+</li>
+<li>
+<p>5 x LED rojo</p>
+</li>
+<li>
+<p>5 x LED amarillo</p>
+</li>
+<li>
+<p>5 x LED verde</p>
+</li>
+<li>
+<p>2 LEDs RGB</p>
 </li>
 </ul>
 </div>
@@ -325,52 +382,13 @@ la opción es lo siguiente:</p>
 <p>Se crea un projecto en ESP32 que lea todos los sensores</p>
 </li>
 <li>
-<p>Se comunica via serial a un demonio creado en un lenguaje de programación como Elixir, Go o Python</p>
+<p>Se comunica via serial a un demonio creado en un lenguaje de programación como Go o Python</p>
 </li>
 <li>
 <p>Este demonio gatilla eventos de teclado para simular presión de botones dentro de TIC-80.</p>
 </li>
 <li>
-<p>TIC-80 escribe en memoria ciertos datos como el Score actual.</p>
-</li>
-<li>
-<p>El demonio lee el archivo del juego y parsea la memoria para mostrar los datos en el display segmentado.</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://github.com/nesbox/TIC-80/wiki/RAM#persistent-memory" class="bare">https://github.com/nesbox/TIC-80/wiki/RAM#persistent-memory</a></p>
-</li>
-<li>
-<p><a href="https://github.com/nesbox/TIC-80/wiki/poke" class="bare">https://github.com/nesbox/TIC-80/wiki/poke</a></p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="pico-8"><a class="anchor" href="#pico-8"></a>PICO-8</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>PICO-8 tiene acceso a GPIO (Aunque solo para ciertas versiones de Raspberry PI) y lectura y escritura serial.
-Aunque la lectura serial está limitada a GPIO, la escritura puede ser redireccionada a un archivo.txt.
-Por lo que se puede seguir con el mismo flujo de TIC-80 solo cambiando el archivo de destino y su formato.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Se crea un projecto en ESP32 que lea todos los sensores</p>
-</li>
-<li>
-<p>Se comunica via serial a un demonio creado en un lenguaje de programación como Elixir, Go o Python</p>
-</li>
-<li>
-<p>Este demonio gatilla eventos de teclado para simular presión de botones dentro de PICO-8.</p>
-</li>
-<li>
-<p>PICO-8 escribe en un archivo de texto serial el Score actual.</p>
+<p>TIC-80 escribe en un archivo de texto serial el Score actual.</p>
 </li>
 <li>
 <p>El demonio lee el archivo y lo parsea para mostrar los datos en el display segmentado.</p>
@@ -378,7 +396,130 @@ Por lo que se puede seguir con el mismo flujo de TIC-80 solo cambiando el archiv
 </ol>
 </div>
 <div class="paragraph">
-<p>Ejemplo de Juego: <a href="https://www.lexaloffle.com/bbs/?pid=131499#p" class="bare">https://www.lexaloffle.com/bbs/?pid=131499#p</a></p>
+<p>Para poder ejecutar el juego y obtener los registros del log se puede ejecutar el siguiente comando:</p>
+</div>
+<div class="listingblock">
+<div class="title">Comando para obtener los logs de un juego en TIC80</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./tic80 esp32.tic &gt; out.log &amp;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El siguiente cartucho puede ser usado para probar</p>
+</div>
+<div class="listingblock">
+<div class="title">Primero Creamos un cartucho de Lua</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; new lua</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Añadimos las funciones de debugging</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-lua hljs" data-lang="lua">-- title:   esp32 test cart
+-- author:  ninjas.cl
+-- desc:    A test cart for input/output to esp32
+-- site:    elixircl.github.io/elixir-robotics
+-- license: BSD License
+-- version: 0.1
+-- script:  lua
+
+t=0
+x=96
+y=24
+
+function TIC()
+  cls(13)
+
+  if btn(0) then y=y-1 end
+	if btn(1) then y=y+1 end
+	if btn(2) then x=x-1 end
+	if btn(3) then x=x+1 end
+
+	if btn(4) then
+	  print("Player 1: A", 90, 100)
+	end
+
+	if btn(5) then
+	  print("Player 1: B", 90, 100)
+	end
+
+	if btn(6) then
+	  print("Player1: X", 90, 100)
+	end
+
+	if btn(7) then
+	  print("Player1: Y", 90, 100)
+	end
+
+	spr(1+t%60//30*2,x,y,14,3,0,0,2,2)
+	print("ESP32 TEST",84,84)
+	t=t+1
+
+	if t &gt; 999 then
+	 t = 0
+	end
+
+	print(t, 0, 0)
+
+	trace("stdout=time:"..t)
+end
+
+-- &lt;TILES&gt;
+-- 001:eccccccccc888888caaaaaaaca888888cacccccccacc0ccccacc0ccccacc0ccc
+-- 002:ccccceee8888cceeaaaa0cee888a0ceeccca0ccc0cca0c0c0cca0c0c0cca0c0c
+-- 003:eccccccccc888888caaaaaaaca888888cacccccccacccccccacc0ccccacc0ccc
+-- 004:ccccceee8888cceeaaaa0cee888a0ceeccca0cccccca0c0c0cca0c0c0cca0c0c
+-- 017:cacccccccaaaaaaacaaacaaacaaaaccccaaaaaaac8888888cc000cccecccccec
+-- 018:ccca00ccaaaa0ccecaaa0ceeaaaa0ceeaaaa0cee8888ccee000cceeecccceeee
+-- 019:cacccccccaaaaaaacaaacaaacaaaaccccaaaaaaac8888888cc000cccecccccec
+-- 020:ccca00ccaaaa0ccecaaa0ceeaaaa0ceeaaaa0cee8888ccee000cceeecccceeee
+-- &lt;/TILES&gt;
+
+-- &lt;WAVES&gt;
+-- 000:00000000ffffffff00000000ffffffff
+-- 001:0123456789abcdeffedcba9876543210
+-- 002:0123456789abcdef0123456789abcdef
+-- &lt;/WAVES&gt;
+
+-- &lt;SFX&gt;
+-- 000:000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000304000000000
+-- &lt;/SFX&gt;
+
+-- &lt;PALETTE&gt;
+-- 000:1a1c2c5d275db13e53ef7d57ffcd75a7f07038b76425717929366f3b5dc941a6f673eff7f4f4f494b0c2566c86333c57
+-- &lt;/PALETTE&gt;
+
+-- &lt;TRACKS&gt;
+-- 000:100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- &lt;/TRACKS&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="daemon"><a class="anchor" href="#daemon"></a>Daemon</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El Daemon es el encargado de comunicar el ESP32 con TIC-80. Este se ejecuta en el mismo computador
+al cual el ESP32 se conecta por USB y ejecuta el TIC-80. Este puede ser programado en Go o Python
+y debe comunicarse via serial con el ESP32 y leer el archivo <code>out.log</code> generado por TIC-80.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Biblioteca de Keyboard para Python: <a href="https://github.com/boppreh/keyboard" class="bare">https://github.com/boppreh/keyboard</a></p>
+</li>
+<li>
+<p>Biblioteca de Comunicación Serial para Python: <a href="https://pyserial.readthedocs.io/en/latest/index.html" class="bare">https://pyserial.readthedocs.io/en/latest/index.html</a></p>
+</li>
+<li>
+<p>Biblioteca de Keyboard para Go: <a href="https://github.com/micmonay/keybd_event" class="bare">https://github.com/micmonay/keybd_event</a></p>
+</li>
+<li>
+<p>Biblioteca de Comunicación Serial para Go: <a href="https://github.com/bugst/go-serial" class="bare">https://github.com/bugst/go-serial</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>

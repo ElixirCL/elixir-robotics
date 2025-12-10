@@ -22,7 +22,7 @@ como principal inspiración.
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/n7Vl6g0RiHI?si=iHBHP6lmPClUBPbZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ++++
 
-== Proyecto
+== Componentes del Proyecto
 
 El proyecto consiste en usar los componentes de hardware cual estarán conectados 
 via GPIO o Conexión Serial (ESP32) a una Raspberry PI o Computador con un videojuego creado en PICO8 (https://pico-8.fandom.com/wiki/GPIO) o TIC80 (https://tic80.com/play).
@@ -40,11 +40,33 @@ del juego en los displays segmentados.
 |Placa de 4 botones| 1 | Simula los pedales de aceleración y fichas. https://afel.cl/products/placa-de-4-botones-independientes-micro-switch
 |====
 
-- Documentación de Pico-8: https://www.lexaloffle.com/dl/docs/pico-8_manual.html#GPIO
-- Serial de Pico-8: https://pico-8.fandom.com/wiki/Serial y http://pico8wiki.com/index.php?title=Serial
-- WiringPI: https://github.com/WiringPi/WiringPi
-- PigPio (WiringPI Alternativa): https://github.com/joan2937/pigpio
-- Keybd Event (Activa teclas desde código en Go): https://github.com/micmonay/keybd_event
+También se puede obtar por un Kit de componentes básicos como 
+
+https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/
+
+Componentes del Kit
+
+- 1 placa de desarrollo ESP32
+- 1 x OLED de 0,96 pulgadas
+- 1X Protoboard 830pts
+- 1 X módulo para evitar obstáculos
+- 1 módulo de fotorresistencia
+- 1 X Módulo de temperatura y humedad DHT11
+- 1 sensor de movimiento PIR de 2/2″
+- 1 potenciómetro X (10K)
+- 1 cable micro USB
+- 30X resistencias (220R/1K/10K)
+- 1 zumbador pasivo
+- 1 X zumbador activo
+- 1 Módulo de relé de doble canal de 5V
+- 6X interruptores de botón
+- 10 x Cable DuPont
+- 10 x cable DuPont de pulgadas
+- 10 x Cable DuPont
+- 5 x LED rojo
+- 5 x LED amarillo
+- 5 x LED verde
+- 2 LEDs RGB
 
 == TIC-80
 
@@ -53,24 +75,117 @@ no tiene funcionalidades para leer o escribir datos en serial o GPIO. Por lo que
 la opción es lo siguiente:
 
 . Se crea un projecto en ESP32 que lea todos los sensores
-. Se comunica via serial a un demonio creado en un lenguaje de programación como Elixir, Go o Python
+. Se comunica via serial a un demonio creado en un lenguaje de programación como Go o Python
 . Este demonio gatilla eventos de teclado para simular presión de botones dentro de TIC-80.
-. TIC-80 escribe en memoria ciertos datos como el Score actual.
-. El demonio lee el archivo del juego y parsea la memoria para mostrar los datos en el display segmentado.
-
-- https://github.com/nesbox/TIC-80/wiki/RAM#persistent-memory
-- https://github.com/nesbox/TIC-80/wiki/poke
-
-== PICO-8
-
-PICO-8 tiene acceso a GPIO (Aunque solo para ciertas versiones de Raspberry PI) y lectura y escritura serial.
-Aunque la lectura serial está limitada a GPIO, la escritura puede ser redireccionada a un archivo.txt.
-Por lo que se puede seguir con el mismo flujo de TIC-80 solo cambiando el archivo de destino y su formato.
-
-. Se crea un projecto en ESP32 que lea todos los sensores
-. Se comunica via serial a un demonio creado en un lenguaje de programación como Elixir, Go o Python
-. Este demonio gatilla eventos de teclado para simular presión de botones dentro de PICO-8.
-. PICO-8 escribe en un archivo de texto serial el Score actual.
+. TIC-80 escribe en un archivo de texto serial el Score actual.
 . El demonio lee el archivo y lo parsea para mostrar los datos en el display segmentado.
 
-Ejemplo de Juego: https://www.lexaloffle.com/bbs/?pid=131499#p
+Para poder ejecutar el juego y obtener los registros del log se puede ejecutar el siguiente comando:
+
+.Comando para obtener los logs de un juego en TIC80
+[source, bash]
+----
+$ ./tic80 esp32.tic > out.log &
+----
+
+El siguiente cartucho puede ser usado para probar
+
+.Primero Creamos un cartucho de Lua 
+[source, bash]
+----
+> new lua
+----
+
+.Añadimos las funciones de debugging
+[source, lua]
+----
+-- title:   esp32 test cart
+-- author:  ninjas.cl
+-- desc:    A test cart for input/output to esp32
+-- site:    elixircl.github.io/elixir-robotics
+-- license: BSD License
+-- version: 0.1
+-- script:  lua
+
+t=0
+x=96
+y=24
+
+function TIC()
+  cls(13)
+	
+  if btn(0) then y=y-1 end
+	if btn(1) then y=y+1 end
+	if btn(2) then x=x-1 end
+	if btn(3) then x=x+1 end
+
+	if btn(4) then
+	  print("Player 1: A", 90, 100)
+	end
+	
+	if btn(5) then
+	  print("Player 1: B", 90, 100)
+	end
+	
+	if btn(6) then
+	  print("Player1: X", 90, 100)
+	end
+	
+	if btn(7) then
+	  print("Player1: Y", 90, 100)
+	end
+	
+	spr(1+t%60//30*2,x,y,14,3,0,0,2,2)
+	print("ESP32 TEST",84,84)
+	t=t+1
+	
+	if t > 999 then
+	 t = 0
+	end
+	
+	print(t, 0, 0)
+	
+	trace("stdout=time:"..t)
+end
+
+-- <TILES>
+-- 001:eccccccccc888888caaaaaaaca888888cacccccccacc0ccccacc0ccccacc0ccc
+-- 002:ccccceee8888cceeaaaa0cee888a0ceeccca0ccc0cca0c0c0cca0c0c0cca0c0c
+-- 003:eccccccccc888888caaaaaaaca888888cacccccccacccccccacc0ccccacc0ccc
+-- 004:ccccceee8888cceeaaaa0cee888a0ceeccca0cccccca0c0c0cca0c0c0cca0c0c
+-- 017:cacccccccaaaaaaacaaacaaacaaaaccccaaaaaaac8888888cc000cccecccccec
+-- 018:ccca00ccaaaa0ccecaaa0ceeaaaa0ceeaaaa0cee8888ccee000cceeecccceeee
+-- 019:cacccccccaaaaaaacaaacaaacaaaaccccaaaaaaac8888888cc000cccecccccec
+-- 020:ccca00ccaaaa0ccecaaa0ceeaaaa0ceeaaaa0cee8888ccee000cceeecccceeee
+-- </TILES>
+
+-- <WAVES>
+-- 000:00000000ffffffff00000000ffffffff
+-- 001:0123456789abcdeffedcba9876543210
+-- 002:0123456789abcdef0123456789abcdef
+-- </WAVES>
+
+-- <SFX>
+-- 000:000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000304000000000
+-- </SFX>
+
+-- <PALETTE>
+-- 000:1a1c2c5d275db13e53ef7d57ffcd75a7f07038b76425717929366f3b5dc941a6f673eff7f4f4f494b0c2566c86333c57
+-- </PALETTE>
+
+-- <TRACKS>
+-- 000:100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- </TRACKS>
+----
+
+== Daemon
+
+El Daemon es el encargado de comunicar el ESP32 con TIC-80. Este se ejecuta en el mismo computador 
+al cual el ESP32 se conecta por USB y ejecuta el TIC-80. Este puede ser programado en Go o Python
+y debe comunicarse via serial con el ESP32 y leer el archivo `out.log` generado por TIC-80.
+
+- Biblioteca de Keyboard para Python: https://github.com/boppreh/keyboard
+- Biblioteca de Comunicación Serial para Python: https://pyserial.readthedocs.io/en/latest/index.html
+
+- Biblioteca de Keyboard para Go: https://github.com/micmonay/keybd_event
+- Biblioteca de Comunicación Serial para Go: https://github.com/bugst/go-serial
