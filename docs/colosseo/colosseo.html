@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Coliseo Atómico :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/colosseo/colosseo.html">
+    <link rel="prev" href="../esp32/project-arcade.html">
+    <link rel="next" href="../raspberry/raspberry.html">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../bibliography.html">Bibliografía</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC555</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../ne555/ic555.html">IC555</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">PIC16f877a</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../pic16f877a/pic16f877a.html">PIC16F877a</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ada</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../ada/ada.html">Lenguaje de programación Ada</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Arduino</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../arduino/arduino.html">Arduino</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">ESP32</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/project-gladiators.html">Proyecto: Gladiadores Robots</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../esp32/project-arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coliseo Atómico</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="colosseo.html">Coliseo Atómico</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Raspberry PI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/nerves.html">Elixir Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/project-animatronics.html">Proyecto: Mesero Robot</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/meshtastic.html">Meshtastic</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/lorawan.html">lorawan.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/sigfox.html">Sigfox</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/zigbee.html">Zigbee</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Coliseo Atómico</li>
+    <li><a href="colosseo.html">Coliseo Atómico</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/colosseo/pages/colosseo.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Coliseo Atómico</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Prepárate para entrar al fantástico mundo de las batallas de robots,
+de una forma tecnológica, divertida y con componentes con precios razonables.
+En este capítulo se mostrarán proyectos relacionados a combates entre robots
+utilizando ESP32, AtomVM y componentes disponibles en el mercado.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="materiales"><a class="anchor" href="#materiales"></a>Materiales</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Los materiales para armar el carro están disponibles en el mercado chileno y tienen un valor razonable (menor a 2 UF).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Carro y Motores DC: <a href="https://mcielectronics.cl/shop/product/kit-robotico-chasis-con-ruedas-motores-y-caja-reductoras-compatible-con-arduino-26429/" class="bare">https://mcielectronics.cl/shop/product/kit-robotico-chasis-con-ruedas-motores-y-caja-reductoras-compatible-con-arduino-26429/</a></p>
+</li>
+<li>
+<p>ESP32: + Cables: <a href="https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/" class="bare">https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/</a></p>
+</li>
+<li>
+<p>L298N (Control de Motores): <a href="https://mcielectronics.cl/shop/product/controlador-de-motores-puente-h-l298n-25508/" class="bare">https://mcielectronics.cl/shop/product/controlador-de-motores-puente-h-l298n-25508/</a></p>
+</li>
+<li>
+<p>Pack de Servomotores: <a href="https://mcielectronics.cl/shop/product/pack-de-5-micro-servo-motores-sg90-9g/" class="bare">https://mcielectronics.cl/shop/product/pack-de-5-micro-servo-motores-sg90-9g/</a></p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/carro.jpg" alt="carro">
+</div>
+<div class="title">Figure 1. Carro</div>
+</div>
+<div class="paragraph">
+<p><strong>Motores DC</strong></p>
+</div>
+<div class="paragraph">
+<p>Los motores DC son utilizados para la movilización principal del robot
+en dos de sus ruedas (la tercera es una rueda de apoyo omnidireccional).
+Estos motores necesitan una batería de 5 a 9v y un L298N  para controlar la dirección
+de cada motor de forma independiente.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Relaciones de Voltaje/Velocidad.</p>
+</li>
+<li>
+<p>DC 3V, 160mA, 120 rpm/min, 100 rpm/min, 0.45 kg.cm;</p>
+</li>
+<li>
+<p>DC 6V, 220mA, 200 rpm/min, 175 rpm/min, 1.0 kg.cm;</p>
+</li>
+<li>
+<p>DC 7.2V, 250mA, 250 rpm/min, 210 rpm/min, 1.5 kg.cm.</p>
+</li>
+<li>
+<p>Relación de los motores: 1:48</p>
+</li>
+<li>
+<p>Tamaño de los motores: 65mm x 18mm x 22mm</p>
+</li>
+<li>
+<p>Alimentación Voltaje: 3~9V</p>
+</li>
+<li>
+<p>Corriente: 600mA</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/motoresdc.jpg" alt="motoresdc">
+</div>
+<div class="title">Figure 2. Motores DC</div>
+</div>
+<div class="paragraph">
+<p>También es importante contar con un controlador L298N
+para controlar a los motores DC individualmente.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/l298n.webp" alt="l298n">
+</div>
+<div class="title">Figure 3. L298N</div>
+</div>
+<div class="paragraph">
+<p><strong>Servomotores SG90</strong></p>
+</div>
+<div class="paragraph">
+<p>Los servomotores son utilizados para herramientas que permitan complementar
+el robot o tener partes con movilidad controlada.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Torque a 4.8 volts: 1.2 kg/cm</p>
+</li>
+<li>
+<p>Voltaje de operación: 4.0 a 7.2 volts</p>
+</li>
+<li>
+<p>Velocidad de giro a 4.8 volts: 120ms / 60 º</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/servo.webp" alt="servo">
+</div>
+<div class="title">Figure 4. Servomotor</div>
+</div>
+<div class="paragraph">
+<p><strong>ESP32</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/kitesp32.png" alt="kitesp32">
+</div>
+<div class="title">Figure 5. KIT ESP32</div>
+</div>
+<div class="paragraph">
+<p>Principal tarjeta de programación para AtomVM, cuenta con Wifi y Bluetooth incorporado
+y puede ser alimentada por USB.</p>
+</div>
+<div class="paragraph">
+<p>En el KIT de MCI incluye una variedad de componentes, aunque no necesariamente todos serán utilizados:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1 placa de desarrollo ESP32</p>
+</li>
+<li>
+<p>1 x OLED de 0,96 pulgadas</p>
+</li>
+<li>
+<p>1X Protoboard 830pts</p>
+</li>
+<li>
+<p>1 X módulo para evitar obstáculos</p>
+</li>
+<li>
+<p>1 módulo de fotorresistencia</p>
+</li>
+<li>
+<p>1 X Módulo de temperatura y humedad DHT11</p>
+</li>
+<li>
+<p>1 sensor de movimiento PIR de 2/2″</p>
+</li>
+<li>
+<p>1 potenciómetro X (10K)</p>
+</li>
+<li>
+<p>1 cable micro USB</p>
+</li>
+<li>
+<p>30X resistencias (220R/1K/10K)</p>
+</li>
+<li>
+<p>1 zumbador pasivo</p>
+</li>
+<li>
+<p>1 X zumbador activo</p>
+</li>
+<li>
+<p>1 Módulo de relé de doble canal de 5V</p>
+</li>
+<li>
+<p>6X interruptores de botón</p>
+</li>
+<li>
+<p>10 x Cable DuPont</p>
+</li>
+<li>
+<p>10 x cable DuPont de pulgadas</p>
+</li>
+<li>
+<p>10 x Cable DuPont</p>
+</li>
+<li>
+<p>5 x LED rojo</p>
+</li>
+<li>
+<p>5 x LED amarillo</p>
+</li>
+<li>
+<p>5 x LED verde</p>
+</li>
+<li>
+<p>2 LEDs RGB</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Minifigura Lego</strong></p>
+</div>
+<div class="paragraph">
+<p>Se recomienda una minifigura Lego que represente al Auriga.
+Ver <a href="https://www.tiendalego.cl/" class="bare">https://www.tiendalego.cl/</a> o alguna tienda similar
+para saber que personajes están disponibles.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/lego.webp" alt="lego">
+</div>
+<div class="title">Figure 6. Minifigura Lego</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="colosseo"><a class="anchor" href="#colosseo"></a>Colosseo</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Tal como en la roma antígüa y la era medieval se presentarán los siguientes eventos.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Lucha de Gladiadores</p>
+</li>
+<li>
+<p>Carrera de Carros</p>
+</li>
+<li>
+<p>Justa</p>
+</li>
+<li>
+<p>Naumaquias (Batalla Naval)</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="auriga"><a class="anchor" href="#auriga"></a>Auriga</h3>
+<div class="paragraph">
+<p>El Auriga es un personaje de lego pequeño que va sobre el carro robot.
+Si el auriga se cae del robot, el jugador pierde inmediatamente.
+Normalmente afirmado al carro de forma de que sea posible sacarlo con un golpe fuerte.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="globos"><a class="anchor" href="#globos"></a>Globos</h3>
+<div class="paragraph">
+<p>Los globos son la "vida" que tiene el carro robot. Si el globo se despega del carro
+o es reventado, el jugador pierde inmediatamente. Se debe usar los globos largos
+que permiten ser moldeados a una forma específica alrededor del carro. El globo
+debe rodear apropiadamente el carro en forma de "U" y estar con un nivel de aire
+de modo que sea de consistencia firme. Cada carro debe tener un color de globo diferente.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="lucha-de-gladiadores"><a class="anchor" href="#lucha-de-gladiadores"></a>Lucha de Gladiadores</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>En un espacio circular de un diametro apropiado (como rueda de automóvil o bicicleta)
+dos carros y sus aurigas se enfrentan.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>El carro puede ser controlado remotamente via Wifi o Bluetooth.</p>
+</li>
+<li>
+<p>El carro debe contar con uno o más clavos (máximo 3) pequeños para reventar el globo.</p>
+</li>
+<li>
+<p>El carro consiste en un acrílico con dos motores dc y una rueda omnidireccional.</p>
+</li>
+<li>
+<p>Se permite que los clavos sean moviles con servomotores.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="reglas"><a class="anchor" href="#reglas"></a>Reglas</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Gana quien reviente primero el globo del adversario o derribe al auriga contrario.</p>
+</li>
+<li>
+<p>Si sale del círculo se penaliza con tarjeta amarilla. Dos tarjetas amarillas y el jugador pierde.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="carrera-de-carros"><a class="anchor" href="#carrera-de-carros"></a>Carrera de Carros</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Similar a la lucha de gladiadores en términos de fabricación de carros y aurigas.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>La pista puede tener obstáculos que pueden reventar los globos.</p>
+</li>
+<li>
+<p>El carro puede ser controlado remotamente via Wifi o Bluetooth.</p>
+</li>
+<li>
+<p>Solo 2 clavos permitidos (uno en cada rueda)</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="reglas-2"><a class="anchor" href="#reglas-2"></a>Reglas</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Gana quien de 3 vueltas primero a la pista.</p>
+</li>
+<li>
+<p>Gana quien destruya los globos del adversario.</p>
+</li>
+<li>
+<p>Gana quien derriba al auriga adversario.</p>
+</li>
+<li>
+<p>Pierde inmediatamente quien se salga de los límites de la pista.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="justa"><a class="anchor" href="#justa"></a>Justa</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La Justa consiste en derribar el auriga contrario con un palo ubicado en la parte superior del carro.
+Dos carros y sus arigas se enfrentan corriendo en línea recta y solamente separados por una línea.
+La pista es una "O" donde al llegar al final deben dar la vuelta y volver a intentar derriba al auriga oponente.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Los muros y límites de la pista pueden reventar los globos.</p>
+</li>
+<li>
+<p>El carro puede ser controlado remotamente via Wifi o Bluetooth.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="reglas-3"><a class="anchor" href="#reglas-3"></a>Reglas</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Gana quien derriba primero al auriga oponente.</p>
+</li>
+<li>
+<p>Pierde si el carro va a la pista equivocada.</p>
+</li>
+<li>
+<p>Pierde si se revientan los globos en los muros o estos se salen del carro.</p>
+</li>
+<li>
+<p>Pierde si el carro deja de funcionar o sale de la pista.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="naumaquias-batalla-naval"><a class="anchor" href="#naumaquias-batalla-naval"></a>Naumaquias (Batalla Naval)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La naumaquia o batalla naval consiste en un robot náutico
+con el objetivo de derribar al auriga contrincante. Estas tienen un cañón
+de pelota de tenis de mesa (blanca), el cual puede ser usado para derribar al auriga contrario.
+También habrán pelotas de tenis de mesa de colores disponibles flotando en el agua que pueden ser recolectadas con redes del barco.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Botellas de plástico de bebidas. 1 de 3 litros y 2 de 500 cc.</p>
+</li>
+<li>
+<p>El cañón puede ser impulsado con un sistema de catapulta onager.</p>
+</li>
+<li>
+<p>Habrá una canasta especial para recolectar las pelotas de tenis de cada barco.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Puede haber una sola canasta y cada barco tiene pelotas de tenis de mesa de un color específico.
+Por ejemplo barco 1 tiene pelotas naranjas y barco 2 tiene pelotas verdes.
+Gana quien junte 2 pelotas de su color o derribe al auriga contrario con su cañón.</p>
+</div>
+<div class="sect2">
+<h3 id="reglas-4"><a class="anchor" href="#reglas-4"></a>Reglas</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Gana quien derriba el auriga oponente.</p>
+</li>
+<li>
+<p>Gana quien recolecte 2 pelotas de tenis de mesa de colores llevadas a la canasta del barco.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../esp32/project-arcade.html">Proyecto: Videojuego Arcade</a></span>
+  <span class="next"><a href="../raspberry/raspberry.html">Raspberry Pi</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

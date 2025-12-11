@@ -1,0 +1,185 @@
+= Coliseo Atómico
+
+Prepárate para entrar al fantástico mundo de las batallas de robots, 
+de una forma tecnológica, divertida y con componentes con precios razonables.
+En este capítulo se mostrarán proyectos relacionados a combates entre robots 
+utilizando ESP32, AtomVM y componentes disponibles en el mercado.
+
+== Materiales
+
+Los materiales para armar el carro están disponibles en el mercado chileno y tienen un valor razonable (menor a 2 UF).
+
+- Carro y Motores DC: https://mcielectronics.cl/shop/product/kit-robotico-chasis-con-ruedas-motores-y-caja-reductoras-compatible-con-arduino-26429/
+- ESP32: + Cables: https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/
+- L298N (Control de Motores): https://mcielectronics.cl/shop/product/controlador-de-motores-puente-h-l298n-25508/
+- Pack de Servomotores: https://mcielectronics.cl/shop/product/pack-de-5-micro-servo-motores-sg90-9g/
+
+.Carro
+image::carro.jpg[]
+
+*Motores DC*
+
+Los motores DC son utilizados para la movilización principal del robot 
+en dos de sus ruedas (la tercera es una rueda de apoyo omnidireccional). 
+Estos motores necesitan una batería de 5 a 9v y un L298N  para controlar la dirección 
+de cada motor de forma independiente.
+
+- Relaciones de Voltaje/Velocidad. 
+- DC 3V, 160mA, 120 rpm/min, 100 rpm/min, 0.45 kg.cm; 
+- DC 6V, 220mA, 200 rpm/min, 175 rpm/min, 1.0 kg.cm; 
+- DC 7.2V, 250mA, 250 rpm/min, 210 rpm/min, 1.5 kg.cm.  
+- Relación de los motores: 1:48 
+- Tamaño de los motores: 65mm x 18mm x 22mm 
+- Alimentación Voltaje: 3~9V 
+- Corriente: 600mA 
+
+.Motores DC
+image::motoresdc.jpg[]
+
+También es importante contar con un controlador L298N
+para controlar a los motores DC individualmente.
+
+.L298N
+image::l298n.webp[]
+
+*Servomotores SG90*
+
+Los servomotores son utilizados para herramientas que permitan complementar 
+el robot o tener partes con movilidad controlada.
+
+- Torque a 4.8 volts: 1.2 kg/cm
+- Voltaje de operación: 4.0 a 7.2 volts
+- Velocidad de giro a 4.8 volts: 120ms / 60 º
+
+.Servomotor
+image::servo.webp[]
+
+*ESP32*
+
+.KIT ESP32
+image::kitesp32.png[]
+
+Principal tarjeta de programación para AtomVM, cuenta con Wifi y Bluetooth incorporado
+y puede ser alimentada por USB.
+
+En el KIT de MCI incluye una variedad de componentes, aunque no necesariamente todos serán utilizados:
+
+- 1 placa de desarrollo ESP32
+- 1 x OLED de 0,96 pulgadas
+- 1X Protoboard 830pts
+- 1 X módulo para evitar obstáculos
+- 1 módulo de fotorresistencia
+- 1 X Módulo de temperatura y humedad DHT11
+- 1 sensor de movimiento PIR de 2/2″
+- 1 potenciómetro X (10K)
+- 1 cable micro USB
+- 30X resistencias (220R/1K/10K)
+- 1 zumbador pasivo
+- 1 X zumbador activo
+- 1 Módulo de relé de doble canal de 5V
+- 6X interruptores de botón
+- 10 x Cable DuPont
+- 10 x cable DuPont de pulgadas
+- 10 x Cable DuPont
+- 5 x LED rojo
+- 5 x LED amarillo
+- 5 x LED verde
+- 2 LEDs RGB
+
+*Minifigura Lego*
+
+Se recomienda una minifigura Lego que represente al Auriga.
+Ver https://www.tiendalego.cl/ o alguna tienda similar 
+para saber que personajes están disponibles.
+
+.Minifigura Lego
+image::lego.webp[]
+
+== Colosseo
+
+Tal como en la roma antígüa y la era medieval se presentarán los siguientes eventos.
+
+- Lucha de Gladiadores
+- Carrera de Carros 
+- Justa
+- Naumaquias (Batalla Naval)
+
+=== Auriga
+
+El Auriga es un personaje de lego pequeño que va sobre el carro robot.
+Si el auriga se cae del robot, el jugador pierde inmediatamente.
+Normalmente afirmado al carro de forma de que sea posible sacarlo con un golpe fuerte.
+
+=== Globos
+
+Los globos son la "vida" que tiene el carro robot. Si el globo se despega del carro 
+o es reventado, el jugador pierde inmediatamente. Se debe usar los globos largos
+que permiten ser moldeados a una forma específica alrededor del carro. El globo 
+debe rodear apropiadamente el carro en forma de "U" y estar con un nivel de aire 
+de modo que sea de consistencia firme. Cada carro debe tener un color de globo diferente.
+
+== Lucha de Gladiadores 
+
+En un espacio circular de un diametro apropiado (como rueda de automóvil o bicicleta)
+dos carros y sus aurigas se enfrentan.
+
+- El carro puede ser controlado remotamente via Wifi o Bluetooth.
+- El carro debe contar con uno o más clavos (máximo 3) pequeños para reventar el globo.
+- El carro consiste en un acrílico con dos motores dc y una rueda omnidireccional.
+- Se permite que los clavos sean moviles con servomotores.
+
+=== Reglas 
+
+- Gana quien reviente primero el globo del adversario o derribe al auriga contrario.
+- Si sale del círculo se penaliza con tarjeta amarilla. Dos tarjetas amarillas y el jugador pierde.
+
+== Carrera de Carros
+
+Similar a la lucha de gladiadores en términos de fabricación de carros y aurigas.
+
+- La pista puede tener obstáculos que pueden reventar los globos.
+- El carro puede ser controlado remotamente via Wifi o Bluetooth.
+- Solo 2 clavos permitidos (uno en cada rueda)
+
+=== Reglas
+
+- Gana quien de 3 vueltas primero a la pista.
+- Gana quien destruya los globos del adversario.
+- Gana quien derriba al auriga adversario.
+- Pierde inmediatamente quien se salga de los límites de la pista.
+
+== Justa
+
+La Justa consiste en derribar el auriga contrario con un palo ubicado en la parte superior del carro.
+Dos carros y sus arigas se enfrentan corriendo en línea recta y solamente separados por una línea.
+La pista es una "O" donde al llegar al final deben dar la vuelta y volver a intentar derriba al auriga oponente.
+
+- Los muros y límites de la pista pueden reventar los globos.
+- El carro puede ser controlado remotamente via Wifi o Bluetooth.
+
+=== Reglas 
+
+- Gana quien derriba primero al auriga oponente.
+- Pierde si el carro va a la pista equivocada.
+- Pierde si se revientan los globos en los muros o estos se salen del carro.
+- Pierde si el carro deja de funcionar o sale de la pista.
+
+== Naumaquias (Batalla Naval)
+
+La naumaquia o batalla naval consiste en un robot náutico 
+con el objetivo de derribar al auriga contrincante. Estas tienen un cañón
+de pelota de tenis de mesa (blanca), el cual puede ser usado para derribar al auriga contrario.
+También habrán pelotas de tenis de mesa de colores disponibles flotando en el agua que pueden ser recolectadas con redes del barco.
+
+- Botellas de plástico de bebidas. 1 de 3 litros y 2 de 500 cc.
+- El cañón puede ser impulsado con un sistema de catapulta onager.
+- Habrá una canasta especial para recolectar las pelotas de tenis de cada barco.
+
+Puede haber una sola canasta y cada barco tiene pelotas de tenis de mesa de un color específico. 
+Por ejemplo barco 1 tiene pelotas naranjas y barco 2 tiene pelotas verdes.
+Gana quien junte 2 pelotas de su color o derribe al auriga contrario con su cañón.
+
+=== Reglas 
+
+- Gana quien derriba el auriga oponente.
+- Gana quien recolecte 2 pelotas de tenis de mesa de colores llevadas a la canasta del barco.

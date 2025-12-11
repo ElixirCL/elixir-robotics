@@ -9,6 +9,7 @@ nav:
   - modules/ada/nav.adoc
   - modules/arduino/nav.adoc
   - modules/esp32/nav.adoc
+  - modules/colosseo/nav.adoc
   - modules/raspberry/nav.adoc
   - modules/communication/nav.adoc
   - modules/tools/nav.adoc
