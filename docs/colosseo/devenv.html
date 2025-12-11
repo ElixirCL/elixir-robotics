@@ -213,7 +213,7 @@ y compilar AtomVM para ser ejecutado en la ESP32 utilizando un sistema operativo
 <h2 id="linuxmacos"><a class="anchor" href="#linuxmacos"></a>Linux/MacOS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Se recomienda usar <em>Devenv</em> para gestionar dependencias del sistema. El siguiente archivo <code>devenv.nix</code> define todas las dependencias necesarias para compilar un proyecto Elixir a <code>avm</code>, y luego flashear el resultado a un ESP32:</p>
+<p>Se recomienda usar <a href="https://devenv.sh/"><em>Devenv</em> </a> para gestionar dependencias del sistema. El siguiente archivo <code>devenv.nix</code> define todas las dependencias necesarias para compilar un proyecto Elixir a <code>avm</code>, y luego flashear el resultado a un ESP32:</p>
 </div>
 <div class="listingblock">
 <div class="title">devenv.nix</div>
@@ -244,6 +244,10 @@ y compilar AtomVM para ser ejecutado en la ESP32 utilizando un sistema operativo
 
   scripts.monitor.exec = ''
     sudo picocom -b 115200 /dev/ttyUSB0
+  '';
+
+  scripts.format.exec = ''
+    sudo esptool --chip auto --port /dev/ttyUSB0 --baud 921600 erase-flash
   '';
 }</code></pre>
 </div>
