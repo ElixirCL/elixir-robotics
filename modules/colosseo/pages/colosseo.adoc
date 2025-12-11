@@ -1,7 +1,9 @@
 = Coliseo Atómico
 
 Prepárate para entrar al fantástico mundo de las batallas de robots, 
-de una forma tecnológica, divertida y con componentes con precios razonables.
+de una forma tecnológica, divertida y con componentes con precios razonables, 
+sin necesidad de soldadura o complicadas conexiones.
+
 En este capítulo se mostrarán proyectos relacionados a combates entre robots 
 utilizando ESP32, AtomVM y componentes disponibles en el mercado.
 
@@ -10,8 +12,9 @@ utilizando ESP32, AtomVM y componentes disponibles en el mercado.
 Los materiales para armar el carro están disponibles en el mercado chileno y tienen un valor razonable (menor a 2 UF).
 
 - Carro y Motores DC: https://mcielectronics.cl/shop/product/kit-robotico-chasis-con-ruedas-motores-y-caja-reductoras-compatible-con-arduino-26429/
-- ESP32: + Cables: https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/
-- L298N (Control de Motores): https://mcielectronics.cl/shop/product/controlador-de-motores-puente-h-l298n-25508/
+- ESP32 (Dev Kit V1 - 30 pines): + Cables + Sensores + Actuadores: https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/
+- L298N (Control de Motores): https://mcielectronics.cl/shop/product/contrzolador-de-motores-puente-h-l298n-25508/
+- Adaptador de Expansión de ESP32 de 30 pines (Opcional): https://altronics.cl/base-esp32-30p-st?search=expansion
 - Pack de Servomotores: https://mcielectronics.cl/shop/product/pack-de-5-micro-servo-motores-sg90-9g/
 
 .Carro
@@ -60,7 +63,9 @@ image::servo.webp[]
 image::kitesp32.png[]
 
 Principal tarjeta de programación para AtomVM, cuenta con Wifi y Bluetooth incorporado
-y puede ser alimentada por USB.
+y puede ser alimentada por USB. Adicionalmente y opcional es la compra de un adaptador de 30 pines 
+para facilitar la conexión, caso contrario se puede usar cables hembra-macho para conectarlo a un protoboard
+y ocupar menos espacio.
 
 En el KIT de MCI incluye una variedad de componentes, aunque no necesariamente todos serán utilizados:
 
@@ -85,6 +90,12 @@ En el KIT de MCI incluye una variedad de componentes, aunque no necesariamente t
 - 5 x LED amarillo
 - 5 x LED verde
 - 2 LEDs RGB
+
+.ESP32 Dev Kit V1 30 Pines USB-C
+image::esp32.jpg[]
+
+.Placa Expansión ESP32 30 Pines
+image::expansionesp32.jpg[]
 
 *Minifigura Lego*
 

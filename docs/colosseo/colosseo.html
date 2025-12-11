@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Coliseo Atómico :: Electrónica, Robótica e IOT con Elixir</title>
     <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/colosseo/colosseo.html">
-    <link rel="prev" href="../esp32/project-arcade.html">
-    <link rel="next" href="../raspberry/raspberry.html">
+    <link rel="prev" href="../tools/home-assistant.html">
+    <link rel="next" href="devenv.html">
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -144,15 +144,6 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Coliseo Atómico</span>
-<ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="colosseo.html">Coliseo Atómico</a>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-    <button class="nav-item-toggle"></button>
     <span class="nav-text">Raspberry PI</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
@@ -171,16 +162,7 @@
     <span class="nav-text">Protocolos de Comunicación</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../communication/meshtastic.html">Meshtastic</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../communication/lorawan.html">lorawan.adoc</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../communication/sigfox.html">Sigfox</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../communication/zigbee.html">Zigbee</a>
+    <a class="nav-link" href="../communication/lorawan.html">LoRaWAN</a>
   </li>
 </ul>
   </li>
@@ -193,6 +175,24 @@
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coliseo Atómico</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="bluetooth.html">Conexión Bluetooth</a>
   </li>
 </ul>
   </li>
@@ -236,8 +236,11 @@
 <div class="sectionbody">
 <div class="paragraph">
 <p>Prepárate para entrar al fantástico mundo de las batallas de robots,
-de una forma tecnológica, divertida y con componentes con precios razonables.
-En este capítulo se mostrarán proyectos relacionados a combates entre robots
+de una forma tecnológica, divertida y con componentes con precios razonables,
+sin necesidad de soldadura o complicadas conexiones.</p>
+</div>
+<div class="paragraph">
+<p>En este capítulo se mostrarán proyectos relacionados a combates entre robots
 utilizando ESP32, AtomVM y componentes disponibles en el mercado.</p>
 </div>
 </div>
@@ -254,10 +257,13 @@ utilizando ESP32, AtomVM y componentes disponibles en el mercado.</p>
 <p>Carro y Motores DC: <a href="https://mcielectronics.cl/shop/product/kit-robotico-chasis-con-ruedas-motores-y-caja-reductoras-compatible-con-arduino-26429/" class="bare">https://mcielectronics.cl/shop/product/kit-robotico-chasis-con-ruedas-motores-y-caja-reductoras-compatible-con-arduino-26429/</a></p>
 </li>
 <li>
-<p>ESP32: + Cables: <a href="https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/" class="bare">https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/</a></p>
+<p>ESP32 (Dev Kit V1 - 30 pines): + Cables + Sensores + Actuadores: <a href="https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/" class="bare">https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/</a></p>
 </li>
 <li>
-<p>L298N (Control de Motores): <a href="https://mcielectronics.cl/shop/product/controlador-de-motores-puente-h-l298n-25508/" class="bare">https://mcielectronics.cl/shop/product/controlador-de-motores-puente-h-l298n-25508/</a></p>
+<p>L298N (Control de Motores): <a href="https://mcielectronics.cl/shop/product/contrzolador-de-motores-puente-h-l298n-25508/" class="bare">https://mcielectronics.cl/shop/product/contrzolador-de-motores-puente-h-l298n-25508/</a></p>
+</li>
+<li>
+<p>Adaptador de Expansión de ESP32 de 30 pines (Opcional): <a href="https://altronics.cl/base-esp32-30p-st?search=expansion" class="bare">https://altronics.cl/base-esp32-30p-st?search=expansion</a></p>
 </li>
 <li>
 <p>Pack de Servomotores: <a href="https://mcielectronics.cl/shop/product/pack-de-5-micro-servo-motores-sg90-9g/" class="bare">https://mcielectronics.cl/shop/product/pack-de-5-micro-servo-motores-sg90-9g/</a></p>
@@ -360,7 +366,9 @@ el robot o tener partes con movilidad controlada.</p>
 </div>
 <div class="paragraph">
 <p>Principal tarjeta de programación para AtomVM, cuenta con Wifi y Bluetooth incorporado
-y puede ser alimentada por USB.</p>
+y puede ser alimentada por USB. Adicionalmente y opcional es la compra de un adaptador de 30 pines
+para facilitar la conexión, caso contrario se puede usar cables hembra-macho para conectarlo a un protoboard
+y ocupar menos espacio.</p>
 </div>
 <div class="paragraph">
 <p>En el KIT de MCI incluye una variedad de componentes, aunque no necesariamente todos serán utilizados:</p>
@@ -432,6 +440,18 @@ y puede ser alimentada por USB.</p>
 </li>
 </ul>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32.jpg" alt="esp32">
+</div>
+<div class="title">Figure 6. ESP32 Dev Kit V1 30 Pines USB-C</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/expansionesp32.jpg" alt="expansionesp32">
+</div>
+<div class="title">Figure 7. Placa Expansión ESP32 30 Pines</div>
+</div>
 <div class="paragraph">
 <p><strong>Minifigura Lego</strong></p>
 </div>
@@ -444,7 +464,7 @@ para saber que personajes están disponibles.</p>
 <div class="content">
 <img src="_images/lego.webp" alt="lego">
 </div>
-<div class="title">Figure 6. Minifigura Lego</div>
+<div class="title">Figure 8. Minifigura Lego</div>
 </div>
 </div>
 </div>
@@ -650,8 +670,8 @@ Gana quien junte 2 pelotas de su color o derribe al auriga contrario con su cañ
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../esp32/project-arcade.html">Proyecto: Videojuego Arcade</a></span>
-  <span class="next"><a href="../raspberry/raspberry.html">Raspberry Pi</a></span>
+  <span class="prev"><a href="../tools/home-assistant.html">Home Assistant</a></span>
+  <span class="next"><a href="devenv.html">Entorno de Desarrollo</a></span>
 </nav>
 </article>
   </div>

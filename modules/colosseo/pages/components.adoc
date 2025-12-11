@@ -1,0 +1,48 @@
+= Componentes Electrónicos
+
+En esta sección se mostrará ejemplos de cómo conectar y utilizar distintos componentes 
+de electrónica que podrían ser utilizados en los robots del coliseo atómico.
+
+== Motor DC
+
+El https://mcielectronics.cl/shop/product/motor-gear-dc-caja-reductora-motorreductor/[Motor DC] requiere de una placa https://mcielectronics.cl/shop/product/controlador-de-motores-puente-h-l298n-25508/[L298N] para poder ser controlado desde la ESP32. 
+Se recomienda una alimentación de 9V separada de la placa de desarrollo para alimentar los motores 
+y tengan una buena velocidad. Son ideales para las ruedas que dan movimiento al carro.
+
+=== Guía de Conexiones
+
+=== Código de Ejemplo
+
+=== Ejemplo de Funcionamiento
+
+== Servomotor
+
+A diferencia de un motor DC, el servomotor puede ser controlado con precisión, pero son más lentos.
+En este caso se utilizará un https://mcielectronics.cl/shop/product/micro-servo-motor-sg90-9g-25775/[Micro servo SG90].
+
+=== Guía de Conexiones
+
+=== Código de Ejemplo
+
+=== Ejemplo de Funcionamiento
+
+== Evitar Obstáculos
+
+== Fotoresistencia
+
+La fotoresistencia son útiles para crear robots que sigan líneas
+o eviten obstáculos según el nivel de luz.
+
+== Sensor de temperatura y humedad
+
+== Sensor de movimiento
+
+== Potenciometro
+
+Los pontenciómetros son útiles para configurar la intensidad de ciertas configuraciones.
+
+== Zumbador activo y pasivo
+
+== Botones
+
+== Pantalla OLED

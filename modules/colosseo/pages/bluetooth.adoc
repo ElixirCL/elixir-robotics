@@ -1,0 +1,6 @@
+= Conexión Bluetooth
+
+En esta sección se mostrará como conectar un celular Android o iPhone
+al ESP32 y poner enviar comandos via Bluetooth.
+
+// Pendiente: Ver si es posible conectar un mando de PS3 o joystick similar que tenga bluetooth.

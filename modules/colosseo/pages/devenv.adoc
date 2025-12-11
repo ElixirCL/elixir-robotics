@@ -1,0 +1,15 @@
+= Entorno de Desarrollo
+
+En esta sección se mostrará cómo configurar el entorno de desarrollo
+y compilar AtomVM para ser ejecutado en la ESP32 utilizando un sistema operativo Linux.
+
+// Pendiente: ¿Qué versión de Linux?
+// Pendiente: ¿Cómo hacerlo con Debian?
+// Pendiente: ¿Cómo hacerlo con Windows 10?
+// Pendiente: ¿Se puede Windows 11?
+// Pendiente: ¿Se puede en MacOS?
+
+== Encender un LED con AtomVM
+
+Si logras ejecutar éste código y el Led prende. Exitosamente 
+has configurado el entorno de desarrollo para AtomVM.

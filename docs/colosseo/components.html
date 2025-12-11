@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Raspberry Pi :: Electrónica, Robótica e IOT con Elixir</title>
-    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/raspberry/raspberry.html">
-    <link rel="prev" href="../esp32/project-arcade.html">
-    <link rel="next" href="nerves.html">
+    <title>Componentes Electrónicos :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/colosseo/components.html">
+    <link rel="prev" href="devenv.html">
+    <link rel="next" href="bluetooth.html">
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -146,14 +146,14 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Raspberry PI</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="raspberry.html">Raspberry Pi</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../raspberry/raspberry.html">Raspberry Pi</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="nerves.html">Elixir Nerves</a>
+    <a class="nav-link" href="../raspberry/nerves.html">Elixir Nerves</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="project-animatronics.html">Proyecto: Mesero Robot</a>
+    <a class="nav-link" href="../raspberry/project-animatronics.html">Proyecto: Mesero Robot</a>
   </li>
 </ul>
   </li>
@@ -183,16 +183,16 @@
     <span class="nav-text">Coliseo Atómico</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../colosseo/colosseo.html">Coliseo Atómico</a>
+    <a class="nav-link" href="colosseo.html">Coliseo Atómico</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../colosseo/devenv.html">Entorno de Desarrollo</a>
+    <a class="nav-link" href="devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="components.html">Componentes Electrónicos</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../colosseo/components.html">Componentes Electrónicos</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../colosseo/bluetooth.html">Conexión Bluetooth</a>
+    <a class="nav-link" href="bluetooth.html">Conexión Bluetooth</a>
   </li>
 </ul>
   </li>
@@ -220,22 +220,125 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
-    <li>Raspberry PI</li>
-    <li><a href="raspberry.html">Raspberry Pi</a></li>
+    <li>Coliseo Atómico</li>
+    <li><a href="components.html">Componentes Electrónicos</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="file:///antora/./modules/raspberry/pages/raspberry.adoc">Editar esta página</a></div>
+<div class="edit-this-page"><a href="file:///antora/./modules/colosseo/pages/components.adoc">Editar esta página</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contenidos" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Raspberry Pi</h1>
+<h1 class="page">Componentes Electrónicos</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>En esta sección se mostrará ejemplos de cómo conectar y utilizar distintos componentes
+de electrónica que podrían ser utilizados en los robots del coliseo atómico.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="motor-dc"><a class="anchor" href="#motor-dc"></a>Motor DC</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El <a href="https://mcielectronics.cl/shop/product/motor-gear-dc-caja-reductora-motorreductor/">Motor DC</a> requiere de una placa <a href="https://mcielectronics.cl/shop/product/controlador-de-motores-puente-h-l298n-25508/">L298N</a> para poder ser controlado desde la ESP32.
+Se recomienda una alimentación de 9V separada de la placa de desarrollo para alimentar los motores
+y tengan una buena velocidad. Son ideales para las ruedas que dan movimiento al carro.</p>
+</div>
+<div class="sect2">
+<h3 id="guía-de-conexiones"><a class="anchor" href="#guía-de-conexiones"></a>Guía de Conexiones</h3>
 
+</div>
+<div class="sect2">
+<h3 id="código-de-ejemplo"><a class="anchor" href="#código-de-ejemplo"></a>Código de Ejemplo</h3>
+
+</div>
+<div class="sect2">
+<h3 id="ejemplo-de-funcionamiento"><a class="anchor" href="#ejemplo-de-funcionamiento"></a>Ejemplo de Funcionamiento</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="servomotor"><a class="anchor" href="#servomotor"></a>Servomotor</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A diferencia de un motor DC, el servomotor puede ser controlado con precisión, pero son más lentos.
+En este caso se utilizará un <a href="https://mcielectronics.cl/shop/product/micro-servo-motor-sg90-9g-25775/">Micro servo SG90</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="guía-de-conexiones-2"><a class="anchor" href="#guía-de-conexiones-2"></a>Guía de Conexiones</h3>
+
+</div>
+<div class="sect2">
+<h3 id="código-de-ejemplo-2"><a class="anchor" href="#código-de-ejemplo-2"></a>Código de Ejemplo</h3>
+
+</div>
+<div class="sect2">
+<h3 id="ejemplo-de-funcionamiento-2"><a class="anchor" href="#ejemplo-de-funcionamiento-2"></a>Ejemplo de Funcionamiento</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="evitar-obstáculos"><a class="anchor" href="#evitar-obstáculos"></a>Evitar Obstáculos</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="fotoresistencia"><a class="anchor" href="#fotoresistencia"></a>Fotoresistencia</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La fotoresistencia son útiles para crear robots que sigan líneas
+o eviten obstáculos según el nivel de luz.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sensor-de-temperatura-y-humedad"><a class="anchor" href="#sensor-de-temperatura-y-humedad"></a>Sensor de temperatura y humedad</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="sensor-de-movimiento"><a class="anchor" href="#sensor-de-movimiento"></a>Sensor de movimiento</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="potenciometro"><a class="anchor" href="#potenciometro"></a>Potenciometro</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Los pontenciómetros son útiles para configurar la intensidad de ciertas configuraciones.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="zumbador-activo-y-pasivo"><a class="anchor" href="#zumbador-activo-y-pasivo"></a>Zumbador activo y pasivo</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="botones"><a class="anchor" href="#botones"></a>Botones</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="pantalla-oled"><a class="anchor" href="#pantalla-oled"></a>Pantalla OLED</h2>
+<div class="sectionbody">
+
+</div>
+</div>
 <nav class="pagination">
-  <span class="prev"><a href="../esp32/project-arcade.html">Proyecto: Videojuego Arcade</a></span>
-  <span class="next"><a href="nerves.html">Elixir Nerves</a></span>
+  <span class="prev"><a href="devenv.html">Entorno de Desarrollo</a></span>
+  <span class="next"><a href="bluetooth.html">Conexión Bluetooth</a></span>
 </nav>
 </article>
   </div>
