@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>IC555 :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/controllers/ic555.html">
+    <link rel="prev" href="../fundamentals/programming.html">
+    <link rel="next" href="pic16f877a.html">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="raspberry.html">Raspberry Pi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/lorawan.html">LoRaWAN</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/grafana.html">grafana.adoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nerves</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../nerves/nerves.html">Elixir Nerves</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coliseo Atómico</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/bluetooth.html">Conexión Bluetooth</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>IC y Controladores</li>
+    <li><a href="ic555.html">IC555</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/controllers/pages/ic555.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">IC555</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>El temporizador 555 fue desarrollado por la firma Signetics en el 1971 con el nombre SE555/NE555 y
+se le conoce como el «Circuito Integrado Máquina del Tiempo» (The IC Time Machine).</p>
+</div>
+<div class="paragraph">
+<p>El IC 555 ha sido llamado "la máquina del tiempo" debido a su capacidad para
+manejar el tiempo en circuitos electrónicos. A pesar de su antigüedad,
+sigue siendo fabricado masivamente y
+es un pilar en la enseñanza y desarrollo de electrónica moderna (Hispavila, 2001).</p>
+</div>
+<div class="paragraph">
+<div class="title">NE555</div>
+<p><span class="image"><img src="_images/ic555/5551.gif" alt="5551"></span></p>
+</div>
+<div class="paragraph">
+<p>El 555 es un temporizador flexible, barato y fácil de encontrar. Es un buen punto de partida
+para multitud de proyectos de cualquier índole, debido a que su versátil salida,
+se puede conectar directamente a una carga a bajo o a alto.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="modo-monoestable"><a class="anchor" href="#modo-monoestable"></a>Modo Monoestable</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Es ideal para crear retardos de tiempo. En este modo, un disparador externo hace que el temporizador
+555 genere un pulso de una duración ajustable.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="modo-astable"><a class="anchor" href="#modo-astable"></a>Modo Astable</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El modo astable está estrechamente relacionado con el modo monoestable. La diferencia importante es que, en modo astable, el pin de disparo, pin 2, está conectado a la patilla umbral pin 6,
+lo que hace que la salida pase a alternar continuamente entre los estados alto y bajo.
+En el modo astable, la salida del temporizador 555, es una forma de onda de pulso continuo.</p>
+</div>
+<div class="paragraph">
+<p>En realidad, el modo astable, se considera un sencillo generador de frecuencias,
+cuya frecuencia se puede controlar, modificando el valor del potenciómetro o cambiando el valor del condensador,
+para cambiar el rango de las frecuencias.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="proyecto-luces-del-ferrocarril"><a class="anchor" href="#proyecto-luces-del-ferrocarril"></a>Proyecto Luces del Ferrocarril</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Esta es un proyecto de luces de ferrocarril con un temporizador 555, en el cual dos luces se alternan,
+similar a una señal de cruce ferroviario. El temporizador 555 está configurado en modo astable,
+por lo que cambia continuamente su salida entre ALTA y BAJA,
+encendiendo y apagando así los dos LED conectados a la salida.</p>
+</div>
+<div class="paragraph">
+<p><strong>Lista de Componentes</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>555 timer IC</p>
+</li>
+<li>
+<p>C1: Capacitor 10µF</p>
+</li>
+<li>
+<p>R1: Resistencia 47k</p>
+</li>
+<li>
+<p>R2: Resistencia 470</p>
+</li>
+<li>
+<p>LED1 y LED2: Luces LED estándar</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Circuito Luces de Ferrocarril</div>
+<p><span class="image"><img src="_images/ic555/railroad.png" alt="railroad"></span></p>
+</div>
+<div class="paragraph">
+<p>Conecta la batería de 9V al riel de alimentación y al riel de tierra para encender el circuito.
+Las luces intermitentes de ferrocarril con el temporizador 555 deberían comenzar a alternarse.</p>
+</div>
+<div class="paragraph">
+<div class="title">Luces de Ferrocarril</div>
+<p><span class="image"><img src="_images/ic555/railroad-breadboard.png" alt="railroad breadboard"></span></p>
+</div>
+<div class="paragraph">
+<p>El proyecto usa un circuito integrado temporizador 555 para crear un efecto intermitente en dos LEDs rojos,
+que comúnmente se usan para simular las luces parpadeantes en un cruce ferroviario en maquetas de trenes.</p>
+</div>
+<div class="paragraph">
+<p>El temporizador 555 está configurado en modo “astable”, lo que significa que genera una secuencia continua de pulsos de
+encendido y apagado.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Componentes de temporización</strong>: La resistencia (R1) y el condensador (C1) determinan la velocidad con la que
+parpadean los LEDs. El condensador se carga a través de R1 y, una vez que alcanza cierto voltaje, el
+temporizador cambia su salida para encender o apagar los LEDs.</p>
+</li>
+<li>
+<p><strong>LEDs y resistencias</strong>: Los dos LEDs (LED1 y LED2) están conectados a la salida del temporizador a
+través de sus respectivas resistencias (R2 y R3), que limitan la corriente para evitar que los
+LEDs se quemen. Cuando la salida del 555 está en alto, la corriente fluye solo a través del LED
+inferior y este se enciende. Cuando la salida está en bajo, la corriente fluye solo a través del LED superior,
+encendiéndolo.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Al alimentar este circuito, el temporizador 555 carga y descarga repetidamente el condensador a
+una velocidad determinada por R1 y C1, haciendo que el pin de salida alterne entre estados alto y bajo.
+Esto hace que los LEDs parpadeen, simulando las luces de advertencia que se ven en un cruce
+ferroviario real.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="proyecto-metrónomo"><a class="anchor" href="#proyecto-metrónomo"></a>Proyecto Metrónomo</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Un metrónomo es un dispositivo utilizado por los músicos para mantener un tempo constante durante la práctica. En este proyecto,
+se construirá un metrónomo simple utilizando el circuito integrado temporizador 555.</p>
+</div>
+<div class="paragraph">
+<p><strong>Lista de Componentes</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Batería 9V</p>
+</li>
+<li>
+<p>555 Timer IC</p>
+</li>
+<li>
+<p>Potenciómetro, VR1 250kΩ</p>
+</li>
+<li>
+<p>Resistencia, R1 1kΩ</p>
+</li>
+<li>
+<p>2 Capacitores, C1 &amp; C2 22µF</p>
+</li>
+<li>
+<p>Altavoz (Parlante), 8Ω</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Circuito del Metrónomo</div>
+<p><span class="image"><img src="_images/ic555/metronome.png" alt="metronome"></span></p>
+</div>
+<div class="paragraph">
+<p>Conecta el pin 8 (VCC) del temporizador 555 a la columna de alimentación positiva, y el pin 1 (GND) a la columna de alimentación negativa.
+Además, conecta el pin 4 (RESET) al pin 8 (VCC) para evitar que el temporizador se reinicie.</p>
+</div>
+<div class="paragraph">
+<p>Utiliza un cable para conectar el pin 6 (THR) al pin 2 (TRIG).</p>
+</div>
+<div class="paragraph">
+<p>Coloca VR1 y R1 en serie entre el pin 8 (VCC) y el pin 7 (DIS).</p>
+</div>
+<div class="paragraph">
+<p>Luego conecta el pin 7 (DIS) al pin 6 (THR), formando un lazo con las resistencias en serie y el temporizador.</p>
+</div>
+<div class="paragraph">
+<p>Conecta el terminal positivo de C1 a la unión entre VR1 y R1, y su terminal negativo al pin 1 (GND).
+Conecta el terminal positivo de C2 al pin 3 (OUT) y su terminal negativo a uno de los terminales del altavoz.</p>
+</div>
+<div class="paragraph">
+<p>Finalmente, conecta el otro terminal del altavoz al pin 1 (GND).</p>
+</div>
+<div class="paragraph">
+<p>Opcionalmente, conecta el pin 5 (CV) a tierra mediante un pequeño condensador de 10nF para estabilizar la frecuencia (no mostrado en el diagrama).</p>
+</div>
+<div class="paragraph">
+<div class="title">Metrónomo</div>
+<p><span class="image"><img src="_images/ic555/metronome-breadboard.png" alt="metronome breadboard"></span></p>
+</div>
+<div class="paragraph">
+<p>El temporizador 555 está configurado en modo astable, lo que significa que genera una secuencia continua de pulsos.
+La frecuencia de estos pulsos determina el tempo del metrónomo.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Componentes de temporización</strong>: Las resistencias (VR1 y R1) y el capacitor (C1) determinan el intervalo entre pulsos,
+el cual se puede ajustar modificando la resistencia de VR1.</p>
+</li>
+<li>
+<p><strong>Descarga del capacitor</strong>: La salida alterna entre estados alto y bajo, lo que hace que C2 se cargue y se descargue,
+generando así el sonido en el altavoz.</p>
+</li>
+<li>
+<p><strong>Salida al altavoz</strong>: Cuando el pin de salida (pin 3) está en alto, C2 se carga a través del altavoz,
+produciendo un sonido de clic.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="proyecto-atari-punk"><a class="anchor" href="#proyecto-atari-punk"></a>Proyecto Atari Punk</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Toma su nombre de las antiguas computadoras Atari de los años 80 porque produce sonidos similares.
+Este circuito es perfecto si ya has construido un par de circuitos simples antes y quieres hacer algo más interesante.</p>
+</div>
+<div class="paragraph">
+<p><strong>Lista de Componentes</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Una placa de pruebas (breadboard) para montar el circuito</p>
+</li>
+<li>
+<p>Cables de conexión (jumper wires)</p>
+</li>
+<li>
+<p>Altavoz (mínimo 0.3W)</p>
+</li>
+<li>
+<p>Dos circuitos integrados temporizadores 555</p>
+</li>
+<li>
+<p>C1: Condensador de 10 nF</p>
+</li>
+<li>
+<p>C2: Condensador de 100 nF</p>
+</li>
+<li>
+<p>R1, R4: Resistencias de 1 kΩ</p>
+</li>
+<li>
+<p>R2, R3: Potenciómetros de 100k</p>
+</li>
+<li>
+<p>R5: Resistencia de 470 Ω</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Circuito de Atari Punk</div>
+<p><span class="image"><img src="_images/ic555/atari.png" alt="atari"></span></p>
+</div>
+<div class="paragraph">
+<div class="title">Atari Punk</div>
+<p><span class="image"><img src="_images/ic555/atari-breadboard.jpg" alt="atari breadboard"></span></p>
+</div>
+<div class="paragraph">
+<p>El circuito utiliza dos temporizadores 555. El temporizador 555 necesita algunos capacitores y
+resistencias para establecer el tono o la duración del pulso.</p>
+</div>
+<div class="paragraph">
+<p>Al combinar uno que establece la frecuencia y otro que controla la duración del pulso,
+puedes crear sonidos muy llamativos o incluso algo locos.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Dahl, Ø. N. (2021, June 4). Build an Atari Punk Console this evening. Retrieved from <a href="https://www.build-electronic-circuits.com/atari-punk-console/" class="bare">https://www.build-electronic-circuits.com/atari-punk-console/</a></p>
+</li>
+<li>
+<p>Dahl, Ø. N. (2024a, April 6). 555 timer Metronome Circuit. Retrieved from <a href="https://www.build-electronic-circuits.com/555-timer-metronome-circuit/" class="bare">https://www.build-electronic-circuits.com/555-timer-metronome-circuit/</a></p>
+</li>
+<li>
+<p>Dahl, Ø. N. (2024, April 6). 555 Timer Railroad Lights. Retrieved from <a href="https://www.build-electronic-circuits.com/555-timer-railroad-lights/" class="bare">https://www.build-electronic-circuits.com/555-timer-railroad-lights/</a></p>
+</li>
+<li>
+<p>Hispavila. (2001, April 6). EL IC-555 – HISPAVILA.COM. Retrieved from <a href="https://www.hispavila.com/el-ic-555/" class="bare">https://www.hispavila.com/el-ic-555/</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../fundamentals/programming.html">Lenguajes de Programación</a></span>
+  <span class="next"><a href="pic16f877a.html">PIC16F877a</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

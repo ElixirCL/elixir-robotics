@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ESP32 :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/controllers/esp32.html">
+    <link rel="prev" href="arduino.html">
+    <link rel="next" href="raspberry.html">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="raspberry.html">Raspberry Pi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/lorawan.html">LoRaWAN</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/grafana.html">grafana.adoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nerves</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../nerves/nerves.html">Elixir Nerves</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coliseo Atómico</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/bluetooth.html">Conexión Bluetooth</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>IC y Controladores</li>
+    <li><a href="esp32.html">ESP32</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/controllers/pages/esp32.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">ESP32</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>ESP32 es un único chip combinado de Wi-Fi y Bluetooth de 2.4 GHz, diseñado con la tecnología de bajo consumo de 40 nm de TSMC.
+Está diseñado para lograr el mejor rendimiento en cuanto a consumo de energía y radiofrecuencia (RF), mostrando solidez,
+versatilidad y fiabilidad en una amplia variedad de aplicaciones y escenarios de consumo energético.</p>
+</div>
+<div class="paragraph">
+<div class="title">ESP32</div>
+<p><span class="image unresolved"><img src="esp32.webp" alt="esp32"></span></p>
+</div>
+<div class="paragraph">
+<p>Con su bajo consumo de energía, el ESP32 es una opción ideal para dispositivos IoT en las siguientes áreas:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Hogar inteligente</p>
+</li>
+<li>
+<p>Automatización industrial</p>
+</li>
+<li>
+<p>Cuidado de la salud</p>
+</li>
+<li>
+<p>Electrónica de consumo</p>
+</li>
+<li>
+<p>Agricultura inteligente</p>
+</li>
+<li>
+<p>Máquinas POS</p>
+</li>
+<li>
+<p>Robots de servicio</p>
+</li>
+<li>
+<p>Dispositivos de audio</p>
+</li>
+<li>
+<p>Concentradores de sensores IoT de bajo consumo genéricos</p>
+</li>
+<li>
+<p>Registradores de datos IoT de bajo consumo genéricos</p>
+</li>
+<li>
+<p>Cámaras para transmisión de video</p>
+</li>
+<li>
+<p>Reconocimiento de voz</p>
+</li>
+<li>
+<p>Reconocimiento de imágenes</p>
+</li>
+<li>
+<p>Tarjeta de red SDIO Wi-Fi + Bluetooth</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Si has trabajado con Arduino y con las placas basadas en ESP8266, la ESP32 es muy similar.
+Es una placa con microcontrolador muchísimo más poderosa que Arduino y
+se puede programar con el mismo IDE de Arduino.</p>
+</div>
+<div class="paragraph">
+<div class="title">Funciones del ESP32</div>
+<p><span class="image unresolved"><img src="esp32functions.png" alt="https://es.wikipedia.org/wiki/ESP32#/media/Archivo:Espressif_ESP32_Chip_Function_Block_Diagram.svg"></span></p>
+</div>
+<div class="paragraph">
+<p><strong>Características Principales</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Microcontrolador Tensilica LX6 de doble núcleo a 240 MHz con 600 DMIPS</p>
+</li>
+<li>
+<p>SRAM integrada de 520 KB</p>
+</li>
+<li>
+<p>Transceptor Wi-Fi 802.11 b/g/n HT40 integrado, con banda base, pila y LwIP</p>
+</li>
+<li>
+<p>Bluetooth de modo dual integrado (clásico y BLE)</p>
+</li>
+<li>
+<p>Memoria flash de 4 MB, mapeada a la memoria de código de la CPU</p>
+</li>
+<li>
+<p>Voltaje de operación de 2.3V a 3.6V</p>
+</li>
+<li>
+<p>Temperatura de operación de -40°C a +125°C</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="esp32-devkit"><a class="anchor" href="#esp32-devkit"></a>ESP32-DevKit</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La placa de desarrollo <strong>ESP32-C6-DevKit Dual Tipo C</strong> es una solución avanzada y
+versátil para el desarrollo de aplicaciones IoT y dispositivos conectados.
+Basada en el microcontrolador ESP32-C6 de <a href="https://www.espressif.com/en/products/socs/esp32">Espressif Systems</a>, esta placa ofrece una serie de mejoras en
+conectividad y rendimiento, haciéndola ideal para una amplia gama de aplicaciones desde sistemas de monitoreo
+remoto hasta soluciones industriales y de hogar inteligente.</p>
+</div>
+<div class="paragraph">
+<div class="title">ESP32 DevKit Tipo C</div>
+<p><span class="image unresolved"><img src="esp32devkit.jpg" alt="esp32devkit"></span></p>
+</div>
+<div class="paragraph">
+<p><strong>Características Destacadas</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Microcontrolador Avanzado: Equipado con el ESP32-C6, esta placa proporciona un rendimiento mejorado y capacidades ampliadas en comparación con las versiones anteriores de la serie ESP32.</p>
+</li>
+<li>
+<p>Conectividad Superior: Ofrece conectividad mejorada con Bluetooth Low Energy (BLE) 5.0 y soporte para el protocolo IEEE 802.11ax, lo que asegura una comunicación eficiente y de alta velocidad. También es compatible con los protocolos IEEE 802.11b/g/n en anchos de banda de 20 MHz y 40 MHz, alcanzando velocidades de datos de hasta 150 Mbps.</p>
+</li>
+<li>
+<p>Memoria y Almacenamiento: Con 4 MB de memoria FLASH, 320 KB de ROM, 512 KB de HP SRAM, y 16 KB de LP SRAM, la placa proporciona suficiente capacidad para ejecutar aplicaciones complejas y almacenar datos de manera eficiente.</p>
+</li>
+<li>
+<p>Versatilidad en Puertos: Dispone de 32 GPIO, 3 SPI, 2 UART, 1 I2C, y 1 ADC, ofreciendo una amplia gama de opciones para conectar y controlar periféricos y sensores.</p>
+</li>
+<li>
+<p>Diseño Robusto: Con una temperatura de funcionamiento de -40 ℃ a 85 ℃, la placa está diseñada para operar en condiciones ambientales extremas, asegurando fiabilidad en entornos industriales y exteriores.</p>
+</li>
+<li>
+<p>Antena Integrada: Incluye una antena PCB integrada, que optimiza la conectividad sin necesidad de componentes externos adicionales.</p>
+</li>
+<li>
+<p>Conectividad Tipo C: La placa está equipada con un puerto USB Tipo C, facilitando la conexión y la programación, y proporcionando una interfaz moderna y eficiente.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Disponibilidad en: <a href="https://www.mechatronicstore.cl/esp32-c6-devkit-pro-tipo-c/" class="bare">https://www.mechatronicstore.cl/esp32-c6-devkit-pro-tipo-c/</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="proyecto-gladiadores-robots"><a class="anchor" href="#proyecto-gladiadores-robots"></a>Proyecto Gladiadores Robots</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El objetivo es crear un "Gladiador Robot" controlado por un smartphone via Wifi,
+este debe ser capaz de reventar un globo. El ganador es quien reviente el globo del oponente.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/gladiator/gladiador.jpg" alt="gladiador">
+</div>
+<div class="title">Figure 1. Alumnos de Robótica UVM 2025 con su Gladiador</div>
+</div>
+<div class="videoblock">
+<div class="title">Combate de Gladiadores Robot</div>
+<div class="content">
+<video src="_images/esp32/gladiator/5-5-2025-uvm.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="materiales"><a class="anchor" href="#materiales"></a>Materiales</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Ítem</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+<th class="tableblock halign-left valign-top">¿Donde adquirir?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ESP32 (Wifi) + Smartphone</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Principal componente. Se programará para enviar señales a los servomotores y crear un servidor web para ser controlado via Smartphone.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://altronics.cl/tarjeta-esp32-microusb" class="bare">https://altronics.cl/tarjeta-esp32-microusb</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Placa de desarrollo ESP32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Extensión del ESP32 que incluye regulador de voltaje para resistir hasta 16V de entrada (DC) y contiene hileras con voltaje, tierra y señal de forma más comoda.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.aliexpress.com/item/1005008212851634.html" class="bare">https://es.aliexpress.com/item/1005008212851634.html</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 motores DC 3 a 12V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Principal fuente de movimiento del gladiador. La elección del motor y su necesidad de voltaje es a criterio del equipo (mayor velocidad = mayor voltaje).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://articulo.mercadolibre.cl/MLC-923623185-motor-dc-coche-gear-amarillo-3v-12v-_JM" class="bare">https://articulo.mercadolibre.cl/MLC-923623185-motor-dc-coche-gear-amarillo-3v-12v-_JM</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L298N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Permite controlar dos motores de corriente continua o un motor paso a paso bipolar de hasta 2 amperes.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://altronics.cl/modulo-puente-h-l298" class="bare">https://altronics.cl/modulo-puente-h-l298</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Chasis + Ruedas de Goma + Porta Pilas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Principal fuente de poder y marco para armar. Alimentación entre 6v a 12v. 9v recomendado.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://altronics.cl/kit-chasis-2wd-1" class="bare">https://altronics.cl/kit-chasis-2wd-1</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gladiador de Lego (A elección).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mini figura de lego versión dungeons and dragons o similar.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.tiendalego.cl/products/dungeons-dragons-71047?variant=41690791805046" class="bare">https://www.tiendalego.cl/products/dungeons-dragons-71047?variant=41690791805046</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Protoboard</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marco para conexión de componentes. Recomendado 400 puntos.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://altronics.cl/protoboard-400ptos" class="bare">https://altronics.cl/protoboard-400ptos</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cables Jumper</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Macho - Hembra, Macho - Macho. Permite conectar los componentes.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://altronics.cl/JW_MF_40_10" class="bare">https://altronics.cl/JW_MF_40_10</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Globos largos (Colores diferentes para cada gladiador).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Globos inflables + bombin.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://belina.cl/globos-largos-20cm-bombin-colores-surtidos-20-pcs" class="bare">https://belina.cl/globos-largos-20cm-bombin-colores-surtidos-20-pcs</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Armas para reventar el Globo (A elección)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clavos, alfileres o materiales corto punzantes varios.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.masferret.cl/product/clavo-punta-1" class="bare">https://www.masferret.cl/product/clavo-punta-1</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/gladiator/gladiator_diagram.png" alt="gladiator diagram">
+</div>
+<div class="title">Figure 2. Diagrama de conexión entre componentes</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Tabla de conexiones</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ESP32 MONTADO EN PLACA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MOTOR AC1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MOTOR AC2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L298N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Batería</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Pin 16</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">IN1</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Pin 17</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">IN2</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Pin 18</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">IN3</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Pin 19</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">IN4</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">(+)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">OUT1</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">(-)</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">OUT2</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">(+)</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">OUT3</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">(-)</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">OUT4</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">IN12V</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">(+)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">GND</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">(-)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Jack de carga</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">(+)(-)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>La posición del globo depende de cada gladiador.
+Pero almenos debe tener dos puntos de anclaje inferior.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="código-fuente"><a class="anchor" href="#código-fuente"></a>Código fuente</h3>
+<div class="listingblock">
+<div class="title">Código fuente del gladiador</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include &lt;WiFi.h&gt;
+#include &lt;WebServer.h&gt;
+
+// Nombre de la red WiFi creada por el ESP32
+const char* ssid = "RobotESP32";
+const char* password = "12345678";
+
+// Pines del L298N
+const int IN1 = 16;
+const int IN2 = 17;
+const int IN3 = 18;
+const int IN4 = 19;
+
+WebServer server(80);
+
+// Funciones de movimiento
+void parar() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+}
+
+void adelante() {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void atras() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+}
+
+void izquierda() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void derecha() {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+}
+
+// Página web con botones
+String paginaHTML() {
+  return R"rawliteral(
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;Control del Robot&lt;/title&gt;
+      &lt;style&gt;
+        body { text-align: center; font-family: Arial; }
+        button {
+          width: 100px; height: 50px;
+          font-size: 18px; margin: 5px;
+        }
+      &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1&gt;Control del Robot&lt;/h1&gt;
+      &lt;button onclick="location.href='/adelante'"&gt;Adelante&lt;/button&gt;&lt;br&gt;
+      &lt;button onclick="location.href='/izquierda'"&gt;Izquierda&lt;/button&gt;
+      &lt;button onclick="location.href='/parar'"&gt;Parar&lt;/button&gt;
+      &lt;button onclick="location.href='/derecha'"&gt;Derecha&lt;/button&gt;&lt;br&gt;
+      &lt;button onclick="location.href='/atras'"&gt;Atrás&lt;/button&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+  )rawliteral";
+}
+
+void setup() {
+  Serial.begin(115200);
+
+  // Configurar pines como salida
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  parar();
+
+  // Iniciar el ESP32 como Access Point
+  WiFi.softAP(ssid, password);
+  Serial.println("Red WiFi creada");
+  Serial.print("IP del robot: ");
+  Serial.println(WiFi.softAPIP());
+
+  // Rutas del servidor
+  server.on("/", []() {
+    server.send(200, "text/html", paginaHTML());
+  });
+  server.on("/adelante", []() {
+    adelante();
+    server.send(200, "text/html", paginaHTML());
+  });
+  server.on("/atras", []() {
+    atras();
+    server.send(200, "text/html", paginaHTML());
+  });
+  server.on("/izquierda", []() {
+    izquierda();
+    server.send(200, "text/html", paginaHTML());
+  });
+  server.on("/derecha", []() {
+    derecha();
+    server.send(200, "text/html", paginaHTML());
+  });
+  server.on("/parar", []() {
+    parar();
+    server.send(200, "text/html", paginaHTML());
+  });
+
+  server.begin();
+}
+
+void loop() {
+  server.handleClient();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Al construir el gladiador se tendrá acceso a una red Wifi llamada "RobotESP32" (cambiar el nombre para cada gladiador).
+La cual puede ser accedida desde cualquier smartphone o computador.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">const char* ssid = "RobotESP32";
+const char* password = "12345678";</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Esta red permite enviar comandos de dirección al hacer click en los enlaces.
+Se deja como ejercicio adicional la creación de una interfaz más adecuada para
+el control del robot, como un joystick virtual o físico.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/gladiator/gladiador-lego.webp" alt="gladiador lego">
+</div>
+<div class="title">Figure 3. Figura de Lego a elección</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="proyecto-robot-animatrónico"><a class="anchor" href="#proyecto-robot-animatrónico"></a>Proyecto Robot Animatrónico</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Hoy en día existen diversos robots para cumplir tareas específicas.
+En el área de restaurantes existen los robots meseros autónomos.
+Éstos robots permiten servir mesas y encontrar su camino por el restaurant.</p>
+</div>
+<div class="paragraph">
+<p>Entre los ejemplos disponibles esta el <a href="https://robotics.segway.com/baobao/">Segway ServeBot S1</a>(“Restaurant Service Robot - Segway Robotics,” 2024)
+y el <a href="https://www.pudurobotics.com/product/detail/bellabot">Bellabot</a> (“Smart Delivery Robot-Pudu Robotics,” n.d.).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/segway.png" alt="segway">
+</div>
+<div class="title">Figure 4. Robot ServeBot S1</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/bellabot.png" alt="bellabot">
+</div>
+<div class="title">Figure 5. Bellabot</div>
+</div>
+<div class="paragraph">
+<p>Estos robots son de alta tecnología y cuentan con sensores e inteligencia artificial
+muy sofisticada. Lo que los hace tener un precio prohibitivo para la mayoría
+de los restaurantes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pilotos-orihime"><a class="anchor" href="#pilotos-orihime"></a>Pilotos OriHime</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>En Japón existe el concepto de "Avatar Robot Café". Donde un restaurant/café es
+atentido por avatares robots. Es decir, robots controlados por humanos remotamente.
+Estos robots no cuentan con IA debido a que se busca integrar a personas con dificultades
+motoras u otros problemas que les impide integrarse a la sociedad en trabajos tradicionales.</p>
+</div>
+<div class="paragraph">
+<p>Entre los avatares robots se puede encontrar meseros y baristas.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/dawn-orihime.jpg" alt="dawn orihime">
+</div>
+<div class="title">Figure 6. Avatares Robot</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/dawn-avatar.jpg" alt="dawn avatar">
+</div>
+<div class="title">Figure 7. Robot OriHime</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/dawn-barista.jpg" alt="dawn barista">
+</div>
+<div class="title">Figure 8. Robot Barista</div>
+</div>
+<div class="paragraph">
+<p>Son controlados remotamente con una aplicación de tablet smartphone.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/dawn-control.png" alt="dawn control">
+</div>
+<div class="title">Figure 9. Interfaz de Piloto</div>
+</div>
+<div class="paragraph">
+<p>Estos robots están ubicados en el Dawn Cafe</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/dawn-cafe.jpg" alt="dawn cafe">
+</div>
+<div class="title">Figure 10. Avatar Robot Cafe DAWN ver.β</div>
+</div>
+<div class="paragraph">
+<p>El “Avatar Robot Café DAWN ver.β” es un café experimental permanente operado por
+OryLab Inc., donde personas que tienen dificultades para salir de casa por diversas
+razones operan de forma remota nuestros robots avatar OriHime y OriHime-D
+desde sus hogares y hospitales para brindar servicios. ("Avatar Robot Café" n.d.)</p>
+</div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tKzCZ_yP4-Y?si=vnxK5cFXp_GdbVYw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+</div>
+<div class="sect1">
+<h2 id="restaurantes-y-robots-en-chile"><a class="anchor" href="#restaurantes-y-robots-en-chile"></a>Restaurantes y Robots en Chile</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>En Chile se han utilizado robots animatrónicos como el conocido restaurante "África" de Viña del Mar (SoyChile, 2019).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/africa.jpg" alt="africa">
+</div>
+<div class="title">Figure 11. Animatronicos del Restaurante África</div>
+</div>
+<div class="paragraph">
+<p>Jorge Fernández, gerente de El Japonés de Viña del Mar, calcula que desde que tienen al “Michi-robot”
+haciendo las veces de mesero la afluencia del público al local ha aumentado en un 20 por ciento.
+¿La razón? La curiosidad de ver en acción al Bella-bot -o “Michi”, como le llaman en el restaurante-,
+que lleva pedidos a la mesa como un garzón más.
+(Transformadores, 2023).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="descripción-del-proyecto"><a class="anchor" href="#descripción-del-proyecto"></a>Descripción del Proyecto</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Como se puede apreciar, Chile está preparado para adoptar la inclusión de robots
+en el área de servicios, especialmente en robots meseros. Sin embargo los altos precios
+de adquisición impiden que más restaurantes adopten estas tecnologías.</p>
+</div>
+<div class="paragraph">
+<p>Para lograr disminuir la brecha tecnológica y aumentar la inclusión de personas con dificultades
+de trabajar presencialmente, se debe crear una alternativa de bajo costo e identidad local.</p>
+</div>
+<div class="paragraph">
+<p>Para esto se creará un "Avatar Robot" controlado remotamente via internet
+que pueda ser usado para atender comandas y servir como garzón en restaurantes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="materiales-2"><a class="anchor" href="#materiales-2"></a>Materiales</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Este robot utilizará materiales reciclados o fáciles de adquirir a un costo moderado.</p>
+</div>
+<div class="sect2">
+<h3 id="marco"><a class="anchor" href="#marco"></a>Marco</h3>
+<div class="paragraph">
+<p>Para el marco principal se debe considerar una estructura liviana que permita un movimiento
+para todas las direcciones, cuente con un lugar para dejar los platos y sea higiénica y estéticamente apropiado.</p>
+</div>
+<div class="paragraph">
+<p>Queda a discreción la selección del marco inicial. Acá se presentará unas opciones posibles.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Nombre</th>
+<th class="tableblock halign-left valign-top">Fotografía</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Estante de Almacenamiento con Ruedas Giratorias y Cestas Metalicas</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/estante.webp" alt="estante">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Carrito Organizador Con Cesta Metal y Ruedas Bloqueables 3 Niveles</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Disponible en: <a href="https://www.sodimac.cl/sodimac-cl/articulo/138001816/Carrito-Organizador-Metal-3-Niveles-Estante-Ruedas-Bloqueables-Negro/138001817?exp=so_com" class="bare">https://www.sodimac.cl/sodimac-cl/articulo/138001816/Carrito-Organizador-Metal-3-Niveles-Estante-Ruedas-Bloqueables-Negro/138001817?exp=so_com</a></p>
+</li>
+<li>
+<p>Marca VIDITA</p>
+</li>
+<li>
+<p>Color Negro</p>
+</li>
+<li>
+<p>Diseño de 3 niveles y 2 mangos</p>
+</li>
+<li>
+<p>Con ruedas giratorias (2 bloqueables)</p>
+</li>
+<li>
+<p>Material resistente de metal</p>
+</li>
+<li>
+<p>Medida 43x29x78cm (largo x ancho x alto)</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Organizador de frutas metal 3 canastos Cromado</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/frutero.webp" alt="frutero">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>La Frutera con 3 canastos y 3 ruedas en la parte inferior.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Disponible en: <a href="https://www.sodimac.cl/sodimac-cl/articulo/110267804/Organizador-de-frutas-metal-3-canastos-Cromado/110267822?exp=so_com" class="bare">https://www.sodimac.cl/sodimac-cl/articulo/110267804/Organizador-de-frutas-metal-3-canastos-Cromado/110267822?exp=so_com</a></p>
+</li>
+<li>
+<p>Marca: Just Home Collection</p>
+</li>
+<li>
+<p>Ancho: 29.5 cm</p>
+</li>
+<li>
+<p>Alto: 75.6 cm</p>
+</li>
+<li>
+<p>Color: Plateado</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Carro de compras colores 32 L</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/carro.avif" alt="carro">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Carro de compras colores 32 L</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Disponible en: <a href="https://www.sodimac.cl/sodimac-cl/articulo/131705964/Carro-de-compras-colores-32-l/131705965?exp=so_com" class="bare">https://www.sodimac.cl/sodimac-cl/articulo/131705964/Carro-de-compras-colores-32-l/131705965?exp=so_com</a></p>
+</li>
+<li>
+<p>Marca: Just Home Collection</p>
+</li>
+<li>
+<p>Ancho: 30 cm</p>
+</li>
+<li>
+<p>Alto: 53 cm</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>La recomendación es que permita al menos 3 niveles. Ya que se necesita espacio para:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>La batería y circuitería. Ubicados en el nivel inferior.</p>
+</li>
+<li>
+<p>La bandeja principal para almacenar los platos a servir.</p>
+</li>
+<li>
+<p>Una bandeja superior para almacenar la cámara y un robot o pantalla opcional para expresar emociones por parte del piloto operador.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>El carro será controlado por una ESP32 que recibirá comandos por USB desde la Raspberry PI.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="batería"><a class="anchor" href="#batería"></a>Batería</h3>
+<div class="paragraph">
+<p>La batería puede ser un PowerBank o una batería de motocicleta con un adaptador para USB.
+Es importante recalcar que el amperaje mínimo necesario es 3 amperes. Menor a ese amperaje servirá
+para cargar un smartphone, más no para alimentar una <em>Raspberry PI</em>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Opción</th>
+<th class="tableblock halign-left valign-top">Imagen</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PowerBank de 30K mAh</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/powerbank.webp" alt="powerbank">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Batería portátil USB capacidad de 30000 mAh.</p>
+</div>
+<div class="paragraph">
+<p>Tres puertos USB con USB-A y USB-C. Carga rápida del dispositivo con puerto USB-C PD 3.0 de máximo 20 W o USB-A con salida QC3/0 de máximo 18 W.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Disponible en: <a href="https://www.philips.cl/c-p/DLP1930CB_00/bateria-portatil-usb" class="bare">https://www.philips.cl/c-p/DLP1930CB_00/bateria-portatil-usb</a></p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Batería 12v + Adaptador USB</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/bateria-moto.webp" alt="] image::esp32/animatronic/adaptador-usb-bateria-moto.avif[">
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Batería de motocicleta combinada con un adaptador USB de alta potencia (QC3.0).
+Es una opción válida para alimentar el robot.</p>
+</div>
+<div class="paragraph">
+<p>Ventajas:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Se tiene mayor voltaje para velocidad más rápida.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Desventaja:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Puede ser más pesado y requerir equipamiento especial para recargar la batería.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Disponible en:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://es.aliexpress.com/item/1005006281134333.html" class="bare">https://es.aliexpress.com/item/1005006281134333.html</a></p>
+</li>
+<li>
+<p><a href="https://www.autoplanet.cl/producto/bateria_pilot_lb4lb_4ah_56cca/141258" class="bare">https://www.autoplanet.cl/producto/bateria_pilot_lb4lb_4ah_56cca/141258</a></p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="smartphone"><a class="anchor" href="#smartphone"></a>Smartphone</h3>
+<div class="paragraph">
+<p>El <em>Smartphone</em> es necesario para proveer internet a la <em>Raspberry PI</em> y también actuar
+como cámara principal para la comunicación remota (utilizando una video llamada).</p>
+</div>
+<div class="paragraph">
+<p>Se recomienda un smartphone Android. Cualquiera que pueda hacer uso de redes 3G y sea relativamente moderno
+(entre 5 a 10 años de antigüedad) servirá como principal puente de comunicación.</p>
+</div>
+<div class="paragraph">
+<p>Se podría omitir este elemento si el restaurante cuenta con Wifi y añadir una cámara web a la <em>Raspberry PI</em>,
+pero requeriría de mayores configuraciones en el router del local y asegurar estabilidad de señal.</p>
+</div>
+<div class="paragraph">
+<p>Para la elaboración de la comunicación via video se utilizará los servicios de
+<a href="https://jitsi.org/jitsi-meet/">Jitsi Meet</a>. El cual proporciona una solución de bajo costo
+y de código libre para ser utilizada.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="raspberry-pi-3"><a class="anchor" href="#raspberry-pi-3"></a>Raspberry PI 3</h3>
+<div class="paragraph">
+<p>Raspberry PI 3 cuenta con un procesador Broadcom Quad-Core ARM Cortex-A53 a 1.2GHz
+combinados con 1GB de RAM LPDDR2.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/raspberrypi3.webp" alt="raspberrypi3">
+</div>
+<div class="title">Figure 12. Raspberry Pi 3 Model B</div>
+</div>
+<div class="paragraph">
+<p>Será el computador principal conectado con <em>Nerves</em>, lo que permitirá enviar señales
+tanto al <em>Emote Robot</em> como al <em>Carro</em> utilizando USB,
+además de proporcionar un servidor web accesible mediante internet conectándose
+al <em>Smartphone</em>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sistema Nerves: <a href="https://github.com/nerves-project/nerves_system_rpi3" class="bare">https://github.com/nerves-project/nerves_system_rpi3</a></p>
+</li>
+<li>
+<p>Disponible en: <a href="https://altronics.cl/raspberry-pi-3-modelb-old?search=raspberry&amp;page=4" class="bare">https://altronics.cl/raspberry-pi-3-modelb-old?search=raspberry&amp;page=4</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>El modelo de Raspberry Pi es a elección, simplemente debe ser compatible con Nerves (<a href="https://hexdocs.pm/nerves/supported-targets.html" class="bare">https://hexdocs.pm/nerves/supported-targets.html</a>)
+Un modelo alternativo compatible es el <em>Raspberry Pi Zero 2W</em>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/rpiz2w.png" alt="rpiz2w">
+</div>
+<div class="title">Figure 13. Raspberry Pi Zero 2 W</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Disponible en: <a href="https://mcielectronics.cl/shop/product/33107/" class="bare">https://mcielectronics.cl/shop/product/33107/</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="emote-robot"><a class="anchor" href="#emote-robot"></a>Emote Robot</h3>
+<div class="paragraph">
+<p>Para proporcionar una forma de mostrar emociones remotamente se puede utilizar
+un personaje de lego animatrónico. Esto es totalmente opcional, pero agrega
+personalidad y empatía al robot. También puede ser utilizada una smart tablet
+con un personaje animado y controlado remotamente.</p>
+</div>
+<div class="paragraph">
+<p>Puede ser adquirido en <a href="https://www.tiendalego.cl/collections/creator-3in1/products/dragon-rojo-31145" class="bare">https://www.tiendalego.cl/collections/creator-3in1/products/dragon-rojo-31145</a></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/lego.webp" alt="lego">
+</div>
+<div class="title">Figure 14. Personaje Lego Creator 3 en 1</div>
+</div>
+<div class="paragraph">
+<p>El robot será controlado por una ESP32 que recibirá comandos por USB desde la Raspberry PI.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Lista de posibles componentes</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Componente</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Descripción</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1 Raspberry PI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Una versión compatible con Nerves y que permita conexión USB (UART) a la ESP32</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2 ESP32 Devkit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Un ESP32 para controlar el carro y un ESP32 para controlar el robot</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 Motor DC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cuatro motores DC de alto torque para movilidad del carro hasta 25 Kg.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L298N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Permite controlar al los motores DC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Android Smartphone</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Un Smartphone que actue como Hotspot y permita usar Jitsi Meet</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Baterías</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La batería necesaria para alimentar tanto a la Raspberry, ESP32 y Smartphone</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.noip.com/es-MX">NoIP</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Servicio de DNS dinámico para acceder al servidor de la Raspberry PI</p></td>
+</tr>
+</tbody>
+</table>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/mesero.png" alt="mesero">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="búho-animatrónico"><a class="anchor" href="#búho-animatrónico"></a>Búho Animatrónico</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Este proyecto grupal tiene como propósito la programación de una figura animatrónica con actuadores (servos), que es
+controlada a través de un microcontrolador ESP32 y un programa en C++. La figura elegida fue un búho,
+cuyas alas, cabeza y patas tienen movimiento mediante servomotores.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/lego-buho.webp" alt="https://www.tiendalego.cl/products/criaturas-fantasticas-del-bosque-31125">
+</div>
+<div class="title">Figure 15. Lego Búho (#31125)</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Tabla de Componentes</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Componente</th>
+<th class="tableblock halign-left valign-top">Cantidad</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ESP32-WROOM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Microcontrolador principal</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Servomotor SG90</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uno por ala, uno en la cabeza, uno en las patas</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fuente de alimentación</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">USB 5V (desde computadora o batería externa)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cables Dupont</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Varios</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Para Conexiones</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bloques tipo LEGO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Varios</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Para ensamblar la estructura del búho</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Protoboard / PCB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Para conexiones eléctricas (opcional)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Acotaciones</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Se recomienda usar piezas tipo LEGO para facilitar el ajuste de los servos y permitir cambios de diseño de manera sencilla.</p>
+</li>
+<li>
+<p>Se cuidó el peso en el diseño para no sobrecargar los servos, especialmente en las alas.</p>
+</li>
+<li>
+<p>La alimentación por USB 5V es suficiente para los servos, pero se debe evitar hacer movimientos simultáneos prolongados para no sobrecargar la corriente disponible.</p>
+</li>
+<li>
+<p>La estructura fue validada para estabilidad durante los movimientos.</p>
+</li>
+<li>
+<p>El código debe incorporar retardos adecuados y límites de movimiento para evitar daños mecánicos.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="title">Código fuente del Búho</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cpp hljs" data-lang="cpp">#include &lt;ESP32Servo.h&gt;
+
+int pos = 0;
+Servo izquierdo;
+Servo derecho;
+Servo cabeza;
+Servo poto;
+
+int led = 16;
+bool inicializar = true;
+
+void setup() {
+  Serial.begin(115200);
+  // Pines válidos para ESP32, cambia si usas otros
+  izquierdo.attach(13, 500, 2500);
+  derecho.attach(14, 500, 2500);
+  cabeza.attach(15, 500, 2500);
+  poto.attach(18, 500, 2500);
+  pinMode(led, OUTPUT);
+}
+
+void startPosition() {
+  digitalWrite(led, HIGH);
+  derecho.write(180);
+  izquierdo.write(0);
+  cabeza.write(180);
+  poto.write(0);
+  delay(500);
+  digitalWrite(led, LOW);
+}
+
+void saludar(int velocidad) {
+  digitalWrite(led, HIGH);
+  for (pos = 90; pos &lt;= 180; pos += 1) {
+    izquierdo.write(pos);
+    derecho.write(180 - pos);
+    poto.write(90-pos);
+    delay(velocidad);
+  }
+
+  for (pos = 180; pos &gt;= 90; pos -= 1) {
+    izquierdo.write(pos);
+    derecho.write(180 - pos);
+    poto.write(pos-40);
+    delay(velocidad);
+  }
+
+  digitalWrite(led, LOW);
+}
+
+void feliz(int velocidad) {
+  digitalWrite(led, HIGH);
+
+  for (pos = 90; pos &lt;= 180; pos += 1) {
+    izquierdo.write(pos);
+    derecho.write(180 - pos);
+    cabeza.write(pos);
+    delay(velocidad);
+  }
+
+  for (pos = 180; pos &gt;= 90; pos -= 1) {
+    izquierdo.write(pos);
+    derecho.write(180 - pos);
+    delay(velocidad);
+  }
+
+  digitalWrite(led, LOW);
+}
+
+void enojar(int velocidad) {
+  digitalWrite(led, HIGH);
+  for (pos =120; pos &lt;= 180; pos += 1) {
+    cabeza.write(pos);
+    delay(velocidad);
+  }
+  digitalWrite(led, LOW);
+}
+
+// Lectura de los comandos por serial USB
+void leerComandoSerial() {
+  if (Serial.available() &lt;= 0) {
+    return;
+  }
+
+  String comando = Serial.readStringUntil('\n');
+
+  // Elimina espacios y saltos de línea
+  comando.trim();
+
+  if (comando == "saludar") {
+    cabeza.write(160);
+    delay(15);
+    saludar(10);
+    saludar(10);
+    saludar(10);
+    startPosition();
+  } else if (comando == "enojar") {
+    startPosition();
+    enojar(10);
+    enojar(10);
+    enojar(10);
+    startPosition();
+  } else if (comando == "resetear") {
+    startPosition();
+  } else if (comando == "feliz") {
+    feliz(5);
+    feliz(5);
+    feliz(5);
+    startPosition();
+  } else {
+    Serial.println("Comando no reconocido.");
+  }
+}
+
+void loop() {
+  leerComandoSerial();
+}</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/animatronico-esquema.png" alt="animatronico esquema">
+</div>
+<div class="title">Figure 16. Esquemático del Animatrónico</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/esp32/animatronic/animatronico-conexion.png" alt="animatronico conexion">
+</div>
+<div class="title">Figure 17. Guía de Conexiones</div>
+</div>
+<div class="videoblock">
+<div class="title">Video de Ejemplo de Funcionamiento</div>
+<div class="content">
+<video src="_images/esp32/animatronic/animatronico.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Universidad EIA -canal institucional-. (2023, September 27). Master Class "ESP32 en la Nube: Conectando microcontroladores a Amazon Web Service [Video]. YouTube. <a href="https://www.youtube.com/watch?v=YLP02lzla5U" class="bare">https://www.youtube.com/watch?v=YLP02lzla5U</a></p>
+</li>
+<li>
+<p>Restaurant Service Robot - Segway Robotics. (2024, June 12). Retrieved from <a href="https://robotics.segway.com/baobao/" class="bare">https://robotics.segway.com/baobao/</a></p>
+</li>
+<li>
+<p>Smart Delivery Robot-Pudu Robotics. (n.d.). Retrieved from <a href="https://www.pudurobotics.com/product/detail/bellabot" class="bare">https://www.pudurobotics.com/product/detail/bellabot</a></p>
+</li>
+<li>
+<p>Avatar Robot Café. (n.d.). Retrieved from <a href="https://dawn2021.orylab.com/en/" class="bare">https://dawn2021.orylab.com/en/</a></p>
+</li>
+<li>
+<p>SoyChile. (2019, July 18). Viaje en el tiempo: “África” de Viña del Mar vuelve a rugir con los animatronics. Retrieved from <a href="https://www.soychile.cl/Valparaiso/Sociedad/2019/07/18/606350/Viaje-en-el-tiempo-Africa-de-Vina-del-Mar-vuelve-a-rugir-con-los-animatronics.aspx" class="bare">https://www.soychile.cl/Valparaiso/Sociedad/2019/07/18/606350/Viaje-en-el-tiempo-Africa-de-Vina-del-Mar-vuelve-a-rugir-con-los-animatronics.aspx</a></p>
+</li>
+<li>
+<p>Transformadores. (2023, February 7). El “Michi-robot” que revoluciona a un restaurante de Viña del Mar. La Tercera. Retrieved from <a href="https://www.latercera.com" class="bare">https://www.latercera.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="arduino.html">Arduino</a></span>
+  <span class="next"><a href="raspberry.html">Raspberry Pi</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

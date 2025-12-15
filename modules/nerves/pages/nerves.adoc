@@ -1,0 +1,56 @@
+= Elixir Nerves
+
+Es un framework para crear firmware de sistemas embebidos de con *Elixir* que 
+corre sobre la maquina virtual de *Erlang*: "BEAM".
+
+Es ideal para trabajar  con dispositivos potentes como *Raspberry Pi, BeagleBone  Black,  etc.* y  
+permite trabajar con sistemas robustos con interfaces conectadas a hardware real (GPIO, 12C, SPI, etc).
+
+== Caracteristicas
+
+* Se puede desarrollar tu firmware en Elixir
+* Soporta actualizaciones
+* Tiene integración con *Phoenix* para paneles  de control  web
+* Usa herramientas modernas de *Elixir* como Mix, OTP y  GenServer.
+
+== Proyecto ejemplo: Sistema de riego automático inteligente
+
+* ESP32 con AtomVM mide la humedad del suelo.
+* Si la humedad es baja, activa una electroválvula.
+* Se comunica vía WiFi con una Raspberry Pi con Nerves, que:
+- Muestra datos en una interfaz web.
+- Permite configurar umbrales de riego.
+- Guarda histórico en una base de  datos.
+* Este sistema permite combinar lo mejor de ambos mundos:
+- Microcontroladores pequeños y eficientes (ESP32 con AtomVM).
+- Sistemas completos y robustos (Raspberry con Nerves).
+
+=== Para AtomVM (microcontroladores):
+- ESP32
+- ESP32-S2 o ESP32-C3
+- STM32 (más potente, pero más complejo de programar).
+- Placas con mínimo 512 KB de RAM y 2 MB de Flash.
+
+=== Para Nerves
+
+- Raspberry Pi 3 o 4 (mejor soporte).
+- BeagleBone Black.
+- GRiSP (especial para Elixir, ejecuta directamente BEAM sin sistema operativo).
+- Cualquier SBC (single board computer) compatible con Linux y GPIO.
+
+== Ventajas de usar Elixir + AtomVM/Nerves
+
+* Código funcional, fácil de razonar y mantener.
+* Alta concurrencia con procesos ligeros.
+* Alta tolerancia a fallos (modelo de actores de Erlang).
+* Ideal para IoT, domótica, robots,  monitoreo industrial y sistemas distribuidos.
+* Usas el mismo lenguaje para la nube y el hardware.
+
+include::circuits.adoc[]
+
+include::soleil.adoc[]
+
+== Referencias
+
+- Nerves Framework: Getting Started guide. (2025, February 4). https://daily.dev/blog/nerves-framework-getting-started-guide?utm_source=chatgpt.com
+- Nerves · Elixir school. (n.d.). https://elixirschool.com/es/lessons/misc/nerves?utm_source=chatgpt.com

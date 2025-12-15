@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Proyecto: Videojuego Arcade :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/atomvm/arcade.html">
+    <link rel="prev" href="atomvm.html">
+    <link rel="next" href="../nerves/nerves.html">
+    <meta name="generator" content="Antora 3.1.10">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/raspberry.html">Raspberry Pi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/lorawan.html">LoRaWAN</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/grafana.html">grafana.adoc</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nerves</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../nerves/nerves.html">Elixir Nerves</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coliseo Atómico</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/bluetooth.html">Conexión Bluetooth</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>AtomVM</li>
+    <li><a href="arcade.html">Proyecto: Videojuego Arcade</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/atomvm/pages/arcade.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Proyecto: Videojuego Arcade</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Este proyecto tiene por objetivo la creación de un arcade clásico
+de los años 70 y principios de los 80 donde se utilizaban
+displays, pontenciómetros e interrupters en el gabinete para complementar el videojuego.</p>
+</div>
+<div class="paragraph">
+<p>En específico se utilizará el juego Speed Race (Taito, 1974) o Monaco GP (Sega, 1979)
+como principal inspiración.</p>
+</div>
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/5jc9_xrD2_M?si=FiIRvA4kTtonmArJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/-Sh7S8Ub5AQ?si=UE4aqX_wABc-Mp24" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/n7Vl6g0RiHI?si=iHBHP6lmPClUBPbZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+</div>
+<div class="sect1">
+<h2 id="componentes-del-proyecto"><a class="anchor" href="#componentes-del-proyecto"></a>Componentes del Proyecto</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El proyecto consiste en usar los componentes de hardware cual estarán conectados
+via GPIO o Conexión Serial (ESP32) a una Raspberry PI o Computador con un videojuego creado en PICO8 (<a href="https://pico-8.fandom.com/wiki/GPIO" class="bare">https://pico-8.fandom.com/wiki/GPIO</a>) o TIC80 (<a href="https://tic80.com/play" class="bare">https://tic80.com/play</a>).
+Se debe crear o seleccionar un juego y habilitar controlarlo con los sensores. Además de mostrar información
+del juego en los displays segmentados.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Components de Arcade Posibles</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Componente</th>
+<th class="tableblock halign-left valign-top">Cantidad</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Potenciometro</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simula un manubrio de carreras. <a href="https://afel.cl/products/potenciometro-500k-ohm" class="bare">https://afel.cl/products/potenciometro-500k-ohm</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Display Segmentado de 4 dígitos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra el High Score y el Score actual. <a href="https://afel.cl/products/display-7-segmentos-4-digitos" class="bare">https://afel.cl/products/display-7-segmentos-4-digitos</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Display Segmantado de 2 dígitos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra el tiempo de juego actual. <a href="https://afel.cl/products/display-7-segmentos-2-digitos" class="bare">https://afel.cl/products/display-7-segmentos-2-digitos</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interruptor MTS-102 3 pines</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simula una palanca de cambios. <a href="https://afel.cl/products/interruptor-mts-102-3-pines" class="bare">https://afel.cl/products/interruptor-mts-102-3-pines</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Placa de 4 botones</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simula los pedales de aceleración y fichas. <a href="https://afel.cl/products/placa-de-4-botones-independientes-micro-switch" class="bare">https://afel.cl/products/placa-de-4-botones-independientes-micro-switch</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>También se puede obtar por un Kit de componentes básicos como</p>
+</div>
+<div class="paragraph">
+<p><a href="https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/" class="bare">https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/</a></p>
+</div>
+<div class="paragraph">
+<p>Componentes del Kit</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1 placa de desarrollo ESP32</p>
+</li>
+<li>
+<p>1 x OLED de 0,96 pulgadas</p>
+</li>
+<li>
+<p>1X Protoboard 830pts</p>
+</li>
+<li>
+<p>1 X módulo para evitar obstáculos</p>
+</li>
+<li>
+<p>1 módulo de fotorresistencia</p>
+</li>
+<li>
+<p>1 X Módulo de temperatura y humedad DHT11</p>
+</li>
+<li>
+<p>1 sensor de movimiento PIR de 2/2″</p>
+</li>
+<li>
+<p>1 potenciómetro X (10K)</p>
+</li>
+<li>
+<p>1 cable micro USB</p>
+</li>
+<li>
+<p>30X resistencias (220R/1K/10K)</p>
+</li>
+<li>
+<p>1 zumbador pasivo</p>
+</li>
+<li>
+<p>1 X zumbador activo</p>
+</li>
+<li>
+<p>1 Módulo de relé de doble canal de 5V</p>
+</li>
+<li>
+<p>6X interruptores de botón</p>
+</li>
+<li>
+<p>10 x Cable DuPont</p>
+</li>
+<li>
+<p>10 x cable DuPont de pulgadas</p>
+</li>
+<li>
+<p>10 x Cable DuPont</p>
+</li>
+<li>
+<p>5 x LED rojo</p>
+</li>
+<li>
+<p>5 x LED amarillo</p>
+</li>
+<li>
+<p>5 x LED verde</p>
+</li>
+<li>
+<p>2 LEDs RGB</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="tic-80"><a class="anchor" href="#tic-80"></a>TIC-80</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TIC-80 si bien tiene mayor flexibilidad de que PICO-8 al ser de código libre,
+no tiene funcionalidades para leer o escribir datos en serial o GPIO. Por lo que
+la opción es lo siguiente:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Se crea un projecto en ESP32 que lea todos los sensores</p>
+</li>
+<li>
+<p>Se comunica via serial a un demonio creado en un lenguaje de programación como Go o Python</p>
+</li>
+<li>
+<p>Este demonio gatilla eventos de teclado para simular presión de botones dentro de TIC-80.</p>
+</li>
+<li>
+<p>TIC-80 escribe en un archivo de texto serial el Score actual.</p>
+</li>
+<li>
+<p>El demonio lee el archivo y lo parsea para mostrar los datos en el display segmentado.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Para poder ejecutar el juego y obtener los registros del log se puede ejecutar el siguiente comando:</p>
+</div>
+<div class="listingblock">
+<div class="title">Comando para obtener los logs de un juego en TIC80</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./tic80 esp32.tic &gt; out.log &amp;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El siguiente cartucho puede ser usado para probar</p>
+</div>
+<div class="listingblock">
+<div class="title">Primero Creamos un cartucho de Lua</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">&gt; new lua</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Añadimos las funciones de debugging</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-lua hljs" data-lang="lua">-- title:   esp32 test cart
+-- author:  ninjas.cl
+-- desc:    A test cart for input/output to esp32
+-- site:    elixircl.github.io/elixir-robotics
+-- license: BSD License
+-- version: 0.1
+-- script:  lua
+
+t=0
+x=96
+y=24
+
+function TIC()
+  cls(13)
+
+  if btn(0) then y=y-1 end
+	if btn(1) then y=y+1 end
+	if btn(2) then x=x-1 end
+	if btn(3) then x=x+1 end
+
+	if btn(4) then
+	  print("Player 1: A", 90, 100)
+	end
+
+	if btn(5) then
+	  print("Player 1: B", 90, 100)
+	end
+
+	if btn(6) then
+	  print("Player1: X", 90, 100)
+	end
+
+	if btn(7) then
+	  print("Player1: Y", 90, 100)
+	end
+
+	spr(1+t%60//30*2,x,y,14,3,0,0,2,2)
+	print("ESP32 TEST",84,84)
+	t=t+1
+
+	if t &gt; 999 then
+	 t = 0
+	end
+
+	print(t, 0, 0)
+
+	trace("stdout=time:"..t)
+end
+
+-- &lt;TILES&gt;
+-- 001:eccccccccc888888caaaaaaaca888888cacccccccacc0ccccacc0ccccacc0ccc
+-- 002:ccccceee8888cceeaaaa0cee888a0ceeccca0ccc0cca0c0c0cca0c0c0cca0c0c
+-- 003:eccccccccc888888caaaaaaaca888888cacccccccacccccccacc0ccccacc0ccc
+-- 004:ccccceee8888cceeaaaa0cee888a0ceeccca0cccccca0c0c0cca0c0c0cca0c0c
+-- 017:cacccccccaaaaaaacaaacaaacaaaaccccaaaaaaac8888888cc000cccecccccec
+-- 018:ccca00ccaaaa0ccecaaa0ceeaaaa0ceeaaaa0cee8888ccee000cceeecccceeee
+-- 019:cacccccccaaaaaaacaaacaaacaaaaccccaaaaaaac8888888cc000cccecccccec
+-- 020:ccca00ccaaaa0ccecaaa0ceeaaaa0ceeaaaa0cee8888ccee000cceeecccceeee
+-- &lt;/TILES&gt;
+
+-- &lt;WAVES&gt;
+-- 000:00000000ffffffff00000000ffffffff
+-- 001:0123456789abcdeffedcba9876543210
+-- 002:0123456789abcdef0123456789abcdef
+-- &lt;/WAVES&gt;
+
+-- &lt;SFX&gt;
+-- 000:000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000304000000000
+-- &lt;/SFX&gt;
+
+-- &lt;PALETTE&gt;
+-- 000:1a1c2c5d275db13e53ef7d57ffcd75a7f07038b76425717929366f3b5dc941a6f673eff7f4f4f494b0c2566c86333c57
+-- &lt;/PALETTE&gt;
+
+-- &lt;TRACKS&gt;
+-- 000:100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+-- &lt;/TRACKS&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="daemon"><a class="anchor" href="#daemon"></a>Daemon</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El Daemon es el encargado de comunicar el ESP32 con TIC-80. Este se ejecuta en el mismo computador
+al cual el ESP32 se conecta por USB y ejecuta el TIC-80. Este puede ser programado en Go o Python
+y debe comunicarse via serial con el ESP32 y leer el archivo <code>out.log</code> generado por TIC-80.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Biblioteca de Keyboard para Python: <a href="https://github.com/boppreh/keyboard" class="bare">https://github.com/boppreh/keyboard</a></p>
+</li>
+<li>
+<p>Biblioteca de Comunicación Serial para Python: <a href="https://pyserial.readthedocs.io/en/latest/index.html" class="bare">https://pyserial.readthedocs.io/en/latest/index.html</a></p>
+</li>
+<li>
+<p>Biblioteca de Keyboard para Go: <a href="https://github.com/micmonay/keybd_event" class="bare">https://github.com/micmonay/keybd_event</a></p>
+</li>
+<li>
+<p>Biblioteca de Comunicación Serial para Go: <a href="https://github.com/bugst/go-serial" class="bare">https://github.com/bugst/go-serial</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="atomvm.html">AtomVM</a></span>
+  <span class="next"><a href="../nerves/nerves.html">Elixir Nerves</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

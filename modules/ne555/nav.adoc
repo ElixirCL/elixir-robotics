@@ -1,2 +1,0 @@
-.IC555
-* xref:ic555.adoc[]

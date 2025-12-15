@@ -1,5 +1,0 @@
-.ESP32
-* xref:esp32.adoc[]
-* xref:atomvm.adoc[]
-* xref:project-gladiators.adoc[]
-* xref:project-arcade.adoc[]

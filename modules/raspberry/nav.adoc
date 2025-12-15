@@ -1,4 +1,0 @@
-.Raspberry PI
-* xref:raspberry.adoc[]
-* xref:nerves.adoc[]
-* xref:project-animatronics.adoc[]

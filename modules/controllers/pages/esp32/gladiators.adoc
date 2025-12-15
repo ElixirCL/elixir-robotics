@@ -1,0 +1,199 @@
+El objetivo es crear un "Gladiador Robot" controlado por un smartphone via Wifi, 
+este debe ser capaz de reventar un globo. El ganador es quien reviente el globo del oponente.
+
+.Alumnos de Robótica UVM 2025 con su Gladiador
+image::esp32/gladiator/gladiador.jpg[]
+
+.Combate de Gladiadores Robot
+video::esp32/gladiator/5-5-2025-uvm.mp4[]
+
+== Materiales
+
+|====
+| Ítem | Descripción | ¿Donde adquirir?
+
+| ESP32 (Wifi) + Smartphone | Principal componente. Se programará para enviar señales a los servomotores y crear un servidor web para ser controlado via Smartphone. | https://altronics.cl/tarjeta-esp32-microusb
+| Placa de desarrollo ESP32 | Extensión del ESP32 que incluye regulador de voltaje para resistir hasta 16V de entrada (DC) y contiene hileras con voltaje, tierra y señal de forma más comoda. | https://es.aliexpress.com/item/1005008212851634.html
+| 2 motores DC 3 a 12V | Principal fuente de movimiento del gladiador. La elección del motor y su necesidad de voltaje es a criterio del equipo (mayor velocidad = mayor voltaje).| https://articulo.mercadolibre.cl/MLC-923623185-motor-dc-coche-gear-amarillo-3v-12v-_JM
+| L298N | Permite controlar dos motores de corriente continua o un motor paso a paso bipolar de hasta 2 amperes.| https://altronics.cl/modulo-puente-h-l298
+| Chasis + Ruedas de Goma + Porta Pilas | Principal fuente de poder y marco para armar. Alimentación entre 6v a 12v. 9v recomendado. | https://altronics.cl/kit-chasis-2wd-1
+| Gladiador de Lego (A elección). | Mini figura de lego versión dungeons and dragons o similar. | https://www.tiendalego.cl/products/dungeons-dragons-71047?variant=41690791805046
+| Protoboard | Marco para conexión de componentes. Recomendado 400 puntos. | https://altronics.cl/protoboard-400ptos
+| Cables Jumper | Macho - Hembra, Macho - Macho. Permite conectar los componentes. | https://altronics.cl/JW_MF_40_10
+| Globos largos (Colores diferentes para cada gladiador). | Globos inflables + bombin. | https://belina.cl/globos-largos-20cm-bombin-colores-surtidos-20-pcs
+| Armas para reventar el Globo (A elección) | Clavos, alfileres o materiales corto punzantes varios. | https://www.masferret.cl/product/clavo-punta-1
+|====
+
+.Diagrama de conexión entre componentes
+image::esp32/gladiator/gladiator_diagram.png[]
+
+.Tabla de conexiones
+[cols=5*]
+|===
+| ESP32 MONTADO EN PLACA| MOTOR AC1 | MOTOR AC2 | L298N | Batería
+^|Pin 16 | |  ^| IN1 |
+^|Pin 17 |  |  ^| IN2 |
+^|Pin 18 |  |  ^| IN3 |
+^|Pin 19 |  |  ^| IN4 |
+| ^| (+) |  ^| OUT1 |
+| ^| (-) |  ^| OUT2 |
+| |  ^| (+) ^| OUT3 |
+| |  ^| (-) ^| OUT4 |
+||  |  ^| IN12V ^| (+)
+||  |  ^| GND ^| (-) 
+^|Jack de carga|  |  |  ^| (+)(-) 
+|===
+
+[NOTE]
+====
+La posición del globo depende de cada gladiador. 
+Pero almenos debe tener dos puntos de anclaje inferior.
+====
+
+=== Código fuente
+
+.Código fuente del gladiador
+[source, c]
+----
+#include <WiFi.h>
+#include <WebServer.h>
+
+// Nombre de la red WiFi creada por el ESP32
+const char* ssid = "RobotESP32";
+const char* password = "12345678";
+
+// Pines del L298N
+const int IN1 = 16;
+const int IN2 = 17;
+const int IN3 = 18;
+const int IN4 = 19;
+
+WebServer server(80);
+
+// Funciones de movimiento
+void parar() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+}
+
+void adelante() {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void atras() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+}
+
+void izquierda() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+}
+
+void derecha() {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+}
+
+// Página web con botones
+String paginaHTML() {
+  return R"rawliteral(
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Control del Robot</title>
+      <style>
+        body { text-align: center; font-family: Arial; }
+        button {
+          width: 100px; height: 50px;
+          font-size: 18px; margin: 5px;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Control del Robot</h1>
+      <button onclick="location.href='/adelante'">Adelante</button><br>
+      <button onclick="location.href='/izquierda'">Izquierda</button>
+      <button onclick="location.href='/parar'">Parar</button>
+      <button onclick="location.href='/derecha'">Derecha</button><br>
+      <button onclick="location.href='/atras'">Atrás</button>
+    </body>
+    </html>
+  )rawliteral";
+}
+
+void setup() {
+  Serial.begin(115200);
+
+  // Configurar pines como salida
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  parar();
+
+  // Iniciar el ESP32 como Access Point
+  WiFi.softAP(ssid, password);
+  Serial.println("Red WiFi creada");
+  Serial.print("IP del robot: ");
+  Serial.println(WiFi.softAPIP());
+
+  // Rutas del servidor
+  server.on("/", []() {
+    server.send(200, "text/html", paginaHTML());
+  });
+  server.on("/adelante", []() {
+    adelante(); 
+    server.send(200, "text/html", paginaHTML());
+  });
+  server.on("/atras", []() {
+    atras(); 
+    server.send(200, "text/html", paginaHTML());
+  });
+  server.on("/izquierda", []() {
+    izquierda(); 
+    server.send(200, "text/html", paginaHTML());
+  });
+  server.on("/derecha", []() {
+    derecha(); 
+    server.send(200, "text/html", paginaHTML());
+  });
+  server.on("/parar", []() {
+    parar(); 
+    server.send(200, "text/html", paginaHTML());
+  });
+
+  server.begin();
+}
+
+void loop() {
+  server.handleClient();
+}
+----
+
+Al construir el gladiador se tendrá acceso a una red Wifi llamada "RobotESP32" (cambiar el nombre para cada gladiador).
+La cual puede ser accedida desde cualquier smartphone o computador.
+
+[source, c]
+----
+const char* ssid = "RobotESP32";
+const char* password = "12345678";
+----
+
+Esta red permite enviar comandos de dirección al hacer click en los enlaces.
+Se deja como ejercicio adicional la creación de una interfaz más adecuada para 
+el control del robot, como un joystick virtual o físico.
+
+.Figura de Lego a elección
+image::esp32/gladiator/gladiador-lego.webp[]
