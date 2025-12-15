@@ -5,7 +5,7 @@ Está diseñado para lograr el mejor rendimiento en cuanto a consumo de energía
 versatilidad y fiabilidad en una amplia variedad de aplicaciones y escenarios de consumo energético.
 
 .ESP32
-image:esp32.webp[]
+image::esp32/esp32.webp[]
 
 Con su bajo consumo de energía, el ESP32 es una opción ideal para dispositivos IoT en las siguientes áreas:
 
@@ -30,7 +30,7 @@ se puede programar con el mismo IDE de Arduino.
 
 
 .Funciones del ESP32
-image:esp32functions.png[https://es.wikipedia.org/wiki/ESP32#/media/Archivo:Espressif_ESP32_Chip_Function_Block_Diagram.svg]
+image::esp32/esp32functions.png[https://es.wikipedia.org/wiki/ESP32#/media/Archivo:Espressif_ESP32_Chip_Function_Block_Diagram.svg]
 
 *Características Principales*
 
@@ -51,7 +51,7 @@ conectividad y rendimiento, haciéndola ideal para una amplia gama de aplicacion
 remoto hasta soluciones industriales y de hogar inteligente.
 
 .ESP32 DevKit Tipo C
-image:esp32devkit.jpg[]
+image::esp32/esp32devkit.jpg[]
 
 *Características Destacadas*
 

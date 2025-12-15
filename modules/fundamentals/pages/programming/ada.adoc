@@ -1,6 +1,6 @@
 = Lenguaje de programación Ada
 
-image:logo.png[Logo de Ada, width=400]
+image::ada/logo.png[Logo de Ada, width=400]
 
 El desarrollo del lenguaje de programación Ada comenzó en 1974, cuando el Ministerio de Defensa de los Estados Unidos llevó a cabo un estudio para encontrar una solución al problema de la diversidad de lenguajes de programación utilizados en sus sistemas. El objetivo era crear un único lenguaje estándar que permitiera mejorar la portabilidad, mantenibilidad y fiabilidad del software militar. El lenguaje fue oficialmente diseñado bajo encargo del Departamento de Defensa de los EE.UU. durante los años 1970.
 
@@ -8,7 +8,7 @@ Ada fue diseñado por Jean Ichbiah y su equipo de CII Honeywell Bull como parte 
 
 El nombre "Ada" se eligió en honor a Augusta Ada Byron, conocida como Ada Lovelace, considerada la primera programadora de la historia. El lenguaje fue anunciado y patrocinado por el Departamento de Defensa de los EE.UU. en reconocimiento a su contribución pionera en computación.
 
-image:ada_lovelace.jpg[Ada Lovelace, width=400]
+image::ada/ada_lovelace.jpg[Ada Lovelace, width=400]
 
 == Características principales del lenguaje
 
@@ -22,7 +22,7 @@ Ada tiene soporte nativo para programación concurrente, con mecanismos como tar
 
 == Aplicaciones y usos actuales
 
-image:ada_military.jpg[Ada Software Reuse, width=400]
+image::ada/ada_military.jpg[Ada Software Reuse, width=400]
 
 Ada se utiliza principalmente en industrias donde la seguridad y la fiabilidad son críticas, como la aeroespacial, defensa, transporte ferroviario y sistemas incrustados.
 
@@ -162,11 +162,11 @@ begin
 end Sistema_Control_Vuelo;
 ----
 
-image:f16.jpg[F-16 Fighting Falcon, width=400]
+image::ada/f16.jpg[F-16 Fighting Falcon, width=400]
 
 == Versiones y evolución
 
-image:evolution.png[Ada logo evolution, width=400]
+image::ada/evolution.png[Ada logo evolution, width=400]
 
 * **Ada 83**: Primera versión estándar oficial.
 * **Ada 95**: Añadió soporte para programación orientada a objetos y mejoras en concurrencia.
@@ -176,7 +176,7 @@ image:evolution.png[Ada logo evolution, width=400]
 
 == Entornos de desarrollo (IDEs) y compiladores
 
-image:gnatstudio.png[GNAT Studio IDE, width=400]
+image::ada/gnatstudio.png[GNAT Studio IDE, width=400]
 
 Las herramientas más utilizadas para programar en Ada son:
 
