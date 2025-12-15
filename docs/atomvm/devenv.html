@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>LoRaWAN :: Electrónica, Robótica e IOT con Elixir</title>
-    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/communication/lorawan.html">
-    <link rel="prev" href="../controllers/raspberry.html">
-    <link rel="next" href="../tools/platformio.html">
+    <title>Entorno de Desarrollo :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/atomvm/devenv.html">
+    <link rel="prev" href="atomvm.html">
+    <link rel="next" href="components.html">
     <meta name="generator" content="Antora 3.1.10">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -106,8 +106,8 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Protocolos de Comunicación</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="lorawan.html">LoRaWAN</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/lorawan.html">LoRaWAN</a>
   </li>
 </ul>
   </li>
@@ -131,19 +131,19 @@
     <span class="nav-text">AtomVM</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+    <a class="nav-link" href="atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="devenv.html">Entorno de Desarrollo</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../atomvm/devenv.html">Entorno de Desarrollo</a>
+    <a class="nav-link" href="components.html">Componentes Electrónicos</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../atomvm/components.html">Componentes Electrónicos</a>
+    <a class="nav-link" href="remote.html">Conexión Remota</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../atomvm/remote.html">Conexión Remota</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+    <a class="nav-link" href="arcade.html">Proyecto: Videojuego Arcade</a>
   </li>
 </ul>
   </li>
@@ -189,86 +189,38 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
-    <li>Protocolos de Comunicación</li>
-    <li><a href="lorawan.html">LoRaWAN</a></li>
+    <li>AtomVM</li>
+    <li><a href="devenv.html">Entorno de Desarrollo</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="file:///antora/./modules/communication/pages/lorawan.adoc">Editar esta página</a></div>
+<div class="edit-this-page"><a href="file:///antora/./modules/atomvm/pages/devenv.adoc">Editar esta página</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contenidos" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">LoRaWAN</h1>
+<h1 class="page">Entorno de Desarrollo</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>El Internet de las Cosas (IoT) se refiere a la interconexión de dispositivos físicos cotidianos a través de Internet, permitiendo la recopilación y el intercambio de datos. Estos dispositivos, equipados con sensores y software, pueden ser desde electrodomésticos hasta dispositivos médicos o sistemas de ciudades inteligentes. Su objetivo es automatizar procesos y mejorar la eficiencia en diversas áreas.</p>
-</div>
-<div class="paragraph">
-<p>En 1982, una máquina expendedora de Coca-Cola en la Universidad Carnegie Mellon se convierte en el primer dispositivo conectado a Internet, capaz de informar sobre la disponibilidad y temperatura de las bebidas. En 1999, Kevin Ashton, del MIT, acuña el término "Internet de las Cosas" al proponer el uso de etiquetas RFID para mejorar la eficiencia en la cadena de suministro.</p>
-</div>
-<div class="paragraph">
-<p>Un ejemplo moderno serían las ampolletas inteligentes, que permiten encender o apagar luces y controlar electrodomésticos desde aplicaciones móviles o asistentes inteligentes.</p>
+<p>En esta sección se mostrará cómo configurar el entorno de desarrollo
+y compilar AtomVM para ser ejecutado en la ESP32 utilizando un sistema operativo Linux.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="internet-industrial-de-las-cosas-iiot"><a class="anchor" href="#internet-industrial-de-las-cosas-iiot"></a>Internet Industrial de las Cosas (IIoT)</h2>
+<h2 id="encender-un-led-con-atomvm"><a class="anchor" href="#encender-un-led-con-atomvm"></a>Encender un LED con AtomVM</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>El Internet Industrial de las Cosas (IIoT) es una extensión del IoT enfocada en el ámbito industrial. Consiste en la integración de sensores, instrumentos y dispositivos autónomos conectados a través de Internet con aplicaciones industriales.</p>
-</div>
-<div class="paragraph">
-<p>Esto permite recopilar datos, realizar análisis y optimizar la producción, aumentando la eficiencia y reduciendo los costos en procesos de fabricación y prestación de servicios.</p>
-</div>
-<div class="paragraph">
-<p>En 2010, el IIoT se perfila como una tendencia revolucionaria, impulsada por la disponibilidad masiva de almacenamiento y capacidad computacional en la nube, permitiendo aplicaciones como el mantenimiento predictivo y la automatización industrial.</p>
-</div>
-<div class="paragraph">
-<p>Los sistemas SCADA, por ejemplo, permiten monitorear y controlar procesos industriales en tiempo real, como plantas eléctricas o estaciones de tratamiento de aguas, haciendo uso del IoT.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="protocolos-de-comunicación-en-iot"><a class="anchor" href="#protocolos-de-comunicación-en-iot"></a>Protocolos de Comunicación en IoT</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Bluetooth Low Energy (BLE):</strong> Tecnología inalámbrica de corto alcance y bajo consumo energético, ideal para dispositivos portátiles y aplicaciones de salud. Permite transferencias de datos rápidas en distancias de hasta 10 metros.</p>
-</li>
-<li>
-<p><strong>LoRaWAN:</strong> Protocolo de red basado en LoRa para redes de baja potencia y área amplia (LPWAN). Permite comunicaciones bidireccionales de largo alcance (hasta 15 km) con consumo energético mínimo, ideal para sensores en áreas rurales o remotas.</p>
-</li>
-<li>
-<p><strong>MQTT:</strong> Protocolo ligero de mensajería basado en el modelo publicador/suscriptor. Es eficiente en conexiones remotas con bajo ancho de banda.</p>
-</li>
-<li>
-<p><strong>CoAP:</strong> Protocolo de la capa de aplicación basado en UDP. Está diseñado para dispositivos con recursos limitados y es eficiente en aplicaciones donde el bajo consumo energético es clave.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="impacto-y-futuro-del-iot-y-iiot"><a class="anchor" href="#impacto-y-futuro-del-iot-y-iiot"></a>Impacto y Futuro del IoT y IIoT</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>El avance del IoT y el IIoT ha transformado profundamente la forma en que interactuamos con la tecnología. Mientras que el IoT mejora la calidad de vida mediante dispositivos inteligentes, el IIoT impulsa la eficiencia operativa en sectores industriales como la manufactura, energía, agricultura y logística.</p>
-</div>
-<div class="paragraph">
-<p>Protocolos como LoRaWAN, Bluetooth LE, MQTT y CoAP permiten adaptar las comunicaciones según las necesidades específicas, priorizando el bajo consumo energético, la cobertura o la velocidad de transmisión.</p>
-</div>
-<div class="paragraph">
-<p>En conjunto, estos avances no solo optimizan procesos, sino que abren paso a nuevos modelos de negocio basados en datos en tiempo real. Con una infraestructura adecuada, una estrategia de seguridad sólida y la selección correcta de tecnologías, IoT y IIoT se consolidan como ejes de la transformación digital del presente y futuro.</p>
+<p>Si logras ejecutar éste código y el Led prende. Exitosamente
+has configurado el entorno de desarrollo para AtomVM.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../controllers/raspberry.html">Raspberry Pi</a></span>
-  <span class="next"><a href="../tools/platformio.html">PlatformIO IDE</a></span>
+  <span class="prev"><a href="atomvm.html">AtomVM</a></span>
+  <span class="next"><a href="components.html">Componentes Electrónicos</a></span>
 </nav>
 </article>
   </div>

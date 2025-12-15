@@ -1,6 +1,7 @@
-= Conexión Bluetooth
+= Conexión Remota
 
 En esta sección se mostrará como conectar un celular Android o iPhone
-al ESP32 y poner enviar comandos via Bluetooth.
+al ESP32 y poner enviar comandos via Wifi Access Point.
 
 // Pendiente: Ver si es posible conectar un mando de PS3 o joystick similar que tenga bluetooth.
+// Ver si se puede crear una extensión de AtomVM que integre Bluetooth exclusivo para ESP32.

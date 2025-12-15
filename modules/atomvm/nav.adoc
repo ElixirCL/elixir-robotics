@@ -1,3 +1,6 @@
 .AtomVM
 * xref:atomvm.adoc[]
+* xref:devenv.adoc[]
+* xref:components.adoc[]
+* xref:remote.adoc[]
 * xref:arcade.adoc[]
