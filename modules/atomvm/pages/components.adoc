@@ -44,5 +44,3 @@ Los pontenciómetros son útiles para configurar la intensidad de ciertas config
 == Zumbador activo y pasivo
 
 == Botones
-
-== Pantalla OLED

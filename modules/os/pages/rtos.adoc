@@ -1,0 +1,28 @@
+= Sistemas Operativos en Tiempo Real
+
+== FreeRTOS
+
+- https://www.youtube.com/watch?v=kcsHsoWmbDI
+- https://www.espressif.com/en/products/sdks/esp-idf
+- https://www.youtube.com/watch?v=s5DnmeOwkxo
+- https://www.youtube.com/watch?v=F321087yYy4
+
+== Zephyr
+
+- https://www.youtube.com/watch?v=Z_7y_4O7yTw&list=PLEQVp_6G_y4iFfemAbFsKw6tsGABarTwp&index=1
+- https://www.youtube.com/watch?v=jR5E5Kz9A-k
+- https://sirinsoftware.com/blog/rtos-wars-freertos-vs-zephyr-a-decision-you-cant-afford-to-get-wrong
+- https://www.youtube.com/watch?v=Qq5qD8OxTtY
+
+== Mbed
+
+- https://os.mbed.com/
+
+== R-Thread
+
+https://www.arduinolibraries.info/libraries/rt-thread
+https://www.rt-thread.io/
+
+== Eclipse Thread-X
+
+- https://threadx.io/

@@ -1,0 +1,6 @@
+= Extender AtomVM
+
+En esta sección se verá como extender AtomVM para incorporar
+componentes y funcionalidades adicionales.
+
+== Pantalla OLED
