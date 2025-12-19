@@ -7,7 +7,7 @@
     <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/colosseo/devenv.html">
     <link rel="prev" href="colosseo.html">
     <link rel="next" href="components.html">
-    <meta name="generator" content="Antora 3.1.10">
+    <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
   </head>
@@ -134,6 +134,15 @@
     <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/remote.html">Conexión Remota</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
   </li>
 </ul>
@@ -152,7 +161,10 @@
     <a class="nav-link" href="components.html">Componentes Electrónicos</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="bluetooth.html">Conexión Bluetooth</a>
+    <a class="nav-link" href="#bluetooth.adoc">bluetooth.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="wifi.html">Conexión a través de Wi-Fi</a>
   </li>
 </ul>
   </li>
@@ -210,8 +222,213 @@ y compilar AtomVM para ser ejecutado en la ESP32 utilizando un sistema operativo
 </div>
 </div>
 <div class="sect1">
+<h2 id="linuxmacos"><a class="anchor" href="#linuxmacos"></a>Linux/MacOS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Se recomienda usar <a href="https://devenv.sh/"><em>Devenv</em> </a> para gestionar dependencias del sistema. El siguiente archivo <code>devenv.nix</code> define todas las dependencias necesarias para compilar un proyecto Elixir a <code>avm</code>, y luego flashear el resultado a un ESP32:</p>
+</div>
+<div class="listingblock">
+<div class="title">devenv.nix</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-nix hljs" data-lang="nix">{ lib, pkgs, ... }:
+
+{
+  languages.elixir.enable = true;
+  packages = [
+    pkgs.inotify-tools
+
+    pkgs.esptool
+    pkgs.picocom
+  ] ++
+  lib.optionals pkgs.stdenv.isDarwin [
+    # for ExUnit notifier
+    pkgs.terminal-notifier
+
+    # for package - file_system
+    pkgs.darwin.apple_sdk.frameworks.CoreFoundation
+    pkgs.darwin.apple_sdk.frameworks.CoreServices
+  ];
+
+  scripts.flash.exec = ''
+    mix atomvm.packbeam &amp;&amp; sudo esptool --chip auto --port /dev/ttyUSB0 --baud 921600 \
+      write-flash 0x250000 serial_test.avm
+  '';
+
+  scripts.monitor.exec = ''
+    sudo picocom -b 115200 /dev/ttyUSB0
+  '';
+
+  scripts.format.exec = ''
+    sudo esptool --chip auto --port /dev/ttyUSB0 --baud 921600 erase-flash
+  '';
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El entorno también incluye un alias para flashear el programa (<code>flash</code>) y un alias para monitorear la salida serial (<code>monitor</code>). Estos alias se pueden ejectuar directamente a través de la shell. Para entrar a la shell de devenv, se debe ejecutar el comando <code>devenv shell</code>.</p>
+</div>
+<div class="paragraph">
+<p>Se asume que la entrada de ESP32 se encuentra en <code>/dev/ttyUSB0</code>. En caso de no encontrarse ahí (se puede verificar con <code>ls /dev/ttyUSB*</code>), se debe cambiar en la definición de los scripts.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="preparar-esp32"><a class="anchor" href="#preparar-esp32"></a>Preparar ESP32</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para correr programas Elixir compilados a <code>avm</code>, es necesario primero flashear la imagen de AtomVM (con soporte para Elixir) en la ESP32.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># eliminar memoria flash
+sudo esptool --chip auto --port /dev/ttyUSB0 --baud 921600 erase-flash
+
+# flashear AtomVM (descarga en https://github.com/atomvm/AtomVM/releases)
+
+sudo esptool \
+  --chip auto \
+  --port /dev/ttyUSB0 --baud 921600 \
+  --before default_reset --after hard_reset \
+  write_flash -u \
+  --flash_mode dio --flash_freq 40m --flash_size detect \
+  0x1000 \
+  ./AtomVM-esp32-elixir-v0.6.6.img</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="encender-un-led-con-atomvm"><a class="anchor" href="#encender-un-led-con-atomvm"></a>Encender un LED con AtomVM</h2>
 <div class="sectionbody">
+<div class="listingblock">
+<div class="title">mix.exs</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule LedTest.MixProject do
+  use Mix.Project
+
+  def project do
+    [
+      app: :led_test,
+      version: "0.1.0",
+      elixir: "~&gt; 1.18",
+      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      atomvm: [
+        start: LedTest,
+        flash_offset: 0x250000
+      ]
+    ]
+  end
+
+  # Run "mix help compile.app" to learn about applications.
+  def application do
+    [
+      extra_applications: [:logger]
+    ]
+  end
+
+  # Run "mix help deps" to learn about dependencies.
+  defp deps do
+    [
+      {:exatomvm, git: "https://github.com/atomvm/ExAtomVM/"}
+    ]
+  end
+end</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">lib/led_test.ex</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule LedTest do
+  @test_duty 3000
+  @test_fade_time 2000
+
+  @led_1 2 # led de ESP32
+
+  def start do
+    ledc_hs_timer = [
+      {:duty_resolution, 13},
+      {:freq_hz, 5000},
+      {:speed_mode, LEDC.high_speed_mode()},
+      {:timer_num, @high_speed_timer}
+    ]
+
+    :ok = LEDC.timer_config(ledc_hs_timer)
+
+    ledc_channel = [
+      [
+        {:channel, 0},
+        {:duty, 0},
+        {:gpio_num, @led_1},
+        {:speed_mode, LEDC.high_speed_mode()},
+        {:hpoint, 0},
+        {:timer_sel, @high_speed_timer}
+      ]
+    ]
+
+    Enum.each(ledc_channel, fn channel_config -&gt; :ok = LEDC.channel_config(channel_config) end)
+    :ok = LEDC.fade_func_install(0)
+    loop(ledc_channel)
+  end
+
+  def loop(ledc_channel) do
+    :io.format('1. LEDC fade up to duty = ~p~n', [@test_duty])
+    Enum.each(ledc_channel, fn channel_config -&gt; do_stage_1(channel_config) end)
+    Process.sleep(@test_fade_time)
+
+    :io.format('2. LEDC fade down to duty = 0~n')
+    Enum.each(ledc_channel, fn channel_config -&gt; do_stage_2(channel_config) end)
+    Process.sleep(@test_fade_time)
+
+    :io.format('3. LEDC set duty = ~p without fade~n', [@test_duty])
+    Enum.each(ledc_channel, fn channel_config -&gt; do_stage_3(channel_config) end)
+    Process.sleep(@test_fade_time)
+
+    :io.format('4. LEDC set duty = 0 without fade~n')
+    Enum.each(ledc_channel, fn channel_config -&gt; do_stage_4(channel_config) end)
+    Process.sleep(@test_fade_time)
+
+    loop(ledc_channel)
+  end
+
+  defp do_stage_1(channel_config) do
+    speed_mode = :proplists.get_value(:speed_mode, channel_config)
+    channel = :proplists.get_value(:channel, channel_config)
+    :ok = LEDC.set_fade_with_time(speed_mode, channel, @test_duty, @test_fade_time)
+    :ok = LEDC.fade_start(speed_mode, channel, LEDC.fade_no_wait())
+  end
+
+  defp do_stage_2(channel_config) do
+    speed_mode = :proplists.get_value(:speed_mode, channel_config)
+    channel = :proplists.get_value(:channel, channel_config)
+    :ok = LEDC.set_fade_with_time(speed_mode, channel, 0, @test_fade_time)
+    :ok = LEDC.fade_start(speed_mode, channel, LEDC.fade_no_wait())
+  end
+
+  defp do_stage_3(channel_config) do
+    speed_mode = :proplists.get_value(:speed_mode, channel_config)
+    channel = :proplists.get_value(:channel, channel_config)
+    :ok = LEDC.set_duty(speed_mode, channel, @test_duty)
+    :ok = LEDC.update_duty(speed_mode, channel)
+  end
+
+  defp do_stage_4(channel_config) do
+    speed_mode = :proplists.get_value(:speed_mode, channel_config)
+    channel = :proplists.get_value(:channel, channel_config)
+    :ok = LEDC.set_duty(speed_mode, channel, 0)
+    :ok = LEDC.update_duty(speed_mode, channel)
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Luego, en una shell con devenv:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">flash</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Si logras ejecutar éste código y el Led prende. Exitosamente
 has configurado el entorno de desarrollo para AtomVM.</p>

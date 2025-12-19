@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Conexión a través de Wi-Fi :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/colosseo/wifi.html">
+    <link rel="prev" href="#bluetooth.adoc">
+    <link rel="next" href="../nerves/nerves.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/raspberry.html">Raspberry Pi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/lorawan.html">LoRaWAN</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/grafana.html">Grafana</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/remote.html">Conexión Remota</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coliseo Atómico</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="#bluetooth.adoc">bluetooth.adoc</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="wifi.html">Conexión a través de Wi-Fi</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nerves</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../nerves/nerves.html">Elixir Nerves</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Coliseo Atómico</li>
+    <li><a href="wifi.html">Conexión a través de Wi-Fi</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/colosseo/pages/wifi.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Conexión a través de Wi-Fi</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>En esta sección se mostrará como conectar un dispositivo al ESP32 y enviar comandos via un navegador.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="dependencias-de-atomvm"><a class="anchor" href="#dependencias-de-atomvm"></a>Dependencias de AtomVM</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para obtener acceso a la librería <code>httpd</code> de Erlang, es necesario incluir <code>atomvm_lib</code> en el archivo mix.exs.</p>
+</div>
+<div class="listingblock">
+<div class="title">mix.exs</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">defp deps do
+  [
+    {:exatomvm, git: "https://github.com/atomvm/ExAtomVM/"},
+    {:atomvm_lib, git: "https://github.com/atomvm/atomvm_lib/"}
+  ]
+end</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ejemplo"><a class="anchor" href="#ejemplo"></a>Ejemplo</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A continuación, se incluye un módulo de ejemplo que implementa <code>httpd</code> para servir archivos y una API desde un servidor hosteado en la ESP32.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">defmodule ApTest do
+  @behaviour :httpd_api_handler
+
+  @port 8080
+
+  def start() do
+    ap_config = [
+      ssid: "robot test",
+      psk: "passpass",
+      ap_started: fn -&gt; :io.format('Punto de acceso iniciado en 192.168.4.1~n') end
+    ]
+
+    {:ok, _network_pid} = :network.start(ap: ap_config)
+
+    Process.sleep(1000)
+
+    httpd_config = [
+      # handler para ruta /api
+      {[&lt;&lt;"api"&gt;&gt;],
+       %{
+         handler: :httpd_api_handler,
+         handler_config: %{
+           module: __MODULE__
+         }
+       }},
+      # handler de archivos para ruta /, expone archivos en directorio /priv
+      {[],
+       %{
+         handler: :httpd_file_handler,
+         handler_config: %{
+           app: :serial_test
+         }
+       }}
+    ]
+
+    {:ok, _httpd_pid} = :httpd.start_link(@port, httpd_config)
+
+    :io.format('Servidor web iniciado en http://192.168.4.1:8080~n')
+
+    :timer.sleep(:infinity)
+  end
+
+  def handle_api_request(:post, [&lt;&lt;"move"&gt;&gt;], http_request, _args) do
+    direction = http_request.body
+
+    move_robot(direction)
+
+    {:ok, %{status: "ok"}}
+  end
+
+  def handle_api_request(method, path, _http_request, _args) do
+    :io.format('Petición no soportada: ~p ~p~n', [method, path])
+    :not_found
+  end
+
+  defp move_robot(direction) do
+    :io.format('Comando de movimiento recibido: ~p~n', [direction])
+    # aqui iría el código para mover el robot
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>También es necesario incluir un archivo <code>index.html</code> en el directorio /priv del proyecto (se debe crear si no existe), para acceder a la API a través de una interfaz.</p>
+</div>
+<div class="listingblock">
+<div class="title">priv/index.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Control del Robot&lt;/title&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;style&gt;
+        :root {
+            --bg: #0f1220;
+            --panel: #1a1e35;
+            --btn: #2a2f55;
+            --btn-hover: #3a4090;
+            --btn-active: #4c53c7;
+            --text: #e8eaff;
+            --danger: #c0392b;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: system-ui, sans-serif;
+            background: radial-gradient(circle at top, #1a1e35, #0f1220);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1 {
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .controls {
+            background: var(--panel);
+            padding: 20px;
+            border-radius: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .controls button {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            border: none;
+            background: linear-gradient(180deg, var(--btn), #1f2340);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 6px 0 #14172b,
+                0 10px 20px rgba(0,0,0,0.4);
+            transition: transform 0.05s ease, box-shadow 0.05s ease, background 0.15s;
+        }
+
+        .controls button:hover {
+            background: linear-gradient(180deg, var(--btn-hover), #2b3090);
+        }
+
+        .controls button:active {
+            transform: translateY(4px);
+            box-shadow:
+                0 2px 0 #14172b,
+                0 4px 10px rgba(0,0,0,0.4);
+            background: linear-gradient(180deg, var(--btn-active), #3a40b0);
+        }
+
+        .controls svg {
+            width: 36px;
+            height: 36px;
+            fill: var(--text);
+        }
+
+        .forward { grid-column: 2; }
+        .left    { grid-column: 1; }
+        .stop    {
+            grid-column: 2;
+            background: linear-gradient(180deg, var(--danger), #8e1f17);
+        }
+        .right   { grid-column: 3; }
+        .back    { grid-column: 2; }
+
+        .stop:hover {
+            background: linear-gradient(180deg, #e74c3c, #a93226);
+        }
+
+        .status {
+            margin-top: 24px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Control del Robot&lt;/h1&gt;
+
+    &lt;div class="controls"&gt;
+        &lt;button class="forward" onclick="moveRobot('forward')"&gt;
+            &lt;svg viewBox="0 0 24 24"&gt;
+                &lt;path d="M12 4l-8 8h5v8h6v-8h5z"/&gt;
+            &lt;/svg&gt;
+        &lt;/button&gt;
+
+        &lt;button class="left" onclick="moveRobot('left')"&gt;
+            &lt;svg viewBox="0 0 24 24"&gt;
+                &lt;path d="M4 12l8 8v-5h8v-6h-8v-5z"/&gt;
+            &lt;/svg&gt;
+        &lt;/button&gt;
+
+        &lt;button class="stop" onclick="moveRobot('stop')"&gt;
+            &lt;svg viewBox="0 0 24 24"&gt;
+                &lt;rect x="6" y="6" width="12" height="12"/&gt;
+            &lt;/svg&gt;
+        &lt;/button&gt;
+
+        &lt;button class="right" onclick="moveRobot('right')"&gt;
+            &lt;svg viewBox="0 0 24 24"&gt;
+                &lt;path d="M20 12l-8-8v5h-8v6h8v5z"/&gt;
+            &lt;/svg&gt;
+        &lt;/button&gt;
+
+        &lt;button class="back" onclick="moveRobot('back')"&gt;
+            &lt;svg viewBox="0 0 24 24"&gt;
+                &lt;path d="M12 20l8-8h-5v-8h-6v8h-5z"/&gt;
+            &lt;/svg&gt;
+        &lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div id="status" class="status"&gt;Estado: Listo&lt;/div&gt;
+
+    &lt;script&gt;
+        function moveRobot(direction) {
+            document.getElementById("status").innerText = "Estado: Enviando comando..."";
+
+            fetch("/api/move", {
+                method: "POST",
+                headers: { "Content-Type": "text/html" },
+                body: direction
+            })
+            .then(r =&gt; r.json())
+            .then(data =&gt; {
+                document.getElementById("status").innerText = "Estado: "" + data.status;
+            })
+            .catch(() =&gt; {
+                document.getElementById("status").innerText = "Estado: Error de conexión";
+            });
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Para acceder a la API, el dispositivo primero se debe conectar a la red Wi-Fi llamada <code>robot test</code>, y luego acceder a <code>192.168.4.1:8080/index.html</code>.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="#bluetooth.adoc">bluetooth.adoc</a></span>
+  <span class="next"><a href="../nerves/nerves.html">Elixir Nerves</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>
