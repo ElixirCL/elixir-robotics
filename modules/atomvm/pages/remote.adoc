@@ -13,21 +13,21 @@ Para obtener acceso a la librería `httpd` de Erlang, es necesario incluir `atom
 
 .mix.exs
 [source, elixir]
-```
+----
 defp deps do
   [
     {:exatomvm, git: "https://github.com/atomvm/ExAtomVM/"},
     {:atomvm_lib, git: "https://github.com/atomvm/atomvm_lib/"}
   ]
 end
-```
+----
 
 === Ejemplo
 
 A continuación, se incluye un módulo de ejemplo que implementa `httpd` para servir archivos y una API desde un servidor hosteado en la ESP32.
 
 [source, elixir]
-```
+----
 defmodule ApTest do
   @behaviour :httpd_api_handler
 
@@ -88,13 +88,13 @@ defmodule ApTest do
     # aqui iría el código para mover el robot
   end
 end
-```
+----
 
 También es necesario incluir un archivo `index.html` en el directorio /priv del proyecto (se debe crear si no existe), para acceder a la API a través de una interfaz.
 
 .priv/index.html
 [source, elixir]
-```
+----
 <!DOCTYPE html>
 <html>
 <head>
@@ -249,7 +249,7 @@ También es necesario incluir un archivo `index.html` en el directorio /priv del
     </script>
 </body>
 </html>
-```
+----
 
 Para acceder a la API, el dispositivo primero se debe conectar a la red Wi-Fi llamada `robot test`, y luego acceder a `192.168.4.1:8080/index.html`.
 

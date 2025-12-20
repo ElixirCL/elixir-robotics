@@ -28,19 +28,535 @@ En este caso se utilizará un https://mcielectronics.cl/shop/product/micro-servo
 
 == Evitar Obstáculos
 
+El módulo de evitación de obstaulos utiliza un sensor infrarrojo para enviar una señal al detectar un obstáculo.
+
+.Sensor de Obstáculos IR
+image::components/obstacle.jpg[]
+
+=== Guía de Conexiones
+
+Para conectar un Sensor de Obstáculos IR a la ESP32:
+
+*   **Pines del Sensor de Obstáculos IR**:
+    *   `VCC`: Alimentación
+    *   `GND`: Tierra
+    *   `OUT`: Salida digital
+*   **Conexión a la ESP32**:
+    *   `VCC` (Sensor) -> Pin `3V3` de la ESP32
+    *   `GND` (Sensor) -> Pin `GND` de la ESP32
+    *   `OUT` (Sensor) -> Pin GPIO de la ESP32 (Ej: GPIO33)
+
+**Notas**:
+
+*   Algunos módulos tienen un potenciómetro para ajustar la distancia de detección.
+*   La salida `OUT` es típicamente `LOW` cuando detecta un obstáculo y `HIGH` cuando no detecta nada.
+
+=== Código de Ejemplo
+
+[source, elixir]
+----
+defmodule DetectTest do
+  @led_pin 2
+  @detection_pin 33
+
+  def start() do
+    :gpio.set_pin_mode(@led_pin, :output)
+    :gpio.set_pin_mode(@detection_pin, :input)
+    loop()
+  end
+
+  defp loop() do
+    level = read_detection(@detection_pin)
+    :gpio.digital_write(@led_pin, level)
+    Process.sleep(100)
+    loop()
+  end
+
+  defp read_detection(pin) do
+    result = GPIO.digital_read(pin)
+    :io.format('Result = ~p~n', [result])
+    result
+  end
+end
+----
+
+== Sensor de temperatura y humedad
+
+El módulo de DHT11 es un sensor digital que mide la temperatura ambiente y la humedad, usando un sensor de humedad capacitativo y un termistor, mostrando los datos a través de un pin digital.
+
+Requiere de un driver adicional: https://github.com/atomvm/atomvm_dht
+
+.Sensor DHT11
+image::components/dht.webp[]
+
+=== Guía de Conexiones
+
+Para conectar un sensor DHT11 a la ESP32:
+
+*   **Pines del Sensor DHT**:
+    *   `VCC` (o `+`): Alimentación (3.3V)
+    *   `DATA` (o `SIG`): Pin de datos
+    *   `GND` (o `-`): Tierra
+    *   *(Nota: Algunos módulos DHT tienen 3 pines, otros tienen 4 y el pin no usado se deja flotante. Asegúrate de identificar `VCC`, `DATA` y `GND` correctamente).*
+*   **Conexión a la ESP32**:
+    *   `VCC` (DHT) -> Pin `3V3` de la ESP32
+    *   `GND` (DHT) -> Pin `GND` de la ESP32
+    *   `DATA` (DHT) -> Pin GPIO de la ESP32 (Ej: `GPIO21`)
+
+=== Código de Ejemplo
+
+[source, elixir]
+----
+defmodule DhtTest do
+  @dht_pin 21
+
+  def start() do
+    {:ok, dht} = :dht.start(%{pin: @dht_pin, device: :dht_11})
+    loop(dht)
+  end
+
+  defp loop(dht) do
+    take_reading(dht)
+    Process.sleep(5000)
+    loop(dht)
+  end
+
+  defp take_reading(dht) do
+    case :dht.take_reading(dht) do
+      {:ok, {{temp, tempFractional}, {hum, humFractional}}} ->
+        :io.format('Temperature: ~p.~pC  Humidity: ~p.~p%~n', [
+          temp,
+          tempFractional,
+          hum,
+          humFractional
+        ])
+      error ->
+        :io.format('Error taking reading: ~p~n', [error])
+    end
+  end
+end
+----
+
+.mix.exs
+[source, elixir]
+----
+  defp deps do
+    [
+      {:exatomvm, git: "https://github.com/atomvm/ExAtomVM/"},
+      {:dht, git: "https://github.com/UncleGrumpy/atomvm_dht"}
+    ]
+  end
+----
+
+== Sensor de movimiento
+
+El sensor de movimiento PIR mide la luz infrarroja emitida en su campo de visión. Cada cuerpo libera energía térmica, lo que permite que el sensor los detecte.
+
+.Sensor PIR
+image::components/pir.jpg[]
+
+=== Guía de Conexiones
+
+Para conectar un Sensor de Movimiento PIR a la ESP32:
+
+*   **Pines del Sensor PIR**:
+    *   `VCC`: Alimentación
+    *   `GND`: Tierra
+    *   `OUT`: Salida digital (HIGH cuando detecta movimiento, LOW en reposo)
+*   **Conexión a la ESP32**:
+    *   `VCC` (PIR) -> Pin `3V3` de la ESP32
+    *   `GND` (PIR) -> Pin `GND` de la ESP32
+    *   `OUT` (PIR) -> Pin GPIO de la ESP32 (Ej: GPIO26)
+
+=== Código de Ejemplo
+
+[source, elixir]
+----
+defmodule SensorTest do
+  @led_pin 2
+  @motion_pin 26
+
+  def start() do
+    :gpio.set_pin_mode(@led_pin, :output)
+    :gpio.set_pin_mode(@motion_pin, :input)
+    loop()
+  end
+
+  defp loop() do
+    level = read_detection(@motion_pin)
+    :gpio.digital_write(@led_pin, level)
+    Process.sleep(100)
+    loop()
+  end
+
+  defp read_detection(pin) do
+    result = GPIO.digital_read(pin)
+    :io.format('Result = ~p~n', [result])
+    result
+  end
+end
+----
+
 == Fotoresistencia
 
 La fotoresistencia son útiles para crear robots que sigan líneas
 o eviten obstáculos según el nivel de luz.
 
-== Sensor de temperatura y humedad
+.Módulo de Fotoresistencia
+image::components/foto.jpg[]
 
-== Sensor de movimiento
+=== Guía de Conexiones
+
+Para conectar un Módulo de Fotoresistencia a la ESP32:
+
+*   **Pines del Módulo de Fotoresistencia**:
+    *   `VCC`: Alimentación
+    *   `GND`: Tierra
+    *   `OUT` (o `DO`): Salida digital
+*   **Conexión a la ESP32**:
+    *   `VCC` -> Pin `3V3` de la ESP32
+    *   `GND` -> Pin `GND` de la ESP32
+    *   `OUT` -> Pin GPIO de la ESP32 (Ej: GPIO26)
+
+**Notas**:
+
+*   Estos módulos suelen tener un potenciómetro para ajustar el umbral de luz que activa la salida digital.
+
+El ejemplo utilizado para el sensor de movimento también aplica para la fotoresistencia.
 
 == Potenciometro
 
 Los pontenciómetros son útiles para configurar la intensidad de ciertas configuraciones.
 
+.Potenciómetro
+image::components/potentiometer.jpg[]
+
+=== Guía de Conexiones
+
+Para conectar un Potenciómetro a la ESP32:
+
+*   **Pines del Potenciómetro**:
+    *   Pin Exterior 1: `VCC` (Alimentación)
+    *   Pin Exterior 2: `GND` (Tierra)
+    *   Pin Central (Wiper): `SIG` (Salida de señal analógica)
+*   **Conexión a la ESP32**:
+    *   Pin Exterior 1 -> Pin `3V3` de la ESP32
+    *   Pin Exterior 2 -> Pin `GND` de la ESP32
+    *   Pin Central -> Pin ADC de la ESP32 (Ej: `GPIO34`)
+
+**Notas**:
+
+*   Los pines ADC de la ESP32 son específicos. `GPIO32-39` son los más comunes para ADC1.
+*   La lectura del potenciómetro proporcionará un valor analógico que varía según la posición del eje.
+
+=== Código de Ejemplo
+
+[source, elixir]
+----
+defmodule PotentiometerTest do
+  @potentiometer_pin 34
+
+  def start do
+    :ok = :esp_adc.start(@potentiometer_pin, bitwidth: :bit_max, atten: :db_12)
+
+    loop()
+  end
+
+  def loop() do
+    read_potentiometer(@potentiometer_pin)
+
+    loop()
+  end
+
+  defp read_potentiometer(pin) do
+    {:ok, {raw, mv}} =
+      :esp_adc.read(pin, [:raw, :voltage, samples: 48])
+
+    :io.format('ADC pin ~p raw value=~p millivolts=~p~n', [pin, raw, mv])
+  end
+end
+----
+
 == Zumbador activo y pasivo
 
+Los zumbadores activos tienen un oscilador interno que produce un tono, lo que los hace fácil de usar. En cambio, los zumbadores pasivos requieren de una señal externa para generar un tono, ofreciendo mayor control a cambio de mayor complejidad.
+
+.Zumbador
+image::components/buzzer.webp[]
+
+=== Guía de Conexiones
+
+Para conectar un Zumbador Activo a la ESP32:
+
+*   **Pines del Zumbador Activo**:
+    *   Pin Positivo (`+`): Alimentación (pin más largo)
+    *   Pin Negativo (`-`): Tierra (pin más corto)
+*   **Conexión a la ESP32**:
+    *   Pin Positivo -> Pin GPIO de la ESP32 (Ej: GPIO26)
+    *   Pin Negativo -> Pin `GND` de la ESP32
+
+**Notas**:
+
+*   Un zumbador activo produce un tono fijo cuando se le aplica voltaje. No requiere una señal PWM para generar sonido.
+
+=== Código de Ejemplo
+
+[source, elixir]
+----
+defmodule BuzzerTest do
+  @led_pin 2
+  @detection_pin 33
+  @buzzer_pin 26
+
+  def start() do
+    :gpio.set_pin_mode(@led_pin, :output)
+    :gpio.set_pin_mode(@detection_pin, :input)
+    :gpio.set_pin_mode(@buzzer_pin, :output)
+    loop()
+  end
+
+  defp loop() do
+    level = read_detection(@detection_pin)
+    :gpio.digital_write(@led_pin, level)
+    :gpio.digital_write(@buzzer_pin, level)
+    Process.sleep(100)
+    loop()
+  end
+
+  defp read_detection(pin) do
+    result = :gpio.digital_read(pin)
+    :io.format('Result = ~pn', [result])
+    result
+  end
+end
+----
+
+
 == Botones
+
+Un botón pulsador táctil común de 4 pines tiene sus contactos internos configurados de manera que los dos pines en cada uno de sus lados largos están siempre eléctricamente conectados entre sí. Al presionar el botón, se establece temporalmente una conexión entre estos dos lados que de otro modo estarían separados, cerrando el circuito. Esta configuración interna significa que para cablear el botón, solo necesitas usar un pin de cada lado opuesto, ya que el otro pin en el mismo lado ofrece un punto de conexión idéntico.
+
+.Botón
+image::components/button.png[]
+
+=== Guía de Conexiones
+
+En el ejemplo se utiliza un pull-up interno. Para conectar un Botón Pulsador a la ESP32 con pull-up interno:
+
+*   **Pines del Botón Pulsador**: Dos terminales
+*   **Conexión a la ESP32**:
+    *   Terminal 1 del Botón -> Pin GPIO de la ESP32 (Ej: GPIO33)
+    *   Terminal 2 del Botón -> Pin `GND` de la ESP32
+
+**Notas**:
+
+*   Con esta configuración, el pin GPIO estará `HIGH` (3.3V) cuando el botón no esté presionado (gracias al pull-up interno).
+*   Cuando el botón es presionado, el pin GPIO se conecta a `GND` y su lectura será `LOW`.
+*   Esto elimina la necesidad de un resistor externo.
+
+=== Código de Ejemplo
+
+[source, elixir]
+----
+defmodule ButtonTest do
+  @test_duty 3000
+  @test_fade_time 2000
+
+  @high_speed_timer 0
+  @low_speed_timer 1
+
+  @led_1 2
+  @led_2 23
+
+  @button_pin 33
+
+  def start do
+    GPIO.set_pin_mode(@button_pin, :input)
+    GPIO.set_pin_pull(@button_pin, :up)
+
+    ledc_hs_timer = [
+      {:duty_resolution, 13},
+      {:freq_hz, 5000},
+      {:speed_mode, LEDC.high_speed_mode()},
+      {:timer_num, @high_speed_timer}
+    ]
+
+    :ok = LEDC.timer_config(ledc_hs_timer)
+
+    ledc_ls_timer = [
+      {:duty_resolution, 13},
+      {:freq_hz, 5000},
+      {:speed_mode, LEDC.low_speed_mode()},
+      {:timer_num, @low_speed_timer}
+    ]
+
+    :ok = LEDC.timer_config(ledc_ls_timer)
+
+    ledc_channel = [
+      [
+        {:channel, 0},
+        {:duty, 0},
+        {:gpio_num, @led_1},
+        {:speed_mode, LEDC.high_speed_mode()},
+        {:hpoint, 0},
+        {:timer_sel, @high_speed_timer}
+      ],
+      [
+        {:channel, 1},
+        {:duty, 0},
+        {:gpio_num, @led_2},
+        {:speed_mode, LEDC.high_speed_mode()},
+        {:hpoint, 0},
+        {:timer_sel, @high_speed_timer}
+      ]
+    ]
+
+    Enum.each(ledc_channel, fn channel_config -> :ok = LEDC.channel_config(channel_config) end)
+    :ok = LEDC.fade_func_install(0)
+    loop(ledc_channel)
+  end
+
+  def loop(ledc_channel) do
+    if read_button(@button_pin) == :pressed do
+      wait_for_release(@button_pin)
+    end
+
+    :io.format('1. LEDC fade up to duty = p~n', [@test_duty])
+    Enum.each(ledc_channel, fn channel_config -> do_stage_1(channel_config) end)
+    Process.sleep(@test_fade_time)
+
+    :io.format('2. LEDC fade down to duty = 0~n')
+    Enum.each(ledc_channel, fn channel_config -> do_stage_2(channel_config) end)
+    Process.sleep(@test_fade_time)
+
+    loop(ledc_channel)
+  end
+
+  defp do_stage_1(channel_config) do
+    speed_mode = :proplists.get_value(:speed_mode, channel_config)
+    channel = :proplists.get_value(:channel, channel_config)
+    :ok = LEDC.set_fade_with_time(speed_mode, channel, @test_duty, @test_fade_time)
+    :ok = LEDC.fade_start(speed_mode, channel, LEDC.fade_no_wait())
+  end
+
+  defp do_stage_2(channel_config) do
+    speed_mode = :proplists.get_value(:speed_mode, channel_config)
+    channel = :proplists.get_value(:channel, channel_config)
+    :ok = LEDC.set_fade_with_time(speed_mode, channel, 0, @test_fade_time)
+    :ok = LEDC.fade_start(speed_mode, channel, LEDC.fade_no_wait())
+  end
+
+  defp read_button(pin) do
+    result = GPIO.digital_read(pin)
+    :io.format('Result = ~p~n', [result])
+    case result do
+      :low -> :pressed
+      :high -> :released
+    end
+  end
+
+  defp wait_for_release(pin) do
+    Process.sleep(50)
+
+    if read_button(pin) == :pressed do
+      wait_for_release(pin)
+    else
+      :ok
+    end
+  end
+end
+----
+
+
+== Pantalla OLED
+
+La pantalla OLED SSD1306 utiliza el protocolo de comunicación I2C para conectarse a la ESP32. Para la transmisión de datos, el pin SDA del display se conecta al pin de datos I2C de la ESP32 (generalmente GPIO21), y el pin SCL del display al pin de reloj I2C de la ESP32 (comúnmente GPIO22).
+
+Requiere de un driver adicional: https://github.com/atomvm/atomgl
+
+.Pantalla SSD1306
+image::components/ssd.jpg[]
+
+=== Guía de Conexiones
+
+Para conectar una Pantalla OLED (SSD1306 I2C) a la ESP32:
+
+*   **Pines de la Pantalla OLED**:
+    *   `VCC`: Alimentación
+    *   `GND`: Tierra
+    *   `SCL`: Línea de reloj I2C
+    *   `SDA`: Línea de datos I2C
+*   **Conexión a la ESP32**:
+    *   `VCC` (OLED) -> Pin `3V3` de la ESP32
+    *   `GND` (OLED) -> Pin `GND` de la ESP32
+    *   `SCL` (OLED) -> Pin `GPIO22` de la ESP32 (Pin SCL I2C por defecto)
+    *   `SDA` (OLED) -> Pin `GPIO21` de la ESP32 (Pin SDA I2C por defecto)
+
+=== Código de Ejemplo
+
+[source, elixir]
+----
+defmodule SsdTest do
+  @sda_pin 21
+  @scl_pin 22
+
+  def start do
+    i2c_opts = [
+      sda: @sda_pin,
+      scl: @scl_pin,
+      clock_speed_hz: 40000,
+      peripheral: "i2c0"
+    ]
+
+    i2c_host = :i2c.open(i2c_opts)
+
+    display_opts = [
+      width: 128,
+      height: 64,
+      compatible: "solomon-systech,ssd1306",
+      i2c_host: i2c_host,
+      reset: 18
+    ]
+
+    display = :erlang.open_port({:spawn, "display"}, display_opts)
+
+    {:ok, pid} =
+      HelloScene.start_link([],
+        display_server: {:port, display}
+      )
+
+    Process.sleep(:infinity)
+  end
+end
+
+defmodule HelloScene do
+  def start_link(args, opts) do
+    :avm_scene.start_link(__MODULE__, args, opts)
+  end
+
+  def init(_args) do
+    :erlang.send_after(100, self(), :update_display)
+    {:ok, %{width: 320, height: 240}}
+  end
+
+  def handle_info(:update_display, %{width: width, height: height} = state) do
+    items = [
+      {:text, 10, 20, :default16px, 0x000000, 0xFFFFFF, "Hello, World!"},
+      {:rect, 0, 0, width, height, 0xFFFFFF}
+    ]
+
+    {:noreply, state, [{:push, items}]}
+  end
+end
+----
+
+.mix.exs
+[source, elixir]
+----
+  defp deps do
+    [
+      {:avm_scene, git: "https://github.com/atomvm/avm_scene/"},
+      {:exatomvm, git: "https://github.com/atomvm/ExAtomVM/"}
+    ]
+  end
+----

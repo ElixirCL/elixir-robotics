@@ -50,6 +50,13 @@ La posición del globo depende de cada gladiador.
 Pero almenos debe tener dos puntos de anclaje inferior.
 ====
 
+[NOTE]
+====
+Las pilas son conectadas a los motores y al ESP32 de forma separada, 
+gracias a la placa de expansión se conecta al Jack de carga directamente a las pilas 
+ya que este aguanta hasta 16v sin problemas.
+====
+
 === Código fuente
 
 .Código fuente del gladiador
