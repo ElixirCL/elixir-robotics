@@ -98,10 +98,13 @@
     <a class="nav-link" href="../controllers/esp32.html">ESP32</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../controllers/smt32.html">SMT32</a>
+    <a class="nav-link" href="../controllers/stm32.html">STM32</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../controllers/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/fpga.html">FPGA</a>
   </li>
 </ul>
   </li>
@@ -125,7 +128,10 @@
     <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../tools/grafana.html">Grafana</a>
+    <a class="nav-link" href="../tools/dashboards.html">Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/cad.html">Herramientas de Computer Asisted Design (CAD)</a>
   </li>
 </ul>
   </li>
@@ -222,11 +228,117 @@ y tengan una buena velocidad. Son ideales para las ruedas que dan movimiento al 
 </div>
 <div class="sect2">
 <h3 id="guía-de-conexiones"><a class="anchor" href="#guía-de-conexiones"></a>Guía de Conexiones</h3>
-
+<div class="paragraph">
+<p>Para controlar un motor DC con una ESP32 y un driver L298N, se requiere de una fuente de alimentación externa para el motor, ya que la ESP32 no puede suministrar la corriente necesaria. El L298N actúa como un "puente H" que permite a la ESP32 controlar tanto la dirección como la velocidad del motor.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Conexión a la ESP32</strong>:</p>
+</li>
+<li>
+<p><code>ESP32 GND</code> &#8594; <code>L298N GND</code> (es importante que compartan tierra)</p>
+</li>
+<li>
+<p><code>ESP32 GPIO26</code> &#8594; <code>L298N IN1</code></p>
+</li>
+<li>
+<p><code>ESP32 GPIO27</code> &#8594; <code>L298N IN2</code></p>
+</li>
+<li>
+<p><code>ESP32 GPIO25</code> &#8594; <code>L298N ENA</code> (si se va a usar PWM)</p>
+</li>
+<li>
+<p><strong>Conexión de la Fuente de Alimentación Externa</strong>:</p>
+</li>
+<li>
+<p><code>Fuente Externa Positivo (+) ` &#8594; `L298N V12</code></p>
+</li>
+<li>
+<p><code>Fuente Externa Negativo (-) ` &#8594; `L298N GND</code></p>
+</li>
+<li>
+<p><strong>Conexión del Motor DC</strong>:</p>
+</li>
+<li>
+<p><code>Motor Terminal 1</code> &#8594; <code>L298N OUT1</code></p>
+</li>
+<li>
+<p><code>Motor Terminal 2</code> &#8594; <code>L298N OUT2</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Notas sobre el pin <code>ENA</code> y el control de velocidad (PWM):</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>El módulo L298N suele venir con un jumper de plástico preinstalado en el pin <code>ENA</code> (y <code>ENB</code>).</p>
+</li>
+<li>
+<p>Si este jumper está puesto, el motor estará siempre habilitado a máxima potencia y no podrás controlar su velocidad mediante software.</p>
+</li>
+<li>
+<p>Para poder controlar la velocidad del motor con la ESP32, se debe retirar el jumper del pin <code>ENA</code> y conectar un pin GPIO de la ESP32 (como <code>GPIO25</code>) a <code>ENA</code>.</p>
+</li>
+<li>
+<p>La ESP32 enviará una señal PWM (Pulse Width Modulation) a este pin <code>ENA</code>. El PWM permite simular un voltaje variable controlando el "tiempo de encendido" de la señal, lo que a su vez controla la velocidad efectiva del motor. En AtomVM, esto se gestiona mediante el módulo <code>LEDC</code>.</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="código-de-ejemplo"><a class="anchor" href="#código-de-ejemplo"></a>Código de Ejemplo</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule MotorTest do
+  @left_motor_pin_1 26
+  @left_motor_pin_2 27
 
+  def start() do
+    :gpio.set_pin_mode(@left_motor_pin_1, :output)
+    :gpio.set_pin_mode(@left_motor_pin_2, :output)
+
+    :io.format('Setup de motor finalizado~n')
+
+    loop()
+  end
+
+  defp loop() do
+    :io.format('Moviendo hacia adelante~n')
+    set_motor_direction(:forward)
+    Process.sleep(3000)
+
+    :io.format('Deteniendo motor~n')
+    set_motor_direction(:stop)
+    Process.sleep(2000)
+
+    :io.format('Moviendo hacia atrás~n')
+    set_motor_direction(:reverse)
+    Process.sleep(3000)
+
+    loop()
+  end
+
+  defp set_motor_direction(direction) do
+    case direction do
+      :forward -&gt;
+        :gpio.digital_write(@left_motor_pin_1, :high)
+        :gpio.digital_write(@left_motor_pin_2, :low)
+      :reverse -&gt;
+        :gpio.digital_write(@left_motor_pin_1, :low)
+        :gpio.digital_write(@left_motor_pin_2, :high)
+      :stop -&gt;
+        :gpio.digital_write(@left_motor_pin_1, :low)
+        :gpio.digital_write(@left_motor_pin_2, :low)
+      _ -&gt;
+        :io.format('Dirección de motor inválida: ~p~n', [direction])
+    end
+  end
+end</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="ejemplo-de-funcionamiento"><a class="anchor" href="#ejemplo-de-funcionamiento"></a>Ejemplo de Funcionamiento</h3>
@@ -243,11 +355,105 @@ En este caso se utilizará un <a href="https://mcielectronics.cl/shop/product/mi
 </div>
 <div class="sect2">
 <h3 id="guía-de-conexiones-2"><a class="anchor" href="#guía-de-conexiones-2"></a>Guía de Conexiones</h3>
-
+<div class="paragraph">
+<p>Para conectar un servomotor SG90 a la ESP32:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Pines del servomotor SG90</strong>:</p>
+</li>
+<li>
+<p><code>Cable Rojo</code>: VCC</p>
+</li>
+<li>
+<p><code>Cable Marrón</code>: GND</p>
+</li>
+<li>
+<p><code>Cable Naranja</code>: Señal PWM</p>
+</li>
+<li>
+<p><strong>Conexión a la ESP32</strong>:</p>
+</li>
+<li>
+<p><code>VCC</code> (Servo) &#8594; <code>ESP32 3v3</code></p>
+</li>
+<li>
+<p><code>GND</code> (Servo) &#8594; <code>ESP32 GND</code></p>
+</li>
+<li>
+<p><code>Signal</code> (Servo) &#8594; <code>ESP32 GPIO</code> (Ej: <code>GPIO13</code>)</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
 <h3 id="código-de-ejemplo-2"><a class="anchor" href="#código-de-ejemplo-2"></a>Código de Ejemplo</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule ServoTest do
+  @servomotor_pin 13
+  @servo_pwm_channel 0 # canal LEDC a usar para el servo
+  @servo_pwm_timer 0   # timer LEDC a usar para el servo
 
+  @servo_pwm_freq 50      # servos usan 50Hz
+  @servo_pwm_resolution 10 # 10 bits de resolución (0-1023)
+
+  # valores de duty cycle para ángulos comunes del SG90
+  # calculados para 10 bits de resolución (máx 1023) y 50Hz (periodo 20ms):
+  # 1ms (0 grados)  -&gt; (1/20) * 1023 = ~51
+  # 1.5ms (90 grados) -&gt; (1.5/20) * 1023 = ~77
+  # 2ms (180 grados) -&gt; (2/20) * 1023 = ~102
+  @duty_0_degrees 51
+  @duty_90_degrees 77
+  @duty_180_degrees 100
+
+  def start() do
+    set_up_servo()
+
+    :io.format('Servo setup finished. Starting movement sequence...~n')
+
+    set_servo_angle(@duty_0_degrees)
+    Process.sleep(1500)
+
+    set_servo_angle(@duty_90_degrees)
+    Process.sleep(1500)
+
+    set_servo_angle(@duty_180_degrees)
+    Process.sleep(1500)
+
+    :io.format('Movement sequence completed. Entering infinite sleep.~n')
+    :timer.sleep(:infinity)
+  end
+
+  defp set_up_servo() do
+    :ok =
+      LEDC.timer_config(
+        duty_resolution: @servo_pwm_resolution,
+        freq_hz: @servo_pwm_freq,
+        speed_mode: LEDC.high_speed_mode(),
+        timer_num: @servo_pwm_timer
+      )
+
+    :ok =
+      LEDC.channel_config(
+        channel: @servo_pwm_channel,
+        duty: @duty_90_degrees, # iniciar el servo en una posición central
+        gpio_num: @servomotor_pin,
+        speed_mode: LEDC.high_speed_mode(),
+        hpoint: 0,
+        timer_sel: @servo_pwm_timer
+      )
+  end
+
+  defp set_servo_angle(duty_cycle_value) do
+    :io.format('Setting servo duty to: ~p~n', [duty_cycle_value])
+    :ok = LEDC.set_duty(LEDC.high_speed_mode(), @servo_pwm_channel, duty_cycle_value)
+    :ok = LEDC.update_duty(LEDC.high_speed_mode(), @servo_pwm_channel)
+  end
+end</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="ejemplo-de-funcionamiento-2"><a class="anchor" href="#ejemplo-de-funcionamiento-2"></a>Ejemplo de Funcionamiento</h3>
