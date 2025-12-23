@@ -1,4 +1,5 @@
 .Herramientas
 * xref:platformio.adoc[]
 * xref:home-assistant.adoc[]
-* xref:grafana.adoc[]
+* xref:dashboards.adoc[]
+* xref:cad.adoc[]

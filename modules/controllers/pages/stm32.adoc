@@ -1,0 +1,4 @@
+= STM32
+
+El STM32 es una gran alternativa a ESP32 cuando se necesitan 
+soluciones profesionales de bajo consumo de calidad industrial.

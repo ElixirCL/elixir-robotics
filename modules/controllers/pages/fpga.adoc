@@ -1,0 +1,4 @@
+= FPGA
+
+- https://github.com/chipsalliance/chisel
+- https://www.imm.dtu.dk/~masca/chisel-book.html

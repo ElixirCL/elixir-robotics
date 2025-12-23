@@ -3,5 +3,6 @@
 * xref:pic16f877a.adoc[]
 * xref:arduino.adoc[]
 * xref:esp32.adoc[]
-* xref:smt32.adoc[]
+* xref:stm32.adoc[]
 * xref:raspberry.adoc[]
+* xref:fpga.adoc[]

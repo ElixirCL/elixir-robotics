@@ -1,0 +1,31 @@
+= Herramientas de Computer Asisted Design (CAD)
+
+== Proteus
+
+- https://www.labcenter.com/simulation/
+
+== Wokwi
+
+- https://wokwi.com/esp32
+
+== Thinkercad
+
+- https://www.tinkercad.com/
+
+== Autodesk Inventor
+
+- https://www.autodesk.com/latam/products/inventor/overview
+
+== FreeCad
+
+- https://www.freecad.org/
+
+== Autodesk Eagle
+
+- https://www.autodesk.com/br/products/eagle/overview.acessado
+
+== KiCad
+
+- https://www.kicad.org/
+
+== PCBWay
