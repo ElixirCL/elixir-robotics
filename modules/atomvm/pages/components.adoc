@@ -9,6 +9,9 @@ El https://mcielectronics.cl/shop/product/motor-gear-dc-caja-reductora-motorredu
 Se recomienda una alimentación de 9V separada de la placa de desarrollo para alimentar los motores 
 y tengan una buena velocidad. Son ideales para las ruedas que dan movimiento al carro.
 
+.Motores DC
+image::components/motoresdc.jpg[]
+
 === Guía de Conexiones
 
 Para controlar un motor DC con una ESP32 y un driver L298N, se requiere de una fuente de alimentación externa para el motor, ya que la ESP32 no puede suministrar la corriente necesaria. El L298N actúa como un "puente H" que permite a la ESP32 controlar tanto la dirección como la velocidad del motor.
@@ -91,6 +94,9 @@ end
 
 A diferencia de un motor DC, el servomotor puede ser controlado con precisión, pero son más lentos.
 En este caso se utilizará un https://mcielectronics.cl/shop/product/micro-servo-motor-sg90-9g-25775/[Micro servo SG90].
+
+.Servomotor SG90
+image::components/servo.png[]
 
 === Guía de Conexiones
 
