@@ -1,24 +1,16 @@
 :fn-ninjas: footnote:[https://ninjas.cl]
+:fn-elixircl: footnote:[https://elixircl.github.io]
 
-= Antora Docs Bootstrap
+= 🧙 Elixir Robotics 🤖
 
-This is a simple configuration for creating documentation with https://docs.antora.org/[Antora Docs].
+A book about projects using _AtomVM_ with _ESP32_.
+And some additional info about electronics, circuits and robotics.
 
-It includes:
-
-- Dockerfile (podman)
-- Kroki (Plant UML and others)
-- Search
-
-== Commands
-
-- `make build`: Compiles Antora Docs.
-- `make install`: Builds the Dockerfile.
-- `make server`: Starts a new server for the html version. (requires python3).
+image::https://elixircl.github.io/elixir-robotics/controllers/_images/esp32/gladiator/gladiador.jpg[ESP32 Gladiator]
 
 == License
 
-Created with ❤️ by https://ninjas.cl[Camilo Castro] and https://github.com/NinjasCL/antora-docs-bootstrap/graphs/contributors[contributors]footnote:[https://github.com/NinjasCL/antora-docs-bootstrap/graphs/contributors]. for https://ninjas.cl[Ninjas.cl]{fn-ninjas}.
+Created with ❤️ by https://ninjas.cl[Camilo Castro] and https://github.com/ElixirCL/elixir-robotics/graphs/contributors[contributors]footnote:[https://github.com/ElixirCL/elixir-robotics/graphs/contributors]. for https://elixircl.github.io[Elixir Chile]{fn-elixircl}.
 
 This document is licensed with http://creativecommons.org/licenses/by-nc-sa/4.0/[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International]footnote:[http://creativecommons.org/licenses/by-nc-sa/4.0/]
 
@@ -36,6 +28,3 @@ Source code licensed with https://opensource.org/licenses/BSD-2-Clause[BSD-2]foo
   </a>.
 </p>
 ++++
-
-
-See Also: https://github.com/NinjasCL/asciidoc-book-template/tree/main[Asciidoc Book Template]
