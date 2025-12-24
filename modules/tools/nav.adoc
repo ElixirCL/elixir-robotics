@@ -3,3 +3,4 @@
 * xref:home-assistant.adoc[]
 * xref:dashboards.adoc[]
 * xref:cad.adoc[]
+* xref:stores.adoc[]

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Tiendas :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/tools/stores.html">
+    <link rel="prev" href="cad.html">
+    <link rel="next" href="../atomvm/atomvm.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/basicstamp.html">Rambal Basic Stamp</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/stm32.html">STM32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/jetson.html">Nvidia Jetson &amp; AMD Kria</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/fpga.html">FPGA</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/lorawan.html">LoRaWAN</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="dashboards.html">Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cad.html">Herramientas de Computer Asisted Design (CAD)</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="stores.html">Tiendas</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/remote.html">Conexión Remota</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coliseo Atómico</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/colosseo.html">Coliseo Atómico</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nerves</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../nerves/nerves.html">Elixir Nerves</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Herramientas</li>
+    <li><a href="stores.html">Tiendas</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/tools/pages/stores.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Tiendas</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>El siguiente es un listado (no exhaustivo) de las tiendas disponibles en Chile
+para poder adquirir diversos componentes de electrónica y robótica. Se recomienda cotizar
+y comparar. No tienen un orden en específico más allá de agruparlos por ciudad.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Lista de Tiendas en Chile</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tienda</th>
+<th class="tableblock halign-left valign-top">Website</th>
+<th class="tableblock halign-left valign-top">Dirección</th>
+<th class="tableblock halign-left valign-top">Comentario</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Global Chile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://globalelectronica.cl/" class="bare">https://globalelectronica.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pasaje Lautaro 37, Viña del Mar (Metro Hospital) (Perpendicular con calle Cancha)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda de electrónica y robótica en la ciudad de Viña del Mar desde 1999. Gran variedad de productos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Electrónica HB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.electronicahb.cl/" class="bare">https://www.electronicahb.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Calle San Antonio 1232, Viña del Mar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda de electrónica en Viña del Mar desde 1950.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Electrónica Villanelo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.facebook.com/ElectronicaVillanelo/" class="bare">https://www.facebook.com/ElectronicaVillanelo/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Villanelo 271, Viña del Mar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda de electrónica en el centro de la ciudad de Viña. Cuenta con reparación de electrodomésticos como televisores.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Infinito</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://share.google/87nDXz3DfWGc3BkH3" class="bare">https://share.google/87nDXz3DfWGc3BkH3</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Claudio Vicuña 919, Quilpué - Almte. Latorre 74, Villa alemana - Ramón Freire 015, Quillota</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Artículos de electricidad y repuestos varios desde 1985. No tiene mucho de electrónica pero se encuentran algunos complementos como pilas y cables.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Radiovisión</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://radiovision.cl/" class="bare">https://radiovision.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Andrés Bello 610, Quilpué - Galeria Arcadia, Local 107, Viña del Mar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda de electricidad y repuestos computacionales. No tiene mucho de electrónica pero se puede encontrar complementos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Telectra</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.telectra.cl/" class="bare">https://www.telectra.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Independencia 1761, Valparaíso</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Principalmente elementos de radio y telecomunicaciones.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Max Electrónica</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://maxelectronica.cl/" class="bare">https://maxelectronica.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Solo Online, Valparaíso</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tiene algunos componentes de arduino y electrónica.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Makers Chile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://makerschile.cl/" class="bare">https://makerschile.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Av. Valparaíso 1327, Viña del Mar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Especialidad en impresion 3D. Cuenta con componentes electrónicos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mechastronic Store</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.mechatronicstore.cl/" class="bare">https://www.mechatronicstore.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manuel Rodriguez 212, local 1, Curicó</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda de robótica y electrónica. Envío a todo Chile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rambal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://rambal.com/" class="bare">https://rambal.com/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jose Manuel Infante 901 Providencia, Santiago (Metro Salvador)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda de robótica en Chile desde 1996. Se pueden adquirir multitud de partes de calidad industrial. También ofrecen cursos de robótica y electrónica presenciales.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MCI Electronics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://mcielectronics.cl/" class="bare">https://mcielectronics.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Luis Thayer Ojeda 0115, Of.1104 (Piso 11) Providencia, Santiago (Metro Tobalaba)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda de electrónica en Santiago, variedad de componentes. Precios algo elevados.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Afel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://afel.cl/" class="bare">https://afel.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Obispo Donoso 6 oficina 302, Providencia, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda de electrónica e impresión 3D.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Altronics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://altronics.cl/" class="bare">https://altronics.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda Online, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda de Electrónica y diversos componentes. Envío a todo Chile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Electrónica Ibarra</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://electronicaibarra.cl/" class="bare">https://electronicaibarra.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">San Diego 928, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diversos componentes electrónicos. Envío a todo Chile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Electrónica Hobby</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://electronicahobby.cl/" class="bare">https://electronicahobby.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">San Diego 945, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Herramientas y componentes de electrónica. Envío a todo Chile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Triacs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://triacs.cl/" class="bare">https://triacs.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vicuña Mackenna #10.178 La Florida, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Componentes de electrónica y robótica. Envío a todo Chile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mouser Electronics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.mouser.cl/" class="bare">https://www.mouser.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda Online, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Componentes electrónicos. Envío a Todo Chile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Electro Art</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.electroart.cl/" class="bare">https://www.electroart.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Catayalud 334, La Reina, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diversos componentes y controladores. Envío a Todo Chile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hubot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://hubot.cl/" class="bare">https://hubot.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda Online, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Especializada en robótica y mecatrónica desde 2017.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Victronics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.victronics.cl/" class="bare">https://www.victronics.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda Online, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Diversos componentes electrónicos.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prodeind</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://prodeind.cl" class="bare">https://prodeind.cl</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tienda Online, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Precios por mayor. Componentes electrónicos de uso educativo e industrial.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CiMech3D</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.cimech3d.cl/" class="bare">https://www.cimech3d.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alcalde Eduardo Castillo Velasco 1409, Ñuñoa, Santiago.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Especializado en la impresión 3D.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Artillec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://artilec.com/" class="bare">https://artilec.com/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Av. Sta. Marta de Huechuraba 6570, Huechuraba, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Antenas, cables y dispositivos de comunicación.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Automa</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.automa.cl/" class="bare">https://www.automa.cl/</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">José Domingo Cañas 1025, Ñuñoa, Santiago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cámaras de seguridad.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="aliexpress"><a class="anchor" href="#aliexpress"></a>AliExpress</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La página de <a href="https://es.aliexpress.com/">AliExpress</a> es muy utilizada en Chile
+para comprar artículos electrónicos, sobre todo piezas muy difíciles de encontrar en el país.</p>
+</div>
+<div class="paragraph">
+<p>Se debe tener en consideración los siguientes puntos:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Desde el 25 de Octubre del 2025 todas las compras online fuera de Chile pagan IVA. Desde esa fecha el Impuesto al Valor Agregado (IVA, 19%) será cobrado directamente por las plataformas que estén inscritas en el Servicio de Impuestos Internos (SII) al momento de la compra, cuando el valor del producto no supere los US$ 500 (<a href="https://www.aduana.cl/compras-online-internacionales-iva-se-pagara-en-las-plataformas-y/aduana/2025-10-06/100335.html" class="bare">https://www.aduana.cl/compras-online-internacionales-iva-se-pagara-en-las-plataformas-y/aduana/2025-10-06/100335.html</a>).</p>
+</li>
+<li>
+<p>Fijarse en el valor del envío, puede un componente "ser más barato" pero considerando el envío costará tanto o más que comprarlo en una tienda en Chile.</p>
+</li>
+<li>
+<p>El envío puede demorar más de la cuenta. Normalmente demora entre 2 a 4 semanas llegar un envío, pero puede tardar más o perderse en el camino.</p>
+</li>
+<li>
+<p>No hay garantía legal. Hay situaciones donde el vendedor no entrega el producto comprado o entrega un producto fallado o adulterado o de mala calidad. No hay ninguna garantía de devolución de dinero o cambio de producto, por lo que cada compra es una apuesta y se recomienda investigar bien cada tienda antes de comprar y documentar todo con video y fotos desde que llego el producto hasta abrirlo y verlo en funcionamiento.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="cad.html">Herramientas de Computer Asisted Design (CAD)</a></span>
+  <span class="next"><a href="../atomvm/atomvm.html">AtomVM</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

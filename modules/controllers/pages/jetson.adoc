@@ -1,0 +1,5 @@
+= Nvidia Jetson & AMD Kria
+
+- https://developer.nvidia.com/isaac
+
+- https://www.amd.com/en/products/system-on-modules/kria/k26/robotics.html

@@ -1,0 +1,47 @@
+= Tiendas 
+
+El siguiente es un listado (no exhaustivo) de las tiendas disponibles en Chile 
+para poder adquirir diversos componentes de electrónica y robótica. Se recomienda cotizar 
+y comparar. No tienen un orden en específico más allá de agruparlos por ciudad.
+
+.Lista de Tiendas en Chile
+|===
+|Tienda|Website|Dirección|Comentario
+
+|Global Chile| https://globalelectronica.cl/ | Pasaje Lautaro 37, Viña del Mar (Metro Hospital) (Perpendicular con calle Cancha) | Tienda de electrónica y robótica en la ciudad de Viña del Mar desde 1999. Gran variedad de productos.
+|Electrónica HB | https://www.electronicahb.cl/  | Calle San Antonio 1232, Viña del Mar | Tienda de electrónica en Viña del Mar desde 1950.
+|Electrónica Villanelo | https://www.facebook.com/ElectronicaVillanelo/ | Villanelo 271, Viña del Mar | Tienda de electrónica en el centro de la ciudad de Viña. Cuenta con reparación de electrodomésticos como televisores. 
+|Infinito | https://share.google/87nDXz3DfWGc3BkH3 | Claudio Vicuña 919, Quilpué - Almte. Latorre 74, Villa alemana - Ramón Freire 015, Quillota | Artículos de electricidad y repuestos varios desde 1985. No tiene mucho de electrónica pero se encuentran algunos complementos como pilas y cables.
+|Radiovisión| https://radiovision.cl/ | Andrés Bello 610, Quilpué - Galeria Arcadia, Local 107, Viña del Mar | Tienda de electricidad y repuestos computacionales. No tiene mucho de electrónica pero se puede encontrar complementos.
+|Telectra| https://www.telectra.cl/ | Independencia 1761, Valparaíso | Principalmente elementos de radio y telecomunicaciones.
+|Max Electrónica | https://maxelectronica.cl/ | Solo Online, Valparaíso | Tiene algunos componentes de arduino y electrónica.
+|Makers Chile | https://makerschile.cl/ | Av. Valparaíso 1327, Viña del Mar | Especialidad en impresion 3D. Cuenta con componentes electrónicos.
+|Mechastronic Store | https://www.mechatronicstore.cl/ | Manuel Rodriguez 212, local 1, Curicó | Tienda de robótica y electrónica. Envío a todo Chile.
+|Rambal| https://rambal.com/ | Jose Manuel Infante 901 Providencia, Santiago (Metro Salvador) | Tienda de robótica en Chile desde 1996. Se pueden adquirir multitud de partes de calidad industrial. También ofrecen cursos de robótica y electrónica presenciales.
+|MCI Electronics | https://mcielectronics.cl/ | Luis Thayer Ojeda 0115, Of.1104 (Piso 11) Providencia, Santiago (Metro Tobalaba) | Tienda de electrónica en Santiago, variedad de componentes. Precios algo elevados.
+|Afel | https://afel.cl/ | Obispo Donoso 6 oficina 302, Providencia, Santiago | Tienda de electrónica e impresión 3D.
+|Altronics | https://altronics.cl/ | Tienda Online, Santiago | Tienda de Electrónica y diversos componentes. Envío a todo Chile.
+|Electrónica Ibarra | https://electronicaibarra.cl/ | San Diego 928, Santiago | Diversos componentes electrónicos. Envío a todo Chile.
+|Electrónica Hobby | https://electronicahobby.cl/ | San Diego 945, Santiago | Herramientas y componentes de electrónica. Envío a todo Chile.
+|Triacs | https://triacs.cl/ | Vicuña Mackenna #10.178 La Florida, Santiago | Componentes de electrónica y robótica. Envío a todo Chile.
+|Mouser Electronics | https://www.mouser.cl/ | Tienda Online, Santiago | Componentes electrónicos. Envío a Todo Chile.
+|Electro Art | https://www.electroart.cl/ | Catayalud 334, La Reina, Santiago | Diversos componentes y controladores. Envío a Todo Chile.
+|Hubot | https://hubot.cl/ | Tienda Online, Santiago | Especializada en robótica y mecatrónica desde 2017.
+|Victronics | https://www.victronics.cl/ | Tienda Online, Santiago | Diversos componentes electrónicos.
+|Prodeind | https://prodeind.cl | Tienda Online, Santiago | Precios por mayor. Componentes electrónicos de uso educativo e industrial.
+|CiMech3D | https://www.cimech3d.cl/ | Alcalde Eduardo Castillo Velasco 1409, Ñuñoa, Santiago. | Especializado en la impresión 3D.
+|Artillec | https://artilec.com/ | Av. Sta. Marta de Huechuraba 6570, Huechuraba, Santiago | Antenas, cables y dispositivos de comunicación.
+|Automa | https://www.automa.cl/ |  José Domingo Cañas 1025, Ñuñoa, Santiago  | Cámaras de seguridad.
+|===
+
+== AliExpress
+
+La página de https://es.aliexpress.com/[AliExpress] es muy utilizada en Chile 
+para comprar artículos electrónicos, sobre todo piezas muy difíciles de encontrar en el país.
+
+Se debe tener en consideración los siguientes puntos:
+
+- Desde el 25 de Octubre del 2025 todas las compras online fuera de Chile pagan IVA. Desde esa fecha el Impuesto al Valor Agregado (IVA, 19%) será cobrado directamente por las plataformas que estén inscritas en el Servicio de Impuestos Internos (SII) al momento de la compra, cuando el valor del producto no supere los US$ 500 (https://www.aduana.cl/compras-online-internacionales-iva-se-pagara-en-las-plataformas-y/aduana/2025-10-06/100335.html).
+- Fijarse en el valor del envío, puede un componente "ser más barato" pero considerando el envío costará tanto o más que comprarlo en una tienda en Chile.
+- El envío puede demorar más de la cuenta. Normalmente demora entre 2 a 4 semanas llegar un envío, pero puede tardar más o perderse en el camino.
+- No hay garantía legal. Hay situaciones donde el vendedor no entrega el producto comprado o entrega un producto fallado o adulterado o de mala calidad. No hay ninguna garantía de devolución de dinero o cambio de producto, por lo que cada compra es una apuesta y se recomienda investigar bien cada tienda antes de comprar y documentar todo con video y fotos desde que llego el producto hasta abrirlo y verlo en funcionamiento.

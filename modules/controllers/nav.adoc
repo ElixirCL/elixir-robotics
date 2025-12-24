@@ -1,8 +1,10 @@
 .IC y Controladores
 * xref:ic555.adoc[]
 * xref:pic16f877a.adoc[]
+* xref:basicstamp.adoc[]
 * xref:arduino.adoc[]
 * xref:esp32.adoc[]
 * xref:stm32.adoc[]
 * xref:raspberry.adoc[]
+* xref:jetson.adoc[]
 * xref:fpga.adoc[]

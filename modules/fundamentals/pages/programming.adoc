@@ -264,4 +264,5 @@ Existen otras alternativas válidas como:
 - https://www.espruino.com/[Espruino].
 - https://picoruby.github.io/[PicoRuby].
 - https://tinygo.org/[TinyGo].
+- https://github.com/slviajero/tinybasic[TinyBasic].
 - https://docs.rust-embedded.org/book/index.html[Embedded Rust].
