@@ -1,4 +1,5 @@
-.Fundamentos
+.Fundamentos e Historia
+* xref:history.adoc[]
 * xref:introduction.adoc[]
 * xref:electricity.adoc[]
 * xref:programming.adoc[]

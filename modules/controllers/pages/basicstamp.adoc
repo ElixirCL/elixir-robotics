@@ -1,2 +1,238 @@
-= Rambal Basic Stamp
-- https://rambal.com/15-basic-stamp
+= Parallax Basic Stamp
+
+En 1997, Parallax produjo la Board of Education, un portaplacas de pruebas (breadboard) y placa de proyectos para el BASIC Stamp 2.
+Educadores de USA solicitaron rápidamente que se montara en un robot, y así se creó el Boe-Bot. 
+Combinado con el libro de Andy Lindsay https://learn.parallax.com/courses/robotics-with-the-boe-bot/["Robotics with the Boe-Bot"] y https://learn.parallax.com/courses/whats-a-microcontroller/["What’s a Microcontroller"], esta combinación de hardware y 
+tutoriales se convirtió en un producto educativo popular.
+
+Hoy en día, _PBASIC_ sigue siendo uno de los lenguajes favoritos de muchos educadores y aulas, 
+y gran parte de la investigación educativa inicial sobre la eficacia de los sistemas de 
+computación física para enseñar programación utilizó el BASIC Stamp.
+
+El Boe-Bot utiliza el lenguaje _PBASIC_. Los robots Boe-Bot se encuentran en escuelas 
+secundarias y preparatorias, escuelas técnicas y universidades, clubes de robótica y en los 
+hogares de aficionados.
+
+Son excelentes compañeros para aprender o enseñar tecnología, mecatrónica y programas STEM. 
+Este kit de robot puede utilizarse como una asignatura optativa en muchas escuelas.
+
+.Basic Stamp Boe-Bot
+image::basicstamp/boebot.webp[]
+
+El siguiente código de PBasic muestra cómo reproducir una canción utilizando el formato de música RTTL 
+utilizado por teléfonos Nokia de principios de la década del 2000.
+
+.Ejemplo de PBasic 
+[source, basic]
+----
+' What's a Microcontroller - MicroMusicWithRtttl.bs2
+' Play Nokia RTTTL format ringtones using DATA.
+
+'{$STAMP BS2}
+'{$PBASIC 2.5}
+DEBUG "Program Running!"
+
+' -----[ I/O Definitions ]-------------------------------------------------
+
+  SpeakerPin     PIN     9                   ' Piezospeaker connected to P9.
+
+' -----[ Variables ]-------------------------------------------------------
+
+  counter        VAR     Word                ' General purpose counter.
+  char           VAR     Byte                ' Variable stores characters.
+  index          VAR     Word                ' Index for pointing at data.
+
+  noteLetter     VAR     Byte                ' Stores note character.
+  noteFreq       VAR     Word                ' Stores note frequency.
+  noteOctave     VAR     Word                ' Stores note octave.
+
+  duration       VAR     Word                ' Stores note duration.
+  tempo          VAR     Word                ' Stores tempo.
+
+  default_d      VAR     Byte                ' Stores default duration.
+  default_o      VAR     Byte                ' Stores default octave.
+  default_b      VAR     Word                ' Stores default beats/min.
+
+' -----[ EEPROM Data ]-----------------------------------------------------
+
+  RTTTL_File     DATA    "Reveille:d=4,o=7,b=140:8g6,8c,16e,16c,8g6,8e,",
+                         "8c,16e,16c,8g6,8e,8c,16e,16c,8a6,8c,e,8c,8g6,",
+                         "8c,16e,16c,8g6,8e,8c,16e,16c,8g6,8e,8c,16e,",
+                         "16c,8g6,8e,c,p,8e,8e,8e,8e,g,8e,8c,8e,8c,8e,8c,",
+                         "e,8c,8e,8e,8e,8e,8e,g,8e,8c,8e,8c,8g6,8g6,c."
+
+  Done           DATA    ",q,"
+
+  Notes          DATA     "p",       "a",       "#",       "b",
+                          "c",       "#",       "d",       "#",
+                          "e",       "f",       "#",       "g",
+                          "#"
+  Octave8        DATA    Word 0,    Word 3520, Word 3729, Word 3951,
+                         Word 4186, Word 4435, Word 4699, Word 4978,
+                         Word 5274, Word 5588, Word 5920, Word 6272,
+                         Word 6645
+
+' -----[ Initialization ]--------------------------------------------------
+
+  counter = 0                                ' Initialize counter.
+
+  GOSUB FindEquals                           ' Find first '=' in file.
+  GOSUB ProcessDuration                      ' Get default duration.
+  GOSUB FindEquals                           ' Find next '='.
+  GOSUB ProcessOctave                        ' Get default octave.
+  GOSUB FindEquals                           ' Find last '='.
+  GOSUB GetTempo                             ' Get default tempo.
+
+' -----[ Program Code ]----------------------------------------------------
+
+  DO UNTIL char = "q"                        ' Loop until 'q' in DATA.
+    GOSUB ProcessDuration                    ' Get note duration.
+    GOSUB ProcessNote                        ' Get index value of note.
+    GOSUB CheckForDot                        ' If dot, 3/2 duration.
+    GOSUB ProcessOctave                      ' Get octave.
+    GOSUB PlayNote                           ' Get freq, play note, next.
+  LOOP                                       ' End of main loop.
+
+  END                                        ' End of program.
+
+' -----[ Subroutine - Find Equals Character ]-----------------------------
+
+  FindEquals:                                ' Go through characters in
+                                             ' RTTTL file looking for
+    DO                                       ' '='.  Increment counter
+      READ RTTTL_File + counter, char        ' until '=' is found, then
+      counter = counter + 1                  ' return.
+    LOOP UNTIL char = "="
+
+    RETURN
+
+' -----[ Subroutine - Read Tempo from RTTTL Header ]----------------------
+' Each keyboard character has a unique number called an ASCII value.
+' The characters 0, 1, 2,...9 have ASCII values of 48, 49, 50,...57.
+' You can always convert from the character representing a digit to
+' to its value by subtracting 48 from the variable storing the digit.
+' You can examine this by comparing DEBUG DEC 49 and DEBUG 49.
+
+  GetTempo:                                  ' Parse RTTTL file for Tempo.
+                                             ' Convert characters to
+    default_b = 0                            ' digits by subtracting 48
+    DO                                       ' from each character's ASCII
+      READ RTTTL_File + counter, char        ' value.  Iteratively multiply
+      IF char = ":" THEN                     ' each digit by 10 if there
+        default_b = default_b / 10           ' is another digit, then add
+        counter = counter + 1                ' the most recent digit to
+        EXIT                                 ' one's column.
+      ENDIF                                  ' For example, the string
+        default_b = default_b + char - 48    ' "120" is (1 X 10 X 10)
+        counter = counter + 1                ' + (2 X 10) + 0.  The '1'
+        default_b = default_b * 10           ' is converted first, then
+    LOOP UNTIL char = ":"                    ' multiplied by 10.  The '2'
+                                             ' is then converted/added.
+    RETURN                                   ' 0 is converted/added, done.
+
+' -----[ Subroutine - Look up Octave ]------------------------------------
+
+  ProcessOctave:                             ' Octave may or may not be
+                                             ' included in a given note
+    READ RTTTL_File + counter, char          ' because any note that is
+    SELECT char                              ' played in the default
+      CASE "5" TO "8"                        ' octave does not specify
+        noteOctave = char - "0"              ' the octave.  If a char
+        counter = counter + 1                ' from '5' to '8' then use
+      CASE ELSE                              ' it, else use default_o.
+        noteOctave = default_o               ' Characters are converted
+    ENDSELECT                                ' to digits by subtracting
+    IF default_o = 0 THEN                    ' '0', which is the same as
+      default_o = noteOctave                 ' subtracting 48. The first
+    ENDIF                                    ' time this subroutine is
+                                             ' called, default_o is 0.
+    RETURN                                   ' If 0, then set default_o.
+
+' -----[ Subroutine - Find Index of Note ]--------------------------------
+
+  ProcessNote:                               ' Set index value for lookup
+                                             ' of note frequency based on
+    READ RTTTL_File + counter, char          ' note character. If 'p',
+    SELECT char                              ' index is 0.  If 'a' to 'g',
+      CASE "p"                               ' read character values in
+        index = 0                            ' DATA table and find match.
+        counter = counter + 1                ' Record index value when
+      CASE "a" TO "g"                        ' match is found.  If next
+        FOR index = 1 TO 12                  ' char is a sharp (#), add
+          READ Notes + index, noteLetter     ' 1 to the index value to
+          IF noteLetter = char THEN EXIT     ' increase the index (and
+        NEXT                                 ' frequency) by 1 notch.
+        counter = counter + 1                ' As with other subroutines,
+        READ RTTTL_File + counter, char      ' increment counter for each
+        SELECT char                          ' character that is processed.
+          CASE "#"
+            index = index + 1
+            counter = counter + 1
+        ENDSELECT
+    ENDSELECT
+
+    RETURN
+
+' -----[ Subroutine - Determine Note Duration ]---------------------------
+
+  ProcessDuration:                           ' Check to see if characters
+                                             ' form 1, 2, 4, 8, 16 or 32.
+    READ RTTTL_File + counter, char          ' If yes, then convert from
+                                             ' ASCII character to a value
+    SELECT char                              ' by subtracting 48. In the
+      CASE "1", "2", "3", "4", "8"           ' case of 16 or 32, multiply
+        duration = char - 48                 ' by 10 and add the next
+        counter = counter + 1                ' digit to the ones column.
+        READ RTTTL_File + counter, char
+        SELECT char
+          CASE "6", "2"
+            duration = duration * 10 + char - 48
+            counter = counter + 1
+        ENDSELECT
+        CASE ELSE                            ' If no duration, use
+        duration = default_d                 ' use default.
+    ENDSELECT
+
+    IF default_d <> 0 THEN                   ' If default_d not defined
+      duration = 60000/default_b/duration*3  ' (if default_d = 0), then
+    ELSE                                     ' set default_d = to the
+      default_d = duration                   ' duration from the d=#.
+    ENDIF
+
+    RETURN
+
+' -----[ Subroutine - Check For '.' Indicating 1.5 Duration ]-------------
+
+  CheckForDot:                               ' Check for dot indicating
+                                             ' multiply duration by 3/2.
+    READ RTTTL_File + counter, char          ' If dot found, multiply by
+    SELECT char                              ' 3/2 and increment counter,
+      CASE "."                               ' else, do nothing and
+        duration = duration * 3 / 2          ' return.
+        counter = counter + 1
+    ENDSELECT
+
+    RETURN
+
+' -----[ Subroutine - Find Comma and Play Note/Duration ]-----------------
+
+  PlayNote:                                  ' Find last comma in the
+                                             ' current note entry.  Then,
+    READ RTTTL_File + counter, char          ' fetch the note frequency
+    SELECT char                              ' from data, and play it, or
+      CASE ","                               ' pause if frequency = 0.
+        counter = counter + 1
+        READ Octave8 + (index * 2), Word noteFreq
+        noteOctave = 8 - noteOctave
+        noteFreq = noteFreq / (DCD noteOctave)
+        IF noteFreq = 0 THEN
+           PAUSE duration
+        ELSE
+          FREQOUT SpeakerPin, duration, noteFreq
+        ENDIF
+    ENDSELECT
+
+    RETURN
+----
+
+Un Basic Stamp en Chile puede ser adquirido en https://rambal.com/15-basic-stamp[Rambal Robots].

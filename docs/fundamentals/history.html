@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Historia de la Robótica y Automatización :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/fundamentals/history.html">
+    <link rel="prev" href="../index.html">
+    <link rel="next" href="introduction.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos e Historia</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="history.html">Historia de la Robótica y Automatización</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/basicstamp.html">Parallax Basic Stamp</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/stm32.html">STM32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/jetson.html">Nvidia Jetson &amp; AMD Kria</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/fpga.html">FPGA</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/iot.html">IOT</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/dashboards.html">Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/cad.html">Herramientas de Computer Asisted Design (CAD)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/stores.html">Tiendas</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/remote.html">Conexión Remota</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Coliseo Atómico</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../colosseo/colosseo.html">Coliseo Atómico</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Nerves</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../nerves/nerves.html">Elixir Nerves</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Fundamentos e Historia</li>
+    <li><a href="history.html">Historia de la Robótica y Automatización</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/fundamentals/pages/history.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Historia de la Robótica y Automatización</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>En este capítulo se dará un vistazo general a los hitos relevantes para la robótica y mecatrónica,
+desde los primeros autómatas hasta la actualidad con sistemas que utilizan machine learning para tomar decisiones
+y analizar su entorno.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="la-creación-del-reloj-mecánico"><a class="anchor" href="#la-creación-del-reloj-mecánico"></a>La creación del reloj mecánico</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El ser humano ha ideado mecanismos que permitan automatizar tareas cotidianas o laboriosas
+utilizando el poder del agua, viento o fuego desde las primeras civilizaciones (por ejemplo el <a href="https://es.wikipedia.org/wiki/Molino_hidr%C3%A1ulico">Molino Hidráulico</a>).</p>
+</div>
+<div class="paragraph">
+<p>La Edad Media proporcionó a Europa una nueva invención: el reloj mecánico, un
+ingenio fascinante que transformó la vida de los habitantes de las ciudades e introdujo en el
+mundo occidental los valores de precisión y eficacia.</p>
+</div>
+<div class="paragraph">
+<p>En monasterios y ciudades el ritmo de trabajo era artificial, a
+diferencia de lo que ocurría en el campo, cuyo ritmo de trabajo era natural,
+regido por la trayectoria del sol. Y un ritmo de trabajo artificial debía medirse con un
+tiempo artificial y un mecanismo que no tenía por qué emular el ritmo de los astros.
+Así surgió en Occidente el reloj mecánico, que se convertiría en el representante más
+genuino de su filosofía de la vida y de su filosofía económica, introduciendo valores
+nuevos como la precisión y la eficacia.</p>
+</div>
+<div class="paragraph">
+<p>A la vez que se construían campanas y campanarios, se fabricaron mecanismos capaces de
+mover aquellos carillones, y tales artilugios, que importaron la tecnología de los monasterios,
+fueron los precedentes de los relojes mecánicos. El objeto de estos primitivos relojes era
+"dar la hora" con el sonido de una campana; de ahí que el término inglés clock, "reloj", sea
+muy cercano al alemán glocke y al francés cloche, que significan "campana".</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/history/relojmedieval.jpg" alt="Reloj medieval">
+</div>
+<div class="title">Figure 1. Reloj Medieval</div>
+</div>
+<div class="paragraph">
+<p>El tiempo era un fluir continuo, pero para construir el reloj era necesario cortarlo,
+convertirlo en una sucesión de fragmentos: las unidades de tiempo que ahora llamamos minutos y segundos.</p>
+</div>
+<div class="paragraph">
+<p>La historia del reloj es parte de la historia de la miniaturización: los pesos se sustituyeron por muelles,
+los relojes pasaron de las torres a las habitaciones, después a los aparadores de las casas, luego a los
+bolsillos de sus poseedores y finalmente a las muñecas de su propietario.</p>
+</div>
+<div class="paragraph">
+<p>Este proceso de miniaturización estuvo acompañado por el interés en mejorar la precisión;
+si la campana debía sonar a una hora convenía que fuera lo más exacta posible.</p>
+</div>
+<div class="paragraph">
+<p>Con la invención del reloj mecánico se establecieron las bases para mecanismos cada vez más diminutos y portátiles,
+que sin necesidad de electricidad podían trasladarse y efectuar sofisticados movimientos.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="autómatas-karakuri"><a class="anchor" href="#autómatas-karakuri"></a>Autómatas Karakuri</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El término "Karakuri" en japonés se traduce aproximadamente como "mecanismo" o "truco",
+capturando el aspecto encantador de estas creaciones. Los autómatas karakuri se desarrollaron
+principalmente durante el período Edo (1603–1867), una época de relativo aislamiento para Japón bajo el shogunato Tokugawa.</p>
+</div>
+<div class="paragraph">
+<p>Aunque Japón estaba en gran medida aislado del mundo occidental, sí mantuvo un contacto
+restringido con algunos comerciantes europeos, lo que permitió que ciertas influencias externas, como la tecnología de
+medición del tiempo, se filtraran en el país. Los relojeros japoneses, inspirados por los mecanismos de engranajes europeos,
+adaptaron esas ideas a su propio contexto cultural.</p>
+</div>
+<div class="paragraph">
+<p>En lugar de replicar los dispositivos europeos, los artesanos japoneses
+encontraron expresiones únicas, fusionando la practicidad con el juego. Experimentaron con
+engranajes de madera, levas y mecanismos de cuerda para crear pequeñas y maravillosas
+muñecas que no solo eran entretenidas, sino también reflejo de la estética japonesa.</p>
+</div>
+<div class="paragraph">
+<p>En el corazón de cada autómata karakuri se encuentra una meticulosa artesanía que une el arte y la ingeniería.
+Quizás la versión más icónica sea el <strong>chahakobi ningyō</strong>, o muñeca que sirve té. Cuando se coloca una taza de té sobre
+la bandeja de madera que sostiene el autómata, un mecanismo oculto activa a la muñeca, que se desliza hacia adelante.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/history/chahakobi.jpg" alt="chahakobi">
+</div>
+<div class="title">Figure 2. chahakobi ningyō</div>
+</div>
+<div class="paragraph">
+<p>Una vez que la taza es retirada, la muñeca se detiene en su lugar, como si esperara cortésmente su taza vacía o una amabl
+e inclinación de cabeza. En su interior, un conjunto de engranajes, resortes y poleas trabaja de manera armoniosa para crear
+este movimiento elegante. Un karakuri bien construido no requiere electricidad; en su lugar, depende de la tensión de resortes
+enrollados o de pesas cuidadosamente colocadas, de forma similar a los relojes de cuerda.</p>
+</div>
+<div class="paragraph">
+<p>Otro modelo cautivador es el <strong>moji-kaki ningyō</strong>, o muñeca escritora, que sumerge un pequeño pincel en tinta y
+traza caracteres sobre el papel. Observar cómo la creación mueve su brazo con una precisión asombrosa pone de manifiesto la
+búsqueda, con siglos de antigüedad, de replicar el movimiento humano mediante medios puramente mecánicos.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/history/mojikaki.jpg" alt="mojikaki">
+</div>
+<div class="title">Figure 3. moji-kaki ningyō</div>
+</div>
+<div class="paragraph">
+<p>La durabilidad y la belleza estética de los autómatas karakuri son testimonio de la dedicación de Japón al arte y a la
+búsqueda de la perfección. Estas piezas trascienden la mera curiosidad y encarnan el significado cultural de la armonía, el
+respeto y el servicio ritualizado, conectando al artesano y al público de una manera profundamente humana.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/history/karakuri.jpg" alt="karakuri">
+</div>
+<div class="title">Figure 4. Karakuri</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="autómatas-de-jaquet-droz"><a class="anchor" href="#autómatas-de-jaquet-droz"></a>Autómatas de Jaquet-Droz</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A pesar de que construyeron muchos más autómatas durante sus carreras se conoce como autómatas de
+Jaquet-Droz al <strong>dibujante</strong>, la <strong>pianista</strong> y el <strong>escritor</strong>,
+diseñados y fabricados entre 1768 y 1774 por el relojero suizo Pierre Jaquet-Droz,
+su hijo Henri-Louis y Jean-Frédéric Leschot.</p>
+</div>
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/IeTOqDb-86s?si=GgVSymhe1VQJ8-jt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<div class="sect2">
+<h3 id="el-dibujante"><a class="anchor" href="#el-dibujante"></a>El dibujante</h3>
+<div class="paragraph">
+<p>Formado por unas 2.000 piezas, es capaz de hacer cuatro dibujos distintos a la
+vez que sigue el movimiento del lápiz con el que los hace con los ojos y, de vez en cuando,
+sopla su punta para eliminar restos de carbon.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="la-pianista"><a class="anchor" href="#la-pianista"></a>La pianista</h3>
+<div class="paragraph">
+<p>Formada con unas 2.000 piezas, toca cinco piezas distintas en un órgano.
+Pero no es una caja de música sino que toca las piezas de verdad, moviendo sus dedos para
+presionar las teclas. Cada vez que termina con una de ellas saluda a su público.
+Igual que el dibujante, mueve los ojos para seguir sus manos, su cuerpo al ritmo de
+la música, e incluso simula que respira, pues su pecho sube y baja.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="el-escritor"><a class="anchor" href="#el-escritor"></a>El escritor</h3>
+<div class="paragraph">
+<p>Formado por algo más de 6.000 piezas no sólo mueve los ojos para seguir la pluma con
+la que escribe y la cabeza cuando va a mojarla en el tintero sino que es capaz de
+escribir cualquier texto con un máximo de 40 caracteres en cuatro líneas. Cualquier texto,
+pues lo que va a escribir se programa mediante unas piezas que se insertan en un disco que
+tiene en su parte posterior, lo que lo convierte en una de las primeras máquinas programables
+de la historia.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/history/automata-jaquet.jpg" alt="automata jaquet">
+</div>
+<div class="title">Figure 5. Autómatas de Jaquet-Droz</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="el-telar-programable"><a class="anchor" href="#el-telar-programable"></a>El telar programable</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El telar de Jacquard es un telar mecánico inventado por Joseph Marie Jacquard en diciembre de 1800 y
+presentado en público en la 2ª Exposición industrial celebrada en París del 19 al 25 de septiembre de 1801 donde recibió una medalla de bronce en un concurso de
+tejido de redes de pesca. Considerado el primer robot programable, el artilugio utilizaba tarjetas perforadas para conseguir tejer
+patrones en la tela, permitiendo que hasta los usuarios más inexpertos pudieran elaborar complejos diseños.</p>
+</div>
+<div class="paragraph">
+<p>El telar de Joseph Marie Jacquard supuso, aparte de un gran avance en la industria textil
+debido a su mecanización, un antecedente fundamental en la codificación de imágenes que casi dos siglos más tarde vería la luz. La base del telar, las tarjetas perforadas de Jean Falcon eran una prefiguración binaria (muy sencilla eso sí) de cómo almacenar imágenes, como guardar la información para poderlas reproducir a posterior. Las tarjetas daban información sobre patrones y dibujos de una manera fácil: con agujeros o sin; de esta manera se conseguían producir en masa las mismas formas, se estaba copiando una sola imagen. El concepto de archivo de una fotografía es similar ya que se
+parece a un telar sólo que con mucha más información pero al fin y al cabo cada puntada es un píxel.
+La maquinaria conforma uno de los antecedentes más antiguos de la computación y de la
+generación de “bases de datos” en lenguaje binario.</p>
+</div>
+<div class="paragraph">
+<p>Hasta la llegada de la invención de Jacquard entre cada paso de la lanzadera con la trama había que subir o bajar los hilos de la urdimbre,
+según correspondiera, a mano.
+Este proceso era lento y sujeto a errores, por lo que los diseños que se hacían no eran muy complicados.
+Pero el dispositivo de Jacquard, sin embargo, era capaz de manejar hasta varios cientos de hilos de urdimbre a
+la vez y de manera extremadamente rápida, lo que sirvió para una mejora exponencial en
+la velocidad de producción de las telas y en la calidad y complejidad de los diseños
+que se podían hacer.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/history/telar.jpg" alt="telar">
+</div>
+<div class="title">Figure 6. Telar programable con tarjetas perforadas</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="la-palabra-robot"><a class="anchor" href="#la-palabra-robot"></a>La palabra Robot</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La palabra “robot” fue usada por primera vez en 1921 cuando el escritor checo Karel Čapek (1890 – 1938) estrena su obra Rossum’s Universal Robot en el
+teatro nacional de Praga. En realidad, el crédito va a su hermano Josef Čapek, quien la inventó.
+Karel solo la empleo en su obra. Su origen viene de la palabra eslava robota o roboti (plural), que se refiere al trabajo forzado.
+La trama de la obra de Čapek era simple, ya que designa a unos autómatas, también conocidos como robots a trabajar de obreros.
+La palabra “robot” fue utilizada en el imperio austro-húngaro hasta 1848 para referirse a los esclavos y la servidumbre.</p>
+</div>
+<div class="paragraph">
+<p>De acuerdo a la definición ofrecida por Oxford Languages, un robot es una
+“Máquina automática programable capaz de realizar determinadas operaciones de manera autónoma y sustituir a los seres humanos en algunas tareas, en especial las pesadas, repetitivas o peligrosas;
+puede estar dotada de sensores, que le permiten adaptarse a nuevas situaciones.”</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/history/rur.jpg" alt="rur">
+</div>
+<div class="title">Figure 7. Karel Capek/; Rossum’s Universal Robots (RUR) 1921</div>
+</div>
+<div class="paragraph">
+<p><strong>La palabra “robot” deriva del término checo <strong>robota</strong>, que puede significar trabajo que
+realmente no quieres hacer o trabajo tedioso. Su obra ha sido representada en todo el mundo,
+y la palabra “robot” fue posteriormente hecha realmente famosa por Isaac Asimov en la
+década de 1940 (relatos recopilados como <strong>Yo, robot</strong> en 1950).</strong></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="máquinas-de-zuse"><a class="anchor" href="#máquinas-de-zuse"></a>Máquinas de Zuse</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Konrad Zuse (Berlín, 1910- Hünfeld, 1995) pensaba y soñaba con gigantescos ductos de información,
+atravesando los espacios exteriores e interiores de las ciudades. El ser humano tendría
+entonces más tiempo y podría dedicarse a asuntos más interesantes y desafiantes, como el arte.
+Zuse tenía un sueño y una idea: “Metrópolis”, como el mismo nombre de la película.
+La idea era una ciudad en la que todos los procesos de transporte e intercambio de bienes y
+personas se realizaría a través de una compleja red de trenes y pistas, facilitándole a
+sus ciudadanos, con el ritmo armónico de una nueva naturaleza, un nuevo bienestar. Zuse
+soñaba con una máquina que piense por nosotros. Aunque no las preguntas fundamentales, relacionadas
+con el universo o el origen y destino de las cosas y los seres; sino máquinas que realizaran
+de manera automática miles de cálculos. Desde el 1 + 1 y el  1 + 2 hasta los
+algoritmos y los números complejos. Necesitábamos asistencia para liberarnos de
+las tareas más monótonas. Para calcular. Algo así como contadores. Ordenadores. Computadoras.</p>
+</div>
+<div class="paragraph">
+<p>La Z1 fue el primer intento. La máquina consistía en una estructura de lata, llena de interruptores de dos posiciones.
+El aparato era totalmente electromecánico, compuesto de interruptores mecánicos y una memoria hecha a partir de láminas de metal. La Z1 podía ser programada a través de tarjetas perforadas, hojas con información codificada en forma de agujeros.“Con la ayuda de esta suerte de primitivo cerebro mecánico será posible resolver todas las operaciones que están al alcance de un mecanismo” escribiría en la tarde del 20 de junio de 1937 Konrad Zuse en su diario de vida. El principio era sencillo, las aspiraciones ambiciosas, los resultados, premonitorios. Lo que hacía Zuse era “calcular con latas”,
+construyendo el principio matemático de lo que hoy conocemos como “operaciones booleanas”, en las
+que se basan cosas tan cotidianas como los buscadores de Internet. Él le llamaba “Schaltalgebra”,
+algo así como “álgebra de encendidos y apagados”, aludiendo a los circuitos compuestos de
+elementos metálicos que tenían contacto entre sí o lo perdían.</p>
+</div>
+<div class="paragraph">
+<p>Los interruptores se basaban en un principio sencillo, el de resumir grandes números en
+muchas operaciones simples: adiciones, sustracciones, multiplicaciones y divisiones de unos
+y ceros. Ya en 1937 la Z1 estaba terminada. El paso siguiente sería la nueva versión, la Z2,
+terminada en 1939, otro experimento que le permitiría indagar en lo realmente necesario para la construcción de una máquina
+pensante. En 1941 estaría terminada la primera computadora que funcionaba realmente “como relojito”: la Z3 ¿La innovación? En vez de interruptores,
+la máquina se componía de relés, dispositivos electromagnéticos que sustituían a los
+interruptores y que se componían de electroimanes y pulsadores sensibles al
+impulso eléctrico generado al activarse cada uno de ellos. Estos pulsadores se ven como
+los pulsadores de un clavecín, y eran parte esencial del antiguo sistema telefónico análogo.</p>
+</div>
+<div class="paragraph">
+<p>Zuse comenzaba a gestar el primer lenguaje computacional. Plankalkül era su nombre.
+Algo así como “cálculo para proyectos” y llegaría a manifestarse de manera plena en la Z4 en 1945.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/history/z1.jpg" alt="z1">
+</div>
+<div class="title">Figure 8. Réplica de la máquina Z1</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="la-mecatrónica"><a class="anchor" href="#la-mecatrónica"></a>La Mecatrónica</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La mecatrónica surge de la combinación sinérgica de distintas ramas de la
+ingeniería, entre las que destacan: la mecánica de precisión, la electrónica, la
+informática y los sistemas de control. Su principal propósito es el análisis y
+diseño de productos y de procesos de manufactura automatizados.</p>
+</div>
+<div class="paragraph">
+<p>Nace en Japón a final de la década de los sesenta con la integración de las ingenierías
+mecánica y electrónica con el objetivo de incorporar las dos ingenierías en los productos
+electrónicos. El ingeniero japonés Tetsuro Mori acuñó "mecatrónica" (meca-trónica) en 1969,
+derivado de "mecanismo" y "electrónica". La Yaskawa Electric Corporation popularizó el
+término en los 70, enfocándose en la integración de la electrónica en
+sistemas mecánicos de alta precisión.</p>
+</div>
+<div class="paragraph">
+<p>En resumen, la mecatrónica evolucionó de una disciplina enfocada en la
+automatización a un campo multidisciplinario que fusiona la ingeniería mecánica,
+electrónica, informática y de control para diseñar sistemas complejos y autónomos.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/history/braveraiden.jpg" alt="braveraiden">
+</div>
+<div class="title">Figure 9. Brave Raideen 1975</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://historia.nationalgeographic.com.es/a/inventos-medievales_6644" class="bare">https://historia.nationalgeographic.com.es/a/inventos-medievales_6644</a></p>
+</li>
+<li>
+<p><a href="https://www.milwaukeeindependent.com/explainers/karakuri-automata-mechanical-bridge-japanese-craftsmanship-milwaukees-german-heritage/" class="bare">https://www.milwaukeeindependent.com/explainers/karakuri-automata-mechanical-bridge-japanese-craftsmanship-milwaukees-german-heritage/</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Karakuri_puppet" class="bare">https://en.wikipedia.org/wiki/Karakuri_puppet</a></p>
+</li>
+<li>
+<p><a href="https://www.microsiervos.com/archivo/ingenieria/-fascinantes-automatas-jaquet-droz.html" class="bare">https://www.microsiervos.com/archivo/ingenieria/-fascinantes-automatas-jaquet-droz.html</a></p>
+</li>
+<li>
+<p><a href="https://www.microsiervos.com/archivo/ordenadores/telar-jacquard-primera-maquina-programable-de-la-historia.html" class="bare">https://www.microsiervos.com/archivo/ordenadores/telar-jacquard-primera-maquina-programable-de-la-historia.html</a></p>
+</li>
+<li>
+<p><a href="https://es.wikipedia.org/wiki/Telar_de_Jacquard" class="bare">https://es.wikipedia.org/wiki/Telar_de_Jacquard</a></p>
+</li>
+<li>
+<p><a href="https://einsrobotics.com/el-origen-de-la-palabra-robot/" class="bare">https://einsrobotics.com/el-origen-de-la-palabra-robot/</a></p>
+</li>
+<li>
+<p><a href="https://mediartinnovation.com/2014/06/11/karel-capek-rossums-universal-robots-rur-1921/" class="bare">https://mediartinnovation.com/2014/06/11/karel-capek-rossums-universal-robots-rur-1921/</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Z1_(computer" class="bare">https://en.wikipedia.org/wiki/Z1_(computer</a>)</p>
+</li>
+<li>
+<p><a href="https://alemaniaparati.diplo.de/mxdz-es/aktuelles/konradzuse-1087764" class="bare">https://alemaniaparati.diplo.de/mxdz-es/aktuelles/konradzuse-1087764</a></p>
+</li>
+<li>
+<p><a href="https://mecatronicaito.wordpress.com/2015/11/26/la-historia-de-la-mecatronica/" class="bare">https://mecatronicaito.wordpress.com/2015/11/26/la-historia-de-la-mecatronica/</a></p>
+</li>
+<li>
+<p><a href="https://teinco.edu.co/resumen-historico-de-la-ingenieria-mecatronica/" class="bare">https://teinco.edu.co/resumen-historico-de-la-ingenieria-mecatronica/</a></p>
+</li>
+<li>
+<p><a href="https://www.tin-robot.com/tr-64-brave-raideen" class="bare">https://www.tin-robot.com/tr-64-brave-raideen</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></span>
+  <span class="next"><a href="introduction.html">Introducción a la Electrónica</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-= LoRaWAN
+= IOT
 
 El Internet de las Cosas (IoT) se refiere a la interconexión de dispositivos físicos cotidianos a través de Internet, permitiendo la recopilación y el intercambio de datos. Estos dispositivos, equipados con sensores y software, pueden ser desde electrodomésticos hasta dispositivos médicos o sistemas de ciudades inteligentes. Su objetivo es automatizar procesos y mejorar la eficiencia en diversas áreas.
 
