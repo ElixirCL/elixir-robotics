@@ -178,6 +178,48 @@ end
 -- </TRACKS>
 ----
 
+En el resto del proyecto, se utilizará el juego https://tic80.com/play?cart=2178[CAR ADVENTURE] con una modificación en el código para enviar eventos a través del standard output.
+
+=== Modificación del codigo fuente
+
+El código fuente de un juego se puede acceder después de ejecutarlo a través de TIC-80, al presionar la tecla ESC. En el editor de código ahora abierto, usa la función de búsqueda (CTRL+F) para modificar las siguientes secciones:
+
+.Evento de puntaje (cerca de línea 175)
+[source, lua]
+----
+  ...
+	print("Score:"..math.ceil(player.score),5,128,COLRscore_2,true)
+	print("Score:"..math.ceil(player.score),4,127,COLRscore_1,true)
+	--Score
+	
+	
+  -- nuevo
+	if player.score % 2500 <= 15	then 
+		trace("event:score_milestone")
+	end
+
+  ...
+----
+
+.Evento de explosión del auto (cerca de línea 232)
+[source, lua]
+----
+...
+
+if player.IsCracked == true then
+	PlayExplode()--Explosion!!!
+	trace("event:explode") -- nueva linea
+		if Exp_stop == false then
+		sfx(63,"C-4",30,3,15,7)--...And sound
+		Exp_stop = true
+		end
+	end
+
+...
+----
+
+Luego de realizar las modificaciones, la nueva versión se puede guardar presionando CTRL+S.
+
 == Daemon
 
 El Daemon es el encargado de comunicar el ESP32 con TIC-80. Este se ejecuta en el mismo computador 
@@ -189,3 +231,520 @@ y debe comunicarse via serial con el ESP32 y leer el archivo `out.log` generado 
 
 - Biblioteca de Keyboard para Go: https://github.com/micmonay/keybd_event
 - Biblioteca de Comunicación Serial para Go: https://github.com/bugst/go-serial
+
+=== Ejemplo de Daemon en Go
+
+Este ejemplo de Daemon en Go muestra cómo leer la entrada serial del ESP32, simular eventos de teclado para TIC-80, y cómo procesar comandos que representarían eventos del juego para enviar de vuelta al ESP32 (en este caso, para controlar el LED RGB).
+
+main.go
+[source, go]
+----
+package main
+
+import (
+	"bufio"
+	"io"
+	"log"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/micmonay/keybd_event"
+	"go.bug.st/serial"
+)
+
+type KeyAction struct {
+	Key      int
+	Duration time.Duration // 0 = tap, >0 = hold for this duration
+}
+
+type State struct {
+	prevPotValue  int
+	prevPotTime   time.Time
+	keyActionChan chan KeyAction
+}
+
+var appLogger = log.New(os.Stdout, "[APP] ", log.LstdFlags|log.Lshortfile)
+
+func main() {
+	portName := "/dev/ttyUSB0"
+	baudRate := 115200
+
+	if len(os.Args) > 1 {
+		portName = os.Args[1]
+	}
+
+	appLogger.Printf("Attempting to open serial port: %s at %d baud...\n", portName, baudRate)
+
+	mode := &serial.Mode{
+		BaudRate: baudRate,
+	}
+
+	port, err := serial.Open(portName, mode)
+	if err != nil {
+		appLogger.Fatalf("Failed to open serial port %s: %v\n", portName, err)
+	}
+	defer func() {
+		appLogger.Println("Closing serial port...")
+		if err := port.Close(); err != nil {
+			appLogger.Printf("Error closing serial port: %v\n", err)
+		}
+	}()
+
+	appLogger.Printf("Successfully opened serial port %s. Starting goroutines...\n", portName)
+
+	keyActionChan := make(chan KeyAction, 10)
+	serialWriteChan := make(chan []byte, 10)
+	serialReadLinesChan := make(chan string, 100)
+
+	state := State{
+		prevPotValue:  -1,
+		prevPotTime:   time.Now(),
+		keyActionChan: keyActionChan,
+	}
+
+	go keyboardWorker(keyActionChan)
+
+	go serialReaderGoroutine(port, serialReadLinesChan)
+
+	go serialWriterGoroutine(port, serialWriteChan)
+
+	go stdinProcessorGoroutine(&state, serialWriteChan)
+
+	go func() {
+		var button1Pressed bool
+		var button2Pressed bool
+
+		for line := range serialReadLinesChan {
+			appLogger.Printf("[Serial Data] Received: %s\n", line)
+			action, newButton1Pressed, newButton2Pressed := getSerialKeyAction(&state, line, button1Pressed, button2Pressed)
+			button1Pressed = newButton1Pressed
+			button2Pressed = newButton2Pressed
+
+			if action.Key != 0 {
+				select {
+				case state.keyActionChan <- action:
+				default:
+					appLogger.Printf("Warning: keyActionChan full, dropping action: %+v", action)
+				}
+			}
+		}
+		appLogger.Println("[Serial Processor] Exiting.")
+	}()
+
+	select {}
+}
+
+func serialReaderGoroutine(port serial.Port, outputChan chan<- string) {
+	appLogger.Println("[Serial Reader] Starting to read from serial port...")
+	reader := bufio.NewReader(port)
+	for {
+		line, err := reader.ReadString('\n')
+		if err != nil {
+			appLogger.Printf("[Serial Reader] Error reading from serial port: %v\n", err)
+			if err == io.EOF || strings.Contains(err.Error(), "device disconnected") || strings.Contains(err.Error(), "no such file") {
+				appLogger.Println("[Serial Reader] Device likely disconnected. Pausing for 5s before retrying read.")
+				time.Sleep(5 * time.Second)
+			} else {
+				time.Sleep(100 * time.Millisecond)
+			}
+			continue
+		}
+
+		line = strings.TrimSpace(line)
+		if line == "" {
+			continue
+		}
+		outputChan <- line
+	}
+}
+
+func serialWriterGoroutine(port serial.Port, inputChan <-chan []byte) {
+	appLogger.Println("[Serial Writer] Starting to write to serial port...")
+	for data := range inputChan {
+		n, err := port.Write(data)
+		if err != nil {
+			appLogger.Printf("[Serial Writer] Error writing %q to serial: %v\n", data, err)
+		} else {
+			appLogger.Printf("[Serial Writer] Wrote %d bytes to serial: %q\n", n, data)
+		}
+	}
+	appLogger.Println("[Serial Writer] Exiting.")
+}
+
+func stdinProcessorGoroutine(state *State, serialWriteChan chan<- []byte) {
+	appLogger.Println("[Stdin Processor] Reading from stdin. Type 'serial:<message>' to send to serial.")
+	appLogger.Println("[Stdin Processor] Example: serial:AT\\r\\n")
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		line := scanner.Text()
+		appLogger.Printf("[Stdin Processor] Received from stdin: %q\n", line)
+		processStdinCommand(state, line, serialWriteChan)
+	}
+	if err := scanner.Err(); err != nil {
+		appLogger.Printf("[Stdin Processor] Error reading stdin: %v\n", err)
+	}
+	appLogger.Println("[Stdin Processor] Stdin closed or error. Exiting.")
+}
+
+func processStdinCommand(state *State, input string, serialWriteChan chan<- []byte) {
+	if after, ok := strings.CutPrefix(input, ">event:"); ok {
+		switch after {
+		case "explode":
+			msgBytes := []byte("red")
+			select {
+			case serialWriteChan <- msgBytes:
+				appLogger.Printf("[Stdin Cmd] Queued message for serial: %q\n", msgBytes)
+			default:
+				appLogger.Println("[Stdin Cmd] Serial write channel full, dropping message.")
+			}
+		case "score_milestone":
+			msgBytes := []byte("blue")
+			select {
+			case serialWriteChan <- msgBytes:
+				appLogger.Printf("[Stdin Cmd] Queued message for serial: %q\n", msgBytes)
+			default:
+				appLogger.Println("[Stdin Cmd] Serial write channel full, dropping message.")
+			}
+		}
+	} else {
+		appLogger.Printf("[Stdin Cmd] Unrecognized stdin command: %q\n", input)
+	}
+}
+
+func getSerialKeyAction(state *State, input string, button1Pressed bool, button2Pressed bool) (KeyAction, bool, bool) {
+	if strings.Contains(input, "Button 1:") {
+		if strings.Contains(input, "pressed") && !button1Pressed {
+			appLogger.Println("[Serial Data] Button 1 pressed.")
+			return KeyAction{Key: keybd_event.VK_X, Duration: 0}, true, button2Pressed
+		} else if strings.Contains(input, "released") {
+			appLogger.Println("[Serial Data] Button 1 released.")
+			return KeyAction{}, false, button2Pressed
+		}
+		return KeyAction{}, button1Pressed, button2Pressed
+	}
+
+	if strings.Contains(input, "Button 2:") {
+		if strings.Contains(input, "pressed") && !button2Pressed {
+			appLogger.Println("[Serial Data] Button 2 pressed.")
+			return KeyAction{Key: keybd_event.VK_Z, Duration: 0}, button1Pressed, true
+		} else if strings.Contains(input, "released") {
+			appLogger.Println("[Serial Data] Button 2 released.")
+			return KeyAction{}, button1Pressed, false
+		}
+		return KeyAction{}, button1Pressed, button2Pressed
+	}
+
+	if strings.HasPrefix(input, "Potentiometer:") {
+		parts := strings.Split(input, " ")
+		if len(parts) < 2 {
+			return KeyAction{}, button1Pressed, button2Pressed
+		}
+
+		rawStr := strings.TrimPrefix(parts[1], "raw=")
+		rawVal, err := strconv.Atoi(rawStr)
+		if err != nil {
+			return KeyAction{}, button1Pressed, button2Pressed
+		}
+
+		if state.prevPotValue == -1 {
+			state.prevPotValue = rawVal
+			state.prevPotTime = time.Now()
+			return KeyAction{}, button1Pressed, button2Pressed
+		}
+
+		diff := rawVal - state.prevPotValue
+
+		now := time.Now()
+		if now.Sub(state.prevPotTime) <= 50*time.Millisecond {
+			return KeyAction{}, button1Pressed, button2Pressed
+		}
+
+		var key int
+		absDiff := diff
+		if diff > 0 {
+			key = keybd_event.VK_RIGHT
+		} else if diff < 0 {
+			key = keybd_event.VK_LEFT
+			absDiff = -diff
+		} else {
+			return KeyAction{}, button1Pressed, button2Pressed
+		}
+
+		if absDiff < 50 {
+			return KeyAction{}, button1Pressed, button2Pressed
+		}
+
+		duration := calculateDuration(absDiff)
+		appLogger.Printf("[Serial Data] Potentiometer changed by %d. Sending key %v for %v.\n", diff, key, duration)
+
+		state.prevPotValue = rawVal
+		state.prevPotTime = now
+
+		return KeyAction{Key: key, Duration: duration}, button1Pressed, button2Pressed
+	}
+
+	return KeyAction{}, button1Pressed, button2Pressed
+}
+
+func keyboardWorker(ch <-chan KeyAction) {
+	appLogger.Println("[Keyboard Worker] Starting...")
+	kb, err := keybd_event.NewKeyBonding()
+	if err != nil {
+		appLogger.Fatalf("Fatal: failed to create KeyBonding in worker: %v", err)
+		return
+	}
+
+	for action := range ch {
+		appLogger.Printf("[Keyboard Worker] Performing action: %+v\n", action)
+		if action.Duration == 0 {
+			kb.SetKeys(action.Key)
+			kb.Launching()
+		} else {
+			kb.SetKeys(action.Key)
+			kb.Press()
+			time.Sleep(action.Duration)
+			kb.Release()
+		}
+	}
+	appLogger.Println("[Keyboard Worker] Exiting.")
+}
+
+func calculateDuration(diff int) time.Duration {
+	switch {
+	case diff >= 1000:
+		return 500 * time.Millisecond
+	case diff >= 500:
+		return 300 * time.Millisecond
+	case diff >= 250:
+		return 200 * time.Millisecond
+	case diff >= 100:
+		return 100 * time.Millisecond
+	case diff >= 50:
+		return 50 * time.Millisecond
+	default:
+		return 0
+	}
+}
+----
+
+=== Programa para ESP32 (Elixir/AtomVM)
+
+Este programa está diseñado para ejecutarse en un ESP32 utilizando AtomVM. Su función principal es leer el estado de los sensores de entrada (botones y potenciómetro) y enviar esta información por el puerto serial al Daemon en el computador. Adicionalmente, escucha el puerto serial para recibir comandos del Daemon (basados en eventos del juego TIC-80) y controlar el LED RGB.
+
+----
+defmodule Tic80 do
+  @led_duty 1000
+  @rgb_duty 4000
+
+  @high_speed_timer 0
+
+  @led_r 22
+  @led_g 21
+  @led_b 23
+
+  @button_1_pin 26
+  @button_2_pin 25
+  @potentiometer_pin 32
+
+  def start do
+    rgb_channels = setup_leds()
+    setup_input(rgb_channels)
+
+    LEDC.set_duty(LEDC.high_speed_mode(), 0, @led_duty)
+    LEDC.update_duty(LEDC.high_speed_mode(), 0)
+
+    spawn(fn -> button_monitor(@button_1_pin, "Button 1") end)
+    spawn(fn -> button_monitor(@button_2_pin, "Button 2") end)
+    spawn(fn -> potentiometer_monitor(@potentiometer_pin) end)
+
+    Process.sleep(:infinity)
+  end
+
+  defp setup_leds() do
+    ledc_hs_timer = [
+      {:duty_resolution, 13},
+      {:freq_hz, 5000},
+      {:speed_mode, LEDC.high_speed_mode()},
+      {:timer_num, @high_speed_timer}
+    ]
+
+    :ok = LEDC.timer_config(ledc_hs_timer)
+
+    ledc_channel = [
+      [
+        {:channel, 1},
+        {:duty, 0},
+        {:gpio_num, @led_r},
+        {:speed_mode, LEDC.high_speed_mode()},
+        {:hpoint, 0},
+        {:timer_sel, @high_speed_timer}
+      ],
+      [
+        {:channel, 2},
+        {:duty, 0},
+        {:gpio_num, @led_g},
+        {:speed_mode, LEDC.high_speed_mode()},
+        {:hpoint, 0},
+        {:timer_sel, @high_speed_timer}
+      ],
+      [
+        {:channel, 3},
+        {:duty, 0},
+        {:gpio_num, @led_b},
+        {:speed_mode, LEDC.high_speed_mode()},
+        {:hpoint, 0},
+        {:timer_sel, @high_speed_timer}
+      ]
+    ]
+
+    Enum.each(ledc_channel, fn channel_config -> :ok = LEDC.channel_config(channel_config) end)
+    :ok = LEDC.fade_func_install(0)
+
+    %{
+      red: Enum.at(ledc_channel, 0),
+      green: Enum.at(ledc_channel, 1),
+      blue: Enum.at(ledc_channel, 2)
+    }
+  end
+
+  defp button_monitor(pin, name) do
+    GPIO.set_pin_mode(pin, :input)
+    GPIO.set_pin_pull(pin, :up)
+    button_loop(pin, name, :released)
+  end
+
+  defp button_loop(pin, name, last_state) do
+    current_state =
+      case GPIO.digital_read(pin) do
+        :low -> :pressed
+        :high -> :released
+      end
+
+    if current_state != last_state do
+      :io.format('~s: ~s~n', [name, current_state])
+      Process.sleep(50)
+      button_loop(pin, name, current_state)
+    else
+      Process.sleep(100)
+      button_loop(pin, name, last_state)
+    end
+  end
+
+  defp potentiometer_monitor(pin) do
+    :ok = :esp_adc.start(pin, bitwidth: :bit_max, atten: :db_12)
+    pot_loop(pin, nil, nil)
+  end
+
+  defp pot_loop(pin, last_raw, last_mv) do
+    case :esp_adc.read(pin, [:raw, :voltage, samples: 48]) do
+      {:ok, {raw, mv}} ->
+        if last_raw == nil || abs(raw - last_raw) > 50 do
+          :io.format('Potentiometer: raw=~p mv=~p~n', [raw, mv])
+          Process.sleep(200)
+          pot_loop(pin, raw, mv)
+        else
+          Process.sleep(200)
+          pot_loop(pin, last_raw, last_mv)
+        end
+
+      error ->
+        :io.format('ADC error: ~p~n', [error])
+        Process.sleep(500)
+        pot_loop(pin, last_raw, last_mv)
+    end
+  end
+
+  defp setup_input(rgb_channels) do
+    uart = :uart.open("UART0", rx: 3, tx: 1, speed: 115_200)
+    :io.format('UART0 opened successfully. Sending and receiving on ~p~n', [uart])
+    spawn(fn -> loop_read(uart, rgb_channels) end)
+  end
+
+  defp loop_read(uart, rgb_channels) do
+    data = :uart.read(uart)
+
+    case data do
+      '' ->
+        Process.sleep(50)
+
+      {:ok, string} ->
+        :io.format('Received: ~p~n', [string])
+
+        process_command(string, rgb_channels)
+    end
+
+    loop_read(uart, rgb_channels)
+  end
+
+  defp process_command(<<"red">>, %{red: red_channel}) do
+    apply_duty(red_channel, @rgb_duty)
+    Process.sleep(1000)
+    apply_duty(red_channel, 0)
+  end
+
+  defp process_command(<<"green">>, %{green: green_channel}) do
+    apply_duty(green_channel, @rgb_duty)
+    Process.sleep(1000)
+    apply_duty(green_channel, 0)
+  end
+
+  defp process_command(<<"blue">>, %{blue: blue_channel}) do
+    apply_duty(blue_channel, @rgb_duty)
+    Process.sleep(1000)
+    apply_duty(blue_channel, 0)
+  end
+
+  defp process_command(_, _), do: :io.format('Invalid input.~n')
+
+  defp apply_duty(channel_config, duty) do
+    speed_mode = :proplists.get_value(:speed_mode, channel_config)
+    channel = :proplists.get_value(:channel, channel_config)
+    :ok = LEDC.set_duty(speed_mode, channel, duty)
+    :ok = LEDC.update_duty(speed_mode, channel)
+  end
+end
+----
+
+== Ejecución
+
+Luego de modificar el código fuente del juego, crear el proyecto de Go y flashear el programa al ESP32, el proyecto se puede ejecutar con el comando `tic80 ./car_adventure.tic | sudo go run main.go`. Esto conecta el `stdout` del juego TIC-80 con el Daemon de Go a través de una pipe.
+
+== Flujo de Datos y Control
+
+Para entender cómo todos los componentes interactúan, podemos seguir el flujo de datos y control a través del sistema:
+
+.  **Entrada Física (Hardware - ESP32):**
+    *   El **Potenciómetro** y los **Botones** son manipulados por el jugador.
+    *   El **ESP32**, ejecutando el programa Elixir, monitorea constantemente el estado de estos componentes.
+        *   Lee el valor analógico del potenciómetro a través de un pin.
+        *   Detecta los cambios de estado (presionado/liberado) de los botones a través de pines GPIO.
+
+.  **Comunicación Serial (ESP32 a Computador):**
+    *   El programa del ESP32 imprime los valores y estados leídos (ej. `Potentiometer: raw=XXXX`, `Button 1: pressed`) a su output serial.
+    *   Este output serial se envía al computador host a través de la conexión USB (que utiliza un puerto serial, típicamente `/dev/ttyUSB0` en Linux).
+
+.  **Procesamiento del Daemon (Computador):**
+    *   El **Daemon Go** se ejecuta en el computador host.
+    *   La goroutine `serialReaderGoroutine` del Daemon lee continuamente los datos del puerto serial (provenientes del ESP32).
+    *   La función `getSerialKeyAction` del Daemon procesa estas líneas. Por ejemplo, un cambio significativo en el potenciómetro se traduce en una acción de "flecha derecha" o "flecha izquierda", y una pulsación de botón en "tecla X" o "tecla Z".
+    *   Estas acciones de teclado son enviadas a través del `keyActionChan` a la goroutine `keyboardWorker`.
+
+.  **Control del Juego (Daemon a TIC-80):**
+    *   La goroutine `keyboardWorker` del Daemon utiliza la biblioteca `keybd_event` para simular pulsaciones de teclas en el sistema operativo.
+    *   El juego **TIC-80** (CAR ADVENTURE) está ejecutándose en el mismo computador y recibe estas pulsaciones de teclas como si un jugador estuviera interactuando directamente con el teclado. Esto permite controlar el auto, acelerar, etc.
+
+.  **Eventos del Juego (TIC-80 a Daemon):**
+    *   Mientras el juego TIC-80 se ejecuta, las modificaciones hechas en su código (`trace("event:score_milestone")`, `trace("event:explode")`) envían eventos específicos a su salida estándar (`stdout`).
+    *   La goroutine `stdinProcessorGoroutine` del Daemon (leyendo el `stdout` del proceso TIC-80) detecta estos eventos.
+
+.  **Retroalimentación al Jugador (Daemon a ESP32 a Hardware):**
+    *   Cuando el Daemon detecta un evento (como "explode"), la función `processStdinCommand` envía un comando específico (ej. "red" para explosión, "blue" para hito de score) al `serialWriteChan`.
+    *   La goroutine `serialWriterGoroutine` del Daemon envía estos comandos de vuelta al **ESP32** a través del puerto serial.
+    *   El programa del ESP32, en su `loop_read` y `process_command`, recibe e interpreta estos comandos.
+    *   Finalmente, la función `apply_duty` del ESP32 controla el led RGB conectado a sus pines, encendiendo el color correspondiente (rojo para explosión, azul para score milestone) para dar retroalimentación visual al jugador.
+
+== Demo
+
+video::atomvm/tic80.mp4[]
