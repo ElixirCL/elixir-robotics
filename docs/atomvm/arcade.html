@@ -571,10 +571,8 @@ y debe comunicarse via serial con el ESP32 y leer el archivo <code>out.log</code
 <div class="paragraph">
 <p>Este ejemplo de Daemon en Go muestra cómo leer la entrada serial del ESP32, simular eventos de teclado para TIC-80, y cómo procesar comandos que representarían eventos del juego para enviar de vuelta al ESP32 (en este caso, para controlar el LED RGB).</p>
 </div>
-<div class="paragraph">
-<p>main.go</p>
-</div>
 <div class="listingblock">
+<div class="title">main.go</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-go hljs" data-lang="go">package main
 
@@ -873,8 +871,9 @@ func calculateDuration(diff int) time.Duration {
 <p>Este programa está diseñado para ejecutarse en un ESP32 utilizando AtomVM. Su función principal es leer el estado de los sensores de entrada (botones y potenciómetro) y enviar esta información por el puerto serial al Daemon en el computador. Adicionalmente, escucha el puerto serial para recibir comandos del Daemon (basados en eventos del juego TIC-80) y controlar el LED RGB.</p>
 </div>
 <div class="listingblock">
+<div class="title">AtomVM Elixir</div>
 <div class="content">
-<pre>defmodule Tic80 do
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule Tic80 do
   @led_duty 1000
   @rgb_duty 4000
 
@@ -1044,7 +1043,7 @@ func calculateDuration(diff int) time.Duration {
     :ok = LEDC.set_duty(speed_mode, channel, duty)
     :ok = LEDC.update_duty(speed_mode, channel)
   end
-end</pre>
+end</code></pre>
 </div>
 </div>
 </div>
