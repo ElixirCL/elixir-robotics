@@ -279,6 +279,26 @@ y compilar AtomVM para ser ejecutado en la ESP32 utilizando un sistema operativo
 <div class="paragraph">
 <p>Se asume que la entrada de ESP32 se encuentra en <code>/dev/ttyUSB0</code>. En caso de no encontrarse ahí (se puede verificar con <code>ls /dev/ttyUSB*</code>), se debe cambiar en la definición de los scripts.</p>
 </div>
+<div class="sect2">
+<h3 id="mise"><a class="anchor" href="#mise"></a>Mise</h3>
+<div class="paragraph">
+<p>También es una opción el utilizar la herramienta <a href="https://mise.jdx.dev/dev-tools/">mise</a> para la <a href="https://qiita.com/mnishiguchi/items/7edc08991d809934d85c">instalación de esptool</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mise use -g pipx
+$ pipx --version
+$ mise use -g pipx:esptool
+$ esptool version</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="windows"><a class="anchor" href="#windows"></a>Windows</h3>
+<div class="paragraph">
+<p>Para Windows se recomienda la instalación de una máquina virtual con Linux o utilizar <a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL</a>.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
