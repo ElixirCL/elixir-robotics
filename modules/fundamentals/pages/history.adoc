@@ -253,7 +253,7 @@ los circuitos integrados tenían alrededor de 2000 transistores. Para 2020, los 
 integrados de última generación tenían más de 10.000 millones.
 
 .Transistores y Válvulas Termoiónicas
-image::history/transistors.jpg[]
+image::history/transistors.avif[]
 
 == Microcontrolador TMS1000
 

@@ -48,8 +48,21 @@ El entorno también incluye un alias para flashear el programa (`flash`) y un al
 
 Se asume que la entrada de ESP32 se encuentra en `/dev/ttyUSB0`. En caso de no encontrarse ahí (se puede verificar con `ls /dev/ttyUSB*`), se debe cambiar en la definición de los scripts.
 
-// Pendiente: ¿Cómo hacerlo con Windows 10?
-// Pendiente: ¿Se puede Windows 11?
+=== Mise
+
+También es una opción el utilizar la herramienta https://mise.jdx.dev/dev-tools/[mise] para la https://qiita.com/mnishiguchi/items/7edc08991d809934d85c[instalación de esptool].
+
+[source, bash]
+----
+$ mise use -g pipx
+$ pipx --version
+$ mise use -g pipx:esptool
+$ esptool version
+----
+
+=== Windows 
+
+Para Windows se recomienda la instalación de una máquina virtual con Linux o utilizar https://learn.microsoft.com/en-us/windows/wsl/install[WSL].
 
 == Preparar ESP32
 
