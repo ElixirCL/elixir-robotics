@@ -29,15 +29,13 @@ via GPIO o Conexión Serial (ESP32) a una Raspberry PI o Computador con un video
 Se debe crear o seleccionar un juego y habilitar controlarlo con los sensores. Además de mostrar información 
 del juego en los displays segmentados.
 
-.Components de Arcade Posibles
+.Componentes de Arcade Posibles
 |====
 |Componente | Cantidad | Descripción
 
 |Potenciometro| 1 | Simula un manubrio de carreras. https://afel.cl/products/potenciometro-500k-ohm
-|Display Segmentado de 4 dígitos| 2 | Muestra el High Score y el Score actual. https://afel.cl/products/display-7-segmentos-4-digitos
-|Display Segmantado de 2 dígitos| 1 | Muestra el tiempo de juego actual. https://afel.cl/products/display-7-segmentos-2-digitos
-|Interruptor MTS-102 3 pines | 1 | Simula una palanca de cambios. https://afel.cl/products/interruptor-mts-102-3-pines
-|Placa de 4 botones| 1 | Simula los pedales de aceleración y fichas. https://afel.cl/products/placa-de-4-botones-independientes-micro-switch
+|Led RGB| 1 | Muestra hitos de puntaje o estado de Game Over. https://afel.cl/products/diodo-led-rgb-5mm
+|Botones| 2 | Simula teclas "Z" y "X" en juegos que lo requieran. https://afel.cl/products/boton-tactil-tapa-12x12x7-3-interruptor
 |====
 
 También se puede obtar por un Kit de componentes básicos como 
@@ -219,6 +217,24 @@ if player.IsCracked == true then
 ----
 
 Luego de realizar las modificaciones, la nueva versión se puede guardar presionando CTRL+S.
+
+== Esquemático
+
+image::arcade/esquematico.png[]
+
+.Tabla de conexiones
+[cols=3*]
+|===
+| Pin ESP32 | Componente | Función
+| 3V3       | Riel de alimentación de la Protoboard (positivo) | Alimentación general para componentes (Potenciómetro, Botones)
+| GND       | Riel de tierra de la Protoboard (negativo) | Tierra general para componentes (Potenciómetro, Botones, LED RGB)
+| 32        | Potenciómetro (SIG) | Entrada analógica para simular el manubrio de carreras
+| 26        | Botón 1             | Entrada digital
+| 25        | Botón 2             | Entrada digital
+| 22        | Resistor (a LED RGB Rojo) | Salida PWM para controlar el color Rojo del LED RGB
+| 21        | Resistor (a LED RGB Verde) | Salida PWM para controlar el color Verde del LED RGB
+| 23        | Resistor (a LED RGB Azul) | Salida PWM para controlar el color Azul del LED RGB
+|===
 
 == Daemon
 

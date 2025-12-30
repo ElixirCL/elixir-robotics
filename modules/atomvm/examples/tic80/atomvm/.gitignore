@@ -1,0 +1,6 @@
+.devenv/
+.devenv.flake*
+.direnv/
+_build/
+deps/
+*.avm

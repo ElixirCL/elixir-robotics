@@ -248,7 +248,7 @@ Se debe crear o seleccionar un juego y habilitar controlarlo con los sensores. A
 del juego en los displays segmentados.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Components de Arcade Posibles</caption>
+<caption class="title">Table 1. Componentes de Arcade Posibles</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -268,24 +268,14 @@ del juego en los displays segmentados.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Simula un manubrio de carreras. <a href="https://afel.cl/products/potenciometro-500k-ohm" class="bare">https://afel.cl/products/potenciometro-500k-ohm</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Display Segmentado de 4 dígitos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Led RGB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra hitos de puntaje o estado de Game Over. <a href="https://afel.cl/products/diodo-led-rgb-5mm" class="bare">https://afel.cl/products/diodo-led-rgb-5mm</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Botones</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra el High Score y el Score actual. <a href="https://afel.cl/products/display-7-segmentos-4-digitos" class="bare">https://afel.cl/products/display-7-segmentos-4-digitos</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Display Segmantado de 2 dígitos</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Muestra el tiempo de juego actual. <a href="https://afel.cl/products/display-7-segmentos-2-digitos" class="bare">https://afel.cl/products/display-7-segmentos-2-digitos</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Interruptor MTS-102 3 pines</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Simula una palanca de cambios. <a href="https://afel.cl/products/interruptor-mts-102-3-pines" class="bare">https://afel.cl/products/interruptor-mts-102-3-pines</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Placa de 4 botones</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Simula los pedales de aceleración y fichas. <a href="https://afel.cl/products/placa-de-4-botones-independientes-micro-switch" class="bare">https://afel.cl/products/placa-de-4-botones-independientes-micro-switch</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Simula teclas "Z" y "X" en juegos que lo requieran. <a href="https://afel.cl/products/boton-tactil-tapa-12x12x7-3-interruptor" class="bare">https://afel.cl/products/boton-tactil-tapa-12x12x7-3-interruptor</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -540,6 +530,71 @@ if player.IsCracked == true then
 <p>Luego de realizar las modificaciones, la nueva versión se puede guardar presionando CTRL+S.</p>
 </div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="esquemático"><a class="anchor" href="#esquemático"></a>Esquemático</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="_images/arcade/esquematico.png" alt="esquematico">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Tabla de conexiones</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pin ESP32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Componente</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Función</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3V3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Riel de alimentación de la Protoboard (positivo)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alimentación general para componentes (Potenciómetro, Botones)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Riel de tierra de la Protoboard (negativo)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tierra general para componentes (Potenciómetro, Botones, LED RGB)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Potenciómetro (SIG)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entrada analógica para simular el manubrio de carreras</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">26</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Botón 1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entrada digital</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Botón 2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entrada digital</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resistor (a LED RGB Rojo)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Salida PWM para controlar el color Rojo del LED RGB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resistor (a LED RGB Verde)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Salida PWM para controlar el color Verde del LED RGB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resistor (a LED RGB Azul)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Salida PWM para controlar el color Azul del LED RGB</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
