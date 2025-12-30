@@ -2,6 +2,8 @@
 -- author: GaboChip
 -- desc: A mini-game of dont crush your car
 -- script: lua
+-- https://tic80.com/play?cart=2178
+
 Mode = "intro"
 intro_t = 0
 Colors  = {}

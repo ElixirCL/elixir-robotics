@@ -24,12 +24,16 @@ como principal inspiración.
 
 == Componentes del Proyecto
 
-El proyecto consiste en usar los componentes de hardware cual estarán conectados 
-via GPIO o Conexión Serial (ESP32) a una Raspberry PI o Computador con un videojuego creado en PICO8 (https://pico-8.fandom.com/wiki/GPIO) o TIC80 (https://tic80.com/play).
-Se debe crear o seleccionar un juego y habilitar controlarlo con los sensores. Además de mostrar información 
-del juego en los displays segmentados.
+El proyecto consiste en usar los componentes de hardware que estarán conectados 
+via GPIO o Conexión Serial (ESP32) a una Raspberry PI o Computador con un videojuego creado en PICO-8 (https://pico-8.fandom.com/wiki/GPIO) o TIC-80 (https://tic80.com/play).
+Se debe crear o seleccionar un juego y habilitar controlarlo con los sensores y gatillar eventos 
+como leds u otros movimientos de los actuadores.
 
-.Componentes de Arcade Posibles
+Para este ejemplo se utilizará un potenciómetro y un led rgb para enviar eventos 
+al juego y mostrar un color azul si se llega a un puntaje específico y 
+un color rojo si se pierde una vida.
+
+.Componentes Electrónicos Necesarios
 |====
 |Componente | Cantidad | Descripción
 
@@ -86,7 +90,17 @@ Para poder ejecutar el juego y obtener los registros del log se puede ejecutar e
 $ ./tic80 esp32.tic > out.log &
 ----
 
-El siguiente cartucho puede ser usado para probar
+También se puede redireccionar directamente el stdout al daemon que usaremos 
+como puente entre la ESP32 y TIC-80.
+
+.Redireccionar stdout via pipes
+[source, bash]
+----
+$ ./tic80 esp32.tic | daemon
+----
+
+El siguiente código demuestra como utilizar la función `trace()`
+para enviar información a stdout desde TIC-80.
 
 .Primero Creamos un cartucho de Lua 
 [source, bash]
@@ -94,7 +108,7 @@ El siguiente cartucho puede ser usado para probar
 > new lua
 ----
 
-.Añadimos las funciones de debugging
+.Demostración de Uso de trace()
 [source, lua]
 ----
 -- title:   esp32 test cart
@@ -240,7 +254,7 @@ image::arcade/esquematico.png[]
 
 El Daemon es el encargado de comunicar el ESP32 con TIC-80. Este se ejecuta en el mismo computador 
 al cual el ESP32 se conecta por USB y ejecuta el TIC-80. Este puede ser programado en Go o Python
-y debe comunicarse via serial con el ESP32 y leer el archivo `out.log` generado por TIC-80.
+y debe comunicarse via serial con el ESP32 y leer el `stdout` generado por TIC-80.
 
 - Biblioteca de Keyboard para Python: https://github.com/boppreh/keyboard
 - Biblioteca de Comunicación Serial para Python: https://pyserial.readthedocs.io/en/latest/index.html
@@ -250,7 +264,9 @@ y debe comunicarse via serial con el ESP32 y leer el archivo `out.log` generado 
 
 === Ejemplo de Daemon en Go
 
-Este ejemplo de Daemon en Go muestra cómo leer la entrada serial del ESP32, simular eventos de teclado para TIC-80, y cómo procesar comandos que representarían eventos del juego para enviar de vuelta al ESP32 (en este caso, para controlar el LED RGB).
+Este ejemplo de Daemon en Go muestra cómo leer la entrada serial del ESP32, 
+simular eventos de teclado para TIC-80, y cómo procesar comandos que representarían 
+eventos del juego para enviar de vuelta al ESP32 (en este caso, para controlar el LED RGB).
 
 .main.go
 [source, go]
@@ -547,7 +563,11 @@ func calculateDuration(diff int) time.Duration {
 
 === Programa para ESP32 (Elixir/AtomVM)
 
-Este programa está diseñado para ejecutarse en un ESP32 utilizando AtomVM. Su función principal es leer el estado de los sensores de entrada (botones y potenciómetro) y enviar esta información por el puerto serial al Daemon en el computador. Adicionalmente, escucha el puerto serial para recibir comandos del Daemon (basados en eventos del juego TIC-80) y controlar el LED RGB.
+Este programa está diseñado para ejecutarse en un ESP32 utilizando AtomVM. 
+Su función principal es leer el estado de los sensores de entrada (botones y potenciómetro) 
+y enviar esta información por el puerto serial al Daemon en el computador. 
+Adicionalmente, escucha el puerto serial para recibir comandos del Daemon 
+(basados en eventos del juego TIC-80) y controlar el LED RGB.
 
 .AtomVM Elixir
 [source, elixir]
@@ -727,11 +747,15 @@ end
 
 == Ejecución
 
-Luego de modificar el código fuente del juego, crear el proyecto de Go y flashear el programa al ESP32, el proyecto se puede ejecutar con el comando `tic80 ./car_adventure.tic | sudo go run main.go`. Esto conecta el `stdout` del juego TIC-80 con el Daemon de Go a través de una pipe.
+Luego de modificar el código fuente del juego, crear el proyecto de Go y 
+flashear el programa al ESP32, el proyecto se puede ejecutar con el comando 
+`tic80 ./car_adventure.tic | sudo go run main.go`. Esto conecta el `stdout` del 
+juego TIC-80 con el Daemon de Go a través de una pipe.
 
 == Flujo de Datos y Control
 
-Para entender cómo todos los componentes interactúan, podemos seguir el flujo de datos y control a través del sistema:
+Para entender cómo todos los componentes interactúan, podemos seguir el flujo de 
+datos y control a través del sistema:
 
 .  **Entrada Física (Hardware - ESP32):**
     *   El **Potenciómetro** y los **Botones** son manipulados por el jugador.
@@ -766,3 +790,9 @@ Para entender cómo todos los componentes interactúan, podemos seguir el flujo 
 == Demo
 
 video::atomvm/tic80.mp4[]
+
+== Código Fuente 
+
+Todo el código fuente puede ser visualizado en:
+
+https://github.com/ElixirCL/elixir-robotics/tree/main/modules/atomvm/examples/tic80

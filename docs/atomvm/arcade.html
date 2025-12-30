@@ -242,13 +242,18 @@ como principal inspiración.</p>
 <h2 id="componentes-del-proyecto"><a class="anchor" href="#componentes-del-proyecto"></a>Componentes del Proyecto</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>El proyecto consiste en usar los componentes de hardware cual estarán conectados
-via GPIO o Conexión Serial (ESP32) a una Raspberry PI o Computador con un videojuego creado en PICO8 (<a href="https://pico-8.fandom.com/wiki/GPIO" class="bare">https://pico-8.fandom.com/wiki/GPIO</a>) o TIC80 (<a href="https://tic80.com/play" class="bare">https://tic80.com/play</a>).
-Se debe crear o seleccionar un juego y habilitar controlarlo con los sensores. Además de mostrar información
-del juego en los displays segmentados.</p>
+<p>El proyecto consiste en usar los componentes de hardware que estarán conectados
+via GPIO o Conexión Serial (ESP32) a una Raspberry PI o Computador con un videojuego creado en PICO-8 (<a href="https://pico-8.fandom.com/wiki/GPIO" class="bare">https://pico-8.fandom.com/wiki/GPIO</a>) o TIC-80 (<a href="https://tic80.com/play" class="bare">https://tic80.com/play</a>).
+Se debe crear o seleccionar un juego y habilitar controlarlo con los sensores y gatillar eventos
+como leds u otros movimientos de los actuadores.</p>
+</div>
+<div class="paragraph">
+<p>Para este ejemplo se utilizará un potenciómetro y un led rgb para enviar eventos
+al juego y mostrar un color azul si se llega a un puntaje específico y
+un color rojo si se pierde una vida.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Componentes de Arcade Posibles</caption>
+<caption class="title">Table 1. Componentes Electrónicos Necesarios</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -394,7 +399,18 @@ la opción es lo siguiente:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>El siguiente cartucho puede ser usado para probar</p>
+<p>También se puede redireccionar directamente el stdout al daemon que usaremos
+como puente entre la ESP32 y TIC-80.</p>
+</div>
+<div class="listingblock">
+<div class="title">Redireccionar stdout via pipes</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./tic80 esp32.tic | daemon</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El siguiente código demuestra como utilizar la función <code>trace()</code>
+para enviar información a stdout desde TIC-80.</p>
 </div>
 <div class="listingblock">
 <div class="title">Primero Creamos un cartucho de Lua</div>
@@ -403,7 +419,7 @@ la opción es lo siguiente:</p>
 </div>
 </div>
 <div class="listingblock">
-<div class="title">Añadimos las funciones de debugging</div>
+<div class="title">Demostración de Uso de trace()</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-lua hljs" data-lang="lua">-- title:   esp32 test cart
 -- author:  ninjas.cl
@@ -603,7 +619,7 @@ if player.IsCracked == true then
 <div class="paragraph">
 <p>El Daemon es el encargado de comunicar el ESP32 con TIC-80. Este se ejecuta en el mismo computador
 al cual el ESP32 se conecta por USB y ejecuta el TIC-80. Este puede ser programado en Go o Python
-y debe comunicarse via serial con el ESP32 y leer el archivo <code>out.log</code> generado por TIC-80.</p>
+y debe comunicarse via serial con el ESP32 y leer el <code>stdout</code> generado por TIC-80.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -624,7 +640,9 @@ y debe comunicarse via serial con el ESP32 y leer el archivo <code>out.log</code
 <div class="sect2">
 <h3 id="ejemplo-de-daemon-en-go"><a class="anchor" href="#ejemplo-de-daemon-en-go"></a>Ejemplo de Daemon en Go</h3>
 <div class="paragraph">
-<p>Este ejemplo de Daemon en Go muestra cómo leer la entrada serial del ESP32, simular eventos de teclado para TIC-80, y cómo procesar comandos que representarían eventos del juego para enviar de vuelta al ESP32 (en este caso, para controlar el LED RGB).</p>
+<p>Este ejemplo de Daemon en Go muestra cómo leer la entrada serial del ESP32,
+simular eventos de teclado para TIC-80, y cómo procesar comandos que representarían
+eventos del juego para enviar de vuelta al ESP32 (en este caso, para controlar el LED RGB).</p>
 </div>
 <div class="listingblock">
 <div class="title">main.go</div>
@@ -923,7 +941,11 @@ func calculateDuration(diff int) time.Duration {
 <div class="sect2">
 <h3 id="programa-para-esp32-elixiratomvm"><a class="anchor" href="#programa-para-esp32-elixiratomvm"></a>Programa para ESP32 (Elixir/AtomVM)</h3>
 <div class="paragraph">
-<p>Este programa está diseñado para ejecutarse en un ESP32 utilizando AtomVM. Su función principal es leer el estado de los sensores de entrada (botones y potenciómetro) y enviar esta información por el puerto serial al Daemon en el computador. Adicionalmente, escucha el puerto serial para recibir comandos del Daemon (basados en eventos del juego TIC-80) y controlar el LED RGB.</p>
+<p>Este programa está diseñado para ejecutarse en un ESP32 utilizando AtomVM.
+Su función principal es leer el estado de los sensores de entrada (botones y potenciómetro)
+y enviar esta información por el puerto serial al Daemon en el computador.
+Adicionalmente, escucha el puerto serial para recibir comandos del Daemon
+(basados en eventos del juego TIC-80) y controlar el LED RGB.</p>
 </div>
 <div class="listingblock">
 <div class="title">AtomVM Elixir</div>
@@ -1108,7 +1130,10 @@ end</code></pre>
 <h2 id="ejecución"><a class="anchor" href="#ejecución"></a>Ejecución</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Luego de modificar el código fuente del juego, crear el proyecto de Go y flashear el programa al ESP32, el proyecto se puede ejecutar con el comando <code>tic80 ./car_adventure.tic | sudo go run main.go</code>. Esto conecta el <code>stdout</code> del juego TIC-80 con el Daemon de Go a través de una pipe.</p>
+<p>Luego de modificar el código fuente del juego, crear el proyecto de Go y
+flashear el programa al ESP32, el proyecto se puede ejecutar con el comando
+<code>tic80 ./car_adventure.tic | sudo go run main.go</code>. Esto conecta el <code>stdout</code> del
+juego TIC-80 con el Daemon de Go a través de una pipe.</p>
 </div>
 </div>
 </div>
@@ -1116,7 +1141,8 @@ end</code></pre>
 <h2 id="flujo-de-datos-y-control"><a class="anchor" href="#flujo-de-datos-y-control"></a>Flujo de Datos y Control</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Para entender cómo todos los componentes interactúan, podemos seguir el flujo de datos y control a través del sistema:</p>
+<p>Para entender cómo todos los componentes interactúan, podemos seguir el flujo de
+datos y control a través del sistema:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1229,6 +1255,17 @@ end</code></pre>
 Your browser does not support the video tag.
 </video>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="código-fuente"><a class="anchor" href="#código-fuente"></a>Código Fuente</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Todo el código fuente puede ser visualizado en:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/ElixirCL/elixir-robotics/tree/main/modules/atomvm/examples/tic80" class="bare">https://github.com/ElixirCL/elixir-robotics/tree/main/modules/atomvm/examples/tic80</a></p>
 </div>
 </div>
 </div>
