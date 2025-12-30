@@ -235,7 +235,7 @@ como principal inspiración.</p>
 </div>
 <iframe width="100%" height="515" src="https://www.youtube.com/embed/5jc9_xrD2_M?si=FiIRvA4kTtonmArJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <iframe width="100%" height="515" src="https://www.youtube.com/embed/-Sh7S8Ub5AQ?si=UE4aqX_wABc-Mp24" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/n7Vl6g0RiHI?si=iHBHP6lmPClUBPbZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/n7Vl6g0RiHI?si=iHBHP6lmPClUBPbZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 </div>
 <div class="sect1">
@@ -282,6 +282,11 @@ un color rojo si se pierde una vida.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Simula teclas "Z" y "X" en juegos que lo requieran. <a href="https://afel.cl/products/boton-tactil-tapa-12x12x7-3-interruptor" class="bare">https://afel.cl/products/boton-tactil-tapa-12x12x7-3-interruptor</a></p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resistencias</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Necesarias para proteger al LED.</p></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -289,76 +294,6 @@ un color rojo si se pierde una vida.</p>
 </div>
 <div class="paragraph">
 <p><a href="https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/" class="bare">https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/</a></p>
-</div>
-<div class="paragraph">
-<p>Componentes del Kit</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>1 placa de desarrollo ESP32</p>
-</li>
-<li>
-<p>1 x OLED de 0,96 pulgadas</p>
-</li>
-<li>
-<p>1X Protoboard 830pts</p>
-</li>
-<li>
-<p>1 X módulo para evitar obstáculos</p>
-</li>
-<li>
-<p>1 módulo de fotorresistencia</p>
-</li>
-<li>
-<p>1 X Módulo de temperatura y humedad DHT11</p>
-</li>
-<li>
-<p>1 sensor de movimiento PIR de 2/2″</p>
-</li>
-<li>
-<p>1 potenciómetro X (10K)</p>
-</li>
-<li>
-<p>1 cable micro USB</p>
-</li>
-<li>
-<p>30X resistencias (220R/1K/10K)</p>
-</li>
-<li>
-<p>1 zumbador pasivo</p>
-</li>
-<li>
-<p>1 X zumbador activo</p>
-</li>
-<li>
-<p>1 Módulo de relé de doble canal de 5V</p>
-</li>
-<li>
-<p>6X interruptores de botón</p>
-</li>
-<li>
-<p>10 x Cable DuPont</p>
-</li>
-<li>
-<p>10 x cable DuPont de pulgadas</p>
-</li>
-<li>
-<p>10 x Cable DuPont</p>
-</li>
-<li>
-<p>5 x LED rojo</p>
-</li>
-<li>
-<p>5 x LED amarillo</p>
-</li>
-<li>
-<p>5 x LED verde</p>
-</li>
-<li>
-<p>2 LEDs RGB</p>
-</li>
-</ul>
 </div>
 </div>
 </div>
@@ -555,6 +490,13 @@ if player.IsCracked == true then
 <div class="content">
 <img src="_images/arcade/esquematico.png" alt="esquematico">
 </div>
+<div class="title">Figure 1. Esquema de Conexiones</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/arcade/resistencia.png" alt="https://resistorcolorcode.in/">
+</div>
+<div class="title">Figure 2. Resistencia 220 Ohm</div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 2. Tabla de conexiones</caption>
@@ -596,17 +538,17 @@ if player.IsCracked == true then
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">22</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resistor (a LED RGB Rojo)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resistor 220 Ohm (a LED RGB Rojo)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Salida PWM para controlar el color Rojo del LED RGB</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">21</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resistor (a LED RGB Verde)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resistor 220 Ohm (a LED RGB Verde)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Salida PWM para controlar el color Verde del LED RGB</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">23</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resistor (a LED RGB Azul)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resistor 220 Ohm (a LED RGB Azul)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Salida PWM para controlar el color Azul del LED RGB</p></td>
 </tr>
 </tbody>

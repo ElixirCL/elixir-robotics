@@ -19,7 +19,7 @@ como principal inspiración.
 
 .Gameplay Monaco GP
 ++++
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/n7Vl6g0RiHI?si=iHBHP6lmPClUBPbZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/n7Vl6g0RiHI?si=iHBHP6lmPClUBPbZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 ++++
 
 == Componentes del Proyecto
@@ -40,35 +40,12 @@ un color rojo si se pierde una vida.
 |Potenciometro| 1 | Simula un manubrio de carreras. https://afel.cl/products/potenciometro-500k-ohm
 |Led RGB| 1 | Muestra hitos de puntaje o estado de Game Over. https://afel.cl/products/diodo-led-rgb-5mm
 |Botones| 2 | Simula teclas "Z" y "X" en juegos que lo requieran. https://afel.cl/products/boton-tactil-tapa-12x12x7-3-interruptor
+|Resistencias| 3 | Necesarias para proteger al LED.
 |====
 
 También se puede obtar por un Kit de componentes básicos como 
 
 https://mcielectronics.cl/shop/product/kit-basico-de-inicio-de-componentes-electronicos-para-esp32-esp-32s/
-
-Componentes del Kit
-
-- 1 placa de desarrollo ESP32
-- 1 x OLED de 0,96 pulgadas
-- 1X Protoboard 830pts
-- 1 X módulo para evitar obstáculos
-- 1 módulo de fotorresistencia
-- 1 X Módulo de temperatura y humedad DHT11
-- 1 sensor de movimiento PIR de 2/2″
-- 1 potenciómetro X (10K)
-- 1 cable micro USB
-- 30X resistencias (220R/1K/10K)
-- 1 zumbador pasivo
-- 1 X zumbador activo
-- 1 Módulo de relé de doble canal de 5V
-- 6X interruptores de botón
-- 10 x Cable DuPont
-- 10 x cable DuPont de pulgadas
-- 10 x Cable DuPont
-- 5 x LED rojo
-- 5 x LED amarillo
-- 5 x LED verde
-- 2 LEDs RGB
 
 == TIC-80
 
@@ -234,7 +211,11 @@ Luego de realizar las modificaciones, la nueva versión se puede guardar presion
 
 == Esquemático
 
+.Esquema de Conexiones
 image::arcade/esquematico.png[]
+
+.Resistencia 220 Ohm
+image::arcade/resistencia.png[https://resistorcolorcode.in/]
 
 .Tabla de conexiones
 [cols=3*]
@@ -245,9 +226,9 @@ image::arcade/esquematico.png[]
 | 32        | Potenciómetro (SIG) | Entrada analógica para simular el manubrio de carreras
 | 26        | Botón 1             | Entrada digital
 | 25        | Botón 2             | Entrada digital
-| 22        | Resistor (a LED RGB Rojo) | Salida PWM para controlar el color Rojo del LED RGB
-| 21        | Resistor (a LED RGB Verde) | Salida PWM para controlar el color Verde del LED RGB
-| 23        | Resistor (a LED RGB Azul) | Salida PWM para controlar el color Azul del LED RGB
+| 22        | Resistor 220 Ohm (a LED RGB Rojo) | Salida PWM para controlar el color Rojo del LED RGB
+| 21        | Resistor 220 Ohm (a LED RGB Verde) | Salida PWM para controlar el color Verde del LED RGB
+| 23        | Resistor 220 Ohm (a LED RGB Azul) | Salida PWM para controlar el color Azul del LED RGB
 |===
 
 == Daemon
