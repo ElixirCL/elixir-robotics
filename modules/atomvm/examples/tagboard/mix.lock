@@ -1,0 +1,8 @@
+%{
+  "atomvm_lib": {:git, "https://github.com/atomvm/atomvm_lib/", "e5ec0248e0286effebcbc0ad70cc9f7228f463ae", []},
+  "avm_scene": {:git, "https://github.com/atomvm/avm_scene/", "aba9249f189d29d4564d81ba50bbe9fe28bc1d44", []},
+  "exatomvm": {:git, "https://github.com/atomvm/ExAtomVM/", "be42c79bd16d3b35cc1833234e84fdee7b01709d", []},
+  "mjson": {:git, "https://github.com/mbj4668/mjson/", "7572555c8953572082d1ffe91932886bbc22daa1", []},
+  "mustache": {:hex, :mustache, "0.5.1", "1bfee8a68a8e72d47616541a93a632ae1684c1abc17c9eb5f7bfecb78d7496e5", [:mix], [], "hexpm", "524c9bbb6080a52d7b6806436b4e269e0224c785a228faf3293ef30a75016bfa"},
+  "uf2tool": {:hex, :uf2tool, "1.1.0", "7091931234ca5a256b66ea691983867d51229798622d083f85c1ad779798a734", [:rebar3], [], "hexpm", "1a7e5ca7ef3d19c7a0b0acf3db804b3188e0980884acffa13fd57d733507b73d"},
+}

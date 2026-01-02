@@ -4,3 +4,4 @@
 * xref:components.adoc[]
 * xref:remote.adoc[]
 * xref:arcade.adoc[]
+* xref:tagboard.adoc[]
