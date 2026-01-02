@@ -208,7 +208,54 @@ end
 * Los datos se serializan usando `:erlang.term_to_binary/1`
 * La memoria NVS tiene capacidad limitada; `@max_tags` evita agotarla
 
-== Frontend y Problema de Tipos MIME
+== Frontend
+
+El frontend consiste en un `index.html` ligero que importa e utiliza un Web Component llamado `<tag-board />`. Este componente se encarga de llamar a la API periódicamente para motrar tags actualizados, además de crear tags nuevos.
+
+./priv/index.html
+[source, html]
+----
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Tagboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #F1E6C9;
+      --btn: #2a2f55;
+      --btn-hover: #3a4090;
+      --btn-active: #4c53c7;
+      --text: #222222;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+
+  <script type="module" src="/bundle.js"></script>
+</head>
+
+<body>
+  <h1>Tagboard</h1>
+
+  <tag-board />
+</body>
+
+</html>
+----
+
+== Problema de Tipos MIME
 
 `httpd` tiene una configuración mínima que sirve todos los archivos con el tipo MIME `application/octet-stream`. Este tipo presenta una limitación: los navegadores modernos no permiten importar módulos JavaScript con este MIME type por razones de seguridad, aunque sí permiten cargarlos mediante etiquetas `<script>`.
 
@@ -236,3 +283,7 @@ La implementación del frontend (fuera del alcance principal de este documento) 
 * fetch() API para comunicación con el backend. Se hacen llamadas cada 3 segundos para mantener el estado sincronizado
 
 Para detalles completos del frontend, consulte el repositorio: https://github.com/ElixirCL/elixir-robotics/tree/main/modules/atomvm/examples/tagboard/js
+
+== Demo
+
+video::atomvm/tagboard.mp4[]

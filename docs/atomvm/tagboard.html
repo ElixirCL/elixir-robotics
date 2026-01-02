@@ -492,7 +492,58 @@ end</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="frontend-y-problema-de-tipos-mime"><a class="anchor" href="#frontend-y-problema-de-tipos-mime"></a>Frontend y Problema de Tipos MIME</h2>
+<h2 id="frontend"><a class="anchor" href="#frontend"></a>Frontend</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El frontend consiste en un <code>index.html</code> ligero que importa e utiliza un Web Component llamado <code>&lt;tag-board /&gt;</code>. Este componente se encarga de llamar a la API periódicamente para motrar tags actualizados, además de crear tags nuevos.</p>
+</div>
+<div class="listingblock">
+<div class="title">/priv/index.html</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-html hljs" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+  &lt;title&gt;Tagboard&lt;/title&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;style&gt;
+    :root {
+      --bg: #F1E6C9;
+      --btn: #2a2f55;
+      --btn-hover: #3a4090;
+      --btn-active: #4c53c7;
+      --text: #222222;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  &lt;/style&gt;
+
+  &lt;script type="module" src="/bundle.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;h1&gt;Tagboard&lt;/h1&gt;
+
+  &lt;tag-board /&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="problema-de-tipos-mime"><a class="anchor" href="#problema-de-tipos-mime"></a>Problema de Tipos MIME</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><code>httpd</code> tiene una configuración mínima que sirve todos los archivos con el tipo MIME <code>application/octet-stream</code>. Este tipo presenta una limitación: los navegadores modernos no permiten importar módulos JavaScript con este MIME type por razones de seguridad, aunque sí permiten cargarlos mediante etiquetas <code>&lt;script&gt;</code>.</p>
@@ -533,6 +584,18 @@ end</code></pre>
 </div>
 <div class="paragraph">
 <p>Para detalles completos del frontend, consulte el repositorio: <a href="https://github.com/ElixirCL/elixir-robotics/tree/main/modules/atomvm/examples/tagboard/js" class="bare">https://github.com/ElixirCL/elixir-robotics/tree/main/modules/atomvm/examples/tagboard/js</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="demo"><a class="anchor" href="#demo"></a>Demo</h2>
+<div class="sectionbody">
+<div class="videoblock">
+<div class="content">
+<video src="_images/atomvm/tagboard.mp4" controls>
+Your browser does not support the video tag.
+</video>
 </div>
 </div>
 </div>
