@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Conexión Remota :: Electrónica, Robótica e IOT con Elixir</title>
-    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/atomvm/remote.html">
-    <link rel="prev" href="components.html">
-    <link rel="next" href="arcade.html">
+    <title>Proyecto: Tagboard :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/atomvm/tagboard.html">
+    <link rel="prev" href="arcade.html">
+    <link rel="next" href="../colosseo/colosseo.html">
     <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -160,13 +160,13 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="components.html">Componentes Electrónicos</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="remote.html">Conexión Remota</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="arcade.html">Proyecto: Videojuego Arcade</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="tagboard.html">Proyecto: Tagboard</a>
   </li>
 </ul>
@@ -214,74 +214,71 @@
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
     <li>AtomVM</li>
-    <li><a href="remote.html">Conexión Remota</a></li>
+    <li><a href="tagboard.html">Proyecto: Tagboard</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="file:///antora/./modules/atomvm/pages/remote.adoc">Editar esta página</a></div>
+<div class="edit-this-page"><a href="file:///antora/./modules/atomvm/pages/tagboard.adoc">Editar esta página</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contenidos" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Conexión Remota</h1>
+<h1 class="page">Proyecto: Tagboard</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>En esta sección se mostrará como conectar un celular Android o iPhone
-al ESP32 y poner enviar comandos via Wi-fi Access Point.</p>
+<p>El proyecto Tagboard implementa un tablero de mensajes ligero ejecutándose en ESP32 con AtomVM. La solución combina un backend en Elixir que expone una API HTTP y sirve archivos estáticos, con un frontend basado en Web Components.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="conexión-a-través-de-wi-fi"><a class="anchor" href="#conexión-a-través-de-wi-fi"></a>Conexión a través de Wi-Fi</h2>
+<h2 id="arquitectura-general"><a class="anchor" href="#arquitectura-general"></a>Arquitectura General</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Es posible crear un Access Point directamente desde un ESP32 para facilitar su conexión a dispositivos. Esta funcionalidad permite que cualquier dispositivo conectado al Access Point pueda acceder al servidor hosteado en el ESP32 a través de navegador.</p>
+<p>El sistema sigue una arquitectura cliente-servidor minimalista:</p>
 </div>
-<div class="sect2">
-<h3 id="dependencias-de-atomvm"><a class="anchor" href="#dependencias-de-atomvm"></a>Dependencias de AtomVM</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Backend: Servidor HTTP integrado en AtomVM que proporciona</p>
+</li>
+<li>
+<p>Una API REST para crear y recuperar tags</p>
+</li>
+<li>
+<p>Servicio de archivos estáticos para el frontend</p>
+</li>
+<li>
+<p>Almacenamiento persistente en NVS (Non-Volatile Storage) del ESP32</p>
+</li>
+<li>
+<p>Frontend: Aplicación web basada en Web Components que se comunica con la API</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="servidor-httpd-y-api"><a class="anchor" href="#servidor-httpd-y-api"></a>Servidor <code>httpd</code> y API</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Para obtener acceso a la librería <code>httpd</code> de Erlang, es necesario incluir <code>atomvm_lib</code> en el archivo mix.exs.</p>
+<p>El módulo principal <code>TagBoard</code> configura el servidor HTTP y define las rutas de la API.</p>
 </div>
 <div class="listingblock">
-<div class="title">mix.exs</div>
+<div class="title">lib/tag_board.ex</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defp deps do
-  [
-    {:exatomvm, git: "https://github.com/atomvm/ExAtomVM/"},
-    {:atomvm_lib, git: "https://github.com/atomvm/atomvm_lib/"}
-  ]
-end</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="ejemplo"><a class="anchor" href="#ejemplo"></a>Ejemplo</h3>
-<div class="paragraph">
-<p>A continuación, se incluye un módulo de ejemplo que implementa <code>httpd</code> para servir archivos y una API desde un servidor hosteado en la ESP32.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule ApTest do
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule TagBoard do
   @behaviour :httpd_api_handler
 
   @port 8080
 
   def start() do
-    ap_config = [
-      ssid: "robot test",
-      psk: "passpass",
-      ap_started: fn -&gt; :io.format('Punto de acceso iniciado en 192.168.4.1~n') end
-    ]
-
-    {:ok, _network_pid} = :network.start(ap: ap_config)
-
-    Process.sleep(1000)
+    setup_network(:sta)
 
     httpd_config = [
       # handler para ruta /api
-      {[&lt;&lt;"api"&gt;&gt;],
+      {[&lt;&lt;"tags"&gt;&gt;],
        %{
          handler: :httpd_api_handler,
          handler_config: %{
@@ -293,209 +290,256 @@ end</code></pre>
        %{
          handler: :httpd_file_handler,
          handler_config: %{
-           app: :serial_test
+           app: :tag_board
          }
        }}
     ]
 
     {:ok, _httpd_pid} = :httpd.start_link(@port, httpd_config)
 
-    :io.format('Servidor web iniciado en http://192.168.4.1:8080~n')
+    :io.format('Servidor web iniciado.~n')
+
+    :timer.sleep(5000)
 
     :timer.sleep(:infinity)
   end
 
-  def handle_api_request(:post, [&lt;&lt;"move"&gt;&gt;], http_request, _args) do
-    direction = http_request.body
+  def handle_api_request(:post, [&lt;&lt;"create"&gt;&gt;], http_request, _args) do
+    {:ok, body_map} = :mjson.decode(http_request.body)
 
-    move_robot(direction)
+    author = body_map[&lt;&lt;"author"&gt;&gt;]
+    content = body_map[&lt;&lt;"content"&gt;&gt;]
+    timestamp = body_map[&lt;&lt;"timestamp"&gt;&gt;]
 
-    {:ok, %{status: "ok"}}
+    post_content(author, content, timestamp)
+
+    {:close, %{status: "ok"}}
   end
 
-  def handle_api_request(method, path, _http_request, _args) do
-    :io.format('Petición no soportada: ~p ~p~n', [method, path])
-    :not_found
+  def handle_api_request(:get, [&lt;&lt;"get"&gt;&gt;], http_request, _args) do
+    {:ok, tags} = TagBoard.Store.get_tags()
+
+    {:close, %{tags: tags}}
   end
 
-  defp move_robot(direction) do
-    :io.format('Comando de movimiento recibido: ~p~n', [direction])
-    # aqui iría el código para mover el robot
+  defp post_content(author, content, timestamp) do
+    TagBoard.Store.add_tag(author, content, timestamp)
+
+    {:ok, tags} = TagBoard.Store.get_tags()
+  end
+
+  defp setup_network(:ap) do
+    ap_config = [
+      ssid: "robot test",
+      psk: "passpass",
+      ap_started: fn -&gt; :io.format('Punto de acceso iniciado en 192.168.4.1~n') end
+    ]
+
+    {:ok, _network_pid} = :network.start(ap: ap_config)
+
+    Process.sleep(4000)
+  end
+
+  defp setup_network(:sta) do
+    config =
+      [
+        {:ssid, &lt;&lt;"ssid"&gt;&gt;},
+        {:psk, &lt;&lt;"password"&gt;&gt;},
+        {:got_ip, fn ip -&gt; :io.format('Got IP: ~p~n', [ip]) end},
+        {:dhcp_hostname, &lt;&lt;"myesp32"&gt;&gt;}
+      ]
+
+    {:ok, _network_pid} = :network.start(sta: config)
+
+    Process.sleep(4000)
   end
 end</code></pre>
 </div>
 </div>
+<div class="sect2">
+<h3 id="rutas-de-la-api"><a class="anchor" href="#rutas-de-la-api"></a>Rutas de la API</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>POST /api/tags/create</code>: Crea un nuevo tag</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Body: JSON con <code>author</code>, <code>content</code>, <code>timestamp</code></p>
+</li>
+<li>
+<p>Response: <code>{"status": "ok"}</code> o <code>{"status": "error", "reason": &#8230;&#8203;}</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>GET /api/tags/get</code>: Obtiene todos los tags</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Response: <code>{"tags": [&#8230;&#8203;]}</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="almacenamiento-persistentente"><a class="anchor" href="#almacenamiento-persistentente"></a>Almacenamiento Persistentente</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>También es necesario incluir un archivo <code>index.html</code> en el directorio /priv del proyecto (se debe crear si no existe), para acceder a la API a través de una interfaz.</p>
+<p>El módulo <code>TagBoard.Store</code> gestiona el almacenamiento de tags en la memoria no volátil (NVS) del ESP32, asegurando que los datos sobrevivan a reinicios.</p>
 </div>
 <div class="listingblock">
-<div class="title">priv/index.html</div>
+<div class="title">lib/tag_board_store.ex</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;Control del Robot&lt;/title&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
-    &lt;style&gt;
-        :root {
-            --bg: #0f1220;
-            --panel: #1a1e35;
-            --btn: #2a2f55;
-            --btn-hover: #3a4090;
-            --btn-active: #4c53c7;
-            --text: #e8eaff;
-            --danger: #c0392b;
-        }
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule TagBoard.Store do
+  @nvs_namespace :tagboard_data
+  @nvs_key :tags_list
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: system-ui, sans-serif;
-            background: radial-gradient(circle at top, #1a1e35, #0f1220);
-            color: var(--text);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+  @max_tags 25
 
-        h1 {
-            margin-bottom: 24px;
-            font-weight: 600;
-        }
+  def add_tag(author, content, timestamp) do
+    case read_tags_from_nvs() do
+      {:ok, current_tags} -&gt;
+        new_tag = %{id: timestamp, author: author, content: content, timestamp: timestamp}
 
-        .controls {
-            background: var(--panel);
-            padding: 20px;
-            border-radius: 20px;
-            display: grid;
-            grid-template-columns: repeat(3, 80px);
-            gap: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
+        updated_tags = [new_tag | current_tags]
 
-        .controls button {
-            width: 80px;
-            height: 80px;
-            border-radius: 18px;
-            border: none;
-            background: linear-gradient(180deg, var(--btn), #1f2340);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow:
-                0 6px 0 #14172b,
-                0 10px 20px rgba(0,0,0,0.4);
-            transition: transform 0.05s ease, box-shadow 0.05s ease, background 0.15s;
-        }
+        limited_tags = :lists.sublist(updated_tags, @max_tags)
 
-        .controls button:hover {
-            background: linear-gradient(180deg, var(--btn-hover), #2b3090);
-        }
+        case write_tags_to_nvs(limited_tags) do
+          :ok -&gt;
+            :ok
 
-        .controls button:active {
-            transform: translateY(4px);
-            box-shadow:
-                0 2px 0 #14172b,
-                0 4px 10px rgba(0,0,0,0.4);
-            background: linear-gradient(180deg, var(--btn-active), #3a40b0);
-        }
+          {:error, reason} -&gt;
+            :io.format('Failed to write tags to NVS after adding: ~p~n', [reason])
+            {:error, reason}
+        end
 
-        .controls svg {
-            width: 36px;
-            height: 36px;
-            fill: var(--text);
-        }
+      {:error, reason} -&gt;
+        :io.format('Failed to add tag due to NVS read error: ~p~n', [reason])
+        {:error, reason}
+    end
+  end
 
-        .forward { grid-column: 2; }
-        .left    { grid-column: 1; }
-        .stop    {
-            grid-column: 2;
-            background: linear-gradient(180deg, var(--danger), #8e1f17);
-        }
-        .right   { grid-column: 3; }
-        .back    { grid-column: 2; }
+  def get_tags, do: read_tags_from_nvs()
 
-        .stop:hover {
-            background: linear-gradient(180deg, #e74c3c, #a93226);
-        }
+  def clear_all_tags do
+    case :esp.nvs_erase_key(@nvs_namespace, @nvs_key) do
+      :ok -&gt;
+        :io.format('All tags cleared from NVS.~n')
+        :ok
 
-        .status {
-            margin-top: 24px;
-            font-size: 14px;
-            opacity: 0.9;
-        }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Control del Robot&lt;/h1&gt;
+      error -&gt;
+        :io.format('Failed to clear tags from NVS: ~p~n', [error])
+        {:error, error}
+    end
+  end
 
-    &lt;div class="controls"&gt;
-        &lt;button class="forward" onclick="moveRobot('forward')"&gt;
-            &lt;svg viewBox="0 0 24 24"&gt;
-                &lt;path d="M12 4l-8 8h5v8h6v-8h5z"/&gt;
-            &lt;/svg&gt;
-        &lt;/button&gt;
+  defp read_tags_from_nvs do
+    binary_tags = :esp.nvs_get_binary(@nvs_namespace, @nvs_key, &lt;&lt;&gt;&gt;)
 
-        &lt;button class="left" onclick="moveRobot('left')"&gt;
-            &lt;svg viewBox="0 0 24 24"&gt;
-                &lt;path d="M4 12l8 8v-5h8v-6h-8v-5z"/&gt;
-            &lt;/svg&gt;
-        &lt;/button&gt;
+    if binary_tags == &lt;&lt;""&gt;&gt; do
+      {:ok, []}
+    else
+      try do
+        tags = :erlang.binary_to_term(binary_tags)
+        # Basic validation: ensure it's a list. If not, treat as empty.
+        if is_list(tags) do
+          {:ok, tags}
+        else
+          {:ok, []}
+        end
+      rescue
+        e -&gt;
+          {:error, {:deserialization_error, e}}
+      end
+    end
+  end
 
-        &lt;button class="stop" onclick="moveRobot('stop')"&gt;
-            &lt;svg viewBox="0 0 24 24"&gt;
-                &lt;rect x="6" y="6" width="12" height="12"/&gt;
-            &lt;/svg&gt;
-        &lt;/button&gt;
+  defp write_tags_to_nvs(tags) do
+    binary_tags = :erlang.term_to_binary(tags)
 
-        &lt;button class="right" onclick="moveRobot('right')"&gt;
-            &lt;svg viewBox="0 0 24 24"&gt;
-                &lt;path d="M20 12l-8-8v5h-8v6h8v5z"/&gt;
-            &lt;/svg&gt;
-        &lt;/button&gt;
+    case :esp.nvs_put_binary(@nvs_namespace, @nvs_key, binary_tags) do
+      :ok -&gt;
+        :ok
 
-        &lt;button class="back" onclick="moveRobot('back')"&gt;
-            &lt;svg viewBox="0 0 24 24"&gt;
-                &lt;path d="M12 20l8-8h-5v-8h-6v8h-5z"/&gt;
-            &lt;/svg&gt;
-        &lt;/button&gt;
-    &lt;/div&gt;
-
-    &lt;div id="status" class="status"&gt;Estado: Listo&lt;/div&gt;
-
-    &lt;script&gt;
-        function moveRobot(direction) {
-            document.getElementById("status").innerText = "Estado: Enviando comando..."";
-
-            fetch("/api/move", {
-                method: "POST",
-                headers: { "Content-Type": "text/html" },
-                body: direction
-            })
-            .then(r =&gt; r.json())
-            .then(data =&gt; {
-                document.getElementById("status").innerText = "Estado: "" + data.status;
-            })
-            .catch(() =&gt; {
-                document.getElementById("status").innerText = "Estado: Error de conexión";
-            });
-        }
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+      error -&gt;
+        {:error, error}
+    end
+  end
+end</code></pre>
 </div>
+</div>
+<div class="sect2">
+<h3 id="consideraciones-de-almacenamiento"><a class="anchor" href="#consideraciones-de-almacenamiento"></a>Consideraciones de Almacenamiento</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Los datos se serializan usando <code>:erlang.term_to_binary/1</code></p>
+</li>
+<li>
+<p>La memoria NVS tiene capacidad limitada; <code>@max_tags</code> evita agotarla</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="frontend-y-problema-de-tipos-mime"><a class="anchor" href="#frontend-y-problema-de-tipos-mime"></a>Frontend y Problema de Tipos MIME</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>httpd</code> tiene una configuración mínima que sirve todos los archivos con el tipo MIME <code>application/octet-stream</code>. Este tipo presenta una limitación: los navegadores modernos no permiten importar módulos JavaScript con este MIME type por razones de seguridad, aunque sí permiten cargarlos mediante etiquetas <code>&lt;script&gt;</code>.</p>
 </div>
 <div class="paragraph">
-<p>Para acceder a la API, el dispositivo primero se debe conectar a la red Wi-Fi llamada <code>robot test</code>, y luego acceder a <code>192.168.4.1:8080/index.html</code>.</p>
+<p>Para solucionar esto, el proyecto usa <code>esbuild</code> para crear un bundle único que incluye todos los componentes Web Components y dependencias.</p>
+</div>
+<div class="sect2">
+<h3 id="configuración-de-build"><a class="anchor" href="#configuración-de-build"></a>Configuración de Build</h3>
+<div class="paragraph">
+<p>El script de flash en <code>devenv.nix</code> automatiza el proceso:</p>
+</div>
+<div class="listingblock">
+<div class="title">devenv.nix</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-nix hljs" data-lang="nix">  scripts.flash.exec = ''
+    esbuild ./js/board.js --bundle --outfile=./priv/bundle.js --format=iife
+    mix atomvm.packbeam &amp;&amp; sudo esptool --chip auto --port /dev/ttyUSB0 --baud 921600 \
+      write-flash 0x250000 tag_board.avm
+  '';</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="estructura-del-frontend"><a class="anchor" href="#estructura-del-frontend"></a>Estructura del Frontend</h3>
+<div class="paragraph">
+<p>La implementación del frontend (fuera del alcance principal de este documento) utiliza:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Web Components para encapsulación, implementados utilizando Lit</p>
+</li>
+<li>
+<p>fetch() API para comunicación con el backend. Se hacen llamadas cada 3 segundos para mantener el estado sincronizado</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Para detalles completos del frontend, consulte el repositorio: <a href="https://github.com/ElixirCL/elixir-robotics/tree/main/modules/atomvm/examples/tagboard/js" class="bare">https://github.com/ElixirCL/elixir-robotics/tree/main/modules/atomvm/examples/tagboard/js</a></p>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="components.html">Componentes Electrónicos</a></span>
-  <span class="next"><a href="arcade.html">Proyecto: Videojuego Arcade</a></span>
+  <span class="prev"><a href="arcade.html">Proyecto: Videojuego Arcade</a></span>
+  <span class="next"><a href="../colosseo/colosseo.html">Coliseo Atómico</a></span>
 </nav>
 </article>
   </div>

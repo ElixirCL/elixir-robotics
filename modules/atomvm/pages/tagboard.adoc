@@ -1,0 +1,238 @@
+= Proyecto: Tagboard
+
+El proyecto Tagboard implementa un tablero de mensajes ligero ejecutándose en ESP32 con AtomVM. La solución combina un backend en Elixir que expone una API HTTP y sirve archivos estáticos, con un frontend basado en Web Components.
+
+== Arquitectura General
+
+El sistema sigue una arquitectura cliente-servidor minimalista:
+
+*   Backend: Servidor HTTP integrado en AtomVM que proporciona
+    *   Una API REST para crear y recuperar tags
+    *   Servicio de archivos estáticos para el frontend
+    *   Almacenamiento persistente en NVS (Non-Volatile Storage) del ESP32
+
+*   Frontend: Aplicación web basada en Web Components que se comunica con la API
+
+== Servidor `httpd` y API
+
+El módulo principal `TagBoard` configura el servidor HTTP y define las rutas de la API.
+
+.lib/tag_board.ex
+[source, elixir]
+----
+defmodule TagBoard do
+  @behaviour :httpd_api_handler
+
+  @port 8080
+
+  def start() do
+    setup_network(:sta)
+
+    httpd_config = [
+      # handler para ruta /api
+      {[<<"tags">>],
+       %{
+         handler: :httpd_api_handler,
+         handler_config: %{
+           module: __MODULE__
+         }
+       }},
+      # handler de archivos para ruta /, expone archivos en directorio /priv 
+      {[],
+       %{
+         handler: :httpd_file_handler,
+         handler_config: %{
+           app: :tag_board
+         }
+       }}
+    ]
+
+    {:ok, _httpd_pid} = :httpd.start_link(@port, httpd_config)
+
+    :io.format('Servidor web iniciado.~n')
+
+    :timer.sleep(5000)
+
+    :timer.sleep(:infinity)
+  end
+
+  def handle_api_request(:post, [<<"create">>], http_request, _args) do
+    {:ok, body_map} = :mjson.decode(http_request.body)
+
+    author = body_map[<<"author">>]
+    content = body_map[<<"content">>]
+    timestamp = body_map[<<"timestamp">>]
+
+    post_content(author, content, timestamp)
+
+    {:close, %{status: "ok"}}
+  end
+
+  def handle_api_request(:get, [<<"get">>], http_request, _args) do
+    {:ok, tags} = TagBoard.Store.get_tags()
+
+    {:close, %{tags: tags}}
+  end
+
+  defp post_content(author, content, timestamp) do
+    TagBoard.Store.add_tag(author, content, timestamp)
+
+    {:ok, tags} = TagBoard.Store.get_tags()
+  end
+
+  defp setup_network(:ap) do
+    ap_config = [
+      ssid: "robot test",
+      psk: "passpass",
+      ap_started: fn -> :io.format('Punto de acceso iniciado en 192.168.4.1~n') end
+    ]
+
+    {:ok, _network_pid} = :network.start(ap: ap_config)
+
+    Process.sleep(4000)
+  end
+
+  defp setup_network(:sta) do
+    config =
+      [
+        {:ssid, <<"ssid">>},
+        {:psk, <<"password">>},
+        {:got_ip, fn ip -> :io.format('Got IP: ~p~n', [ip]) end},
+        {:dhcp_hostname, <<"myesp32">>}
+      ]
+
+    {:ok, _network_pid} = :network.start(sta: config)
+
+    Process.sleep(4000)
+  end
+end
+----
+
+=== Rutas de la API
+
+* `POST /api/tags/create`: Crea un nuevo tag
+  - Body: JSON con `author`, `content`, `timestamp`
+  - Response: `{"status": "ok"}` o `{"status": "error", "reason": ...}`
+
+* `GET /api/tags/get`: Obtiene todos los tags
+  - Response: `{"tags": [...]}`
+
+== Almacenamiento Persistentente
+
+El módulo `TagBoard.Store` gestiona el almacenamiento de tags en la memoria no volátil (NVS) del ESP32, asegurando que los datos sobrevivan a reinicios.
+
+.lib/tag_board_store.ex
+[source, elixir]
+----
+defmodule TagBoard.Store do
+  @nvs_namespace :tagboard_data
+  @nvs_key :tags_list
+
+  @max_tags 25
+
+  def add_tag(author, content, timestamp) do
+    case read_tags_from_nvs() do
+      {:ok, current_tags} ->
+        new_tag = %{id: timestamp, author: author, content: content, timestamp: timestamp}
+
+        updated_tags = [new_tag | current_tags]
+
+        limited_tags = :lists.sublist(updated_tags, @max_tags)
+
+        case write_tags_to_nvs(limited_tags) do
+          :ok ->
+            :ok
+
+          {:error, reason} ->
+            :io.format('Failed to write tags to NVS after adding: ~p~n', [reason])
+            {:error, reason}
+        end
+
+      {:error, reason} ->
+        :io.format('Failed to add tag due to NVS read error: ~p~n', [reason])
+        {:error, reason}
+    end
+  end
+
+  def get_tags, do: read_tags_from_nvs()
+
+  def clear_all_tags do
+    case :esp.nvs_erase_key(@nvs_namespace, @nvs_key) do
+      :ok ->
+        :io.format('All tags cleared from NVS.~n')
+        :ok
+
+      error ->
+        :io.format('Failed to clear tags from NVS: ~p~n', [error])
+        {:error, error}
+    end
+  end
+
+  defp read_tags_from_nvs do
+    binary_tags = :esp.nvs_get_binary(@nvs_namespace, @nvs_key, <<>>)
+
+    if binary_tags == <<"">> do
+      {:ok, []}
+    else
+      try do
+        tags = :erlang.binary_to_term(binary_tags)
+        # Basic validation: ensure it's a list. If not, treat as empty.
+        if is_list(tags) do
+          {:ok, tags}
+        else
+          {:ok, []}
+        end
+      rescue
+        e ->
+          {:error, {:deserialization_error, e}}
+      end
+    end
+  end
+
+  defp write_tags_to_nvs(tags) do
+    binary_tags = :erlang.term_to_binary(tags)
+
+    case :esp.nvs_put_binary(@nvs_namespace, @nvs_key, binary_tags) do
+      :ok ->
+        :ok
+
+      error ->
+        {:error, error}
+    end
+  end
+end
+----
+
+=== Consideraciones de Almacenamiento
+
+* Los datos se serializan usando `:erlang.term_to_binary/1`
+* La memoria NVS tiene capacidad limitada; `@max_tags` evita agotarla
+
+== Frontend y Problema de Tipos MIME
+
+`httpd` tiene una configuración mínima que sirve todos los archivos con el tipo MIME `application/octet-stream`. Este tipo presenta una limitación: los navegadores modernos no permiten importar módulos JavaScript con este MIME type por razones de seguridad, aunque sí permiten cargarlos mediante etiquetas `<script>`.
+
+Para solucionar esto, el proyecto usa `esbuild` para crear un bundle único que incluye todos los componentes Web Components y dependencias.
+
+=== Configuración de Build
+
+El script de flash en `devenv.nix` automatiza el proceso:
+
+.devenv.nix
+[source, nix]
+----
+  scripts.flash.exec = ''
+    esbuild ./js/board.js --bundle --outfile=./priv/bundle.js --format=iife
+    mix atomvm.packbeam && sudo esptool --chip auto --port /dev/ttyUSB0 --baud 921600 \
+      write-flash 0x250000 tag_board.avm
+  '';
+----
+
+=== Estructura del Frontend
+
+La implementación del frontend (fuera del alcance principal de este documento) utiliza:
+
+* Web Components para encapsulación, implementados utilizando Lit
+* fetch() API para comunicación con el backend. Se hacen llamadas cada 3 segundos para mantener el estado sincronizado
+
+Para detalles completos del frontend, consulte el repositorio: https://github.com/ElixirCL/elixir-robotics/tree/main/modules/atomvm/examples/tagboard/js
