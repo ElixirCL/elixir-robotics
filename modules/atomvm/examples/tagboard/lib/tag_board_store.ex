@@ -7,7 +7,12 @@ defmodule TagBoard.Store do
   def add_tag(author, content, timestamp) do
     case read_tags_from_nvs() do
       {:ok, current_tags} ->
-        new_tag = %{id: timestamp, author: author, content: content, timestamp: timestamp}
+        new_tag = %{
+          id: timestamp,
+          author: author,
+          content: :string.slice(content, 0, 70),
+          timestamp: timestamp
+        }
 
         updated_tags = [new_tag | current_tags]
 
