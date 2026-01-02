@@ -126,7 +126,7 @@ export class TagBoard extends LitElement {
 
       <div class="tags">${this.renderTags(this._tags)}</div>
       <form @submit=${this.onTagSubmit}>
-        <input placeholder="Mensaje" @input=${this.onTagInput} .value=${this._content} />
+        <input placeholder="Mensaje" @input=${this.onTagInput} .value=${this._content} maxlength="70" />
         <button>Enviar</button>
       </form>
       `
