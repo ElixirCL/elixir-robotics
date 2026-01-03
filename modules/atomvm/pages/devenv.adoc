@@ -219,7 +219,7 @@ has configurado el entorno de desarrollo para AtomVM.
 
 == Compilar AtomVM
 
-También es opción compilar un ejecutable de AtomVM que permita probar el código 
+También es opción https://qiita.com/t-yamanashi/items/75a9e33b4222dbdb5f77[compilar un ejecutable de AtomVM] que permita probar el código 
 dentro de un computador Linux o MacOS. 
 
 Para esto se necesitan las siguientes dependencias:
@@ -250,13 +250,17 @@ $ sudo port install rebar3
 ====
 rebar3 necesita erlang. Por lo que si ya tienes erlang instalado 
 solo debes descargar el archivo.
+====
 
+[source, bash]
+----
 $ curl https://s3.amazonaws.com/rebar3/rebar3 -o rebar3
 $ chmod +x rebar3
 $ sudo mv rebar3 /usr/local/bin
 $ rebar3 --version
 rebar 3.25.1 on Erlang/OTP 26 Erts 14.2.5.9
-====
+----
+
 
 Luego se puede compilar:
 
