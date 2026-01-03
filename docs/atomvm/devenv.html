@@ -467,6 +467,141 @@ has configurado el entorno de desarrollo para AtomVM.</p>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="compilar-atomvm"><a class="anchor" href="#compilar-atomvm"></a>Compilar AtomVM</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>También es opción compilar un ejecutable de AtomVM que permita probar el código
+dentro de un computador Linux o MacOS.</p>
+</div>
+<div class="paragraph">
+<p>Para esto se necesitan las siguientes dependencias:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>cmake</p>
+</li>
+<li>
+<p>gperf</p>
+</li>
+<li>
+<p>rebar3</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Estas pueden ser instaladas en Linux (Debian) por ejemplo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo apt install cmake
+$ sudo apt install gperf
+$ sudo apt install rebar3</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Y en MacOS utilizando <a href="https://www.macports.org/">MacPorts</a> por ejemplo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo port install cmake
+$ sudo port install gperf
+$ sudo port install rebar3</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>rebar3 necesita erlang. Por lo que si ya tienes erlang instalado
+solo debes descargar el archivo.</p>
+</div>
+<div class="paragraph">
+<p>$ curl <a href="https://s3.amazonaws.com/rebar3/rebar3" class="bare">https://s3.amazonaws.com/rebar3/rebar3</a> -o rebar3
+$ chmod +x rebar3
+$ sudo mv rebar3 /usr/local/bin
+$ rebar3 --version
+rebar 3.25.1 on Erlang/OTP 26 Erts 14.2.5.9</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Luego se puede compilar:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ git clone https://github.com/atomvm/AtomVM.git
+$ cd AtomVM/
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make -j 16</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Esto generará un ejecutable que se puede añadir a un alias como <code>avm</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">alias avm='AtomVM ~/bin/atomvmlib.avm'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Y se puede probar</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ avm ./examples/erlang/hello_world.avm
+Hello World
+Console.puts() and Console.print() work with binary or charlist strings.
+Return value: ok</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="elixir"><a class="anchor" href="#elixir"></a>Elixir</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para tener soporte de Elixir se debe seguir el siguiente ejemplo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ git clone https://github.com/atomvm/atomvm_examples.git
+$ cd atomvm_examples/elixir/HelloWorld
+$ mix deps.get
+$ mix atomvm.packbeam
+$ avm hello_world.avm
+Hello World
+Return value: ok</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Muchas bibliotecas de Elixir como Enum y Regex, entre otras
+no están disponibles en AtomVM debido a que es una máquina virtual muy pequeña.
+Se debe tener en consideración sobre qué dependencias utilizar en los proyectos,
+muchas veces se preferirá código Erlang para suplir lo que haga falta.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="atomvm.html">AtomVM</a></span>
   <span class="next"><a href="components.html">Componentes Electrónicos</a></span>
