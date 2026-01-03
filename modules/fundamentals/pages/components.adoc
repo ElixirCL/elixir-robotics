@@ -1,0 +1,28 @@
+= Componentes Electrónicos
+
+Un breve vistazo a los distintos componentes electrónicos 
+y su uso común.
+
+== Resistencias
+
+== Transistores
+
+== Mosfet
+
+== Diodos
+
+== Fusibles
+
+== Regulador de Voltaje
+
+== Led
+
+== Potenciómetro
+
+== Solenoide
+
+== Motor DC
+
+== Servomotor
+
+== Capacitor

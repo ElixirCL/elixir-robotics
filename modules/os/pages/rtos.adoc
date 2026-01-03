@@ -30,3 +30,7 @@ https://www.rt-thread.io/
 == ROS
 
 https://www.ros.org/
+
+== Nuttx
+
+https://nuttx.apache.org/

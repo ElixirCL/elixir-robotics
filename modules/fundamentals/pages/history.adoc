@@ -233,6 +233,13 @@ corriente eléctrica entre dos contactos según la presencia o ausencia de corri
 tercer contacto. El término transistor proviene del acrónimo transfer resistor 
 (en español resistor de transferencia). 
 
+El 22 de octubre de 1925, Julius Edgar Lilienfeld patentó el transistor de efecto de 
+campo (FET). En 1928, también patentó el transistor de efecto de campo 
+metal-óxido-semiconductor (MOSFET). 
+El transistor de contacto puntual, desarrollado mucho más tarde (Bell Labs, 1948), 
+fue un callejón sin salida. Hoy en día, casi todos los miles de millones de billones 
+de transistores de nuestras computadoras y teléfonos inteligentes son FET del tipo Lilienfeld.
+
 El primer transistor comercial de silicio fue producido por Texas Instruments en 1954 gracias al trabajo del experto Gordon Teal 
 quien había trabajado previamente en los Laboratorios Bell en el crecimiento de cristales de 
 alta pureza. El primer transistor MOSFET fue construido por el coreano-estadounidense 
@@ -329,3 +336,4 @@ image::history/tms1000-architecture.webp[]
 - https://es.wikipedia.org/wiki/Transistor
 - https://www.arrow.com/es-mx/research-and-events/articles/the-transistor-revolution-how-transistors-changed-the-world
 - https://hackaday.com/2020/02/18/the-tms1000-the-first-commercially-available-microcontroller/
+- https://people.idsia.ch/~juergen/who-invented-the-transistor.html

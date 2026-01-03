@@ -66,6 +66,19 @@ image::esp32/esp32devkit.jpg[]
 
 Disponibilidad en: https://www.mechatronicstore.cl/esp32-c6-devkit-pro-tipo-c/
 
+== Tipos de ESP32
+
+- ESP32-DevKitC (varios módulos: WROOM, WROVER con PSRAM). Uno de los más económicos y fáciles de adquirir en el mercado.
+- ESP32-C3-DevKitC / DevKitM (chip RISC-V)
+- ESP32-S2-DevKitC (USB nativo + Wi-Fi)
+- ESP32-S3-DevKitC (USB + PSRAM + AI)
+- ESP32-C6-DevKitC (Wi-Fi 6 + BLE + Thread/Zigbee)
+- ESP32-H2-DevKitM (802.15.4 + BLE para Zigbee/Thread)
+- ESP32-CAM – integración de cámara y microSD (muy usada en visión IoT). 
+- Boards con pantalla (TTGO T-Display) – con LCD para proyectos con interfaz visual. 
+- Boards con LoRa (TTGO T-Beam, Heltec) – combinan ESP32 con transceptores LoRa para comunicaciones de largo alcance
+- ESP32-P4: No es una placa típica con Wi-Fi/Bluetooth, sino un SoC (chip). Está más orientada a tareas de procesamiento y conectividad por cable/periféricos.
+
 == Proyecto Gladiadores Robots
 
 include::esp32/gladiators.adoc[]

@@ -216,3 +216,96 @@ flash
 
 Si logras ejecutar éste código y el Led prende. Exitosamente 
 has configurado el entorno de desarrollo para AtomVM.
+
+== Compilar AtomVM
+
+También es opción compilar un ejecutable de AtomVM que permita probar el código 
+dentro de un computador Linux o MacOS. 
+
+Para esto se necesitan las siguientes dependencias:
+
+- cmake
+- gperf
+- rebar3
+
+Estas pueden ser instaladas en Linux (Debian) por ejemplo:
+
+[source, bash]
+----
+$ sudo apt install cmake
+$ sudo apt install gperf
+$ sudo apt install rebar3
+----
+
+Y en MacOS utilizando https://www.macports.org/[MacPorts] por ejemplo:
+
+[source, bash]
+----
+$ sudo port install cmake 
+$ sudo port install gperf 
+$ sudo port install rebar3 
+----
+
+[NOTE]
+====
+rebar3 necesita erlang. Por lo que si ya tienes erlang instalado 
+solo debes descargar el archivo.
+
+$ curl https://s3.amazonaws.com/rebar3/rebar3 -o rebar3
+$ chmod +x rebar3
+$ sudo mv rebar3 /usr/local/bin
+$ rebar3 --version
+rebar 3.25.1 on Erlang/OTP 26 Erts 14.2.5.9
+====
+
+Luego se puede compilar:
+
+[source, bash]
+----
+$ git clone https://github.com/atomvm/AtomVM.git
+$ cd AtomVM/
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make -j 16
+----
+
+Esto generará un ejecutable que se puede añadir a un alias como `avm`:
+
+[source, bash]
+----
+alias avm='AtomVM ~/bin/atomvmlib.avm'
+----
+
+Y se puede probar 
+
+[source, bash]
+----
+$ avm ./examples/erlang/hello_world.avm
+Hello World
+Console.puts() and Console.print() work with binary or charlist strings.
+Return value: ok
+----
+
+== Elixir
+
+Para tener soporte de Elixir se debe seguir el siguiente ejemplo:
+
+[source, bash]
+----
+$ git clone https://github.com/atomvm/atomvm_examples.git
+$ cd atomvm_examples/elixir/HelloWorld
+$ mix deps.get
+$ mix atomvm.packbeam
+$ avm hello_world.avm
+Hello World
+Return value: ok
+----
+
+[NOTE]
+====
+Muchas bibliotecas de Elixir como Enum y Regex, entre otras
+no están disponibles en AtomVM debido a que es una máquina virtual muy pequeña.
+Se debe tener en consideración sobre qué dependencias utilizar en los proyectos, 
+muchas veces se preferirá código Erlang para suplir lo que haga falta.
+====
