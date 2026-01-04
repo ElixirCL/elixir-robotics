@@ -261,7 +261,6 @@ $ rebar3 --version
 rebar 3.25.1 on Erlang/OTP 26 Erts 14.2.5.9
 ----
 
-
 Luego se puede compilar:
 
 [source, bash]
@@ -274,20 +273,31 @@ $ cmake ..
 $ make -j 16
 ----
 
-Esto generará un ejecutable que se puede añadir a un alias como `avm`:
+Esto generará un ejecutable que se puede crear un script como `avm`.
+El ejecutable está dentro del directorio `build/src`.
 
 [source, bash]
 ----
-alias avm='AtomVM ~/bin/atomvmlib.avm'
+$ mkdir /usr/local/bin/atomvm
+$ cp src/AtomVM /usr/local/bin/atomvm
+$ cp lib/atomvmlib.avm /usr/local/bin/atomvm
+$ touch /usr/local/bin/avm
+$ chmod +x /usr/local/bin/avm
 ----
 
-Y se puede probar 
+./usr/local/bin/avm
+[source, bash]
+----
+#!/usr/bin/env bash
+/usr/local/bin/atomvm/AtomVM /usr/local/bin/atomvm/atomvmlib.avm "$@"
+----
+
+Y se puede usar de la siguiente forma
 
 [source, bash]
 ----
 $ avm ./examples/erlang/hello_world.avm
 Hello World
-Console.puts() and Console.print() work with binary or charlist strings.
 Return value: ok
 ----
 

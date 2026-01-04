@@ -1,0 +1,9 @@
+= Elixir PopCorn
+
+Popcorn es una biblioteca que te permite ejecutar Elixir del lado del 
+cliente en navegadores, con interoperabilidad con JavaScript. Utilizando la tecnología
+Web Assembly.
+
+Internamente, Popcorn ejecuta AtomVM, una pequeña máquina virtual de Erlang.
+
+- https://github.com/software-mansion/popcorn
