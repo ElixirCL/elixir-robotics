@@ -1,1 +1,194 @@
 = Home Assistant
+
+Home Assistant es un software de automatización del hogar de código abierto que prioriza el control local y la privacidad. Puede ejecutarse en entornos como una Raspberry Pi o en un servidor local, ofreciendo integración con una amplia variedad de plataformas y dispositivos, y se gestiona a través de un dashboard web o una aplicación móvil.
+
+== Configuración de un servidor autoalojado
+
+Existen dos tipos principales de instalación de Home Assistant: Home Assistant Operating System y Home Assistant Container.
+
+*   *Home Assistant Operating System*: Consiste en un sistema operativo minimalista diseñado específicamente para ejecutar Home Assistant en dispositivos embebidos. A diferencia de la versión en contenedor, soporta add-ons.
+*   *Home Assistant Container*: Es una instalación basada en un contenedor Docker. Requiere ejecutarse sobre un sistema operativo existente (como Linux) con un motor de orquestación de contenedores (como Docker), y demanda que las actualizaciones y el mantenimiento se realicen manualmente.
+
+Para obtener más detalles, visita la https://www.home-assistant.io/installation[página de instalación oficial].
+
+=== Home Assistant Container
+
+La instalación mediante contenedor es la opción más sencilla para integrar Home Assistant en un sistema ya existente. Para ejecutar el contenedor, solo necesitas tener Docker instalado y ejecutar el siguiente comando:
+
+[source, bash]
+----
+docker run -d \
+      --name homeassistant \
+      --privileged \
+      --restart=unless-stopped \
+      -e TZ=America/Santiago \
+      -v ~/services/home-assistant:/config \
+      -v /run/dbus:/run/dbus:ro \
+      --network=host \
+      ghcr.io/home-assistant/home-assistant:stable
+----
+
+[NOTE]
+====
+Deberás modificar la opción `-v ~/services/home-assistant:/config` para especificar el directorio donde deseas almacenar la configuración de Home Assistant en tu sistema host.
+====
+
+Una vez que el contenedor haya finalizado su descarga y arranque, podrás acceder al dashboard web visitando `http://localhost:8123`.
+
+== Conexión de dispositivos a Home Assistant
+
+Para añadir un dispositivo a través de la interfaz de usuario de Home Assistant, navega hasta el dashboard, haz clic en el icono *+* en la esquina superior derecha y selecciona "Agregar dispositivo". Esto abrirá una ventana con los dispositivos e integraciones compatibles.
+
+Además del soporte para dispositivos específicos, Home Assistant incluye integraciones para protocolos como MQTT (también configurables desde la UI). Las APIs REST, por otro lado, requieren configuración manual directamente en el archivo `configuration.yaml`.
+
+== ESP32 con Home Assistant
+
+Las placas ESP32 son ideales para su uso con Home Assistant, gracias a su tamaño compacto, opciones de conectividad versátiles (Wi-Fi, Bluetooth) y bajo consumo energético. Existen diversas soluciones para conectar un ESP32 con Home Assistant. A continuación, exploraremos dos alternativas.
+
+=== ESPHome
+
+ESPHome es un framework de firmware de código abierto diseñado para una integración fluida y profunda con Home Assistant. Su configuración se realiza mediante archivos `YAML`, donde se declaran los sensores, actuadores y otros periféricos conectados a la placa.
+
+Por ejemplo, para configurar un interruptor y un sensor binario:
+
+[source, yaml]
+----
+switch:
+  - platform: gpio
+    name: "Living Room Dehumidifier"
+    pin: GPIO5
+
+binary_sensor:
+  - platform: gpio
+    name: "Living Room Window"
+    pin:
+      number: GPIO0
+      inverted: true
+      mode:
+        input: true
+        pullup: true
+----
+
+Este enfoque permite configurar fácilmente un dispositivo ESP32 que interactúe de forma nativa con Home Assistant.
+
+Más información en la https://esphome.io/[página oficial de ESPHome].
+
+=== AtomVM en ESP32
+
+Para casos más especializados o cuando se requiere un control de bajo nivel sobre el firmware, es posible desarrollar programas directamente en el entorno ESP-IDF, utilizando plataformas como AtomVM. Esto permite utilizar diversos protocolos de comunicación compatibles con Home Assistant, ofreciendo gran flexibilidad según el caso de uso. Entre estos métodos, se incluyen webhooks, MQTT o servidores HTTP para polling de datos.
+
+El siguiente ejemplo ilustra la creación de un servidor REST simple en Elixir (AtomVM) que acepta solicitudes GET desde Home Assistant para proporcionar información de temperatura y humedad, utilizando un sensor DHT11.
+
+[source, elixir]
+----
+defmodule HomeAssistantTemp do
+  @behaviour :httpd_api_handler
+  @port 8080
+
+  @dht_pin 21
+
+  def start() do
+    {:ok, dht} = :dht.start(%{pin: @dht_pin, device: :dht_11})
+
+    setup_network()
+
+    Process.sleep(3000)
+
+    httpd_config = [
+      {[],
+       %{
+         handler: :httpd_api_handler,
+         handler_config: %{
+           module: __MODULE__,
+           args: dht
+         }
+       }}
+    ]
+
+    {:ok, _httpd_pid} = :httpd.start_link(@port, httpd_config)
+
+    Process.sleep(:infinity)
+  end
+
+  def handle_api_request(:get, [<<"temp">>], http_request, dht) do
+    case take_reading(dht) do
+      :error -> {:close, %{status: "error"}}
+      json -> {:close, json}
+    end
+  end
+
+  defp take_reading(dht) do
+    case :dht.take_reading(dht) do
+      {:ok, {{temp, temp_fractional}, {hum, hum_fractional}}} ->
+        temperature =
+          :io_lib.format('~p.~pC', [temp, temp_fractional])
+          |> :lists.flatten()
+
+        humidity =
+          :io_lib.format('~p.~p%', [hum, hum_fractional])
+          |> :lists.flatten()
+
+        %{temperature: temperature, humidity: humidity}
+
+      error ->
+        :io.format('Error taking reading: ~p~n', [error])
+        :error
+    end
+  end
+
+  defp setup_network() do
+    config =
+      [
+        {:ssid, <<"ssid">>},
+        {:psk, <<"password">>},
+        {:got_ip, fn ip -> :io.format('Got IP: ~p~n', [ip]) end},
+        {:dhcp_hostname, <<"myesp32">>}
+      ]
+
+    {:ok, _network_pid} = :network.start(sta: config)
+
+    Process.sleep(4000)
+  end
+end
+----
+
+El archivo `mix.exs` con las dependencias necesarias:
+.mix.exs
+[source, elixir]
+----
+  defp deps do
+    [
+      {:avm_scene, git: "https://github.com/atomvm/avm_scene/"},
+      {:exatomvm, git: "https://github.com/atomvm/ExAtomVM/"},
+      {:atomvm_lib, git: "https://github.com/atomvm/atomvm_lib/"},
+      {:mjson, git: "https://github.com/mbj4668/mjson/"}
+    ]
+  end
+----
+
+[NOTE]
+====
+Para el entorno de desarrollo y detalles de compilación, consulta el documento: xref:atomvm:devenv.adoc[]
+====
+
+Finalmente, en el archivo `configuration.yaml` de Home Assistant, se añade la configuración para el sensor REST que realizará el polling de datos:
+
+[source, yaml]
+----
+rest:
+  - resource: http://192.168.1.10:8080/temp
+    scan_interval: 30
+    sensor:
+      - name: "ESP32 Temperature"
+        value_template: "{{ value_json.temperature | replace('C', '') | float }}"
+        unit_of_measurement: "°C"
+        device_class: "temperature"
+        state_class: "measurement"
+        unique_id: "esp32_temp_sensor"
+      - name: "ESP32 Humidity"
+        value_template: "{{ value_json.humidity | replace('%', '') | float }}"
+        unit_of_measurement: "%"
+        device_class: "humidity"
+        state_class: "measurement"
+        unique_id: "esp32_humidity_sensor"
+----
