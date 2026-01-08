@@ -347,6 +347,9 @@ binary_sensor:
 <div class="paragraph">
 <p>Para casos más especializados o cuando se requiere un control de bajo nivel sobre el firmware, es posible desarrollar programas directamente en el entorno ESP-IDF, utilizando plataformas como AtomVM. Esto permite utilizar diversos protocolos de comunicación compatibles con Home Assistant, ofreciendo gran flexibilidad según el caso de uso. Entre estos métodos, se incluyen webhooks, MQTT o servidores HTTP para polling de datos.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="rest"><a class="anchor" href="#rest"></a>REST</h3>
 <div class="paragraph">
 <p>El siguiente ejemplo ilustra la creación de un servidor REST simple en Elixir (AtomVM) que acepta solicitudes GET desde Home Assistant para proporcionar información de temperatura y humedad, utilizando un sensor DHT11.</p>
 </div>
@@ -475,6 +478,161 @@ end</code></pre>
         state_class: "measurement"
         unique_id: "esp32_humidity_sensor"</code></pre>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mqtt"><a class="anchor" href="#mqtt"></a>MQTT</h3>
+<div class="paragraph">
+<p>Este ejemplo describe cómo crear un programa simple en AtomVM para el ESP32 que utiliza un cliente MQTT para enviar actualizaciones de un sensor DHT11 a Home Assistant.</p>
+</div>
+<div class="paragraph">
+<p>Para empezar, necesitamos configurar y ejecutar un broker MQTT. Utilizaremos Mosquitto en un contenedor Docker. En tu sistema host, crea un directorio para la configuración de Mosquitto y, dentro de él, crea el archivo <code>mosquitto.conf</code> con el siguiente contenido:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-conf hljs" data-lang="conf">listener 1883 0.0.0.0
+allow_anonymous true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Esta configuración permite que el broker escuche en el puerto <code>1883</code> en todas las interfaces de red del host (<code>0.0.0.0</code>), y acepta conexiones sin necesidad de autenticación.</p>
+</div>
+<div class="paragraph">
+<p>Luego, ejecuta el siguiente comando Docker. Asegúrate de ajustar la ruta del volumen (<code>-v</code>) al directorio donde creaste <code>mosquitto.conf</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">docker run -d \
+      --name mos1 \
+      --restart=unless-stopped \
+      --network=host \
+      -v ~/services/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf \
+      eclipse-mosquitto</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Una vez que el broker Mosquitto está en funcionamiento, debes configurar Home Assistant para que se conecte a él.</p>
+</div>
+<div class="paragraph">
+<p>Luego, se debe agregar el servicio MQTT <a href="https://www.home-assistant.io/integrations/mqtt/#broker-configuration">a través de la interfaz web de Home Assistant</a>.</p>
+</div>
+<div class="paragraph">
+<p>Ahora, flashea el siguiente programa a tu ESP32. Este programa se conectará al broker MQTT, publicará las lecturas del DHT11 en un topic específico.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule HomeAssistantTemp do
+  @dht_pin 21
+
+  def start() do
+    {:ok, dht} = :dht.start(%{pin: @dht_pin, device: :dht_11})
+
+    setup_network()
+
+    config = %{
+      url: "mqtt://192.168.1.14:1883",
+      connected_handler: &amp;handle_connected/1,
+      disconnected_handler: &amp;handle_disconnected/1,
+      error_handler: &amp;handle_error/2
+    }
+
+    Process.sleep(5000)
+    {:ok, mqtt} = :mqtt_client.start(config)
+
+    loop(dht, mqtt)
+  end
+
+  defp loop(dht, mqtt) do
+    take_reading(dht, mqtt)
+    Process.sleep(5000)
+    loop(dht, mqtt)
+  end
+
+  defp take_reading(dht, mqtt) do
+    case :dht.take_reading(dht) do
+      {:ok, {{temp, temp_fractional}, {hum, hum_fractional}}} -&gt;
+        json =
+          :io_lib.format('{"temperature": ~p.~p, "humidity": ~p.~p}', [
+            temp,
+            temp_fractional,
+            hum,
+            hum_fractional
+          ])
+          |&gt; :lists.flatten()
+
+        :io.format('Got reading: ~p~n', [json])
+
+        :mqtt_client.publish(mqtt, &lt;&lt;"temp"&gt;&gt;, :erlang.list_to_binary(json))
+
+      error -&gt;
+        :io.format('Error taking reading: ~p~n', [error])
+    end
+  end
+
+  defp handle_error(_mqtt, error) do
+    :io.format('Got mqtt error: ~p~n', [error])
+  end
+
+  defp handle_connected(_mqtt) do
+    :io.format('MQTT connected~n')
+  end
+
+  defp handle_disconnected(_mqtt) do
+    :io.format('MQTT disconnected~n')
+  end
+
+  defp setup_network() do
+    config =
+      [
+        {:ssid, &lt;&lt;"ssid"&gt;&gt;},
+        {:psk, &lt;&lt;"password"&gt;&gt;},
+        {:got_ip, fn ip -&gt; :io.format('Got IP: ~p~n', [ip]) end},
+        {:dhcp_hostname, &lt;&lt;"myesp32"&gt;&gt;}
+      ]
+
+    {:ok, _network_pid} = :network.start(sta: config)
+
+    Process.sleep(4000)
+  end
+end</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Reemplaza <code>"192.168.1.14"</code> en el código del ESP32 con la dirección IP real del host del broker.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Finalmente, añade la siguiente configuración a tu archivo <code>configuration.yaml</code> de Home Assistant para crear los sensores de temperatura y humedad que recibirán los datos del ESP32.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">mqtt:
+  sensor:
+    - name: "Room Temperature"
+      state_topic: "temp"
+      unit_of_measurement: "°C"
+      device_class: temperature
+      value_template: "{{ value_json.temperature | round(1) }}"
+
+    - name: "Room Humidity"
+      state_topic: "temp"
+      unit_of_measurement: "%"
+      device_class: humidity
+      value_template: "{{ value_json.humidity | round(1) }}"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Después de modificar <code>configuration.yaml</code>, debes reiniciar Home Assistant para que los cambios surtan efecto.</p>
 </div>
 </div>
 </div>
