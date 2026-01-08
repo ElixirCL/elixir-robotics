@@ -228,34 +228,198 @@
 </aside>
 <article class="doc">
 <h1 class="page">Dashboards</h1>
-<div class="sect1">
-<h2 id="thingboard"><a class="anchor" href="#thingboard"></a>Thingboard</h2>
+<div id="preamble">
 <div class="sectionbody">
+<div class="paragraph">
+<p>En esta página, exploraremos diferentes plataformas y herramientas para la visualización y gestión de datos de dispositivos IoT, incluyendo una guía para integrar datos de un ESP32 con Grafana.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="thingsboard"><a class="anchor" href="#thingsboard"></a>ThingsBoard</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>ThingsBoard es una plataforma IoT open-source que facilita la gestión de dispositivos, así como la recolección, procesamiento y visualización de datos.</p>
+</div>
+<div class="paragraph">
+<p>Sus funcionalidades clave incluyen:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/thingsboard/thingsboard" class="bare">https://github.com/thingsboard/thingsboard</a></p>
+<p>Un motor de reglas flexible para el procesamiento de datos complejos.</p>
+</li>
+<li>
+<p>Dashboards IoT en tiempo real y dashboards SCADA para entornos industriales.</p>
+</li>
+<li>
+<p>Capacidades robustas de aprovisionamiento y monitoreo de entidades IoT.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Más información en el <a href="https://github.com/thingsboard/thingsboard">repositorio de GitHub de ThingsBoard</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="openremote"><a class="anchor" href="#openremote"></a>OpenRemote</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>OpenRemote es una plataforma IoT de código abierto e intuitiva, diseñada para construir soluciones completas de gestión de dispositivos. Ofrece un control más granular para equipos internos en comparación con plataformas como ThingsBoard.</p>
+</div>
+<div class="paragraph">
+<p>Características destacadas de OpenRemote:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/openremote/openremote" class="bare">https://github.com/openremote/openremote</a></p>
+<p>Aprovisionamiento automático de dispositivos.</p>
+</li>
+<li>
+<p>Personalización de tipos de activos.</p>
+</li>
+<li>
+<p>Automatización avanzada mediante reglas "cuando-entonces", flujos y scripts en JavaScript.</p>
+</li>
+<li>
+<p>Herramientas de análisis de datos.</p>
+</li>
+<li>
+<p>Conectividad a través de múltiples protocolos.</p>
+</li>
+<li>
+<p>Gestión de usuarios y roles.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Más información en el <a href="https://github.com/openremote/openremote">repositorio de GitHub de OpenRemote</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="grafana"><a class="anchor" href="#grafana"></a>Grafana</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Grafana es una herramienta de código abierto popular para la visualización de datos analíticos. En la siguiente sección mostraremos cómo usarla para visualizar datos de temperatura y humedad de un ESP32.</p>
+</div>
+<div class="sect2">
+<h3 id="integración-con-esp32-mediante-http-y-sqlite"><a class="anchor" href="#integración-con-esp32-mediante-http-y-sqlite"></a>Integración con ESP32 (mediante HTTP y SQLite)</h3>
+<div class="paragraph">
+<p>Utilizaremos el programa de servidor HTTP para ESP32 (DHT11) que se explicó en la página <a href="home-assistant.html" class="xref page">Home Assistant</a>.</p>
+</div>
+<div class="paragraph">
+<p>Crea el siguiente script en Elixir (por ejemplo, <code>grafana.exs</code>). Este script se conectará periódicamente al servidor HTTP del ESP32, extraerá las lecturas de temperatura y humedad, y las almacenará en una base de datos SQLite (<code>main.db</code>).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">Mix.install([:req, :exqlite])
 
+defmodule Grafana do
+  def loop(conn) do
+    case Req.get!("http://192.168.1.10:8080/temp") do
+      %{body: %{"humidity" =&gt; humidity_string, "temperature" =&gt; temperature_string}} -&gt;
+        {humidity, _} = Float.parse(humidity_string)
+        {temperature, _} = Float.parse(temperature_string)
+
+        {:ok, statement} =
+          Exqlite.Sqlite3.prepare(
+            conn,
+            "insert into readings (humidity, temperature, time) values (?1, ?2, ?3)"
+          )
+
+        :ok = Exqlite.Sqlite3.bind(statement, [humidity, temperature, System.os_time(:second)])
+        :done = Exqlite.Sqlite3.step(conn, statement)
+
+        IO.inspect(humidity, label: "humidity")
+        IO.inspect(temperature, label: "temperature")
+
+      _ -&gt;
+        nil
+    end
+
+    Process.sleep(5000)
+    Grafana.loop(conn)
+  end
+end
+
+{:ok, conn} = Exqlite.Sqlite3.open("file:main.db")
+
+:ok =
+  Exqlite.Sqlite3.execute(
+    conn,
+    "create table if not exists readings (id integer primary key, humidity real, temperature real, time integer)"
+  )
+
+Grafana.loop(conn)</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Reemplaza <code>"192.168.1.10"</code> en el código del ESP32 con la dirección IP real del ESP32.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Desde la terminal, en el directorio donde guardaste <code>grafana.exs</code>, corre el script con <code>elixir grafana.exs</code>. Este comando iniciará el proceso de recolección y almacenamiento de datos en <code>main.db</code>.</p>
+</div>
+<div class="paragraph">
+<p>Luego, sigue estos pasos para visualizar los datos en Grafana:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Instala el plugin de SQLite: En <code>Search</code> &#8594; <code>Plugins</code>, busca e instala el plugin <code>SQLite</code>.</p>
+</li>
+<li>
+<p>Crea una nueva fuente de datos (Data Source): En Grafana, ve a <code>Connections</code> &#8594; <code>Data Sources</code> y añade una nueva fuente de datos de tipo <code>SQLite</code>.</p>
+</li>
+<li>
+<p>Configura la ruta del archivo: Especifica la ruta completa al archivo <code>main.db</code> que el script Elixir está creando (por ejemplo, <code>/home/user/grafana/main.db</code>).</p>
+</li>
+<li>
+<p>Crea un Dashboard y Panel:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Crea un nuevo dashboard y añade un panel de visualización.</p>
+</li>
+<li>
+<p>En la configuración del panel, selecciona tu fuente de datos SQLite recién creada.</p>
+</li>
+<li>
+<p>Utiliza la siguiente consulta SQL para obtener la temperatura y humedad a lo largo del tiempo:</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT
+  time,
+  temperature AS "Temperature",
+  humidity AS "Humidity"
+FROM readings
+ORDER BY time</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafana_dashboard.png" alt="Ejemplo de Dashboard de Grafana con datos del DHT11">
+</div>
+</div>
+</div>
 </div>
 </div>
 <nav class="pagination">
