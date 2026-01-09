@@ -5,6 +5,195 @@ y su uso común.
 
 == Resistencias
 
+Las resistencias en un circuito eléctrico sirven para controlar y 
+proteger el funcionamiento del circuito. Sus funciones principales son:
+
+- Limitar la corriente ⚡: Evitan que circule demasiada corriente, lo que podría dañar componentes como LEDs, transistores o circuitos integrados.
+
+- Dividir el voltaje 🔋: Permiten obtener diferentes niveles de voltaje dentro de un mismo circuito (divisor de tensión).
+
+- Proteger componentes 🛡️: Al limitar corriente y voltaje, protegen otros elementos sensibles del circuito.
+
+- Controlar señales 📶: Se usan para ajustar niveles de señal, por ejemplo en audio, sensores o entradas de microcontroladores.
+
+- Generar calor 🔥: Transforman parte de la energía eléctrica en calor (efecto Joule), útil en aplicaciones como calentadores o fusibles.
+
+- Polarizar componentes electrónicos 💡: Ayudan a que dispositivos como transistores funcionen en la región correcta.
+
+Para determinar el valor de una resistencia, primero identificamos las bandas de colores. 
+Generalmente, una resistencia tiene tres bandas de colores seguidas y 
+una cuarta banda más separada.
+
+Leyendo las bandas de colores de izquierda a derecha:
+
+- Las primeras tres bandas nos indican el valor nominal de la resistencia.
+- La cuarta banda señala la tolerancia, es decir, el rango de variación en el valor real de la resistencia respecto al valor teórico indicado por las primeras tres bandas.
+
+Por ejemplo, si tenemos una resistencia de 1,000 ohmios (Ω) con una tolerancia del 10%, 
+esto significa que el valor teórico de la resistencia es de 1,000Ω, 
+pero el valor real puede variar en un ±10% de 1,000Ω. Por lo tanto, 
+la resistencia puede tener un valor real entre 900Ω y 1,100Ω.
+
+Normalmente, al medir resistencias con un multímetro, los valores suelen ser 
+bastante precisos, independientemente de la tolerancia indicada.
+
+La siguiente resistencia tiene un valor de 200.000Ω +- el 10%.
+
+.Colores de Resistencia
+image::components/resistencia.webp[]
+
+=== Ejemplo
+
+.Resistencia
+image::components/resistenci2.webp[]
+
+El primer color nos dice que tiene un valor de 2, el segundo de 7, 
+es decir, 27, y el tercer valor es por 100,000 (o añadir 5 ceros). 
+La resistencia valdrá 2.700.000 ohmios. 
+
+La tolerancia como es color plata, es del 10%. Esta resistencia, 
+en la realidad, podrá tener valores entre 2.700.000Ω +- el 10% de ese valor. 
+Podrá valer 270.000Ω más o menos del valor teórico que es 2.700.000Ω.
+
+=== ¿Cuándo utilizar?
+
+Debes usar una resistencia cuando necesitas controlar corriente, voltaje o 
+proteger componentes. Regla rápida para saber si hace falta resistencia.
+
+- ¿Este componente se puede dañar con mucha corriente?: Usar resistencia.
+- ¿Necesito bajar voltaje o corriente?: Usar resistencia.
+- ¿Es un LED, transistor, entrada lógica o botón?: Usar resistencia.
+
+==== Cuando un componente no controla la corriente por sí solo
+
+Si el componente no indica cuánta corriente limita, usa resistencia. 
+
+Ejemplo:
+
+- Un LED *siempre* necesita una resistencia. Sin ella, se queman por exceso de corriente.
+
+==== Cuando necesitas limitar la corriente
+
+Usa una resistencia si:
+
+- La fuente entrega más corriente de la que el componente soporta.
+- Quieres reducir la intensidad en una parte del circuito.
+
+Ejemplo:
+
+- Proteger la entrada de un microcontrolador.
+- Evitar sobrecorriente en un sensor.
+
+==== Cuando necesitas un voltaje menor
+
+Usa resistencias como divisor de voltaje si:
+
+- Un componente necesita menos voltaje que la fuente
+- La corriente es baja (señales, no potencia)
+
+Ejemplo:
+
+- Pasar de 9 V a 5 V para una señal
+
+==== Para controlar señales
+
+Usa resistencias cuando:
+
+- Necesitas ajustar niveles de señal
+- Quieres evitar ruido o corrientes indeseadas
+
+Ejemplo:
+
+- Resistencia pull-up o pull-down en botones
+- Resistencias en entradas digitales
+
+==== Para polarizar transistores
+
+Siempre se usan resistencias:
+
+- En la base de transistores.
+- En puertas de MOSFET (a veces).
+
+=== ¿Cómo saber que valor de resistencia se necesita?
+
+Las resistencias no existen con cualquier valor. 
+Se elige el valor comercial más cercano hacia arriba para mayor seguridad.
+
+*Regla rápida*
+
+- LEDs con 5V → 220Ω
+- LEDs con 9V → 330Ω – 470Ω
+- Pull-up / pull-down → 10kΩ
+- Base de transistor → 1kΩ – 4.7kΩ
+
+Para saber qué valor de resistencia se necesita, debes seguir un procedimiento sencillo.
+
+==== Conoce el voltaje de la fuente
+
+Es el voltaje que alimenta el circuito. Por ejemplo 5V, 9V, 12V, etc.
+
+==== Conoce el voltaje y la corriente del componente
+
+Estos datos suelen venir en la hoja de datos (datasheet).
+
+Ejemplos:
+
+- LED: Voltaje típico: 2V (rojo), 3 – 3.3V (azul/blanco). Corriente típica: 20 mA (0.02 A).
+- Entrada de microcontrolador: Corriente muy pequeña (µA o mA).
+
+==== Aplica la Ley de Ohm
+
+asciimath:[V = I * R]
+
+.Tabla de Variables
+|====
+| Variable | Descripción | Unidad
+
+| *V*	Voltage (diferencia de potencial) |	Volts (V)
+| *I*	Corriente	| Amperios (A)
+| *R*	Resistencia	| Ohms (Ω) u ohm.
+|====
+
+Para encontrar la resistencia entonces hay que aplicar la fórmula
+
+asciimath:[R = V/I]
+
+Pero para obtener el voltaje se debe tener en consideración tanto el voltaje 
+de la fuente de poder como el voltaje del componente, es decir la diferencia de potencial.
+
+asciimath:[R = (V_text(fuente) - V_text(componente)) / I_text(componente)]
+
+*Ejemplo*
+
+Para calcular la resistencia del siguiente circuito:
+
+- Fuente: 9 V
+- LED: 2 V, 20 mA
+
+Se utiliza la fórmula
+asciimath:[R = (9V − 2V) / 0.02A]
+
+Y da como resultado asciimath:[350Ω]. 
+Por lo que ee elige el valor comercial de resistencia más cercano de asciimath:[360Ω]
+
+*Calcular la Potencia*
+
+La potencia de una resistencia es la cantidad máxima de energía eléctrica que 
+puede disipar (convertir en calor) sin dañarse.
+
+Para calcular la potencia se debe usar la fórmula asciimath:[P = V * I] o también asciimath:[P = I^2 * R].
+
+En este caso para una resistencia de asciimath:[360Ω] solo tenemos el valor de la 
+resistencia y el valor de la corriente disponible.
+
+Por lo que la fórmula a utilizar es asciimath:[P = 0.02^2 * 360]
+Lo que da una de potencia de asciimath:[0.144W].
+
+=== Referencias
+
+- https://www.logicbus.com.mx/codigo-de-colores-de-resistencias
+- https://resistorcolorcode.in/
+
 == Transistores
 
 == Mosfet

@@ -3,3 +3,4 @@
 * xref:introduction.adoc[]
 * xref:electricity.adoc[]
 * xref:programming.adoc[]
+* xref:components.adoc[]
