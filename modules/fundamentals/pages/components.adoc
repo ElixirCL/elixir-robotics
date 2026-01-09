@@ -29,15 +29,15 @@ Leyendo las bandas de colores de izquierda a derecha:
 - Las primeras tres bandas nos indican el valor nominal de la resistencia.
 - La cuarta banda señala la tolerancia, es decir, el rango de variación en el valor real de la resistencia respecto al valor teórico indicado por las primeras tres bandas.
 
-Por ejemplo, si tenemos una resistencia de 1,000 ohmios (Ω) con una tolerancia del 10%, 
-esto significa que el valor teórico de la resistencia es de 1,000Ω, 
-pero el valor real puede variar en un ±10% de 1,000Ω. Por lo tanto, 
-la resistencia puede tener un valor real entre 900Ω y 1,100Ω.
+Por ejemplo, si tenemos una resistencia de 1.000 ohmios (Ω) con una tolerancia del 10%, 
+esto significa que el valor teórico de la resistencia es de 1.000Ω, 
+pero el valor real puede variar en un ±10% de 1.000Ω. Por lo tanto, 
+la resistencia puede tener un valor real entre 900Ω y 1.100Ω.
 
 Normalmente, al medir resistencias con un multímetro, los valores suelen ser 
 bastante precisos, independientemente de la tolerancia indicada.
 
-La siguiente resistencia tiene un valor de 200.000Ω +- el 10%.
+La siguiente resistencia tiene un valor de 200.000Ω ±10%.
 
 .Colores de Resistencia
 image::components/resistencia.webp[]
@@ -45,14 +45,14 @@ image::components/resistencia.webp[]
 === Ejemplo
 
 .Resistencia
-image::components/resistenci2.webp[]
+image::components/resistencia2.webp[]
 
 El primer color nos dice que tiene un valor de 2, el segundo de 7, 
-es decir, 27, y el tercer valor es por 100,000 (o añadir 5 ceros). 
+es decir, 27, y el tercer valor es por 100.000 (o añadir 5 ceros). 
 La resistencia valdrá 2.700.000 ohmios. 
 
 La tolerancia como es color plata, es del 10%. Esta resistencia, 
-en la realidad, podrá tener valores entre 2.700.000Ω +- el 10% de ese valor. 
+en la realidad, podrá tener valores entre 2.700.000Ω ±10% de ese valor. 
 Podrá valer 270.000Ω más o menos del valor teórico que es 2.700.000Ω.
 
 === ¿Cuándo utilizar?
@@ -149,9 +149,9 @@ asciimath:[V = I * R]
 |====
 | Variable | Descripción | Unidad
 
-| *V*	Voltage (diferencia de potencial) |	Volts (V)
-| *I*	Corriente	| Amperios (A)
-| *R*	Resistencia	| Ohms (Ω) u ohm.
+| *V*	| Voltage (Diferencia de potencial) |	Volts (V)
+| *I*	| Corriente	| Amperios (A)
+| *R*	| Resistencia	| Ohms (Ω) u ohm.
 |====
 
 Para encontrar la resistencia entonces hay que aplicar la fórmula
@@ -167,14 +167,14 @@ asciimath:[R = (V_text(fuente) - V_text(componente)) / I_text(componente)]
 
 Para calcular la resistencia del siguiente circuito:
 
-- Fuente: 9 V
-- LED: 2 V, 20 mA
+- Fuente: 9V
+- LED: 2V, 20 mA
 
 Se utiliza la fórmula
 asciimath:[R = (9V − 2V) / 0.02A]
 
 Y da como resultado asciimath:[350Ω]. 
-Por lo que ee elige el valor comercial de resistencia más cercano de asciimath:[360Ω]
+Por lo que se elige el valor comercial de resistencia más cercano de asciimath:[360Ω]
 
 *Calcular la Potencia*
 
