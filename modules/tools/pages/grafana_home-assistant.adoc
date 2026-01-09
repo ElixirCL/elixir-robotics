@@ -1,0 +1,90 @@
+= Grafana + Home Assistant
+
+Esta página detalla cómo integrar Grafana con Home Assistant para crear dashboards de visualización en tiempo real de tus sensores y métricas domóticas. Utilizaremos la configuración de Home Assistant explicada en xref:tools:home-assistant.adoc[Home Assistant].
+
+== Requisitos Previos
+
+Antes de comenzar, asegúrate de tener instalados y funcionando:
+
+*   Un servidor Home Assistant.
+*   Una instancia de Prometheus para recolectar las métricas de Home Assistant.
+*   Una instancia de Grafana para visualizar los datos recolectados por Prometheus.
+
+
+[NOTE]
+====
+Tanto Prometheus como Grafana pueden instalarse fácilmente usando Docker para simplificar la configuración.
+====
+
+== Autenticación en Home Assistant (Long-Lived Access Token)
+
+Para permitir que Prometheus acceda de forma segura a las métricas de Home Assistant, es necesario generar un "Token de Acceso de Larga Duración" (Long-Lived Access Token).
+
+. Pasos para generar el token:
+.. En la interfaz de usuario de Home Assistant, haz clic en tu perfil de usuario (en la esquina inferior izquierda).
+.. Navega a la sección `Security`.
+.. Busca `Long-Lived Access Tokens` y haz clic en `Create token`.
+.. Se generará una cadena de caracteres. Cópiala y guárdala, ya que solo se mostrará una vez y la necesitarás para la configuración de Prometheus.
+
+== Habilitar la Exposición de Métricas en Home Assistant
+
+Para que Home Assistant exponga sus métricas en un formato compatible con Prometheus, debes habilitar la integración de Prometheus.
+
+Abre el archivo `configuration.yaml` de tu instalación de Home Assistant (por ejemplo, `~/services/home-assistant:/config`) y añade la siguiente línea en el nivel raíz del archivo:
+
+[source, yaml]
+----
+prometheus:
+----
+
+Después de guardar los cambios en `configuration.yaml`, reinicia tu instancia de Home Assistant. Esto cargará la nueva configuración y habilitará el endpoint `/api/prometheus`.
+
+== Configuración de Prometheus para Recolectar Métricas
+
+Ahora configuraremos Prometheus para que recolecte regularmente las métricas expuestas por Home Assistant.
+
+Abre el archivo de configuración de Prometheus (`prometheus.yml`) y añade el siguiente bloque `scrape_config` a la sección `scrape_configs`:
+
+[source, yaml]
+----
+- job_name: "hass"
+  scrape_interval: 60s
+  metrics_path: /api/prometheus
+
+  authorization:
+    credentials: "your.longlived.token"
+
+  scheme: http
+  static_configs:
+    - targets: ['localhost:8123']
+----
+
+**  Puntos importantes de la configuración de Prometheus:
+*   `job_name: "hass"`: Un nombre para identificar este trabajo de recolección.
+*   `scrape_interval: 60s`: Prometheus recolectará las métricas cada 60 segundos.
+*   `metrics_path: /api/prometheus`: La ruta del endpoint donde Home Assistant expone las métricas.
+*   `authorization`: Utiliza el `Long-Lived Access Token` que generaste.
+*   `scheme: http`: Es crucial usar `http` a menos que hayas configurado explícitamente HTTPS en tu instancia de Home Assistant.
+*   `targets: ['localhost:8123']`:
+    *   Si Prometheus y Home Assistant se ejecutan en la misma máquina y Home Assistant usa `--network=host`, `localhost:8123` es correcto.
+    *   Si Prometheus es un contenedor en su propia red Docker, o en un computador diferente, deberás usar la dirección IP real de tu Home Assistant.
+
+Luego, guarda los cambios en `prometheus.yml` y reinicia tu instancia de Prometheus para que cargue la nueva configuración.
+
+== Configuración de Grafana para Visualización
+
+Finalmente, configuraremos Grafana para que utilice Prometheus como fuente de datos y cree un dashboard.
+
+. Añade Prometheus como fuente de datos en Grafana:
+.. En la interfaz de usuario de Grafana, ve a `Connections` -> `Data Sources`.
+.. Haz clic en `Add new data source` y busca `Prometheus`.
+.. En la configuración de la fuente de datos, en el campo `URL`, introduce la dirección de tu servidor Prometheus (por ejemplo, `http://localhost:9090` si se ejecuta localmente en el puerto predeterminado).
+.. Guarda y prueba la conexión.
+
+. Crea un Dashboard en Grafana:
+.. Ve a `Dashboards` y crea un `New Dashboard`.
+.. Añade un `New Panel`.
+.. En la sección de consulta (Query), selecciona tu fuente de datos Prometheus.
+.. Utiliza las siguientes consultas para visualizar la temperatura y la humedad:
+***   Para temperatura: `hass_sensor_temperature_celsius`
+***   Para humedad: `hass_sensor_humidity_percent`
