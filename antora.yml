@@ -8,6 +8,5 @@ nav:
   - modules/communication/nav.adoc
   - modules/tools/nav.adoc
   - modules/atomvm/nav.adoc
-  - modules/colosseo/nav.adoc
-  - modules/nerves/nav.adoc
+  - modules/advanced/nav.adoc
   - modules/solar/nav.adoc

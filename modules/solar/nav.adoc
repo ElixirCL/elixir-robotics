@@ -1,0 +1,2 @@
+.Energía Solar
+* xref:solar.adoc[]

@@ -1,4 +1,4 @@
-= Elixir Nerves
+= Nerves
 
 Es un framework para crear firmware de sistemas embebidos de con *Elixir* que 
 corre sobre la maquina virtual de *Erlang*: "BEAM".
@@ -45,10 +45,6 @@ permite trabajar con sistemas robustos con interfaces conectadas a hardware real
 * Alta tolerancia a fallos (modelo de actores de Erlang).
 * Ideal para IoT, domótica, robots,  monitoreo industrial y sistemas distribuidos.
 * Usas el mismo lenguaje para la nube y el hardware.
-
-include::circuits.adoc[]
-
-include::soleil.adoc[]
 
 == Referencias
 

@@ -4,5 +4,6 @@
 * xref:devenv.adoc[]
 * xref:components.adoc[]
 * xref:remote.adoc[]
+* xref:colosseo.adoc[]
 * xref:arcade.adoc[]
 * xref:tagboard.adoc[]

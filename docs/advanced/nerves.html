@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Energía Solar :: Electrónica, Robótica e IOT con Elixir</title>
-    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/solar/solar.html">
-    <link rel="prev" href="../advanced/grisp.html">
+    <title>Nerves :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/advanced/nerves.html">
+    <link rel="prev" href="../atomvm/tagboard.html">
+    <link rel="next" href="circuits.html">
     <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -180,20 +181,20 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Hardware Avanzado</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../advanced/nerves.html">Nerves</a>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="nerves.html">Nerves</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../advanced/circuits.html">circuits.adoc</a>
+    <a class="nav-link" href="circuits.html">circuits.adoc</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../advanced/soleil.html">soleil.adoc</a>
+    <a class="nav-link" href="soleil.html">soleil.adoc</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../advanced/beambots.html">BeamBots</a>
+    <a class="nav-link" href="beambots.html">BeamBots</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../advanced/grisp.html">Grisp</a>
+    <a class="nav-link" href="grisp.html">Grisp</a>
   </li>
 </ul>
   </li>
@@ -201,8 +202,8 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Energía Solar</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="solar.html">Energía Solar</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/solar.html">Energía Solar</a>
   </li>
 </ul>
   </li>
@@ -230,21 +231,175 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
-    <li>Energía Solar</li>
-    <li><a href="solar.html">Energía Solar</a></li>
+    <li>Hardware Avanzado</li>
+    <li><a href="nerves.html">Nerves</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="file:///antora/./modules/solar/pages/solar.adoc">Editar esta página</a></div>
+<div class="edit-this-page"><a href="file:///antora/./modules/advanced/pages/nerves.adoc">Editar esta página</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contenidos" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Energía Solar</h1>
-
+<h1 class="page">Nerves</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Es un framework para crear firmware de sistemas embebidos de con <strong>Elixir</strong> que
+corre sobre la maquina virtual de <strong>Erlang</strong>: "BEAM".</p>
+</div>
+<div class="paragraph">
+<p>Es ideal para trabajar  con dispositivos potentes como <strong>Raspberry Pi, BeagleBone  Black,  etc.</strong> y
+permite trabajar con sistemas robustos con interfaces conectadas a hardware real (GPIO, 12C, SPI, etc).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="caracteristicas"><a class="anchor" href="#caracteristicas"></a>Caracteristicas</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Se puede desarrollar tu firmware en Elixir</p>
+</li>
+<li>
+<p>Soporta actualizaciones</p>
+</li>
+<li>
+<p>Tiene integración con <strong>Phoenix</strong> para paneles  de control  web</p>
+</li>
+<li>
+<p>Usa herramientas modernas de <strong>Elixir</strong> como Mix, OTP y  GenServer.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="proyecto-ejemplo-sistema-de-riego-automático-inteligente"><a class="anchor" href="#proyecto-ejemplo-sistema-de-riego-automático-inteligente"></a>Proyecto ejemplo: Sistema de riego automático inteligente</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>ESP32 con AtomVM mide la humedad del suelo.</p>
+</li>
+<li>
+<p>Si la humedad es baja, activa una electroválvula.</p>
+</li>
+<li>
+<p>Se comunica vía WiFi con una Raspberry Pi con Nerves, que:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Muestra datos en una interfaz web.</p>
+</li>
+<li>
+<p>Permite configurar umbrales de riego.</p>
+</li>
+<li>
+<p>Guarda histórico en una base de  datos.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Este sistema permite combinar lo mejor de ambos mundos:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Microcontroladores pequeños y eficientes (ESP32 con AtomVM).</p>
+</li>
+<li>
+<p>Sistemas completos y robustos (Raspberry con Nerves).</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="para-atomvm-microcontroladores"><a class="anchor" href="#para-atomvm-microcontroladores"></a>Para AtomVM (microcontroladores):</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>ESP32</p>
+</li>
+<li>
+<p>ESP32-S2 o ESP32-C3</p>
+</li>
+<li>
+<p>STM32 (más potente, pero más complejo de programar).</p>
+</li>
+<li>
+<p>Placas con mínimo 512 KB de RAM y 2 MB de Flash.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="para-nerves"><a class="anchor" href="#para-nerves"></a>Para Nerves</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Raspberry Pi 3 o 4 (mejor soporte).</p>
+</li>
+<li>
+<p>BeagleBone Black.</p>
+</li>
+<li>
+<p>GRiSP (especial para Elixir, ejecuta directamente BEAM sin sistema operativo).</p>
+</li>
+<li>
+<p>Cualquier SBC (single board computer) compatible con Linux y GPIO.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ventajas-de-usar-elixir-atomvmnerves"><a class="anchor" href="#ventajas-de-usar-elixir-atomvmnerves"></a>Ventajas de usar Elixir + AtomVM/Nerves</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Código funcional, fácil de razonar y mantener.</p>
+</li>
+<li>
+<p>Alta concurrencia con procesos ligeros.</p>
+</li>
+<li>
+<p>Alta tolerancia a fallos (modelo de actores de Erlang).</p>
+</li>
+<li>
+<p>Ideal para IoT, domótica, robots,  monitoreo industrial y sistemas distribuidos.</p>
+</li>
+<li>
+<p>Usas el mismo lenguaje para la nube y el hardware.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Nerves Framework: Getting Started guide. (2025, February 4). <a href="https://daily.dev/blog/nerves-framework-getting-started-guide?utm_source=chatgpt.com" class="bare">https://daily.dev/blog/nerves-framework-getting-started-guide?utm_source=chatgpt.com</a></p>
+</li>
+<li>
+<p>Nerves · Elixir school. (n.d.). <a href="https://elixirschool.com/es/lessons/misc/nerves?utm_source=chatgpt.com" class="bare">https://elixirschool.com/es/lessons/misc/nerves?utm_source=chatgpt.com</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <nav class="pagination">
-  <span class="prev"><a href="../advanced/grisp.html">Grisp</a></span>
+  <span class="prev"><a href="../atomvm/tagboard.html">Proyecto: Tagboard</a></span>
+  <span class="next"><a href="circuits.html">circuits.adoc</a></span>
 </nav>
 </article>
   </div>

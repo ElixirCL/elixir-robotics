@@ -18,7 +18,7 @@ Los materiales para armar el carro están disponibles en el mercado chileno y ti
 - Pack de Servomotores: https://mcielectronics.cl/shop/product/pack-de-5-micro-servo-motores-sg90-9g/
 
 .Carro
-image::carro.jpg[]
+image::colosseo/carro.jpg[]
 
 *Motores DC*
 
@@ -37,13 +37,13 @@ de cada motor de forma independiente.
 - Corriente: 600mA 
 
 .Motores DC
-image::motoresdc.jpg[]
+image::colosseo/motoresdc.jpg[]
 
 También es importante contar con un controlador L298N
 para controlar a los motores DC individualmente.
 
 .L298N
-image::l298n.webp[]
+image::colosseo/l298n.webp[]
 
 *Servomotores SG90*
 
@@ -55,12 +55,12 @@ el robot o tener partes con movilidad controlada.
 - Velocidad de giro a 4.8 volts: 120ms / 60 º
 
 .Servomotor
-image::servo.webp[]
+image::colosseo/servo.webp[]
 
 *ESP32*
 
 .KIT ESP32
-image::kitesp32.png[]
+image::colosseo/kitesp32.png[]
 
 Principal tarjeta de programación para AtomVM, cuenta con Wifi y Bluetooth incorporado
 y puede ser alimentada por USB. Adicionalmente y opcional es la compra de un adaptador de 30 pines 
@@ -92,10 +92,10 @@ En el KIT de MCI incluye una variedad de componentes, aunque no necesariamente t
 - 2 LEDs RGB
 
 .ESP32 Dev Kit V1 30 Pines USB-C
-image::esp32.jpg[]
+image::colosseo/esp32.jpg[]
 
 .Placa Expansión ESP32 30 Pines
-image::expansionesp32.jpg[]
+image::colosseo/expansionesp32.jpg[]
 
 *Minifigura Lego*
 
@@ -104,7 +104,7 @@ Ver https://www.tiendalego.cl/ o alguna tienda similar
 para saber que personajes están disponibles.
 
 .Minifigura Lego
-image::lego.webp[]
+image::colosseo/lego.webp[]
 
 == Colosseo
 
