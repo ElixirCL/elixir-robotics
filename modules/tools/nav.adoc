@@ -1,7 +1,7 @@
 .Herramientas
 * xref:platformio.adoc[]
 * xref:home-assistant.adoc[]
+* xref:grafana.adoc[]
 * xref:dashboards.adoc[]
 * xref:cad.adoc[]
 * xref:stores.adoc[]
-* xref:grafana_home-assistant.adoc[]

@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Grafana :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/tools/grafana.html">
+    <link rel="prev" href="home-assistant.html">
+    <link rel="next" href="dashboards.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos e Historia</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/history.html">Historia de la Robótica y Automatización</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/basicstamp.html">Parallax Basic Stamp</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/stm32.html">STM32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/jetson.html">Nvidia Jetson &amp; AMD Kria</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/fpga.html">FPGA</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/iot.html">IOT</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="grafana.html">Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="dashboards.html">Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="cad.html">Herramientas de Computer Asisted Design (CAD)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="stores.html">Tiendas</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/popcorn.html">Elixir PopCorn</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/remote.html">Conexión Remota</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/tagboard.html">Proyecto: Tagboard</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware Avanzado</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/circuits.html">Elixir Circuits</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/soleil.html">Soleil</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/beambots.html">Beam Bots</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/grisp.html">GRiSP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Energía Solar</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/solar.html">Energía Solar</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Herramientas</li>
+    <li><a href="grafana.html">Grafana</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/tools/pages/grafana.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Grafana</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Grafana es una herramienta de código abierto popular para la visualización de datos analíticos. En la siguiente sección mostraremos cómo usarla para visualizar datos de temperatura y humedad de un ESP32.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="integración-con-esp32-mediante-http-y-sqlite"><a class="anchor" href="#integración-con-esp32-mediante-http-y-sqlite"></a>Integración con ESP32 (mediante HTTP y SQLite)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Utilizaremos el programa de servidor HTTP para ESP32 (DHT11) que se explicó en la página <a href="home-assistant.html" class="xref page">Home Assistant</a>.</p>
+</div>
+<div class="paragraph">
+<p>Crea el siguiente script en Elixir (por ejemplo, <code>grafana.exs</code>). Este script se conectará periódicamente al servidor HTTP del ESP32, extraerá las lecturas de temperatura y humedad, y las almacenará en una base de datos SQLite (<code>main.db</code>).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">Mix.install([:req, :exqlite])
+
+defmodule Grafana do
+  def loop(conn) do
+    case Req.get!("http://192.168.1.10:8080/temp") do
+      %{body: %{"humidity" =&gt; humidity_string, "temperature" =&gt; temperature_string}} -&gt;
+        {humidity, _} = Float.parse(humidity_string)
+        {temperature, _} = Float.parse(temperature_string)
+
+        {:ok, statement} =
+          Exqlite.Sqlite3.prepare(
+            conn,
+            "insert into readings (humidity, temperature, time) values (?1, ?2, ?3)"
+          )
+
+        :ok = Exqlite.Sqlite3.bind(statement, [humidity, temperature, System.os_time(:second)])
+        :done = Exqlite.Sqlite3.step(conn, statement)
+
+        IO.inspect(humidity, label: "humidity")
+        IO.inspect(temperature, label: "temperature")
+
+      _ -&gt;
+        nil
+    end
+
+    Process.sleep(5000)
+    Grafana.loop(conn)
+  end
+end
+
+{:ok, conn} = Exqlite.Sqlite3.open("file:main.db")
+
+:ok =
+  Exqlite.Sqlite3.execute(
+    conn,
+    "create table if not exists readings (id integer primary key, humidity real, temperature real, time integer)"
+  )
+
+Grafana.loop(conn)</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Reemplaza <code>"192.168.1.10"</code> en el código del ESP32 con la dirección IP real del ESP32.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Desde la terminal, en el directorio donde guardaste <code>grafana.exs</code>, corre el script con <code>elixir grafana.exs</code>. Este comando iniciará el proceso de recolección y almacenamiento de datos en <code>main.db</code>.</p>
+</div>
+<div class="paragraph">
+<p>Luego, sigue estos pasos para visualizar los datos en Grafana:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Instala el plugin de SQLite: En <code>Search</code> &#8594; <code>Plugins</code>, busca e instala el plugin <code>SQLite</code>.</p>
+</li>
+<li>
+<p>Crea una nueva fuente de datos (Data Source): En Grafana, ve a <code>Connections</code> &#8594; <code>Data Sources</code> y añade una nueva fuente de datos de tipo <code>SQLite</code>.</p>
+</li>
+<li>
+<p>Configura la ruta del archivo: Especifica la ruta completa al archivo <code>main.db</code> que el script Elixir está creando (por ejemplo, <code>/home/user/grafana/main.db</code>).</p>
+</li>
+<li>
+<p>Crea un Dashboard y Panel:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Crea un nuevo dashboard y añade un panel de visualización.</p>
+</li>
+<li>
+<p>En la configuración del panel, selecciona tu fuente de datos SQLite recién creada.</p>
+</li>
+<li>
+<p>Utiliza la siguiente consulta SQL para obtener la temperatura y humedad a lo largo del tiempo:</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT
+  time,
+  temperature AS "Temperature",
+  humidity AS "Humidity"
+FROM readings
+ORDER BY time</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/grafana_dashboard.png" alt="Ejemplo de Dashboard de Grafana con datos del DHT11">
+</div>
+<div class="title">Figure 1. Ejemplo de Dashboard</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="grafana-home-assistant"><a class="anchor" href="#grafana-home-assistant"></a>Grafana + Home Assistant</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Se detallará cómo integrar Grafana con Home Assistant para crear
+dashboards de visualización en tiempo real de tus sensores y métricas domóticas.
+Utilizaremos la configuración de Home Assistant explicada en
+<a href="home-assistant.html" class="xref page">Home Assistant</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="requisitos-previos"><a class="anchor" href="#requisitos-previos"></a>Requisitos Previos</h3>
+<div class="paragraph">
+<p>Antes de comenzar, asegúrate de tener instalados y funcionando:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Un servidor Home Assistant.</p>
+</li>
+<li>
+<p>Una instancia de Prometheus para recolectar las métricas de Home Assistant.</p>
+</li>
+<li>
+<p>Una instancia de Grafana para visualizar los datos recolectados por Prometheus.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Tanto Prometheus como Grafana pueden instalarse fácilmente usando Docker para simplificar la configuración.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="autenticación-en-home-assistant-long-lived-access-token"><a class="anchor" href="#autenticación-en-home-assistant-long-lived-access-token"></a>Autenticación en Home Assistant (Long-Lived Access Token)</h3>
+<div class="paragraph">
+<p>Para permitir que Prometheus acceda de forma segura a las métricas de Home Assistant, es necesario generar un "Token de Acceso de Larga Duración" (Long-Lived Access Token).</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pasos para generar el token:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>En la interfaz de usuario de Home Assistant, haz clic en tu perfil de usuario (en la esquina inferior izquierda).</p>
+</li>
+<li>
+<p>Navega a la sección <code>Security</code>.</p>
+</li>
+<li>
+<p>Busca <code>Long-Lived Access Tokens</code> y haz clic en <code>Create token</code>.</p>
+</li>
+<li>
+<p>Se generará una cadena de caracteres. Cópiala y guárdala, ya que solo se mostrará una vez y la necesitarás para la configuración de Prometheus.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="habilitar-la-exposición-de-métricas-en-home-assistant"><a class="anchor" href="#habilitar-la-exposición-de-métricas-en-home-assistant"></a>Habilitar la Exposición de Métricas en Home Assistant</h3>
+<div class="paragraph">
+<p>Para que Home Assistant exponga sus métricas en un formato compatible con Prometheus, debes habilitar la integración de Prometheus.</p>
+</div>
+<div class="paragraph">
+<p>Abre el archivo <code>configuration.yaml</code> de tu instalación de Home Assistant (por ejemplo, <code>~/services/home-assistant:/config</code>) y añade la siguiente línea en el nivel raíz del archivo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">prometheus:</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Después de guardar los cambios en <code>configuration.yaml</code>, reinicia tu instancia de Home Assistant. Esto cargará la nueva configuración y habilitará el endpoint <code>/api/prometheus</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuración-de-prometheus-para-recolectar-métricas"><a class="anchor" href="#configuración-de-prometheus-para-recolectar-métricas"></a>Configuración de Prometheus para Recolectar Métricas</h3>
+<div class="paragraph">
+<p>Ahora configuraremos Prometheus para que recolecte regularmente las métricas expuestas por Home Assistant.</p>
+</div>
+<div class="paragraph">
+<p>Abre el archivo de configuración de Prometheus (<code>prometheus.yml</code>) y añade el siguiente bloque <code>scrape_config</code> a la sección <code>scrape_configs</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">- job_name: "hass"
+  scrape_interval: 60s
+  metrics_path: /api/prometheus
+
+  authorization:
+    credentials: "your.longlived.token"
+
+  scheme: http
+  static_configs:
+    - targets: ['localhost:8123']</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Puntos importantes de la configuración de Prometheus:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>job_name: "hass"</code>: Un nombre para identificar este trabajo de recolección.</p>
+</li>
+<li>
+<p><code>scrape_interval: 60s</code>: Prometheus recolectará las métricas cada 60 segundos.</p>
+</li>
+<li>
+<p><code>metrics_path: /api/prometheus</code>: La ruta del endpoint donde Home Assistant expone las métricas.</p>
+</li>
+<li>
+<p><code>authorization</code>: Utiliza el <code>Long-Lived Access Token</code> que generaste.</p>
+</li>
+<li>
+<p><code>scheme: http</code>: Es crucial usar <code>http</code> a menos que hayas configurado explícitamente HTTPS en tu instancia de Home Assistant.</p>
+</li>
+<li>
+<p><code>targets: ['localhost:8123']</code>:</p>
+</li>
+<li>
+<p>Si Prometheus y Home Assistant se ejecutan en la misma máquina y Home Assistant usa <code>--network=host</code>, <code>localhost:8123</code> es correcto.</p>
+</li>
+<li>
+<p>Si Prometheus es un contenedor en su propia red Docker, o en un computador diferente, deberás usar la dirección IP real de tu Home Assistant.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Luego, guarda los cambios en <code>prometheus.yml</code> y reinicia tu instancia de Prometheus para que cargue la nueva configuración.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuración-de-grafana-para-visualización"><a class="anchor" href="#configuración-de-grafana-para-visualización"></a>Configuración de Grafana para Visualización</h3>
+<div class="paragraph">
+<p>Finalmente, configuraremos Grafana para que utilice Prometheus como fuente de datos y cree un dashboard.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Añade Prometheus como fuente de datos en Grafana:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>En la interfaz de usuario de Grafana, ve a <code>Connections</code> &#8594; <code>Data Sources</code>.</p>
+</li>
+<li>
+<p>Haz clic en <code>Add new data source</code> y busca <code>Prometheus</code>.</p>
+</li>
+<li>
+<p>En la configuración de la fuente de datos, en el campo <code>URL</code>, introduce la dirección de tu servidor Prometheus (por ejemplo, <code><a href="http://localhost:9090" class="bare">http://localhost:9090</a></code> si se ejecuta localmente en el puerto predeterminado).</p>
+</li>
+<li>
+<p>Guarda y prueba la conexión.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Crea un Dashboard en Grafana:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Ve a <code>Dashboards</code> y crea un <code>New Dashboard</code>.</p>
+</li>
+<li>
+<p>Añade un <code>New Panel</code>.</p>
+</li>
+<li>
+<p>En la sección de consulta (Query), selecciona tu fuente de datos Prometheus.</p>
+</li>
+<li>
+<p>Utiliza las siguientes consultas para visualizar la temperatura y la humedad:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Para temperatura: <code>hass_sensor_temperature_celsius</code></p>
+</li>
+<li>
+<p>Para humedad: <code>hass_sensor_humidity_percent</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="home-assistant.html">Home Assistant</a></span>
+  <span class="next"><a href="dashboards.html">Dashboards</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

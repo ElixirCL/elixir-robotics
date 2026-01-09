@@ -1,8 +1,94 @@
-= Grafana + Home Assistant
+= Grafana
 
-Esta página detalla cómo integrar Grafana con Home Assistant para crear dashboards de visualización en tiempo real de tus sensores y métricas domóticas. Utilizaremos la configuración de Home Assistant explicada en xref:tools:home-assistant.adoc[Home Assistant].
+Grafana es una herramienta de código abierto popular para la visualización de datos analíticos. En la siguiente sección mostraremos cómo usarla para visualizar datos de temperatura y humedad de un ESP32.
 
-== Requisitos Previos
+== Integración con ESP32 (mediante HTTP y SQLite)
+
+Utilizaremos el programa de servidor HTTP para ESP32 (DHT11) que se explicó en la página xref:tools:home-assistant.adoc[Home Assistant].
+
+Crea el siguiente script en Elixir (por ejemplo, `grafana.exs`). Este script se conectará periódicamente al servidor HTTP del ESP32, extraerá las lecturas de temperatura y humedad, y las almacenará en una base de datos SQLite (`main.db`).
+
+[source, elixir]
+----
+Mix.install([:req, :exqlite])
+
+defmodule Grafana do
+  def loop(conn) do
+    case Req.get!("http://192.168.1.10:8080/temp") do
+      %{body: %{"humidity" => humidity_string, "temperature" => temperature_string}} ->
+        {humidity, _} = Float.parse(humidity_string)
+        {temperature, _} = Float.parse(temperature_string)
+
+        {:ok, statement} =
+          Exqlite.Sqlite3.prepare(
+            conn,
+            "insert into readings (humidity, temperature, time) values (?1, ?2, ?3)"
+          )
+
+        :ok = Exqlite.Sqlite3.bind(statement, [humidity, temperature, System.os_time(:second)])
+        :done = Exqlite.Sqlite3.step(conn, statement)
+
+        IO.inspect(humidity, label: "humidity")
+        IO.inspect(temperature, label: "temperature")
+
+      _ ->
+        nil
+    end
+
+    Process.sleep(5000)
+    Grafana.loop(conn)
+  end
+end
+
+{:ok, conn} = Exqlite.Sqlite3.open("file:main.db")
+
+:ok =
+  Exqlite.Sqlite3.execute(
+    conn,
+    "create table if not exists readings (id integer primary key, humidity real, temperature real, time integer)"
+  )
+
+Grafana.loop(conn)
+----
+
+[NOTE]
+====
+Reemplaza `"192.168.1.10"` en el código del ESP32 con la dirección IP real del ESP32.
+====
+
+Desde la terminal, en el directorio donde guardaste `grafana.exs`, corre el script con `elixir grafana.exs`. Este comando iniciará el proceso de recolección y almacenamiento de datos en `main.db`.
+
+Luego, sigue estos pasos para visualizar los datos en Grafana:
+
+1.  Instala el plugin de SQLite: En `Search` -> `Plugins`, busca e instala el plugin `SQLite`.
+2.  Crea una nueva fuente de datos (Data Source): En Grafana, ve a `Connections` -> `Data Sources` y añade una nueva fuente de datos de tipo `SQLite`.
+3.  Configura la ruta del archivo: Especifica la ruta completa al archivo `main.db` que el script Elixir está creando (por ejemplo, `/home/user/grafana/main.db`).
+4.  Crea un Dashboard y Panel:
+    *   Crea un nuevo dashboard y añade un panel de visualización.
+    *   En la configuración del panel, selecciona tu fuente de datos SQLite recién creada.
+    *   Utiliza la siguiente consulta SQL para obtener la temperatura y humedad a lo largo del tiempo:
+
+[source, sql]
+----
+SELECT
+  time,
+  temperature AS "Temperature",
+  humidity AS "Humidity"
+FROM readings
+ORDER BY time
+----
+
+.Ejemplo de Dashboard
+image::grafana_dashboard.png[Ejemplo de Dashboard de Grafana con datos del DHT11]
+
+== Grafana + Home Assistant
+
+Se detallará cómo integrar Grafana con Home Assistant para crear 
+dashboards de visualización en tiempo real de tus sensores y métricas domóticas. 
+Utilizaremos la configuración de Home Assistant explicada en 
+xref:tools:home-assistant.adoc[Home Assistant].
+
+=== Requisitos Previos
 
 Antes de comenzar, asegúrate de tener instalados y funcionando:
 
@@ -10,13 +96,12 @@ Antes de comenzar, asegúrate de tener instalados y funcionando:
 *   Una instancia de Prometheus para recolectar las métricas de Home Assistant.
 *   Una instancia de Grafana para visualizar los datos recolectados por Prometheus.
 
-
 [NOTE]
 ====
 Tanto Prometheus como Grafana pueden instalarse fácilmente usando Docker para simplificar la configuración.
 ====
 
-== Autenticación en Home Assistant (Long-Lived Access Token)
+=== Autenticación en Home Assistant (Long-Lived Access Token)
 
 Para permitir que Prometheus acceda de forma segura a las métricas de Home Assistant, es necesario generar un "Token de Acceso de Larga Duración" (Long-Lived Access Token).
 
@@ -26,7 +111,7 @@ Para permitir que Prometheus acceda de forma segura a las métricas de Home Assi
 .. Busca `Long-Lived Access Tokens` y haz clic en `Create token`.
 .. Se generará una cadena de caracteres. Cópiala y guárdala, ya que solo se mostrará una vez y la necesitarás para la configuración de Prometheus.
 
-== Habilitar la Exposición de Métricas en Home Assistant
+=== Habilitar la Exposición de Métricas en Home Assistant
 
 Para que Home Assistant exponga sus métricas en un formato compatible con Prometheus, debes habilitar la integración de Prometheus.
 
@@ -39,7 +124,7 @@ prometheus:
 
 Después de guardar los cambios en `configuration.yaml`, reinicia tu instancia de Home Assistant. Esto cargará la nueva configuración y habilitará el endpoint `/api/prometheus`.
 
-== Configuración de Prometheus para Recolectar Métricas
+=== Configuración de Prometheus para Recolectar Métricas
 
 Ahora configuraremos Prometheus para que recolecte regularmente las métricas expuestas por Home Assistant.
 
@@ -71,7 +156,7 @@ Abre el archivo de configuración de Prometheus (`prometheus.yml`) y añade el s
 
 Luego, guarda los cambios en `prometheus.yml` y reinicia tu instancia de Prometheus para que cargue la nueva configuración.
 
-== Configuración de Grafana para Visualización
+=== Configuración de Grafana para Visualización
 
 Finalmente, configuraremos Grafana para que utilice Prometheus como fuente de datos y cree un dashboard.
 
