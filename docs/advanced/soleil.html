@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Electrónica, Robótica e IOT con Elixir</title>
+    <title>Soleil :: Electrónica, Robótica e IOT con Elixir</title>
     <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/advanced/soleil.html">
     <link rel="prev" href="circuits.html">
     <link rel="next" href="beambots.html">
@@ -185,16 +185,16 @@
     <a class="nav-link" href="nerves.html">Nerves</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="circuits.html">circuits.adoc</a>
+    <a class="nav-link" href="circuits.html">Elixir Circuits</a>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="soleil.html">soleil.adoc</a>
+    <a class="nav-link" href="soleil.html">Soleil</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="beambots.html">BeamBots</a>
+    <a class="nav-link" href="beambots.html">Beam Bots</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="grisp.html">Grisp</a>
+    <a class="nav-link" href="grisp.html">GRiSP</a>
   </li>
 </ul>
   </li>
@@ -232,7 +232,7 @@
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
     <li>Hardware Avanzado</li>
-    <li><a href="soleil.html">soleil.adoc</a></li>
+    <li><a href="soleil.html">Soleil</a></li>
   </ul>
 </nav>
 <div class="edit-this-page"><a href="file:///antora/./modules/advanced/pages/soleil.adoc">Editar esta página</a></div>
@@ -242,17 +242,41 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<div class="sect1">
-<h2 id="soleil"><a class="anchor" href="#soleil"></a>Soleil</h2>
-<div class="sectionbody">
+<h1 class="page">Soleil</h1>
 <div class="paragraph">
-<p>Soleil, una placa de control de sueño y gestión de energía de código abierto para Raspberry Pi y Nerves.</p>
+<p>Soleil es una placa de gestión de energía y control de suspensión para Raspberry Pi,
+diseñada específicamente para su uso con Nerves. Permite alimentar tu proyecto mediante
+una batería, cargar la batería con USB-C o un panel solar, e incluye un modo de bajo consumo para ahorrar energía. Cuenta con tres fuentes de activación (wakeup) para que puedas controlar exactamente cómo y cuándo se enciende la placa.</p>
 </div>
+<div class="paragraph">
+<p>Además, Soleil incorpora el chip ATECC608A (también conocido como NervesKey), que permite
+conexiones seguras con NervesHub.</p>
 </div>
+<div class="paragraph">
+<p>Por último, la versión v0.2 de la placa también incluye un conector Qwiic, que te
+permite conectarte fácilmente a un amplio ecosistema de dispositivos electrónicos de terceros.
+Soleil te permite concentrarte en construir tu proyecto portátil o de bajo consumo sin
+preocuparte por cómo alimentarlo.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/soleiv1.jpeg" alt="soleiv1">
+</div>
+<div class="title">Figure 1. Solei v0.1</div>
+</div>
+<div class="paragraph">
+<p><strong>Enlaces</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://protolux.io/projects/soleil" class="bare">https://protolux.io/projects/soleil</a></p>
+</li>
+</ul>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="circuits.html">circuits.adoc</a></span>
-  <span class="next"><a href="beambots.html">BeamBots</a></span>
+  <span class="prev"><a href="circuits.html">Elixir Circuits</a></span>
+  <span class="next"><a href="beambots.html">Beam Bots</a></span>
 </nav>
 </article>
   </div>

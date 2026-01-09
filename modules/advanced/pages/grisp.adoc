@@ -1,1 +1,23 @@
-= Grisp
+= GRiSP
+
+La placa GRiSP 2 es una placa de prototipado modular que combina un sistema en 
+módulo (SoM) con una placa base de expansión de E/S. Cuenta con Wi-Fi integrado, 
+USB, Ethernet y múltiples puertos de expansión. Ideal para aplicaciones en red, automatización y sistemas distribuidos.
+
+
+La placa GRiSP 2 tiene las siguientes características:
+
+- Erlang bare-metal para aplicaciones en tiempo real.
+- Tiempos de arranque más rápidos y almacenamiento seguro de claves.
+- Un diseño modular que facilita la transición a producción.
+
+- CPU: NXP iMX6UL, ARM Cortex-A7 @ 696 MHz, 128 KB L2 cache. Integrated power management. TRNG, Crypto Engine (AES/TDES/SHA), Secure Boot
+- RAM: 128 MB of DDR3 DRAM.
+- Almacenamiento: 4 GB eMMC.
+
+.GRiSP 2
+image::grisp_board.gif[]
+
+*Enlaces*
+
+- https://www.grisp.org

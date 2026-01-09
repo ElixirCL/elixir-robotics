@@ -1,7 +1,11 @@
-== Elixir Circuits
+= Elixir Circuits
 
 Elixir Circuits es una colección de bibliotecas Elixir diseñadas para facilitar la interacción con 
 hardware, facilitando el control de periféricos y la interacción con sensores. 
-Proporciona herramientas para trabajar con diversas interfaces de hardware como GPIO, I2C, SPI y UART. 
-Estas bibliotecas permiten a los desarrolladores escribir código Elixir que interactúa directamente con 
+
+Proporciona herramientas para trabajar con diversas 
+interfaces de hardware como GPIO, I2C, SPI y UART. 
+
+Estas bibliotecas permiten a los desarrolladores escribir código Elixir que 
+interactúa directamente con 
 el hardware, lo que facilita la creación de sistemas incrustados, dispositivos IoT y más.

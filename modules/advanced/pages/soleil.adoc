@@ -1,3 +1,20 @@
-== Soleil
+= Soleil
 
-Soleil, una placa de control de sueño y gestión de energía de código abierto para Raspberry Pi y Nerves.
+Soleil es una placa de gestión de energía y control de suspensión para Raspberry Pi, 
+diseñada específicamente para su uso con Nerves. Permite alimentar tu proyecto mediante 
+una batería, cargar la batería con USB-C o un panel solar, e incluye un modo de bajo consumo para ahorrar energía. Cuenta con tres fuentes de activación (wakeup) para que puedas controlar exactamente cómo y cuándo se enciende la placa.
+
+Además, Soleil incorpora el chip ATECC608A (también conocido como NervesKey), que permite 
+conexiones seguras con NervesHub.
+
+Por último, la versión v0.2 de la placa también incluye un conector Qwiic, que te 
+permite conectarte fácilmente a un amplio ecosistema de dispositivos electrónicos de terceros. 
+Soleil te permite concentrarte en construir tu proyecto portátil o de bajo consumo sin 
+preocuparte por cómo alimentarlo.
+
+.Solei v0.1
+image::soleiv1.jpeg[]
+
+*Enlaces*
+
+- https://protolux.io/projects/soleil

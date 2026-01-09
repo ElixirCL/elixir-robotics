@@ -46,6 +46,39 @@ permite trabajar con sistemas robustos con interfaces conectadas a hardware real
 * Ideal para IoT, domótica, robots,  monitoreo industrial y sistemas distribuidos.
 * Usas el mismo lenguaje para la nube y el hardware.
 
+== NervesHub
+
+NervesHub es un servicio web extensible que te permite gestionar actualizaciones de 
+firmware por aire (OTA) de dispositivos desplegados en el campo. Construido con Phoenix, 
+NervesHub ofrece soporte de primera clase para despliegues de hardware directamente desde 
+la línea de comandos.
+
+Logra agilidad en IoT con NervesHub
+
+Una vez que tienes un conjunto de dispositivos IoT en producción — desplegados en 
+el campo — ¿Cómo gestionas las actualizaciones de firmware? Con NervesHub, mantén 
+tus productos conectados actualizados sin sacrificar seguridad ni velocidad.
+
+Existen muchos beneficios al desarrollar aplicaciones incrustadas con Nerves: el entorno de 
+ejecución de Erlang, robusto y tolerante a fallos, es muy adecuado para dispositivos 
+IoT e industriales. Sin embargo, uno de los mayores atractivos del framework es la 
+productividad del desarrollador. Herramientas del framework como **fwup** hacen que 
+grabar tarjetas SD y realizar actualizaciones locales de firmware por aire (OTA) 
+sea muy sencillo, mientras que el ecosistema de librerías, como **nerves_time**, 
+ofrece configuraciones sensatas por defecto para problemas que no quieres preocuparte 
+por resolver al inicio, como la gestión del tiempo mediante NTP, particiones A/B para 
+actualizaciones y mucho más. Todo esto significa que puedes ser productivo desde el primer día.
+
+Una de las herramientas más interesantes del ecosistema Nerves es **NervesHub**, 
+una aplicación de código abierto para gestionar flotas de dispositivos. Proporciona 
+mecanismos para enviar actualizaciones inalámbricas de firmware a dispositivos 
+desplegados en el campo, acceso remoto a la consola y muchas otras funcionalidades.
+
+*Enlaces*
+
+- https://www.nerves-hub.org/
+- https://github.com/nerves-hub/nerves_hub_web
+
 == Referencias
 
 - Nerves Framework: Getting Started guide. (2025, February 4). https://daily.dev/blog/nerves-framework-getting-started-guide?utm_source=chatgpt.com
