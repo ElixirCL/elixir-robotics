@@ -3,6 +3,9 @@
 La energía solar tiene principalmente tres componentes escenciales, 
 los paneles solares, las baterías y el inversor.
 
+.Configuración de un Sistema de Energía Solar
+image::sistema.webp[]
+
 == Paneles Solares 
 
 Un panel solar funciona convirtiendo la luz del sol en electricidad mediante un proceso 
@@ -41,6 +44,15 @@ La electricidad producida puede:
 
 .Panel Solar Pequeño
 image::solar-panel.webp[]
+
+=== MPPT
+
+Los cargadores MPPT (Maximum Power Point Tracking) logran sacar más energía del panel solar, 
+incluso cuando el voltaje está muy bajo (radiación solar muy débil).
+La tecnología MPPT incrementa la eficiencia de carga hasta un 20% más usando reconocimiento de voltaje automático.
+
+.Regulador de Carga para Paneles Solares – MPPT – 40A 12/24V 
+image::mppt.webp[]
 
 == Baterías
 
@@ -93,3 +105,4 @@ image::inversor.webp[]
 - https://altronics.cl/panel-solar-5v-500ma-130x150mm
 - https://genectra.cl/products/estacion-adventure-energy-1200
 - https://chilepozos.cl/energia-solar-en-el-campo-chilepozos-tambien-instala-paneles-solares/
+- https://enertik.com/cl/tienda/energia-solar-fotovoltaica/reguladores-solares/mppt/regulador-de-carga-para-paneles-solares-mppt-40a-12-24v/
