@@ -33,3 +33,53 @@ un beneficio estratégico: incrementan el valor del campo. Hoy, un predio que
 genera parte de su propia energía es más atractivo para el arriendo, la venta o 
 para presentar proyectos a fondos públicos o privados que exigen 
 sustentabilidad como eje central.
+
+== Ley Netbilling de Chile 
+
+La generación distribuida, instaurada bajo el Artículo 149 bis de la Ley 
+General de Servicios Eléctricos, también conocida como Ley de Net -Billing o Ley 
+de Generación, que entró en vigencia el año 2014, establece para hogares, escuelas, 
+negocios, entre otros (los llamados clientes regulados), el derecho a autoabastecer 
+su consumo eléctrico a través de equipos de generación propia e inyectar los 
+excedentes de energía a la red, recibiendo una compensación económica por ello.
+
+Consiste en la instalación de paneles fotovoltaicos  que generan energía 
+eléctrica y, al  estar conectados a la red, permiten inyectar excedentes 
+de la energía no consumida, significando un ahorro en su cuenta de la luz.
+
+Para contar con este sistema se debe contactar a alguna Empresa o Profesional 
+autorizado por la SEC que realizará la instalación y el proceso de inscripción.
+
+.Generación Autoconsumo Distribuido
+image::netbilling.png[]
+
+== Otras Fuentes de Energías Renovables 
+
+Las energías renovables son aquellas que provienen de fuentes consideradas inagotables, 
+y que se caracterizan porque en sus procesos de transformación y 
+aprovechamiento no se consumen a escala humana, ya sea por la inmensa cantidad 
+de energía que contienen o porque son capaces de regenerarse en el tiempo. Entre estas 
+fuentes de energía se consideran la hidráulica, la solar, la eólica y la de los océanos. 
+De igual forma, dependiendo de su modo de explotación, también pueden ser 
+catalogadas como renovables la energía proveniente de la biomasa, la energía geotérmica 
+y los biocombustibles.
+
+Las energías renovables suelen clasificarse en convencionales y no convencionales, 
+según sea el grado de desarrollo de las tecnologías para su aprovechamiento y 
+la predominancia en los mercados energéticos en que presenten.
+
+Dentro de las convencionales, la más importante hasta la fecha es la hidráulica a 
+gran escala. Por otra parte, en el ámbito nacional, se definen como fuentes de 
+Energías Renovables No Convencionales (ERNC) a la eólica, la pequeña hidroeléctrica 
+(centrales hasta 20 MW), la biomasa, el biogás, la geotermia, la solar y la 
+energía de los mares. Si bien es una concepción muy establecida en la actualidad, 
+no es de extrañar que dada la notable entrada y establecimiento de algunas de 
+las antes mencionadas, es posible que en algún momento se conviertan en convencionales, 
+como puede ser el caso solar, de amplio desarrollo en los últimos años.
+
+== Referencias
+
+- https://generaciondistribuida.minenergia.cl/
+- https://exploradores.minenergia.cl/
+- https://www.energia.gob.cl/educacion/que-son-las-energia-renovables
+- https://autoconsumo.minenergia.cl/
