@@ -1,1 +1,35 @@
-= Energía Solar
+= ¿Qué es la Energía Solar?
+
+La energía solar es una de las alternativas ecológicamente sostenibles 
+más populares de la actualidad, con opciones para todos los presupuestos.
+
+Es muy útil para la alimentación de equipos en situaciones donde
+no se encuentra acceso a energía tradicional, por ejemplo 
+lugares remotos, de difícil acceso o también como una alternativa 
+para disminuir los costos operativos complementando con la fuente 
+de energía tradicional.
+
+Para la robótica y domótica existen diversas alternativas 
+de pequeño tamaño que permiten alimentar dispositivos 
+que consumen baja cantidad de voltaje. Lo que permite elaborar 
+soluciones autónomas y autosuficientes.
+
+Los paneles solares son una solución excelente y transformadora para 
+ubicaciones rurales, ofreciendo independencia energética, 
+especialmente donde la red eléctrica es escasa, mediante sistemas autónomos (off-grid) 
+con baterías y, en algunos casos, agrovoltaica para uso agrícola, 
+reduciendo costos y mejorando la sostenibilidad; aunque requieren 
+permisos de construcción y la elección correcta del kit solar (paneles, inversor y baterías) 
+según el consumo.
+
+El uso de energía solar en el campo no se limita al riego. 
+Muchos predios requieren electricidad para sistemas de monitoreo, iluminación, 
+galpones, bodegas, cercos eléctricos, casas patronales e incluso centros de acopio. 
+Contar con una fuente limpia, renovable y de bajo mantenimiento permite 
+operar con mayor eficiencia y sin depender completamente de la red eléctrica.
+
+Además del ahorro a mediano plazo, los paneles solares aportan 
+un beneficio estratégico: incrementan el valor del campo. Hoy, un predio que 
+genera parte de su propia energía es más atractivo para el arriendo, la venta o 
+para presentar proyectos a fondos públicos o privados que exigen 
+sustentabilidad como eje central.

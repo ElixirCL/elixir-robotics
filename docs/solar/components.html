@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Meshtastic :: Electrónica, Robótica e IOT con Elixir</title>
-    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/communication/meshtastic.html">
+    <title>Componentes :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/solar/components.html">
+    <link rel="prev" href="solar.html">
     <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -123,7 +124,7 @@
     <span class="nav-text">Protocolos de Comunicación</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="iot.html">IOT</a>
+    <a class="nav-link" href="../communication/iot.html">IOT</a>
   </li>
 </ul>
   </li>
@@ -207,10 +208,10 @@
     <span class="nav-text">Energía Solar</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../solar/solar.html">¿Qué es la Energía Solar?</a>
+    <a class="nav-link" href="solar.html">¿Qué es la Energía Solar?</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../solar/components.html">Componentes</a>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="components.html">Componentes</a>
   </li>
 </ul>
   </li>
@@ -238,18 +239,246 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
-    <li><a href="meshtastic.html">Meshtastic</a></li>
+    <li>Energía Solar</li>
+    <li><a href="components.html">Componentes</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="file:///antora/./modules/communication/pages/meshtastic.adoc">Editar esta página</a></div>
+<div class="edit-this-page"><a href="file:///antora/./modules/solar/pages/components.adoc">Editar esta página</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contenidos" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Meshtastic</h1>
-
+<h1 class="page">Componentes</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>La energía solar tiene principalmente tres componentes escenciales,
+los paneles solares, las baterías y el inversor.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="paneles-solares"><a class="anchor" href="#paneles-solares"></a>Paneles Solares</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Un panel solar funciona convirtiendo la luz del sol en electricidad mediante un proceso
+llamado efecto fotovoltaico. Un panel solar funciona en días nublados porque no
+necesita sol directo, solo luz solar.</p>
+</div>
+<div class="paragraph">
+<p>El panel está formado por muchas celdas fotovoltaicas, generalmente hechas de silicio.
+Cuando la luz del sol incide sobre ellas, la energía de los fotones
+(partículas de la luz) golpea los átomos del silicio.</p>
+</div>
+<div class="paragraph">
+<p>Las celdas fotovoltaicas:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Absorben la luz que atraviesa las nubes.</p>
+</li>
+<li>
+<p>Liberan electrones igual que en un día soleado.</p>
+</li>
+<li>
+<p>Producen electricidad, pero en menor cantidad en días nublados.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>En un día muy nublado pueden generar entre 10% y 40% de su producción
+normal (depende del tipo de panel y la densidad de nubes).</p>
+</div>
+<div class="paragraph">
+<p>Al recibir esa energía:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Los electrones del silicio se liberan.</p>
+</li>
+<li>
+<p>Se crea un movimiento de electrones, que es lo que llamamos corriente eléctrica.</p>
+</li>
+<li>
+<p>Esta corriente es corriente continua (CC).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>La electricidad generada pasa por un inversor, que:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Convierte la corriente continua (CC) en corriente alterna (CA).</p>
+</li>
+<li>
+<p>La corriente alterna es la que usamos en casas, escuelas y empresas.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>La electricidad producida puede:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Usarse directamente en el momento.</p>
+</li>
+<li>
+<p>Almacenarse en baterías para usarla de noche o en días nublados.</p>
+</li>
+<li>
+<p>En sistemas conectados a la red, el exceso se envía a la red eléctrica.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/solar-panel.webp" alt="solar panel">
+</div>
+<div class="title">Figure 1. Panel Solar Pequeño</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="baterías"><a class="anchor" href="#baterías"></a>Baterías</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para almacenar la energía de paneles solares existen
+varios tipos de baterías, cada uno con ventajas, desventajas y usos ideales.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Comparación de Baterías</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tipo</th>
+<th class="tableblock halign-left valign-top">Vida útil</th>
+<th class="tableblock halign-left valign-top">Descarga útil</th>
+<th class="tableblock halign-left valign-top">Precio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Plomo abierto</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Baja</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">50%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">💲</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AGM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Media</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">50–60%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">💲💲</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Gel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Media-alta</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">60%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">💲💲</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OPzS / OPzV</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alta</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">70%</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">💲💲💲</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>LiFePO₄</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Muy alta</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>90–100%</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">💲💲💲💲</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Recomendación de Uso</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sistema pequeño y barato: AGM o plomo</p>
+</li>
+<li>
+<p>Uso diario intensivo: LiFePO₄</p>
+</li>
+<li>
+<p>Sistema grande aislado: OPzV o litio</p>
+</li>
+<li>
+<p>Movilidad / eficiencia: Litio</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Todas las baterías almacenan energía solar. Se diferencian en vida útil, eficiencia y costo.
+<strong>LiFePO₄</strong> es la mejor opción hoy si el presupuesto lo permite.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/bateria.png" alt="bateria">
+</div>
+<div class="title">Figure 2. Estación de Energía Solar</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="inversores"><a class="anchor" href="#inversores"></a>Inversores</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Un inversor en un sistema solar sirve para convertir y gestionar la
+electricidad que producen los paneles solares, de modo que pueda
+usarse de forma segura en equipos comunes. Es una pieza clave del sistema.</p>
+</div>
+<div class="paragraph">
+<p>Los paneles solares y las baterías trabajan en corriente continua (DC).
+La mayoría de los aparatos eléctricos funcionan con corriente alterna (AC).
+El inversor convierte energía DC a AC.</p>
+</div>
+<div class="paragraph">
+<p>Los inversores de onda pura imitan la red eléctrica.
+Protegen motores y electrónica y evitan calentamiento y fallos.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/inversor.webp" alt="inversor">
+</div>
+<div class="title">Figure 3. Inversor 8000W</div>
+</div>
+<div class="sect2">
+<h3 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://altronics.cl/cargador-solar-cn3791-mppt-12v" class="bare">https://altronics.cl/cargador-solar-cn3791-mppt-12v</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/panel-solar-5v-500ma-130x150mm" class="bare">https://altronics.cl/panel-solar-5v-500ma-130x150mm</a></p>
+</li>
+<li>
+<p><a href="https://genectra.cl/products/estacion-adventure-energy-1200" class="bare">https://genectra.cl/products/estacion-adventure-energy-1200</a></p>
+</li>
+<li>
+<p><a href="https://chilepozos.cl/energia-solar-en-el-campo-chilepozos-tambien-instala-paneles-solares/" class="bare">https://chilepozos.cl/energia-solar-en-el-campo-chilepozos-tambien-instala-paneles-solares/</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="solar.html">¿Qué es la Energía Solar?</a></span>
+</nav>
 </article>
   </div>
 </main>

@@ -1,0 +1,95 @@
+= Componentes
+
+La energía solar tiene principalmente tres componentes escenciales, 
+los paneles solares, las baterías y el inversor.
+
+== Paneles Solares 
+
+Un panel solar funciona convirtiendo la luz del sol en electricidad mediante un proceso 
+llamado efecto fotovoltaico. Un panel solar funciona en días nublados porque no 
+necesita sol directo, solo luz solar.
+
+El panel está formado por muchas celdas fotovoltaicas, generalmente hechas de silicio.
+Cuando la luz del sol incide sobre ellas, la energía de los fotones 
+(partículas de la luz) golpea los átomos del silicio.
+
+Las celdas fotovoltaicas:
+
+- Absorben la luz que atraviesa las nubes.
+- Liberan electrones igual que en un día soleado.
+- Producen electricidad, pero en menor cantidad en días nublados.
+
+En un día muy nublado pueden generar entre 10% y 40% de su producción 
+normal (depende del tipo de panel y la densidad de nubes).
+
+Al recibir esa energía:
+
+- Los electrones del silicio se liberan.
+- Se crea un movimiento de electrones, que es lo que llamamos corriente eléctrica.
+- Esta corriente es corriente continua (CC).
+
+La electricidad generada pasa por un inversor, que:
+
+- Convierte la corriente continua (CC) en corriente alterna (CA).
+- La corriente alterna es la que usamos en casas, escuelas y empresas.
+
+La electricidad producida puede:
+
+- Usarse directamente en el momento.
+- Almacenarse en baterías para usarla de noche o en días nublados.
+- En sistemas conectados a la red, el exceso se envía a la red eléctrica.
+
+.Panel Solar Pequeño
+image::solar-panel.webp[]
+
+== Baterías
+
+Para almacenar la energía de paneles solares existen 
+varios tipos de baterías, cada uno con ventajas, desventajas y usos ideales.
+
+.Comparación de Baterías
+|====
+| Tipo          | Vida útil    | Descarga útil | Precio   
+
+| Plomo abierto | Baja         | 50%           | 💲       
+| AGM           | Media        | 50–60%        | 💲💲     
+| Gel           | Media-alta   | 60%           | 💲💲     
+| OPzS / OPzV   | Alta         | 70%           | 💲💲💲   
+| *LiFePO₄*     | *Muy alta*   | *90–100%*     | 💲💲💲💲 
+|====
+
+*Recomendación de Uso*
+
+- Sistema pequeño y barato: AGM o plomo
+- Uso diario intensivo: LiFePO₄
+- Sistema grande aislado: OPzV o litio
+- Movilidad / eficiencia: Litio
+
+Todas las baterías almacenan energía solar. Se diferencian en vida útil, eficiencia y costo.
+*LiFePO₄* es la mejor opción hoy si el presupuesto lo permite.
+
+.Estación de Energía Solar
+image::bateria.png[]
+
+== Inversores
+
+Un inversor en un sistema solar sirve para convertir y gestionar la 
+electricidad que producen los paneles solares, de modo que pueda 
+usarse de forma segura en equipos comunes. Es una pieza clave del sistema.
+
+Los paneles solares y las baterías trabajan en corriente continua (DC).
+La mayoría de los aparatos eléctricos funcionan con corriente alterna (AC).
+El inversor convierte energía DC a AC.
+
+Los inversores de onda pura imitan la red eléctrica. 
+Protegen motores y electrónica y evitan calentamiento y fallos.
+
+.Inversor 8000W
+image::inversor.webp[]
+
+=== Referencias
+
+- https://altronics.cl/cargador-solar-cn3791-mppt-12v
+- https://altronics.cl/panel-solar-5v-500ma-130x150mm
+- https://genectra.cl/products/estacion-adventure-energy-1200
+- https://chilepozos.cl/energia-solar-en-el-campo-chilepozos-tambien-instala-paneles-solares/
