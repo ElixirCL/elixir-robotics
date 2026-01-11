@@ -6,7 +6,7 @@
     <title>FPGA :: Electrónica, Robótica e IOT con Elixir</title>
     <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/controllers/fpga.html">
     <link rel="prev" href="jetson.html">
-    <link rel="next" href="../communication/iot.html">
+    <link rel="next" href="asic.html">
     <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -117,6 +117,9 @@
   </li>
   <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="fpga.html">FPGA</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="asic.html">ASIC</a>
   </li>
 </ul>
   </li>
@@ -252,19 +255,292 @@
 </aside>
 <article class="doc">
 <h1 class="page">FPGA</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Un <strong>FPGA</strong> (<strong>Field-Programmable Gate Array</strong>) es un
+<strong>circuito integrado programable</strong> que permite crear <strong>hardware digital personalizado</strong>
+después de ser fabricado.</p>
+</div>
+<div class="paragraph">
+<p>A diferencia de un microcontrolador o CPU, un FPGA <strong>no ejecuta instrucciones</strong>,
+sino que <strong>se configura para convertirse en el circuito</strong> diseñado.</p>
+</div>
+<div class="paragraph">
+<p>Un FPGA está compuesto por:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/chipsalliance/chisel" class="bare">https://github.com/chipsalliance/chisel</a></p>
+<p>🔲 <strong>Bloques lógicos configurables</strong> (LUTs)</p>
 </li>
 <li>
-<p><a href="https://www.imm.dtu.dk/~masca/chisel-book.html" class="bare">https://www.imm.dtu.dk/~masca/chisel-book.html</a></p>
+<p>🔁 <strong>Flip-flops</strong> (memoria básica)</p>
+</li>
+<li>
+<p>🔗 <strong>Interconexiones programables</strong></p>
+</li>
+<li>
+<p>⏱️ <strong>Relojes y PLLs</strong></p>
+</li>
+<li>
+<p>📥📤 <strong>Pines de entrada/salida (I/O)</strong></p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Cuando es programado se define <strong>qué hace cada bloque</strong>, cómo se <strong>conectan entre sí</strong>.
+Todo funcionando <strong>en paralelo</strong>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="en-qué-se-diferencia-de-un-microcontrolador"><a class="anchor" href="#en-qué-se-diferencia-de-un-microcontrolador"></a>¿En qué se diferencia de un microcontrolador?</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Comparación entre FPGA y MicroControlador</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">FPGA</th>
+<th class="tableblock halign-left valign-top">Microcontrolador</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hardware configurable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hardware fijo</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ejecución paralela</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ejecución secuencial</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muy rápido</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Más lento</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Se programa con HDL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Se programa con C/C++</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ideal para tiempo real</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ideal para control</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="programación"><a class="anchor" href="#programación"></a>Programación</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para programar un FPGA se usan <strong>lenguajes de descripción de hardware (HDL)</strong>.
+Donde se describen los circuitos.</p>
+</div>
+<div class="paragraph">
+<p>Ejemplos:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>VHDL</strong></p>
+</li>
+<li>
+<p><strong>Verilog</strong></p>
+</li>
+<li>
+<p><strong>SystemVerilog</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/chipsalliance/chisel">Chisel</a> (<a href="https://www.imm.dtu.dk/~masca/chisel-book.html">Libro</a>).</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="chisel"><a class="anchor" href="#chisel"></a>Chisel</h3>
+<div class="paragraph">
+<p>Chisel es un lenguaje específico de dominio (DSL) para describir circuitos de hardware,
+incrustado en Scala. Por su propia naturaleza, proporciona construcciones equivalentes a
+las de Verilog, como módulos, entradas/salidas (Input/Output), registros (Reg), etc.
+De forma problemática para tu pregunta, esto provoca que los ejemplos más básicos de
+Chisel se vean exactamente igual que Verilog y también permite que la gente escriba
+Chisel que se parece mucho a Verilog. Esto se utiliza a menudo como argumento para
+descartar Chisel en favor de Verilog.</p>
+</div>
+<div class="paragraph">
+<p>Chisel forma parte de un framework de compilación de hardware que se parece
+mucho a LLVM aplicado a la generación de hardware. El proceso de Chisel a
+Verilog forma parte de un compilador de múltiples etapas. El frontend de
+Chisel compila Chisel a una representación intermedia de circuitos
+llamada FIRRTL (Flexible Intermediate Representation for RTL). Luego, la etapa
+intermedia de FIRRTL (mid-end) optimiza FIRRTL y aplica transformaciones
+personalizadas definidas por el usuario. Finalmente, la etapa de Verilog
+(back-end) genera código Verilog a partir del FIRRTL optimizado.</p>
+</div>
+<div class="listingblock">
+<div class="title">Ejemplo de Código de Chisel</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-scala hljs" data-lang="scala">package hw
+
+import chisel3._
+import chisel3.util.MuxCase
+
+class Counter(size: Int) extends Module {
+  val io = IO(new Bundle {
+    val out = Output(UInt(size.W))
+    val ena = Input(Bool())
+    val clr = Input(Bool())
+  })
+
+  val tmp: UInt = RegInit(0.U(size.W))
+
+  when(reset.asBool) {
+    tmp := 0.U
+  }.otherwise {
+    tmp := MuxCase(tmp, Array(io.clr -&gt; 0.U, io.ena -&gt; (tmp + 1.U)))
+  }
+
+  io.out := tmp
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="para-qué-se-usan-los-fpga"><a class="anchor" href="#para-qué-se-usan-los-fpga"></a>¿Para qué se usan los FPGA?</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Procesamiento de señales (DSP)</p>
+</li>
+<li>
+<p>Video y visión artificial</p>
+</li>
+<li>
+<p>Redes y telecomunicaciones</p>
+</li>
+<li>
+<p>Criptografía</p>
+</li>
+<li>
+<p>Inteligencia artificial (aceleradores)</p>
+</li>
+<li>
+<p>Prototipado de ASIC</p>
+</li>
+<li>
+<p>Control industrial de alta velocidad</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Ventajas</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ejecución totalmente paralela</p>
+</li>
+<li>
+<p>Muy baja latencia</p>
+</li>
+<li>
+<p>Reconfigurable</p>
+</li>
+<li>
+<p>Alto rendimiento</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Desventajas</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Más caro que un microcontrolador</p>
+</li>
+<li>
+<p>Mayor consumo</p>
+</li>
+<li>
+<p>Curva de aprendizaje más alta</p>
+</li>
+<li>
+<p>Requiere herramientas especializadas</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Ejemplo</strong></p>
+</div>
+<div class="paragraph">
+<p>Un FPGA puede:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Leer múltiples señales</p>
+</li>
+<li>
+<p>Procesarlas <strong>al mismo tiempo</strong></p>
+</li>
+<li>
+<p>Generar salidas en <strong>nanosegundos</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Mientras que un microcontrolador lo haría <strong>una por una</strong>.</p>
+</div>
+<div class="sect2">
+<h3 id="mister-fpga"><a class="anchor" href="#mister-fpga"></a>MiSTer FPGA</h3>
+<div class="paragraph">
+<p>MiSTer es un proyecto de código abierto que emula consolas,
+computadoras y placas arcade mediante FPGA. Esto es diferente de la emulación por
+software, ya que existe la posibilidad de obtener un rendimiento exactamente igual al
+del hardware original.</p>
+</div>
+<div class="paragraph">
+<p>Aunque la emulación por software también puede llegar a ser muy precisa,
+con la emulación mediante FPGA es mucho más probable lograr latencia cero,
+lo que la convierte en una opción excelente para personas que utilizan
+tanto pantallas HDMI como monitores CRT.</p>
+</div>
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/F5__shDTYMQ?si=KypU241H9b2FDNUL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://stackoverflow.com/questions/53007782/what-benefits-does-chisel-offer-over-classic-hardware-description-languages" class="bare">https://stackoverflow.com/questions/53007782/what-benefits-does-chisel-offer-over-classic-hardware-description-languages</a></p>
+</li>
+<li>
+<p><a href="https://github.com/chisel-crew/chisel-hello" class="bare">https://github.com/chisel-crew/chisel-hello</a></p>
+</li>
+<li>
+<p><a href="https://retrorgb.com/mister.html" class="bare">https://retrorgb.com/mister.html</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Field-programmable_gate_array" class="bare">https://en.wikipedia.org/wiki/Field-programmable_gate_array</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="jetson.html">Nvidia Jetson &amp; AMD Kria</a></span>
-  <span class="next"><a href="../communication/iot.html">IOT</a></span>
+  <span class="next"><a href="asic.html">ASIC</a></span>
 </nav>
 </article>
   </div>

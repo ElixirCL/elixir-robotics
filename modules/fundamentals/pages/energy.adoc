@@ -67,14 +67,14 @@ para almacenar energía eléctrica.
 |====
 |Imagen|Tipo|Descripción
 
-| - | Alcalina | No se
+a| image::electricity/alcaline.jpg[width="60%"] | Alcalina | No se
 pueden recargar (muy peligroso) y generalmente
 tienen del orden de 1.5 volts por celda.
-| - | Recargables (NiMH, NiCd) | Están las baterías recargables de
+a| image::electricity/rechargable.webp[width="30%"] | Recargables (NiMH, NiCd) | Están las baterías recargables de
 Niquel-Hidruro metálico o Niquel-Cadmio que tienen del orden de
 1.2 volts por celda.
-| - | Plomo ácido o gel | Típicamente 6 volts o 12 volts, sirven para encender un auto, por ejemplo.
-| - | Ión-Litio o polímero de Litio| Tienen 3.7 volts por celda. Éstas son las que se utilizan,
+a| image::electricity/acid.webp[width="80%"] | Plomo ácido o gel | Típicamente 6 volts o 12 volts, sirven para encender un auto, por ejemplo.
+a| image::electricity/ion.webp[width="40%"] | Ión-Litio o polímero de Litio, también conocidas como *18650*.| Tienen 3.7 volts por celda. Éstas son las que se utilizan,
 por ejemplo, en muchos teléfonos celulares o computadores. Las baterías de polímero de
-litio tienen una mayor capacidad que las de ión-litio, pero son un poco más peligrosas de manejar.
+litio tienen una mayor capacidad que las de ión-litio, pero son un poco más peligrosas de manejar. Muy usadas en proyectos de robótica.
 |====

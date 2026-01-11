@@ -189,6 +189,50 @@ resistencia y el valor de la corriente disponible.
 Por lo que la fórmula a utilizar es asciimath:[P = 0.02^2 * 360]
 Lo que da una de potencia de asciimath:[0.144W].
 
+=== ¿Se puede usar una resistencia para múltiples componentes?
+
+Por ejemplo si se quisiera conectar varios LED a una sola resistencia 
+se podría en serie, pero no en paralelo (necesita de una resistencia por LED).
+
+==== Conexión en Serie
+
+[source, text]
+----
++V ── Resistencia ── LED1 ── LED2 ── LED3 ── GND
+----
+
+- La corriente es la misma para todos.
+- La resistencia limita la corriente total.
+- Es eficiente y seguro.
+- El voltaje de la fuente debe ser mayor que la suma de los voltajes de los LED.
+
+Ejemplo:
+
+- LED rojo ≈ 2 V.
+- 3 LED → 6 V.
+- Fuente mínima ≈ 7–9 V (según la resistencia).
+
+==== Conexión en Paralelo
+
+En el siguiente ejemplo cada LED tiene pequeñas diferencias internas por lo que uno puede llevar más corriente que otro.
+Puede quemarse un LED y luego los demás. 
+
+[source, text]
+----
+      ┌─ LED1 ─┐
++V ── R        ├── GND
+      └─ LED2 ─┘
+----
+
+Por lo que se debe usar una resistencia por cada LED si están en paralelo.
+
+[source, text]
+----
++V ── R1 ── LED1 ── GND
++V ── R2 ── LED2 ── GND
+----
+
+
 === Referencias
 
 - https://www.logicbus.com.mx/codigo-de-colores-de-resistencias

@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Raspberry Pi :: Electrónica, Robótica e IOT con Elixir</title>
-    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/controllers/raspberry.html">
-    <link rel="prev" href="arduino.html">
-    <link rel="next" href="esp32.html">
+    <title>ASIC :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/controllers/asic.html">
+    <link rel="prev" href="fpga.html">
+    <link rel="next" href="../communication/iot.html">
     <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -103,7 +103,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="arduino.html">Arduino</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="raspberry.html">Raspberry Pi</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -118,7 +118,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="fpga.html">FPGA</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="asic.html">ASIC</a>
   </li>
 </ul>
@@ -244,21 +244,216 @@
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
     <li>IC y Controladores</li>
-    <li><a href="raspberry.html">Raspberry Pi</a></li>
+    <li><a href="asic.html">ASIC</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="file:///antora/./modules/controllers/pages/raspberry.adoc">Editar esta página</a></div>
+<div class="edit-this-page"><a href="file:///antora/./modules/controllers/pages/asic.adoc">Editar esta página</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contenidos" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Raspberry Pi</h1>
-
+<h1 class="page">ASIC</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Un <strong>ASIC</strong> (<strong>Application-Specific Integrated Circuit</strong> o <strong>Circuito Integrado de Aplicación Específica</strong>)
+es un <strong>chip diseñado para realizar una función concreta</strong>, a diferencia de los circuitos
+integrados de propósito general. Se crea <strong>a medida</strong> para una tarea específica
+y <strong>no es reprogramable</strong> una vez fabricado.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="características-principales"><a class="anchor" href="#características-principales"></a>Características principales</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>🔒 Diseño <strong>fijo</strong></p>
+</li>
+<li>
+<p>🚀 <strong>Muy alto rendimiento</strong></p>
+</li>
+<li>
+<p>🔋 <strong>Bajo consumo de energía</strong></p>
+</li>
+<li>
+<p>📦 Tamaño optimizado</p>
+</li>
+<li>
+<p>💰 Económico por unidad en grandes volúmenes</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="cómo-se-diseña-un-asic"><a class="anchor" href="#cómo-se-diseña-un-asic"></a>¿Cómo se diseña un ASIC?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Es un proceso largo, complejo y costoso.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Definición de la función</p>
+</li>
+<li>
+<p>Diseño lógico (HDL: Verilog/VHDL)</p>
+</li>
+<li>
+<p>Simulación y verificación</p>
+</li>
+<li>
+<p>Síntesis</p>
+</li>
+<li>
+<p>Diseño físico (layout)</p>
+</li>
+<li>
+<p>Fabricación</p>
+</li>
+<li>
+<p>Pruebas</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="comparación"><a class="anchor" href="#comparación"></a>Comparación</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="asic-vs-microcontrolador"><a class="anchor" href="#asic-vs-microcontrolador"></a>ASIC vs Microcontrolador</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>ASIC: función única, máxima eficiencia  .</p>
+</li>
+<li>
+<p>Microcontrolador: flexible, programable.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="asic-vs-fpga"><a class="anchor" href="#asic-vs-fpga"></a>ASIC vs FPGA</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>ASIC: fijo y optimizado .</p>
+</li>
+<li>
+<p>FPGA: reconfigurable y flexible.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ejemplos-de-asic"><a class="anchor" href="#ejemplos-de-asic"></a>Ejemplos de ASIC</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Procesadores (CPU, GPU)</p>
+</li>
+<li>
+<p>Chips de teléfonos móviles</p>
+</li>
+<li>
+<p>Aceleradores de IA</p>
+</li>
+<li>
+<p>Codificadores/decodificadores de video</p>
+</li>
+<li>
+<p>Mineros de criptomonedas</p>
+</li>
+<li>
+<p>Controladores USB / Ethernet</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="cuándo-conviene-usar-un-asic"><a class="anchor" href="#cuándo-conviene-usar-un-asic"></a>¿Cuándo conviene usar un ASIC?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Conviene</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Producción masiva</p>
+</li>
+<li>
+<p>Requisitos estrictos de velocidad o consumo</p>
+</li>
+<li>
+<p>Función bien definida y estable</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>No es ideal para</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Prototipos</p>
+</li>
+<li>
+<p>Proyectos pequeños</p>
+</li>
+<li>
+<p>Cambios frecuentes de diseño</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="minería-de-criptomonedas"><a class="anchor" href="#minería-de-criptomonedas"></a>Minería de Criptomonedas</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Los equipos ASIC son muy populares para la minería de criptomonedas como Bitcoin, Litecoin y Ethereum.</p>
+</div>
+<div class="paragraph">
+<p>Los principales equipos para minar son ASIC especializados como Antminer L3+, L3++, L7, L9, DG1.
+Estos dispositivos están optimizados para el algoritmo <strong>Scrypt</strong> y ofrecen un alto nivel de
+rendimiento con un consumo de energía relativamente bajo en comparación con otros ASIC.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/asic/asic.avif" alt="asic">
+</div>
+<div class="title">Figure 1. ASIC AntMiner Z15</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Application-specific_integrated_circuit" class="bare">https://en.wikipedia.org/wiki/Application-specific_integrated_circuit</a></p>
+</li>
+<li>
+<p><a href="https://www.bitmain.com/" class="bare">https://www.bitmain.com/</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <nav class="pagination">
-  <span class="prev"><a href="arduino.html">Arduino</a></span>
-  <span class="next"><a href="esp32.html">ESP32</a></span>
+  <span class="prev"><a href="fpga.html">FPGA</a></span>
+  <span class="next"><a href="../communication/iot.html">IOT</a></span>
 </nav>
 </article>
   </div>

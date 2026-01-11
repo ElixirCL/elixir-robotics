@@ -8,3 +8,4 @@
 * xref:stm32.adoc[]
 * xref:jetson.adoc[]
 * xref:fpga.adoc[]
+* xref:asic.adoc[]

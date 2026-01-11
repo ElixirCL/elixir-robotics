@@ -1,0 +1,76 @@
+= ASIC
+
+Un **ASIC** (*Application-Specific Integrated Circuit* o **Circuito Integrado de Aplicación Específica**) 
+es un **chip diseñado para realizar una función concreta**, a diferencia de los circuitos 
+integrados de propósito general. Se crea **a medida** para una tarea específica 
+y **no es reprogramable** una vez fabricado.
+
+== Características principales
+
+- 🔒 Diseño **fijo**
+- 🚀 **Muy alto rendimiento**
+- 🔋 **Bajo consumo de energía**
+- 📦 Tamaño optimizado
+- 💰 Económico por unidad en grandes volúmenes
+
+== ¿Cómo se diseña un ASIC?
+
+Es un proceso largo, complejo y costoso.
+
+. Definición de la función
+. Diseño lógico (HDL: Verilog/VHDL)
+. Simulación y verificación
+. Síntesis
+. Diseño físico (layout)
+. Fabricación
+. Pruebas
+
+== Comparación
+
+=== ASIC vs Microcontrolador
+
+- ASIC: función única, máxima eficiencia  .
+- Microcontrolador: flexible, programable.
+
+=== ASIC vs FPGA
+
+- ASIC: fijo y optimizado . 
+- FPGA: reconfigurable y flexible.
+
+== Ejemplos de ASIC
+- Procesadores (CPU, GPU)
+- Chips de teléfonos móviles
+- Aceleradores de IA
+- Codificadores/decodificadores de video
+- Mineros de criptomonedas
+- Controladores USB / Ethernet
+
+== ¿Cuándo conviene usar un ASIC?
+
+*Conviene*:
+
+- Producción masiva  
+- Requisitos estrictos de velocidad o consumo  
+- Función bien definida y estable  
+
+*No es ideal para*:
+
+- Prototipos
+- Proyectos pequeños
+- Cambios frecuentes de diseño
+
+== Minería de Criptomonedas 
+
+Los equipos ASIC son muy populares para la minería de criptomonedas como Bitcoin, Litecoin y Ethereum.
+
+Los principales equipos para minar son ASIC especializados como Antminer L3+, L3++, L7, L9, DG1. 
+Estos dispositivos están optimizados para el algoritmo *Scrypt* y ofrecen un alto nivel de 
+rendimiento con un consumo de energía relativamente bajo en comparación con otros ASIC.
+
+.ASIC AntMiner Z15
+image::asic/asic.avif[]
+
+== Referencias 
+
+- https://en.wikipedia.org/wiki/Application-specific_integrated_circuit
+- https://www.bitmain.com/

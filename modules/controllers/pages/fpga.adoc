@@ -1,4 +1,147 @@
 = FPGA
 
-- https://github.com/chipsalliance/chisel
-- https://www.imm.dtu.dk/~masca/chisel-book.html
+Un **FPGA** (*Field-Programmable Gate Array*) es un 
+**circuito integrado programable** que permite crear **hardware digital personalizado** 
+después de ser fabricado.
+
+A diferencia de un microcontrolador o CPU, un FPGA **no ejecuta instrucciones**, 
+sino que **se configura para convertirse en el circuito** diseñado.
+
+Un FPGA está compuesto por:
+
+- 🔲 **Bloques lógicos configurables** (LUTs)
+- 🔁 **Flip-flops** (memoria básica)
+- 🔗 **Interconexiones programables**
+- ⏱️ **Relojes y PLLs**
+- 📥📤 **Pines de entrada/salida (I/O)**
+
+Cuando es programado se define **qué hace cada bloque**, cómo se **conectan entre sí**. 
+Todo funcionando **en paralelo**.
+
+== ¿En qué se diferencia de un microcontrolador?
+
+.Comparación entre FPGA y MicroControlador
+|====
+| FPGA | Microcontrolador 
+
+| Hardware configurable | Hardware fijo 
+| Ejecución paralela | Ejecución secuencial 
+| Muy rápido | Más lento 
+| Se programa con HDL | Se programa con C/C++ 
+| Ideal para tiempo real | Ideal para control 
+|====
+
+== Programación
+
+Para programar un FPGA se usan **lenguajes de descripción de hardware (HDL)**. 
+Donde se describen los circuitos.
+
+Ejemplos:
+
+- **VHDL**
+- **Verilog**
+- **SystemVerilog**
+- https://github.com/chipsalliance/chisel[Chisel] (https://www.imm.dtu.dk/~masca/chisel-book.html[Libro]).
+
+=== Chisel
+
+Chisel es un lenguaje específico de dominio (DSL) para describir circuitos de hardware, 
+incrustado en Scala. Por su propia naturaleza, proporciona construcciones equivalentes a 
+las de Verilog, como módulos, entradas/salidas (Input/Output), registros (Reg), etc. 
+De forma problemática para tu pregunta, esto provoca que los ejemplos más básicos de 
+Chisel se vean exactamente igual que Verilog y también permite que la gente escriba 
+Chisel que se parece mucho a Verilog. Esto se utiliza a menudo como argumento para 
+descartar Chisel en favor de Verilog.
+
+Chisel forma parte de un framework de compilación de hardware que se parece 
+mucho a LLVM aplicado a la generación de hardware. El proceso de Chisel a 
+Verilog forma parte de un compilador de múltiples etapas. El frontend de 
+Chisel compila Chisel a una representación intermedia de circuitos 
+llamada FIRRTL (Flexible Intermediate Representation for RTL). Luego, la etapa 
+intermedia de FIRRTL (mid-end) optimiza FIRRTL y aplica transformaciones 
+personalizadas definidas por el usuario. Finalmente, la etapa de Verilog 
+(back-end) genera código Verilog a partir del FIRRTL optimizado.
+
+.Ejemplo de Código de Chisel
+[source, scala]
+----
+package hw
+
+import chisel3._
+import chisel3.util.MuxCase
+
+class Counter(size: Int) extends Module {
+  val io = IO(new Bundle {
+    val out = Output(UInt(size.W))
+    val ena = Input(Bool())
+    val clr = Input(Bool())
+  })
+
+  val tmp: UInt = RegInit(0.U(size.W))
+
+  when(reset.asBool) {
+    tmp := 0.U
+  }.otherwise {
+    tmp := MuxCase(tmp, Array(io.clr -> 0.U, io.ena -> (tmp + 1.U)))
+  }
+
+  io.out := tmp
+}
+----
+
+== ¿Para qué se usan los FPGA?
+
+- Procesamiento de señales (DSP)
+- Video y visión artificial
+- Redes y telecomunicaciones
+- Criptografía
+- Inteligencia artificial (aceleradores)
+- Prototipado de ASIC
+- Control industrial de alta velocidad
+
+*Ventajas*
+
+- Ejecución totalmente paralela  
+- Muy baja latencia  
+- Reconfigurable  
+- Alto rendimiento
+
+*Desventajas*
+
+- Más caro que un microcontrolador  
+- Mayor consumo  
+- Curva de aprendizaje más alta  
+- Requiere herramientas especializadas
+
+*Ejemplo*
+
+Un FPGA puede:
+
+- Leer múltiples señales
+- Procesarlas **al mismo tiempo**
+- Generar salidas en **nanosegundos**
+
+Mientras que un microcontrolador lo haría **una por una**.
+
+=== MiSTer FPGA
+
+MiSTer es un proyecto de código abierto que emula consolas, 
+computadoras y placas arcade mediante FPGA. Esto es diferente de la emulación por 
+software, ya que existe la posibilidad de obtener un rendimiento exactamente igual al 
+del hardware original.
+
+Aunque la emulación por software también puede llegar a ser muy precisa, 
+con la emulación mediante FPGA es mucho más probable lograr latencia cero, 
+lo que la convierte en una opción excelente para personas que utilizan 
+tanto pantallas HDMI como monitores CRT.
+
+++++
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/F5__shDTYMQ?si=KypU241H9b2FDNUL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
+
+== Referencias
+
+- https://stackoverflow.com/questions/53007782/what-benefits-does-chisel-offer-over-classic-hardware-description-languages
+- https://github.com/chisel-crew/chisel-hello
+- https://retrorgb.com/mister.html
+- https://en.wikipedia.org/wiki/Field-programmable_gate_array
