@@ -1,1 +1,24 @@
 = Raspberry Pi
+
+Raspberry Pi es una serie de computadores de placa única (SBC) desarrollada originalmente en el Reino Unido por la Fundación Raspberry Pi, en colaboración con Broadcom.
+
+Gracias a su tamaño compacto, bajo costo y flexibilidad, se utilizan en áreas como la automatización industrial, la robótica y los dispositivos IoT.
+
+== Computadores de Placa Única (SBC)
+
+La serie principal de Raspberry Pi ofrece hardware de alto rendimiento, un sistema operativo Linux completo y una amplia variedad de puertos comunes, todo ello con un tamaño similar al de una tarjeta de crédito.
+
+== Módulos de Cómputo (CM)
+
+Placas diseñadas para sistemas embebidos e industriales, que proporcionan el mismo hardware que las SBC, pero en un formato más compacto y sin conectores integrados. En su lugar, se conectan a una placa base que suministra los puertos necesarios y los pines de expansión.
+
+== Serie Zero
+
+Placas pequeñas y económicas, con un tamaño mínimo, que ofrecen un sistema operativo Linux completo y puertos esenciales, destacando por su bajo consumo eléctrico.
+
+== Serie Pico
+
+Microcontroladores pequeños y versátiles que no ejecutan un sistema operativo Linux. Los programas se cargan directamente a la memoria de la placa, haciéndolos ideales para el control en tiempo real y pequeños proyectos embebidos.
+
+== Referencias
+* https://www.raspberrypi.com/documentation/computers/raspberry-pi.html
