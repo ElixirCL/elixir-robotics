@@ -2,3 +2,23 @@
 
 El STM32 es una gran alternativa a ESP32 cuando se necesitan 
 soluciones profesionales de bajo consumo de calidad industrial.
+
+La familia STM32 de microcontroladores de 32-bit está diseñada para ofrecer nuevos grados de libertad a usuarios de microcontroladores. Ofrece productos combinando alto rendimiento, capacidad de procesamiento en tiempo real, procesamiento de señales digitales y conectividad, manteniendo integración completa y facilidad de desarrollo.
+
+Cuenta con una amplia selección de herramientas y software para respaldar el desarrollo de proyectos, lo que hace que esta familia sea ideal tanto para prototipos pequeños como para sistemas completos de extremo a extremo.
+
+== Serie F (Propósito General)
+
+La serie F es la línea principal de propósito general. Ofrece un excelente equilibrio entre rendimiento, consumo y costo. Basada en núcleos Cortex-M0 a Cortex-M7, es ideal para aplicaciones de control de motores, interfaces de usuario y electrónica de consumo.
+
+== Serie L (Bajo Consumo)
+
+La serie L está optimizada para aplicaciones de ultrabajo consumo. Es perfecta para dispositivos alimentados por batería, como wearables, sensores remotos y equipos médicos, gracias a sus avanzados modos de ahorro de energía y rápidos tiempos de activación.
+
+== Serie H (Alto Rendimiento)
+
+La serie H proporciona el máximo rendimiento de la familia. Equipada con núcleos Cortex-M7 de alta velocidad, está diseñada para tareas exigentes como procesamiento de audio y video, visión artificial y sistemas industriales complejos.
+
+== Referencias
+
+* https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html
