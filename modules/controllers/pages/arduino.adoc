@@ -1,1 +1,43 @@
 = Arduino
+
+Arduino es una compañía italiana que diseña y fabrica sistemas basados en microcontroladores. Su ecosistema facilita a los principiantes el inicio en el uso de microcontroladores.
+
+Los productos de Arduino son de *código abierto*, lo que significa que existe una amplia selección de sistemas compatibles y de proveedores de componentes que son relativamente fáciles de integrar con el hardware de Arduino.
+
+Generalmente, el término 'Arduino' se refiere a un producto diseñado por la compañía. Las plataformas más populares son:
+
+[cols="1,1,2"]
+|===
+|Procesador |Arquitectura |Placas Comunes
+
+|Mega328P
+|8 bits
+|Uno, Nano
+
+|Mega2560
+|8 bits
+|Mega
+
+|Mega32u4
+|8 bits
+|Leonardo, Micro
+|===
+
+Arduino también ofrece un Entorno de Desarrollo Integrado (IDE), que permite compilar y cargar programas, compatible con una amplia gama de dispositivos.
+
+== Familia Nano
+
+La familia Nano es una serie de placas de tamaño reducido y con diversas funcionalidades. Varían desde modelos económicos como el Nano Every, hasta placas con mayores funcionalidades como la Nano 33 BLE Sense o la Nano RP2040 Connect. Estas placas también suelen incorporar un conjunto de sensores integrados, como los de temperatura, humedad, presión, micrófono, entre otros.
+
+== Familia MKR
+
+La familia MKR es una serie de placas, escudos y placas de expansión que se pueden combinar para crear proyectos sin necesidad de circuitos adicionales. Cada placa está equipada con un módulo de radio que proporciona conectividad Wi-Fi, Bluetooth, LoRa, Sigfox y NB-IoT. Todas las placas se basan en el procesador Arm Cortex-M0 de 32 bits, el SAMD21.
+
+== Familia UNO
+
+La familia Uno incluye placas como el conocido Arduino UNO R3 o el UNO R4 WiFi. Estas placas se consideran el pilar del proyecto Arduino y han disfrutado de un gran éxito durante muchos años.
+
+== Referencias
+
+* https://www.arduino.cc/en/hardware/
+* https://www.reddit.com/r/arduino/wiki/faq/
