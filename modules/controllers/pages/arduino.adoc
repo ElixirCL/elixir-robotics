@@ -23,8 +23,6 @@ Generalmente, el término 'Arduino' se refiere a un producto diseñado por la co
 |Leonardo, Micro
 |===
 
-Arduino también ofrece un Entorno de Desarrollo Integrado (IDE), que permite compilar y cargar programas, compatible con una amplia gama de dispositivos.
-
 == Familia Nano
 
 image::arduino/arduino_nano.webp[]
@@ -42,6 +40,36 @@ La familia MKR es una serie de placas, escudos y placas de expansión que se pue
 image::arduino/arduino_uno.webp[]
 
 La familia Uno incluye placas como el conocido Arduino UNO R3 o el UNO R4 WiFi. Estas placas se consideran el pilar del proyecto Arduino y han disfrutado de un gran éxito durante muchos años.
+
+== Arduino
+
+Arduino también ofrece un Entorno de Desarrollo Integrado (IDE), que permite compilar y cargar programas, compatible con una amplia gama de dispositivos. Para obtener detalles sobre su instalación, visita la https://support.arduino.cc/hc/en-us/articles/360019833020-Download-and-install-Arduino-IDE[página de instalación oficial].
+
+=== Flasheando un programa a un ESP32
+
+Para cargar el siguiente programa de parpadeo de LED en un ESP32 usando el Arduino IDE, sigue estos pasos:
+
+[source, c]
+----
+#define LED 2 // define el pin donde está conectado el led
+
+void setup() {
+  pinMode(LED, OUTPUT); // configura el pin del led como salida
+}
+
+void loop() {
+  digitalWrite(LED, HIGH); // enciende el led
+  delay(500);              // espera 500 milisegundos
+  digitalWrite(LED, LOW);  // apaga el led
+  delay(500);              // espera otros 500 milisegundos
+}
+----
+
+1. Copia el código: Abre un nuevo sketch en el Arduino IDE y copia el código de ejemplo anterior.
+
+2. Selecciona la placa y el puerto: En el menú `Herramientas > Placa`, selecciona tu modelo específico de ESP32 (por ejemplo, "ESP32 Dev Module"). Asegúrate de seleccionar el puerto serial correcto en `Herramientas > Puerto`. Este suele ser un puerto `COMx` en Windows o `/dev/ttyUSBx` en Linux/macOS.
+
+3. Carga el programa: Haz clic en el botón "Subir" (el icono de flecha hacia la derecha) en la barra de herramientas del IDE. El IDE compilará el código y lo cargará.
 
 == Referencias
 

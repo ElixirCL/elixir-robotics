@@ -312,9 +312,6 @@
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>Arduino también ofrece un Entorno de Desarrollo Integrado (IDE), que permite compilar y cargar programas, compatible con una amplia gama de dispositivos.</p>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -353,6 +350,49 @@
 </div>
 <div class="paragraph">
 <p>La familia Uno incluye placas como el conocido Arduino UNO R3 o el UNO R4 WiFi. Estas placas se consideran el pilar del proyecto Arduino y han disfrutado de un gran éxito durante muchos años.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="arduino"><a class="anchor" href="#arduino"></a>Arduino</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Arduino también ofrece un Entorno de Desarrollo Integrado (IDE), que permite compilar y cargar programas, compatible con una amplia gama de dispositivos. Para obtener detalles sobre su instalación, visita la <a href="https://support.arduino.cc/hc/en-us/articles/360019833020-Download-and-install-Arduino-IDE">página de instalación oficial</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="flasheando-un-programa-a-un-esp32"><a class="anchor" href="#flasheando-un-programa-a-un-esp32"></a>Flasheando un programa a un ESP32</h3>
+<div class="paragraph">
+<p>Para cargar el siguiente programa de parpadeo de LED en un ESP32 usando el Arduino IDE, sigue estos pasos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#define LED 2 // define el pin donde está conectado el led
+
+void setup() {
+  pinMode(LED, OUTPUT); // configura el pin del led como salida
+}
+
+void loop() {
+  digitalWrite(LED, HIGH); // enciende el led
+  delay(500);              // espera 500 milisegundos
+  digitalWrite(LED, LOW);  // apaga el led
+  delay(500);              // espera otros 500 milisegundos
+}</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Copia el código: Abre un nuevo sketch en el Arduino IDE y copia el código de ejemplo anterior.</p>
+</li>
+<li>
+<p>Selecciona la placa y el puerto: En el menú <code>Herramientas &gt; Placa</code>, selecciona tu modelo específico de ESP32 (por ejemplo, "ESP32 Dev Module"). Asegúrate de seleccionar el puerto serial correcto en <code>Herramientas &gt; Puerto</code>. Este suele ser un puerto <code>COMx</code> en Windows o <code>/dev/ttyUSBx</code> en Linux/macOS.</p>
+</li>
+<li>
+<p>Carga el programa: Haz clic en el botón "Subir" (el icono de flecha hacia la derecha) en la barra de herramientas del IDE. El IDE compilará el código y lo cargará.</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 </div>
