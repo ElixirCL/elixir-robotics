@@ -9,13 +9,19 @@ Cuenta con una amplia selección de herramientas y software para respaldar el de
 
 == Serie F (Propósito General)
 
+image::stm32/stm32f.jpg[]
+
 La serie F es la línea principal de propósito general. Ofrece un excelente equilibrio entre rendimiento, consumo y costo. Basada en núcleos Cortex-M0 a Cortex-M7, es ideal para aplicaciones de control de motores, interfaces de usuario y electrónica de consumo.
 
 == Serie L (Bajo Consumo)
 
+image::stm32/stm32l.jpg[]
+
 La serie L está optimizada para aplicaciones de ultrabajo consumo. Es perfecta para dispositivos alimentados por batería, como wearables, sensores remotos y equipos médicos, gracias a sus avanzados modos de ahorro de energía y rápidos tiempos de activación.
 
 == Serie H (Alto Rendimiento)
+
+image::stm32/stm32h.webp[]
 
 La serie H proporciona el máximo rendimiento de la familia. Equipada con núcleos Cortex-M7 de alta velocidad, está diseñada para tareas exigentes como procesamiento de audio y video, visión artificial y sistemas industriales complejos.
 
