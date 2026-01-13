@@ -1,5 +1,38 @@
 = Nvidia Jetson & AMD Kria
 
-- https://developer.nvidia.com/isaac
+== Nvidia Jetson
 
-- https://www.amd.com/en/products/system-on-modules/kria/k26/robotics.html
+image::jetson/jetson_orin.webp[]
+
+Nvidia Jetson es un ecosistema que ofrece un amplio conjunto de productos y servicios, incluyendo software para IA, herramientas de desarrollo y soluciones de hardware como servidores. Estas soluciones dan soporte a industrias que van desde la robótica y la manufactura hasta el comercio minorista, el transporte y la salud.
+
+El ecosistema cuenta con los Jetson Modules, que consisten en placas que ofrecen una gama de niveles de rendimiento y precios.
+
+Algunos ejemplos de módulos son:
+
+* Jetson AGX Thor Series: Ofrece computación de IA para sistemas robóticos avanzados.
+* Jetson AGX Orin Series: Computadora de IA para máquinas autónomas energéticamente eficientes.
+* Jetson Orin Nano Series: El módulo Jetson más compacto, diseñado para IA en el edge.
+* Jetson AGX Xavier Series: Introduce un nuevo nivel de densidad de cómputo y la inferencia de IA en el edge.
+
+=== Nvidia Isaac
+
+Nvidia ofrece diversas herramientas de desarrollo para robótica, agrupadas bajo su plataforma Isaac. Esta plataforma facilita la simulación y el aprendizaje automático para robots, la planificación de movimientos, la detección de objetos y la identificación de obstáculos en 3D.
+
+== AMD Kria
+
+image::jetson/kria.png[]
+
+Los AMD Kria son sistemas en módulo (SoM) que incluyen los componentes centrales de un sistema de procesamiento integrado en una única placa lista para su producción, simplificando así el proceso de diseño. AMD Kria proporciona un entorno de diseño familiar para desarrolladores de software sin requerir experiencia previa con FPGAs (Matrices de Puertas Programables en Campo).
+
+Actualmente, ofrecen dos series:
+
+* Kria K24 SOM: Diseñado para aplicaciones que requieren un procesamiento de señales digitales intensivo, como, por ejemplo, el control de motor.
+* Kria K26 SOM: Diseñado para visión de IA, robótica y aplicaciones industriales.
+
+== Referencias
+
+* https://developer.nvidia.com/isaac
+* https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/
+* https://www.amd.com/es/products/system-on-modules/what-is-a-som.html
+* https://www.amd.com/en/products/system-on-modules/kria/k26/robotics.html
