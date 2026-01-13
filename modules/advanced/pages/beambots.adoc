@@ -1,1 +1,171 @@
 = Beam Bots
+
+image::beambots.png[]
+
+Beam Bots es un framework de Elixir diseñado para desarrollar aplicaciones robóticas tolerantes a fallos, aprovechando los principios de OTP.
+
+Este framework se basa en un lenguaje específico de dominio (DSL) construido mediante el uso de macros. El resultado es un código que se asemeja a una especificación, reflejando directamente la estructura física del robot.
+
+== Comparación con ROS2
+
+Beam Bots ofrece un enfoque similar a ROS2 para la comunicación y la gestión de tareas, pero utilizando las capacidades nativas del ecosistema BEAM. A continuación, se presenta una comparación de conceptos clave:
+
+[cols="1,2a"]
+|===
+|Concepto en ROS2 |Equivalente en Elixir/Beam Bots
+
+|*Comunicación publish/subscribe entre nodos*
+|`Phoenix.PubSub`, `Registry` para el registro de procesos, y la capacidad inherente de *process messaging* de Erlang/Elixir.
+
+|*Servicios para interacciones síncronas de solicitud/respuesta*
+|`GenServer.call/3` es el mecanismo estándar para realizar llamadas síncronas a un proceso `GenServer`, emulando un servicio.
+
+|*Acciones para tareas de larga duración con retroalimentación de progreso*
+|`Task.Supervisor` gestionando procesos `Task` que pueden enviar mensajes de progreso al proceso solicitante.
+
+|*Nodos de ciclo de vida para gestionar transiciones de estado de forma explícita*
+|`GenServer` con transiciones de estado definidas, permitiendo la implementación de máquinas de estado robustas.
+
+|*Sistema de parámetros para configuración dinámica en tiempo de ejecución*
+|`ETS` (Erlang Term Storage) para almacenar y acceder a configuraciones compartidas y modificables en caliente.
+|===
+
+== Crear un proyecto
+
+Para iniciar un nuevo proyecto con Beam Bots, ejecuta los siguientes comandos:
+
+[source, bash]
+----
+mix igniter.new
+mix igniter.install bb
+----
+
+Igniter te guiará durante el proceso de configuración del proyecto, generando los archivos necesarios e instalando las dependencias.
+
+== Ejemplo de Robot
+
+A continuación, se presenta un ejemplo de un brazo robótico simple, implementado utilizando el DSL de Beam Bots:
+
+[source, elixir]
+----
+defmodule MyRobot do
+  use BB
+
+  defmodule MoveCommand do
+    use BB.Command
+
+    alias BB.Robot.State, as: RobotState
+
+    @impl BB.Command
+    def handle_command(goal, context, state) do
+      positions =
+        goal
+        |> Enum.into(%{})
+        |> Map.take([:shoulder, :elbow])
+
+      :ok = RobotState.set_positions(context.robot_state, positions)
+
+      new_positions = RobotState.get_all_positions(context.robot_state)
+      {:stop, :normal, %{state | result: {:ok, new_positions}}}
+    end
+
+    @impl BB.Command
+    def result(%{result: result}), do: result
+  end
+
+  commands do
+    command :arm do
+      handler BB.Command.Arm
+      allowed_states [:disarmed]
+    end
+
+    command :disarm do
+      handler BB.Command.Disarm
+      allowed_states [:idle]
+    end
+
+    command :move do
+      handler MoveCommand
+      allowed_states [:idle]
+    end
+  end
+
+  topology do
+    link :base do
+      joint :shoulder do
+        type :revolute
+
+        axis do
+        end
+
+        limit do
+          effort(~u(50 newton_meter))
+          velocity(~u(2 radian_per_second))
+        end
+
+        link :upper_arm do
+          joint :elbow do
+            type :revolute
+
+            axis do
+            end
+
+            limit do
+              effort(~u(30 newton_meter))
+              velocity(~u(3 radian_per_second))
+            end
+
+            link :forearm do
+            end
+          end
+        end
+      end
+    end
+  end
+end
+----
+
+El módulo `MoveCommand` define un comando de movimiento para el robot, el cual se registra en el bloque `commands`. A continuación, se define la topología del robot, compuesta por enlaces y articulaciones. Cada definición de articulación debe incluir un tipo, un eje y sus límites.
+
+Para ejecutar la aplicación del robot, se debe integrar en el archivo `application.ex` de la siguiente manera:
+
+[source, elixir]
+----
+defmodule MyApp.Application do
+  use Application
+
+  @impl true
+  def start(_type, _args) do
+    children = [
+      MyRobot
+    ]
+
+    opts = [strategy: :one_for_one, name: MyApp.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+end
+----
+
+=== Simulación
+
+La aplicación también puede ser probada en modo simulación. Para ello, se inicia el entorno del proyecto con `iex -S mix`, y luego se ejecutan los siguientes comandos:
+
+[source, elixir]
+----
+# iniciar proceso de simulación
+{:ok, pid} = MyRobot.start_link(simulation: :kinematic)
+
+# armar robot
+{:ok, cmd} = MyRobot.arm()
+{:ok, :armed, _} = BB.Command.await(cmd)
+
+# ejemplo de comando de movimiento
+{:ok, cmd} = MyRobot.move(shoulder: 0.5, elbow: 1.0)
+{:ok, positions} = BB.Command.await(cmd)
+----
+
+El último comando muestra las posiciones de las articulaciones del robot, luego de esperar a que el comando de movimiento termine.
+
+== Referencias
+
+* https://hexdocs.pm/bb/readme.html

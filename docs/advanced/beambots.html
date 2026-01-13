@@ -270,7 +270,235 @@
 </aside>
 <article class="doc">
 <h1 class="page">Beam Bots</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="_images/beambots.png" alt="beambots">
+</div>
+</div>
+<div class="paragraph">
+<p>Beam Bots es un framework de Elixir diseñado para desarrollar aplicaciones robóticas tolerantes a fallos, aprovechando los principios de OTP.</p>
+</div>
+<div class="paragraph">
+<p>Este framework se basa en un lenguaje específico de dominio (DSL) construido mediante el uso de macros. El resultado es un código que se asemeja a una especificación, reflejando directamente la estructura física del robot.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="comparación-con-ros2"><a class="anchor" href="#comparación-con-ros2"></a>Comparación con ROS2</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Beam Bots ofrece un enfoque similar a ROS2 para la comunicación y la gestión de tareas, pero utilizando las capacidades nativas del ecosistema BEAM. A continuación, se presenta una comparación de conceptos clave:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Concepto en ROS2</th>
+<th class="tableblock halign-left valign-top">Equivalente en Elixir/Beam Bots</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Comunicación publish/subscribe entre nodos</strong></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>Phoenix.PubSub</code>, <code>Registry</code> para el registro de procesos, y la capacidad inherente de <strong>process messaging</strong> de Erlang/Elixir.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Servicios para interacciones síncronas de solicitud/respuesta</strong></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>GenServer.call/3</code> es el mecanismo estándar para realizar llamadas síncronas a un proceso <code>GenServer</code>, emulando un servicio.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Acciones para tareas de larga duración con retroalimentación de progreso</strong></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>Task.Supervisor</code> gestionando procesos <code>Task</code> que pueden enviar mensajes de progreso al proceso solicitante.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Nodos de ciclo de vida para gestionar transiciones de estado de forma explícita</strong></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>GenServer</code> con transiciones de estado definidas, permitiendo la implementación de máquinas de estado robustas.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Sistema de parámetros para configuración dinámica en tiempo de ejecución</strong></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>ETS</code> (Erlang Term Storage) para almacenar y acceder a configuraciones compartidas y modificables en caliente.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crear-un-proyecto"><a class="anchor" href="#crear-un-proyecto"></a>Crear un proyecto</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Para iniciar un nuevo proyecto con Beam Bots, ejecuta los siguientes comandos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">mix igniter.new
+mix igniter.install bb</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Igniter te guiará durante el proceso de configuración del proyecto, generando los archivos necesarios e instalando las dependencias.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ejemplo-de-robot"><a class="anchor" href="#ejemplo-de-robot"></a>Ejemplo de Robot</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A continuación, se presenta un ejemplo de un brazo robótico simple, implementado utilizando el DSL de Beam Bots:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule MyRobot do
+  use BB
 
+  defmodule MoveCommand do
+    use BB.Command
+
+    alias BB.Robot.State, as: RobotState
+
+    @impl BB.Command
+    def handle_command(goal, context, state) do
+      positions =
+        goal
+        |&gt; Enum.into(%{})
+        |&gt; Map.take([:shoulder, :elbow])
+
+      :ok = RobotState.set_positions(context.robot_state, positions)
+
+      new_positions = RobotState.get_all_positions(context.robot_state)
+      {:stop, :normal, %{state | result: {:ok, new_positions}}}
+    end
+
+    @impl BB.Command
+    def result(%{result: result}), do: result
+  end
+
+  commands do
+    command :arm do
+      handler BB.Command.Arm
+      allowed_states [:disarmed]
+    end
+
+    command :disarm do
+      handler BB.Command.Disarm
+      allowed_states [:idle]
+    end
+
+    command :move do
+      handler MoveCommand
+      allowed_states [:idle]
+    end
+  end
+
+  topology do
+    link :base do
+      joint :shoulder do
+        type :revolute
+
+        axis do
+        end
+
+        limit do
+          effort(~u(50 newton_meter))
+          velocity(~u(2 radian_per_second))
+        end
+
+        link :upper_arm do
+          joint :elbow do
+            type :revolute
+
+            axis do
+            end
+
+            limit do
+              effort(~u(30 newton_meter))
+              velocity(~u(3 radian_per_second))
+            end
+
+            link :forearm do
+            end
+          end
+        end
+      end
+    end
+  end
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El módulo <code>MoveCommand</code> define un comando de movimiento para el robot, el cual se registra en el bloque <code>commands</code>. A continuación, se define la topología del robot, compuesta por enlaces y articulaciones. Cada definición de articulación debe incluir un tipo, un eje y sus límites.</p>
+</div>
+<div class="paragraph">
+<p>Para ejecutar la aplicación del robot, se debe integrar en el archivo <code>application.ex</code> de la siguiente manera:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defmodule MyApp.Application do
+  use Application
+
+  @impl true
+  def start(_type, _args) do
+    children = [
+      MyRobot
+    ]
+
+    opts = [strategy: :one_for_one, name: MyApp.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+end</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="simulación"><a class="anchor" href="#simulación"></a>Simulación</h3>
+<div class="paragraph">
+<p>La aplicación también puede ser probada en modo simulación. Para ello, se inicia el entorno del proyecto con <code>iex -S mix</code>, y luego se ejecutan los siguientes comandos:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir"># iniciar proceso de simulación
+{:ok, pid} = MyRobot.start_link(simulation: :kinematic)
+
+# armar robot
+{:ok, cmd} = MyRobot.arm()
+{:ok, :armed, _} = BB.Command.await(cmd)
+
+# ejemplo de comando de movimiento
+{:ok, cmd} = MyRobot.move(shoulder: 0.5, elbow: 1.0)
+{:ok, positions} = BB.Command.await(cmd)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El último comando muestra las posiciones de las articulaciones del robot, luego de esperar a que el comando de movimiento termine.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://hexdocs.pm/bb/readme.html" class="bare">https://hexdocs.pm/bb/readme.html</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="soleil.html">Soleil</a></span>
   <span class="next"><a href="grisp.html">GRiSP</a></span>
