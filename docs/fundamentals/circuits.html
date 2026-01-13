@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Fundamentos de Circuitos :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/fundamentals/circuits.html">
+    <link rel="prev" href="electricity.html">
+    <link rel="next" href="components.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos e Historia</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="history.html">Historia de la Robótica y Automatización</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="circuits.html">Fundamentos de Circuitos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tools.html">Herramientas</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/basicstamp.html">Parallax Basic Stamp</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/stm32.html">STM32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/jetson.html">Nvidia Jetson &amp; AMD Kria</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/fpga.html">FPGA</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/asic.html">ASIC</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/iot.html">IOT</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/grafana.html">Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/dashboards.html">Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/cad.html">Herramientas de Computer Asisted Design (CAD)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/stores.html">Tiendas</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sistemas Operativos en Tiempo Real (RTOS)</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../os/rtos.html">Sistemas Operativos en Tiempo Real</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/popcorn.html">Elixir PopCorn</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/remote.html">Conexión Remota</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/tagboard.html">Proyecto: Tagboard</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware Avanzado</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/circuits.html">Elixir Circuits</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/soleil.html">Soleil</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/beambots.html">Beam Bots</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/grisp.html">GRiSP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Energía Solar</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/solar.html">¿Qué es la Energía Solar?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/components.html">Componentes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Fundamentos e Historia</li>
+    <li><a href="circuits.html">Fundamentos de Circuitos</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/fundamentals/pages/circuits.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Fundamentos de Circuitos</h1>
+<div class="sect1">
+<h2 id="circuito-abierto"><a class="anchor" href="#circuito-abierto"></a>Circuito Abierto</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="circuito-cerrado"><a class="anchor" href="#circuito-cerrado"></a>Circuito Cerrado</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="conexión-en-serie"><a class="anchor" href="#conexión-en-serie"></a>Conexión en Serie</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="conexión-en-paralelo"><a class="anchor" href="#conexión-en-paralelo"></a>Conexión en Paralelo</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="malla"><a class="anchor" href="#malla"></a>Malla</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="nodo"><a class="anchor" href="#nodo"></a>Nodo</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="ley-de-ohm"><a class="anchor" href="#ley-de-ohm"></a>Ley de Ohm</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="potencia"><a class="anchor" href="#potencia"></a>Potencia</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="leyes-de-kirchhoff"><a class="anchor" href="#leyes-de-kirchhoff"></a>Leyes de Kirchhoff</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="electricity.html">Fundamentos de Electricidad</a></span>
+  <span class="next"><a href="components.html">Componentes Electrónicos</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

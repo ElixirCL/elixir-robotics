@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Herramientas :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/fundamentals/tools.html">
+    <link rel="prev" href="components.html">
+    <link rel="next" href="programming.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos e Historia</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="history.html">Historia de la Robótica y Automatización</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="circuits.html">Fundamentos de Circuitos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="tools.html">Herramientas</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/basicstamp.html">Parallax Basic Stamp</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/stm32.html">STM32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/jetson.html">Nvidia Jetson &amp; AMD Kria</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/fpga.html">FPGA</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/asic.html">ASIC</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/iot.html">IOT</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/grafana.html">Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/dashboards.html">Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/cad.html">Herramientas de Computer Asisted Design (CAD)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/stores.html">Tiendas</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sistemas Operativos en Tiempo Real (RTOS)</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../os/rtos.html">Sistemas Operativos en Tiempo Real</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/popcorn.html">Elixir PopCorn</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/remote.html">Conexión Remota</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/tagboard.html">Proyecto: Tagboard</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware Avanzado</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/circuits.html">Elixir Circuits</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/soleil.html">Soleil</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/beambots.html">Beam Bots</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/grisp.html">GRiSP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Energía Solar</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/solar.html">¿Qué es la Energía Solar?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/components.html">Componentes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Fundamentos e Historia</li>
+    <li><a href="tools.html">Herramientas</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/fundamentals/pages/tools.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Herramientas</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>La fabricación de circuitos y trabajar con electrónica requiere de múltiples herramientas
+disponibles en el mercado con variado precio y calidad. En este capítulo se mostrarán
+las más importantes.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/kit.avif" alt="kit">
+</div>
+<div class="title">Figure 1. Kit de Soldadura de Circuitos</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="protoboard-breadboard"><a class="anchor" href="#protoboard-breadboard"></a>Protoboard / Breadboard</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La protoboard o breadboard (tabla de pan) es una herramienta escencial para crear prototipos
+sin soldadura. Permite iterar rápidamente distintas configuraciones.
+Las hay de distintos tamaños y colores.</p>
+</div>
+<div class="paragraph">
+<p>En inglés, breadboard significa literalmente "tabla para cortar pan".
+Antes de existir las placas de prueba modernas, muchos ingenieros y aficionados
+probaban circuitos usando tablas de madera reales, como las que se usaban en la
+cocina para cortar pan.
+Clavaban o atornillaban componentes y cables sobre esas tablas para hacer pruebas rápidas.</p>
+</div>
+<div class="paragraph">
+<p>El nombre técnico moderno es "solderless breadboard" (breadboard sin soldadura),
+pero casi nadie usa el nombre completo.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/breadboard.png" alt="breadboard">
+</div>
+<div class="title">Figure 2. Breadboard Primigenia</div>
+</div>
+<div class="paragraph">
+<p>Aunque por fuera solo ves agujeros, por dentro hay tiras metálicas que conectan ciertos puntos.</p>
+</div>
+<div class="paragraph">
+<p><strong>Filas centrales (zona de componentes)</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Están divididas en dos bloques separados por una ranura central.</p>
+</li>
+<li>
+<p>Cada fila de 5 agujeros (o puntos) está conectada internamente en horizontal.</p>
+</li>
+<li>
+<p>La ranura central sirve para colocar circuitos integrados (IC), de modo que cada pata quede en filas distintas.</p>
+</li>
+<li>
+<p>Si conectas un cable en un agujero de una fila, todos los agujeros de esa fila están eléctricamente unidos.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Líneas laterales (alimentación)</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Son columnas largas a los lados.</p>
+</li>
+<li>
+<p>Se usan para voltaje o <strong>VCC</strong> (+) y tierra o <strong>GND</strong> (−).</p>
+</li>
+<li>
+<p>El protoboard es para bajo voltaje, típicamente ≤ 12 V.</p>
+</li>
+<li>
+<p>Normalmente están marcadas con líneas roja y azul.</p>
+</li>
+<li>
+<p>En algunos protoboards están cortadas a la mitad, así que no siempre están conectadas de extremo a extremo.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/protoboard.webp" alt="protoboard">
+</div>
+<div class="title">Figure 3. Protoboard Actual</div>
+</div>
+<div class="sect2">
+<h3 id="placas-perforadas"><a class="anchor" href="#placas-perforadas"></a>Placas Perforadas</h3>
+<div class="paragraph">
+<p>Las placas perforadas son el siguiente escalón de utilizar breadboards, ya que permiten
+soldar los componentes de forma permanente. Sin embargo son recomendados para un solo uso
+ya que se deben conectar los componentes de forma más engorrosa que utilizando una placa
+de baquelita impresa.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/perforada.webp" alt="perforada">
+</div>
+<div class="title">Figure 4. Placa Perforada</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="placas-de-baquelita"><a class="anchor" href="#placas-de-baquelita"></a>Placas de Baquelita</h3>
+<div class="paragraph">
+<p>Placa para tarjetas de circuito impreso (pcb).
+Esta placa puede tener laminado de cobre por una sola cara o ambas.</p>
+</div>
+<div class="paragraph">
+<p>Son utilizadas para la elaboración de circuitos más resistentes que
+con protoboards. Normalmente cuando se desea producir circuitos en mayor cantidad y profesionalidad.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/placa.webp" alt="placa">
+</div>
+<div class="title">Figure 5. Placa de Baquelita</div>
+</div>
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/PAEWLyJlp60?si=rHsXzJbxEZZYtT0l" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<div class="sect3">
+<h4 id="brocas-pcb"><a class="anchor" href="#brocas-pcb"></a>Brocas PCB</h4>
+<div class="paragraph">
+<p>Para hacer orificios en las placas se necesitan brocas
+de tamaños pequeños.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/brocas.webp" alt="brocas">
+</div>
+<div class="title">Figure 6. Brocas para PCB</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="multímetro"><a class="anchor" href="#multímetro"></a>Multímetro</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Es una herramienta práctica para el uso electricista y electrónico.
+Es fácil de operar y las lecturas se indican directamente en la pantalla.
+Se puede utilizar para revisar todos los tipos de tarjetas de circuitos.
+El multímetro sirve para medir magnitudes eléctricas básicas y verificar el
+estado de componentes y circuitos. Es una de las herramientas más importantes en
+electrónica y electricidad.</p>
+</div>
+<div class="paragraph">
+<p>¿Para qué se usa en la práctica?</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Revisar pilas y baterías</p>
+</li>
+<li>
+<p>Detectar cortocircuitos</p>
+</li>
+<li>
+<p>Diagnosticar fallas electrónicas</p>
+</li>
+<li>
+<p>Medir fuentes de alimentación</p>
+</li>
+<li>
+<p>Verificar componentes antes de soldar</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/multimetro.webp" alt="multimetro">
+</div>
+<div class="title">Figure 7. Multímetro</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="osciloscopio"><a class="anchor" href="#osciloscopio"></a>Osciloscopio</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Un osciloscopio sirve para ver y analizar señales eléctricas en el tiempo.
+Te permite observar cómo cambia un voltaje segundo a segundo,
+algo que no se puede ver solo con un multímetro.
+El osciloscopio no reemplaza al multímetro, lo complementa.</p>
+</div>
+<div class="paragraph">
+<p><strong>Ejemplos</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ver cómo parpadea realmente un LED</p>
+</li>
+<li>
+<p>Comprobar si un Arduino está generando PWM</p>
+</li>
+<li>
+<p>Ajustar una fuente de alimentación</p>
+</li>
+<li>
+<p>Analizar señales de sensores</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/osciloscopio.webp" alt="osciloscopio">
+</div>
+<div class="title">Figure 8. Osciloscopio Digital</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="fuente-de-poder"><a class="anchor" href="#fuente-de-poder"></a>Fuente de Poder</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Adicional a las baterías y enchufes, se puede tener una fuente de poder regulable
+que permita utilizar distintos voltajes y corrientes. Están diseñadas pensando en la flexibilidad.</p>
+</div>
+<div class="paragraph">
+<p>Permite operaciones de salida tanto en serie como en paralelo,
+y un control ajustable de tres vías, donde CH1 y CH2 ofrecen salidas de 0 a 30V,
+mientras que CH3 agrega versatilidad con tres escalones de voltaje: 2.5V, 3.3V y 5V.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/fuente.webp" alt="fuente">
+</div>
+<div class="title">Figure 9. Fuente de Poder Regulable</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="protección-anti-estática"><a class="anchor" href="#protección-anti-estática"></a>Protección Anti Estática</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La protección anti estática es importante para evitar quemar los circuitos
+con electricidad estática almacenada en el cuerpo humano. Siempre se recomienda
+conectarse a tierra antes de manipular dispositivos electrónicos.</p>
+</div>
+<div class="sect2">
+<h3 id="carpeta-de-silicona"><a class="anchor" href="#carpeta-de-silicona"></a>Carpeta de Silicona</h3>
+<div class="paragraph">
+<p>La carpeta de silicona antiestática y antideslizante es de alta resistencia al
+calor para trabajos de electrónica y soldadura.</p>
+</div>
+<div class="paragraph">
+<p>Está construida en silicona espacialmente moldeada y formada con regletas de medición,
+identificación y compartimentos organizadores que le permitirán separar
+pequeños componentes o tornillos para facilitar el desarmado y
+posterior armado de los dispositivos intervenidos.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/silicon.webp" alt="silicon">
+</div>
+<div class="title">Figure 10. Carpeta de Silicona</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pulsera"><a class="anchor" href="#pulsera"></a>Pulsera</h3>
+<div class="paragraph">
+<p>La pulsera antiestática permite una conexión a tierra constante.
+Especial para trabajos con circuitos.
+La parte metálica debe ser conectada a un elemento conectado a tierra.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/pulsera.webp" alt="pulsera">
+</div>
+<div class="title">Figure 11. Pulsera Antiestática</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pinzas"><a class="anchor" href="#pinzas"></a>Pinzas</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Estas pinzas están hechas de acero resistente al ácido y la corrosión.
+Tienen buena elasticidad y son antimagnéticas.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/pinzas.webp" alt="pinzas">
+</div>
+<div class="title">Figure 12. Pinzas</div>
+</div>
+<div class="paragraph">
+<p>Esta herramienta se usa para extraer componentes electrónicos DIP (Dual in-line package).
+Por ejemplo, serviría para extraer el microcontrolador de una placa Arduino UNO.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/extractor.webp" alt="extractor">
+</div>
+<div class="title">Figure 13. Pinza Extractora</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="alicates-y-crimpadoras"><a class="anchor" href="#alicates-y-crimpadoras"></a>Alicates y Crimpadoras</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Los alicates y crimpadoras son herramientas útiles para pelar y cortar cables
+e instalar cabezales de los distintos terminales. Se recomienda la utilización
+de lentes de seguridad al usarlos ya que pueden saltar pedazos de cable
+al usarlos.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/alicate.webp" alt="alicate">
+</div>
+<div class="title">Figure 14. Alicate Corta Cables</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/pelacables.webp" alt="pelacables">
+</div>
+<div class="title">Figure 15. Alicate Pela Cables</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/crimpadora.webp" alt="crimpadora">
+</div>
+<div class="title">Figure 16. Crimpadora Dupont</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="cautín"><a class="anchor" href="#cautín"></a>Cautín</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El cautín es una herramienta utilizada para derretir el estaño y fijar
+los componentes electrónicos a un circuito. Es similar a un lápiz y genera
+un calor entre 180°C a 480°C (dependiendo del cautín).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/cautin.webp" alt="cautin">
+</div>
+<div class="title">Figure 17. Cautín con Pantalla Integrada</div>
+</div>
+<div class="sect2">
+<h3 id="limpiador-de-punta"><a class="anchor" href="#limpiador-de-punta"></a>Limpiador de Punta</h3>
+<div class="paragraph">
+<p>El limpiador de punta es el compañero ideal para el cautín. Mantiene la punta siempre limpia,
+permitiendo que el acabado de la soldadura quede limpio y profesional.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/limpiador.webp" alt="limpiador">
+</div>
+<div class="title">Figure 18. Limpiador de Punta</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tercera-mano"><a class="anchor" href="#tercera-mano"></a>Tercera Mano</h3>
+<div class="paragraph">
+<p>La herramienta es conocida como “Tercera Mano” y sirve para sostener la
+pieza que se va a soldar, por ejemplo una placa de circuito impreso.
+La herramienta cuenta con porta cautín y con lupa.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/tercera.webp" alt="tercera">
+</div>
+<div class="title">Figure 19. Tercera Mano</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="estaño"><a class="anchor" href="#estaño"></a>Estaño</h3>
+<div class="paragraph">
+<p>El estaño es utilizado para fijar los elementos al circuito, se utiliza
+normalmente como rollos de soldadura derretibles con calor.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/estano.webp" alt="estano">
+</div>
+<div class="title">Figure 20. Rollo de Soldadura de Estaño</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pasta-para-soldar-flux"><a class="anchor" href="#pasta-para-soldar-flux"></a>Pasta para Soldar (Flux)</h3>
+<div class="paragraph">
+<p>La pasta para soldar, también conocida como flux, es utilizada para la limpieza
+de la punta del cautín y los componentes a soldar. Permite una fijación del estaño
+al eliminar impurezas como polvo antes de aplicar el estaño.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Limpia el metal: elimina óxidos e impurezas de la superficie.</p>
+</li>
+<li>
+<p>Mejora la adhesión: permite que el estaño o soldadura fluya y se adhiera mejor.</p>
+</li>
+<li>
+<p>Evita la oxidación durante el calentamiento.</p>
+</li>
+<li>
+<p>Reduce defectos como soldaduras frías o porosas.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>También se recomienda limpiar los residuos después de soldar
+(con alcohol isopropílico) para evitar corrosión o fallas.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/pasta.webp" alt="pasta">
+</div>
+<div class="title">Figure 21. Pasta Flux para Soldar</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="malla-para-desoldar"><a class="anchor" href="#malla-para-desoldar"></a>Malla para Desoldar</h3>
+<div class="paragraph">
+<p>Malla de Cobre para Desoldar componentes electrónicos.
+Este rollo de malla de cobre para desoldar tiene un ancho de
+2 milímetros y un largo de 1,5 metros.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/desoldar.webp" alt="desoldar">
+</div>
+<div class="title">Figure 22. Malla para Desoldar</div>
+</div>
+<div class="sect3">
+<h4 id="bomba-de-estaño"><a class="anchor" href="#bomba-de-estaño"></a>Bomba de Estaño</h4>
+<div class="paragraph">
+<p>Este es el clásico extractor de soldadura o bomba de estaño,
+que por dentro tiene un mecanismo con un
+resorte, y lo usa para extraer el estaño. Ideal para PCB.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/tools/extractor-soldadura.webp" alt="extractor soldadura">
+</div>
+<div class="title">Figure 23. Bomba de Estaño</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.analogictips.com/breadboards-evolve-to-meet-21st-century-design-needs-part-1-the-ancient-past/" class="bare">https://www.analogictips.com/breadboards-evolve-to-meet-21st-century-design-needs-part-1-the-ancient-past/</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/carpeta-silicona-zd-154-1b" class="bare">https://altronics.cl/carpeta-silicona-zd-154-1b</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/antistatic-esd-wristband" class="bare">https://altronics.cl/antistatic-esd-wristband</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/pinzas-esd-10_15" class="bare">https://altronics.cl/pinzas-esd-10_15</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/extractor-componentes-dip" class="bare">https://altronics.cl/extractor-componentes-dip</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/alicate-cortante-plato-170" class="bare">https://altronics.cl/alicate-cortante-plato-170</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/crimpadora-dupont" class="bare">https://altronics.cl/crimpadora-dupont</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/alicate-pelacables-tuosen-11390" class="bare">https://altronics.cl/alicate-pelacables-tuosen-11390</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/set-brocas-pcb-10pcs" class="bare">https://altronics.cl/set-brocas-pcb-10pcs</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/cautin-ajustable-80w-lcd" class="bare">https://altronics.cl/cautin-ajustable-80w-lcd</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/rollo-soldadura-1mm-sanki" class="bare">https://altronics.cl/rollo-soldadura-1mm-sanki</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/extractor-soldadura-metalico" class="bare">https://altronics.cl/extractor-soldadura-metalico</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/pasta-soldar-zd-170-100g" class="bare">https://altronics.cl/pasta-soldar-zd-170-100g</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/protoboard-1660-ptos-zy-204" class="bare">https://altronics.cl/protoboard-1660-ptos-zy-204</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/placa-pcb-una-cara-100x60x14-fr4" class="bare">https://altronics.cl/placa-pcb-una-cara-100x60x14-fr4</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/placa-perforada-pcb-single-side-5x7cm-baquelita" class="bare">https://altronics.cl/placa-perforada-pcb-single-side-5x7cm-baquelita</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/multimeter-xl-830l" class="bare">https://altronics.cl/multimeter-xl-830l</a></p>
+</li>
+<li>
+<p><a href="https://altronics.cl/osciloscopio-digital-dso138" class="bare">https://altronics.cl/osciloscopio-digital-dso138</a></p>
+</li>
+<li>
+<p><a href="https://afel.cl/products/fuente-de-poder-regulable-30v-3a-3-canales-kd3303d-korad" class="bare">https://afel.cl/products/fuente-de-poder-regulable-30v-3a-3-canales-kd3303d-korad</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="components.html">Componentes Electrónicos</a></span>
+  <span class="next"><a href="programming.html">Lenguajes de Programación</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

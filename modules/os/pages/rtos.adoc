@@ -20,8 +20,8 @@
 
 == R-Thread
 
-https://www.arduinolibraries.info/libraries/rt-thread
-https://www.rt-thread.io/
+- https://www.arduinolibraries.info/libraries/rt-thread
+- https://www.rt-thread.io/
 
 == Eclipse Thread-X
 
@@ -29,8 +29,8 @@ https://www.rt-thread.io/
 
 == ROS
 
-https://www.ros.org/
+- https://www.ros.org/
 
 == Nuttx
 
-https://nuttx.apache.org/
+- https://nuttx.apache.org/

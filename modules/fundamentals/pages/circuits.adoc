@@ -1,0 +1,19 @@
+= Fundamentos de Circuitos
+
+== Circuito Abierto
+
+== Circuito Cerrado
+
+== Conexión en Serie 
+
+== Conexión en Paralelo
+
+== Malla 
+
+== Nodo 
+
+== Ley de Ohm
+
+== Potencia
+
+== Leyes de Kirchhoff

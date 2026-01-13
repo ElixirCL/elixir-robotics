@@ -30,7 +30,7 @@
 
 == EasyEDA
 
-https://easyeda.com/
+- https://easyeda.com/
 
 == Impresión de PCB
 

@@ -1,0 +1,277 @@
+= Herramientas
+
+La fabricación de circuitos y trabajar con electrónica requiere de múltiples herramientas 
+disponibles en el mercado con variado precio y calidad. En este capítulo se mostrarán 
+las más importantes.
+
+.Kit de Soldadura de Circuitos
+image::tools/kit.avif[]
+
+== Protoboard / Breadboard
+
+La protoboard o breadboard (tabla de pan) es una herramienta escencial para crear prototipos
+sin soldadura. Permite iterar rápidamente distintas configuraciones.
+Las hay de distintos tamaños y colores.
+
+En inglés, breadboard significa literalmente "tabla para cortar pan".
+Antes de existir las placas de prueba modernas, muchos ingenieros y aficionados 
+probaban circuitos usando tablas de madera reales, como las que se usaban en la 
+cocina para cortar pan.
+Clavaban o atornillaban componentes y cables sobre esas tablas para hacer pruebas rápidas.
+
+El nombre técnico moderno es "solderless breadboard" (breadboard sin soldadura), 
+pero casi nadie usa el nombre completo.
+
+.Breadboard Primigenia
+image::tools/breadboard.png[]
+
+Aunque por fuera solo ves agujeros, por dentro hay tiras metálicas que conectan ciertos puntos.
+
+*Filas centrales (zona de componentes)*:
+
+- Están divididas en dos bloques separados por una ranura central.
+- Cada fila de 5 agujeros (o puntos) está conectada internamente en horizontal.
+- La ranura central sirve para colocar circuitos integrados (IC), de modo que cada pata quede en filas distintas.
+- Si conectas un cable en un agujero de una fila, todos los agujeros de esa fila están eléctricamente unidos.
+
+*Líneas laterales (alimentación)*:
+
+- Son columnas largas a los lados.
+- Se usan para voltaje o *VCC* (+) y tierra o *GND* (−).
+- El protoboard es para bajo voltaje, típicamente ≤ 12 V.
+- Normalmente están marcadas con líneas roja y azul.
+- En algunos protoboards están cortadas a la mitad, así que no siempre están conectadas de extremo a extremo.
+
+.Protoboard Actual
+image::tools/protoboard.webp[]
+
+=== Placas Perforadas
+
+Las placas perforadas son el siguiente escalón de utilizar breadboards, ya que permiten 
+soldar los componentes de forma permanente. Sin embargo son recomendados para un solo uso
+ya que se deben conectar los componentes de forma más engorrosa que utilizando una placa 
+de baquelita impresa.
+
+.Placa Perforada
+image::tools/perforada.webp[]
+
+=== Placas de Baquelita
+
+Placa para tarjetas de circuito impreso (pcb).
+Esta placa puede tener laminado de cobre por una sola cara o ambas.
+
+Son utilizadas para la elaboración de circuitos más resistentes que 
+con protoboards. Normalmente cuando se desea producir circuitos en mayor cantidad y profesionalidad.
+
+.Placa de Baquelita
+image::tools/placa.webp[]
+
+++++
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/PAEWLyJlp60?si=rHsXzJbxEZZYtT0l" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
+
+==== Brocas PCB
+
+Para hacer orificios en las placas se necesitan brocas 
+de tamaños pequeños.
+
+.Brocas para PCB
+image::tools/brocas.webp[]
+
+== Multímetro
+
+Es una herramienta práctica para el uso electricista y electrónico. 
+Es fácil de operar y las lecturas se indican directamente en la pantalla. 
+Se puede utilizar para revisar todos los tipos de tarjetas de circuitos.
+El multímetro sirve para medir magnitudes eléctricas básicas y verificar el 
+estado de componentes y circuitos. Es una de las herramientas más importantes en 
+electrónica y electricidad.
+
+¿Para qué se usa en la práctica?
+
+- Revisar pilas y baterías
+- Detectar cortocircuitos
+- Diagnosticar fallas electrónicas
+- Medir fuentes de alimentación
+- Verificar componentes antes de soldar
+
+.Multímetro
+image::tools/multimetro.webp[]
+
+== Osciloscopio
+
+Un osciloscopio sirve para ver y analizar señales eléctricas en el tiempo.
+Te permite observar cómo cambia un voltaje segundo a segundo, 
+algo que no se puede ver solo con un multímetro.
+El osciloscopio no reemplaza al multímetro, lo complementa.
+
+*Ejemplos*:
+
+- Ver cómo parpadea realmente un LED
+- Comprobar si un Arduino está generando PWM
+- Ajustar una fuente de alimentación
+- Analizar señales de sensores
+
+.Osciloscopio Digital
+image::tools/osciloscopio.webp[]
+
+== Fuente de Poder 
+
+Adicional a las baterías y enchufes, se puede tener una fuente de poder regulable
+que permita utilizar distintos voltajes y corrientes. Están diseñadas pensando en la flexibilidad.
+
+Permite operaciones de salida tanto en serie como en paralelo, 
+y un control ajustable de tres vías, donde CH1 y CH2 ofrecen salidas de 0 a 30V, 
+mientras que CH3 agrega versatilidad con tres escalones de voltaje: 2.5V, 3.3V y 5V.
+
+.Fuente de Poder Regulable
+image::tools/fuente.webp[]
+
+== Protección Anti Estática
+
+La protección anti estática es importante para evitar quemar los circuitos 
+con electricidad estática almacenada en el cuerpo humano. Siempre se recomienda 
+conectarse a tierra antes de manipular dispositivos electrónicos.
+
+=== Carpeta de Silicona
+
+La carpeta de silicona antiestática y antideslizante es de alta resistencia al 
+calor para trabajos de electrónica y soldadura.
+
+Está construida en silicona espacialmente moldeada y formada con regletas de medición, 
+identificación y compartimentos organizadores que le permitirán separar 
+pequeños componentes o tornillos para facilitar el desarmado y 
+posterior armado de los dispositivos intervenidos.
+
+.Carpeta de Silicona
+image::tools/silicon.webp[]
+
+=== Pulsera
+
+La pulsera antiestática permite una conexión a tierra constante.
+Especial para trabajos con circuitos.
+La parte metálica debe ser conectada a un elemento conectado a tierra.
+
+.Pulsera Antiestática
+image::tools/pulsera.webp[]
+
+== Pinzas 
+
+Estas pinzas están hechas de acero resistente al ácido y la corrosión.
+Tienen buena elasticidad y son antimagnéticas.
+
+.Pinzas
+image::tools/pinzas.webp[]
+
+Esta herramienta se usa para extraer componentes electrónicos DIP (Dual in-line package). 
+Por ejemplo, serviría para extraer el microcontrolador de una placa Arduino UNO.
+
+.Pinza Extractora
+image::tools/extractor.webp[]
+
+== Alicates y Crimpadoras
+
+Los alicates y crimpadoras son herramientas útiles para pelar y cortar cables 
+e instalar cabezales de los distintos terminales. Se recomienda la utilización
+de lentes de seguridad al usarlos ya que pueden saltar pedazos de cable 
+al usarlos.
+
+.Alicate Corta Cables
+image::tools/alicate.webp[]
+
+.Alicate Pela Cables
+image::tools/pelacables.webp[]
+
+.Crimpadora Dupont
+image::tools/crimpadora.webp[]
+
+== Cautín
+
+El cautín es una herramienta utilizada para derretir el estaño y fijar 
+los componentes electrónicos a un circuito. Es similar a un lápiz y genera
+un calor entre 180°C a 480°C (dependiendo del cautín).
+
+.Cautín con Pantalla Integrada
+image::tools/cautin.webp[]
+
+=== Limpiador de Punta
+
+El limpiador de punta es el compañero ideal para el cautín. Mantiene la punta siempre limpia,
+permitiendo que el acabado de la soldadura quede limpio y profesional.
+
+.Limpiador de Punta
+image::tools/limpiador.webp[]
+
+=== Tercera Mano
+
+La herramienta es conocida como “Tercera Mano” y sirve para sostener la 
+pieza que se va a soldar, por ejemplo una placa de circuito impreso.
+La herramienta cuenta con porta cautín y con lupa.
+
+.Tercera Mano
+image::tools/tercera.webp[]
+
+=== Estaño
+
+El estaño es utilizado para fijar los elementos al circuito, se utiliza 
+normalmente como rollos de soldadura derretibles con calor.
+
+.Rollo de Soldadura de Estaño
+image::tools/estano.webp[]
+
+=== Pasta para Soldar (Flux)
+
+La pasta para soldar, también conocida como flux, es utilizada para la limpieza
+de la punta del cautín y los componentes a soldar. Permite una fijación del estaño
+al eliminar impurezas como polvo antes de aplicar el estaño.
+
+- Limpia el metal: elimina óxidos e impurezas de la superficie.
+- Mejora la adhesión: permite que el estaño o soldadura fluya y se adhiera mejor.
+- Evita la oxidación durante el calentamiento.
+- Reduce defectos como soldaduras frías o porosas.
+
+También se recomienda limpiar los residuos después de soldar 
+(con alcohol isopropílico) para evitar corrosión o fallas.
+
+.Pasta Flux para Soldar
+image::tools/pasta.webp[]
+
+=== Malla para Desoldar
+
+Malla de Cobre para Desoldar componentes electrónicos.
+Este rollo de malla de cobre para desoldar tiene un ancho de 
+2 milímetros y un largo de 1,5 metros.
+
+.Malla para Desoldar
+image::tools/desoldar.webp[]
+
+==== Bomba de Estaño
+
+Este es el clásico extractor de soldadura o bomba de estaño, 
+que por dentro tiene un mecanismo con un 
+resorte, y lo usa para extraer el estaño. Ideal para PCB.
+
+.Bomba de Estaño
+image::tools/extractor-soldadura.webp[]
+
+== Referencias
+
+- https://www.analogictips.com/breadboards-evolve-to-meet-21st-century-design-needs-part-1-the-ancient-past/
+- https://altronics.cl/carpeta-silicona-zd-154-1b
+- https://altronics.cl/antistatic-esd-wristband
+- https://altronics.cl/pinzas-esd-10_15
+- https://altronics.cl/extractor-componentes-dip
+- https://altronics.cl/alicate-cortante-plato-170
+- https://altronics.cl/crimpadora-dupont
+- https://altronics.cl/alicate-pelacables-tuosen-11390
+- https://altronics.cl/set-brocas-pcb-10pcs
+- https://altronics.cl/cautin-ajustable-80w-lcd
+- https://altronics.cl/rollo-soldadura-1mm-sanki
+- https://altronics.cl/extractor-soldadura-metalico
+- https://altronics.cl/pasta-soldar-zd-170-100g
+- https://altronics.cl/protoboard-1660-ptos-zy-204
+- https://altronics.cl/placa-pcb-una-cara-100x60x14-fr4
+- https://altronics.cl/placa-perforada-pcb-single-side-5x7cm-baquelita
+- https://altronics.cl/multimeter-xl-830l
+- https://altronics.cl/osciloscopio-digital-dso138
+- https://afel.cl/products/fuente-de-poder-regulable-30v-3a-3-canales-kd3303d-korad

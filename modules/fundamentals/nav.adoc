@@ -2,5 +2,7 @@
 * xref:history.adoc[]
 * xref:introduction.adoc[]
 * xref:electricity.adoc[]
+* xref:circuits.adoc[]
 * xref:components.adoc[]
+* xref:tools.adoc[]
 * xref:programming.adoc[]
