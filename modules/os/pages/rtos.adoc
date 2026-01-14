@@ -2,65 +2,439 @@
 
 == FreeRTOS
 
-FreeRTOS es un kernel de sistema operativo en tiempo real (RTOS) diseñado específicamente para sistemas embebidos. Se ha adaptado a más de 40 arquitecturas de microcontroladores (incluyendo el ESP32) y se distribuye bajo licencia MIT.
+FreeRTOS es un kernel de sistema operativo en tiempo real (RTOS) 
+diseñado específicamente para sistemas incrustado. Se ha adaptado a más de 
+40 arquitecturas de microcontroladores (incluyendo el ESP32) y se distribuye bajo licencia MIT.
 
-Está diseñado para ser compacto y sencillo, y está escrito principalmente en C. FreeRTOS proporciona mecanismos para la gestión de múltiples hilos (tareas), mutexes, semáforos y temporizadores, manteniendo un bajo consumo de memoria y tiempos de ejecución rápidos.
+Está diseñado para ser compacto y sencillo, y está escrito principalmente en C. 
+FreeRTOS proporciona mecanismos para la gestión de múltiples hilos (tareas), mutexes, 
+semáforos y temporizadores, manteniendo un bajo consumo de memoria y 
+tiempos de ejecución rápidos.
+
+*Este es el framework usado por AtomVM*
+
+.Ejemplo de LED con FreeRTOS
+[source, c]
+----
+#include "FreeRTOS.h"
+#include "task.h"
+
+/* Funciones dependientes del hardware */
+void LED_Init(void);
+void LED_Toggle(void);
+
+/* Tarea de parpadeo */
+void vLedTask(void *pvParameters)
+{
+    while (1)
+    {
+        LED_Toggle();
+        vTaskDelay(pdMS_TO_TICKS(500)); // 500 ms
+    }
+}
+
+int main(void)
+{
+    /* Inicialización del hardware */
+    LED_Init();
+
+    /* Crear la tarea */
+    xTaskCreate(
+        vLedTask,          // Función de la tarea
+        "LED Task",        // Nombre
+        128,               // Tamaño del stack (words)
+        NULL,              // Parámetro
+        1,                 // Prioridad
+        NULL               // Handle
+    );
+
+    /* Iniciar el scheduler */
+    vTaskStartScheduler();
+
+    /* Nunca debería llegar aquí */
+    while (1) {}
+}
+----
 
 === Recursos
-* Tutorial en video sobre FreeRTOS: https://www.youtube.com/watch?v=kcsHsoWmbDI
-* Documentación ESP-IDF (con FreeRTOS): https://www.espressif.com/en/products/sdks/esp-idf
-* Otro tutorial en video sobre FreeRTOS: https://www.youtube.com/watch?v=s5DnmeOwkxo
-* Introducción a las tareas en FreeRTOS: https://www.youtube.com/watch?v=F321087yYy4
+
+- Tutorial en video sobre FreeRTOS: https://www.youtube.com/watch?v=kcsHsoWmbDI
+- Documentación ESP-IDF (con FreeRTOS): https://www.espressif.com/en/products/sdks/esp-idf
+- Otro tutorial en video sobre FreeRTOS: https://www.youtube.com/watch?v=s5DnmeOwkxo
+- Introducción a las tareas en FreeRTOS: https://www.youtube.com/watch?v=F321087yYy4
 
 == Zephyr
 
-Zephyr es un RTOS compacto y escalable que ofrece un mayor control sobre el sistema a cambio de una mayor complejidad. Soporta más de 170 dispositivos y es altamente configurable y modular. Permite desarrollar aplicaciones para diversas arquitecturas mediante Device Trees, utilizados para describir el hardware y la información de configuración.
+Zephyr es un RTOS compacto y escalable que ofrece un mayor control 
+sobre el sistema a cambio de una mayor complejidad. Soporta más de 170 
+dispositivos y es altamente configurable y modular. Permite desarrollar 
+aplicaciones para diversas arquitecturas mediante Device Trees, 
+utilizados para describir el hardware y la información de configuración.
 
-El proyecto se beneficia de un ciclo de vida de desarrollo seguro, que incluye validación de seguridad, fuzz testing, penetration testing y análisis de código estático.
+El proyecto se beneficia de un ciclo de vida de desarrollo seguro, que 
+incluye validación de seguridad, fuzz testing, penetration testing y análisis de código estático.
+
+Es más completo que FreeRTOS y proporciona abstracciones que permiten 
+migrar fácilmente el código de una plataforma a otra. Es decir que las aplicaciones 
+pueden ser trasladadas entre microcontroladores sin muchos cambios.
+
+.Ejemplo de LED con Zephyr
+[source, c]
+----
+#include <zephyr/kernel.h>
+#include <zephyr/device.h>
+#include <zephyr/drivers/gpio.h>
+
+/* Obtener el LED desde el DeviceTree */
+#define LED0_NODE DT_ALIAS(led0)
+
+#if !DT_NODE_HAS_STATUS(LED0_NODE, okay)
+#error "No hay un alias led0 en el DeviceTree"
+#endif
+
+static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
+
+int main(void)
+{
+    int ret;
+
+    if (!device_is_ready(led.port)) {
+        return 0;
+    }
+
+    ret = gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE);
+    if (ret < 0) {
+        return 0;
+    }
+
+    while (1) {
+        gpio_pin_toggle_dt(&led);
+        k_sleep(K_MSEC(500));  // 500 ms
+    }
+}
+----
 
 === Recursos
-* https://www.youtube.com/watch?v=Z_7y_4O7yTw
-* https://www.youtube.com/watch?v=jR5E5Kz9A-k
-* https://sirinsoftware.com/blog/rtos-wars-freertos-vs-zephyr-a-decision-you-cant-afford-to-get-wrong
-* https://www.youtube.com/watch?v=Qq5qD8OxTtY
 
-== Mbed OS
-
-Mbed OS es un sistema operativo para dispositivos IoT diseñado para un desarrollo rápido, basado en microcontroladores Arm Cortex-M de 32 bits y mantenido por Arm. La plataforma alcanzará su fin de vida (EOL) en julio de 2026, momento a partir del cual dejará de recibir mantenimiento por parte de Arm.
-
-== RT-Thread
-
-RT-Thread es un RTOS para dispositivos IoT basado en C, que cuenta con un amplio ecosistema con soporte para diversos paquetes de software, incluyendo componentes externos. Esto se facilita por el diseño modular de su kernel, donde los paquetes se compilan por separado del kernel y luego se cargan directamente durante la ejecución. Es ideal para aplicaciones más complejas y de mayor escala.
-
-=== Recursos
-* https://www.arduinolibraries.info/libraries/rt-thread
-* https://www.rt-thread.io/
+- Hola Mundo en Zephyr y ESP32: https://www.youtube.com/watch?v=Z_7y_4O7yTw
+- Introducción a Zephyr: https://www.youtube.com/watch?v=jR5E5Kz9A-k
+- FreeRTOS vs Zephyr: https://sirinsoftware.com/blog/rtos-wars-freertos-vs-zephyr-a-decision-you-cant-afford-to-get-wrong
+- Fundamentos de Zephyr: https://www.youtube.com/watch?v=Qq5qD8OxTtY
 
 == Eclipse Thread-X
 
-Eclipse Thread-X es un RTOS diseñado para sistemas profundamente embebidos que utiliza una arquitectura de picokernel. Ofrece scheduling avanzado, message passing, gestión de interrupciones y servicios de mensajería. Cuenta con certificaciones para aplicaciones donde la seguridad es crítica.
+Eclipse Thread-X es un RTOS diseñado para sistemas profundamente 
+incrustado que utiliza una arquitectura de picokernel. Ofrece 
+scheduling avanzado, message passing, gestión de interrupciones y 
+servicios de mensajería. Cuenta con certificaciones para aplicaciones 
+donde la seguridad es crítica.
+
+Microsoft ha contribuido con la tecnología Azure RTOS a la Eclipse Foundation. 
+Con la Eclipse Foundation como su nuevo hogar, Azure RTOS pasa a convertirse en 
+Eclipse ThreadX, un conjunto avanzado de herramientas para el desarrollo incrustado 
+que incluye un sistema operativo pequeño pero potente, capaz de ofrecer un 
+rendimiento fiable y ultrarrápido para dispositivos con recursos limitados.
+
+Eclipse ThreadX ofrece un sistema operativo de código abierto, 
+neutral respecto a proveedores y con certificación de seguridad para 
+aplicaciones en tiempo real, todo bajo una licencia permisiva. Se distingue como 
+el primer y único RTOS que combina de forma única estas características 
+para satisfacer una amplia gama de necesidades, beneficiando por igual a 
+adoptantes industriales, desarrolladores y usuarios finales.
+
+.Ejemplo de LED con ThreadX
+[source, c]
+----
+#include "tx_api.h"
+
+/* Definiciones */
+#define LED_THREAD_STACK_SIZE  1024
+#define LED_THREAD_PRIORITY    1
+
+TX_THREAD led_thread;
+ULONG led_thread_stack[LED_THREAD_STACK_SIZE / sizeof(ULONG)];
+
+/* Funciones dependientes del hardware */
+void LED_Init(void);
+void LED_Toggle(void);
+
+/* Thread del LED */
+void led_thread_entry(ULONG thread_input)
+{
+    while (1)
+    {
+        LED_Toggle();
+        tx_thread_sleep(TX_TIMER_TICKS_PER_SECOND / 2); // 500 ms
+    }
+}
+
+int main(void)
+{
+    /* Inicialización del hardware */
+    LED_Init();
+
+    /* Inicializar ThreadX */
+    tx_kernel_enter();
+}
+----
 
 === Recursos
-* https://threadx.io/
+
+- https://threadx.io/
+
+== FreeRTOS vs Zephyr vs ThreadX
+
+La siguiente es una tabla comparativa que ilustra los puntos claves entre las alternativas 
+de FreeRTOS, Zephyr y ThreadX.
+
+.Comparación de FreeRTOS, Zephyr y ThreadX
+[cols="1,1,1,1", options="header"]
+|===
+| Característica        | FreeRTOS                          | Zephyr                              | ThreadX
+
+| Tipo de proyecto
+| RTOS ligero
+| RTOS completo
+| RTOS comercial/industrial
+
+| Enfoque principal
+| Sistemas embebidos simples
+| IoT y sistemas embebidos complejos
+| Sistemas embebidos críticos y de alto rendimiento
+
+| Licencia
+| MIT
+| Apache 2.0
+| Comercial con opción de licencia abierta (Eclipse ThreadX)
+
+| Soporte de hardware
+| Muy amplio (MCUs)
+| Amplio (MCUs y SoCs)
+| Amplio (MCUs, SoCs y DSPs)
+
+| Huella de memoria
+| Muy baja
+| Baja–media
+| Baja–media
+
+| Planificación RT
+| Sí (preemptiva/cooperativa)
+| Sí (configurable)
+| Sí (determinista, preemptiva)
+
+| Networking
+| Básico (TCP/IP opcional)
+| Avanzado (IPv6, BLE, Thread, etc.)
+| Opcional, integrable mediante middleware
+
+| Seguridad
+| Limitada (depende de librerías)
+| Integrada (TLS, secure boot, etc.)
+| Integrable, soporte para seguridad en tiempo real
+
+| Ecosistema
+| Muy maduro y estable
+| En rápido crecimiento
+| Estable, usado en industria crítica
+
+| Facilidad de uso
+| Alta
+| Media
+| Media
+
+| Casos de uso típicos
+| Sensores, controladores simples
+| IoT industrial, dispositivos conectados
+| Sistemas embebidos críticos, controladores de dispositivos, robots industriales
+
+| Lenguajes principales
+| C
+| C, C++
+| C
+
+| Ventajas
+| Muy ligero, fácil de aprender, gran documentación
+| Modular, portable, soporte de IoT, integración con Bluetooth y redes
+| Determinista, confiable, ampliamente usado en industria, soporte comercial
+
+| Desventajas
+| Limitado para sistemas complejos, no pensado para tiempo real crítico en grandes proyectos
+| Curva de aprendizaje más alta, algunas funciones requieren configuración detallada
+| Licencia comercial, ecosistema menos abierto que FreeRTOS/Zephyr
+
+| Soporte de tiempo real
+| Básico / configurable
+| Avanzado, con threads y temporizadores
+| Determinista, preemptivo y altamente confiable
+
+| Herramientas de desarrollo
+| IDEs estándar (Eclipse, VSCode, PlatformIO), depuradores JTAG/SWD
+| West, CMake, Zephyr SDK, IDEs compatibles
+| IDEs comerciales (IAR, Keil, STM32CubeIDE con ThreadX), depuración profesional
+
+| Compatibilidad ROS 2 / micro-ROS
+| micro-ROS soportado, ideal para MCUs pequeños
+| micro-ROS nativo, recomendado para IoT y sensores
+| micro-ROS posible vía integración externa, menos documentación que Zephyr
+|===
+
+
+== Otros RTOS
+
+Otras alternativas relevantes.
+
+=== Mbed OS
+
+Mbed OS es un sistema operativo para dispositivos IoT diseñado para un 
+desarrollo rápido, basado en microcontroladores Arm Cortex-M de 32 bits y 
+mantenido por Arm. La plataforma alcanzará su fin de vida (EOL) en julio de 2026, 
+momento a partir del cual dejará de recibir mantenimiento por parte de Arm.
+
+Mbed ha sido un proyecto enormemente popular desde 2009, ayudando a desarrolladores 
+profesionales, usuarios del ámbito educativo y a la comunidad maker a crear, 
+asegurar, desplegar y actualizar miles de aplicaciones en hardware basado en Arm, 
+desarrollado por socios y colaboradores de Mbed.
+
+Un fork comunitario de Mbed OS: Mbed CE, se encuentra en 
+desarrollo activo.
+
+==== Recursos 
+
+- https://github.com/mbed-ce
+
+=== RT-Thread
+
+RT-Thread es un RTOS para dispositivos IoT basado en C, 
+que cuenta con un amplio ecosistema con soporte para diversos paquetes de 
+software, incluyendo componentes externos. Esto se facilita por el diseño 
+modular de su kernel, donde los paquetes se compilan por separado del kernel 
+y luego se cargan directamente durante la ejecución. Es ideal para aplicaciones 
+más complejas y de mayor escala.
+
+==== Recursos
+
+- https://www.arduinolibraries.info/libraries/rt-thread
+- https://www.rt-thread.io/
+
+=== Apache Nuttx
+
+Apache Nuttx es un RTOS que se enfoca en el cumplimiento de estándares, 
+principalmente POSIX y ANSI C. También adopta funcionalidades de otras 
+APIs estándar de Unix y de otros RTOS. Al ofrecer un entorno compatible 
+con POSIX, es un sistema RTOS más completo (y por ende, potencialmente más pesado) 
+que otras alternativas más minimalistas.
+
+.Parpadear LED en Apache Nuttx
+[source, c]
+----
+#include <nuttx/config.h>
+#include <nuttx/init.h>
+#include <nuttx/board.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <nuttx/irq.h>
+#include <nuttx/gpio/gpio.h>
+#include <arch/board/board.h>
+#include <pthread.h>
+
+/* Dependiente del hardware */
+#define LED_PIN PIN_LED1  // Por ejemplo, en la placa NuttX define PIN_LED1
+
+void *led_task(void *arg)
+{
+    gpio_direction_out(LED_PIN, 0); // Configurar como salida
+
+    while (1)
+    {
+        gpio_write(LED_PIN, 1);   // LED encendido
+        usleep(500000);           // 500 ms
+        gpio_write(LED_PIN, 0);   // LED apagado
+        usleep(500000);           // 500 ms
+    }
+
+    return NULL;
+}
+
+int main(int argc, char *argv[])
+{
+    pthread_t thread_id;
+    pthread_create(&thread_id, NULL, led_task, NULL);
+
+    /* Main puede hacer otras cosas o simplemente dormir */
+    while (1)
+    {
+        sleep(1);
+    }
+
+    return 0;
+}
+----
+
+==== Recursos
+
+- https://nuttx.apache.org/
 
 == ROS (Robot Operating System)
 
-Robot Operating System (ROS) es un conjunto de bibliotecas de software y herramientas que facilitan el desarrollo de robots. Incluye desde *drivers* hasta algoritmos, es multiplataforma y soporta Linux, macOS, Windows, así como plataformas embebidas a través de micro-ROS.
+Robot Operating System (ROS) es un conjunto de bibliotecas de 
+software y herramientas que facilitan el desarrollo de robots. 
+Incluye desde *drivers* hasta algoritmos, es multiplataforma y soporta 
+Linux, macOS, Windows, así como plataformas embebidas a través de micro-ROS.
+
+*ROS 1* fue la primera versión ampliamente adoptada y se diseñó 
+principalmente para investigación y prototipado en robótica.
+
+*ROS 2* es la evolución de ROS, rediseñado desde cero para uso industrial, 
+comercial y en sistemas críticos.
+
+Características principales de ROS 2:
+
+- Arquitectura descentralizada (sin master).
+- Basado en DDS (Data Distribution Service) para la comunicación.
+- Soporte nativo para tiempo real.
+- Funciona en múltiples sistemas operativos: Linux, Windows, macOS, RTOS (FreeRTOS, Zephyr, ThreadX, etc.).
+- Seguridad integrada (autenticación, cifrado, control de acceso).
+- Mejor soporte para sistemas distribuidos y escalables.
+
+ROS 2 sí puede usarse con Zephyr y otros RTOS, 
+pero no de la misma forma que en Linux. La integración está pensada para 
+microcontroladores y sistemas con recursos limitados. Para esto se utiliza micro-ROS.
+
+. Zephyr ejecuta el micro-ROS client.
+. El micro-ROS Agent corre en un PC o SBC (Linux).
+. La comunicación usa DDS de ROS 2 a través del agente.
+
+.Conexión entre ROS2 y Zephyr
+[source, text]
+----
+┌────────────────────────────┐
+│        ROS 2 (PC / SBC)    │
+│   Linux / Windows / etc.   │
+└───────────┬────────────────┘
+            │ DDS
+┌───────────▼────────────────┐
+│     micro-ROS Agent        │
+│   (Linux / PC / SBC)      │
+└───────────┬────────────────┘
+            │ Serial / UDP
+┌───────────▼────────────────┐
+│ micro-ROS Client           │
+│ Zephyr RTOS                │
+│ MCU (Cortex-M, RISC-V)     │
+└────────────────────────────┘
+----
+
+Plataformas como https://developer.nvidia.com/isaac[Nvidia Isaac] están basadas
+en ROS2.
 
 === Recursos
-* https://www.ros.org/
 
-== Apache Nuttx
+- https://www.ros.org/
 
-Apache Nuttx es un RTOS que se enfoca en el cumplimiento de estándares, principalmente POSIX y ANSI C. También adopta funcionalidades de otras APIs estándar de Unix y de otros RTOS. Al ofrecer un entorno compatible con POSIX, es un sistema RTOS más completo (y por ende, potencialmente más pesado) que otras alternativas más minimalistas.
+== Beam Bots
 
-=== Recursos
-* https://nuttx.apache.org/
+Una alternativa del ecosistema Elixir a ROS2 es Beam Bots. Ya que la máquina virtual
+de Erlang proporciona todos los componentes necesarios para la creación de complejas
+orquestaciones de movimientos en robots.
 
-== Referencias
-
-* https://en.wikipedia.org/wiki/FreeRTOS
-* https://www.freertos.org/
-* https://www.zephyrproject.org/learn-about/
-* https://os.mbed.com/
-* https://github.com/eclipse-threadx/threadx
+Puedes leer el tutorial para saber más de xref:advanced:beambots.adoc[Beam Bots].
