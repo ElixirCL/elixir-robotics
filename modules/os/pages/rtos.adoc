@@ -1,5 +1,57 @@
 = Sistemas Operativos en Tiempo Real
 
+Un sistema operativo en tiempo real (RTOS, Real-Time Operating System) 
+es un tipo de sistema operativo diseñado para responder a eventos y ejecutar 
+tareas dentro de plazos estrictos y deterministas. La clave no es solo ejecutar 
+tareas correctamente, sino garantizar que se ejecuten a tiempo.
+
+En contraste, un sistema operativo tradicional (como Windows, Linux de escritorio o macOS) 
+se centra en rendimiento y multitarea general, pero no garantiza 
+tiempos de respuesta deterministas.
+
+Un RTOS garantiza "hacer lo correcto y a tiempo", 
+mientras que un OS tradicional garantiza "hacer lo correcto eventualmente".
+
+*Ejemplo*:
+
+- RTOS: control de un motor, parpadeo de un LED crítico, sistema de frenos ABS en un automóvil.
+- OS tradicional: abrir un navegador, reproducir música, ejecutar software de oficina.
+
+.Comparación entre RTOS y OS
+[cols="1,1,1", options="header"]
+|===
+| Característica               | RTOS                                | Sistema Operativo Tradicional
+
+| Objetivo principal
+| Cumplimiento de tiempos estrictos
+| Rendimiento general y multitarea
+
+| Determinismo
+| Garantizado
+| No determinista
+
+| Planificador (scheduler)
+| Prioridad estricta, preemptivo
+| Basado en tiempo compartido / fairness
+
+| Uso de recursos
+| Optimizado, bajo consumo
+| Flexible, más pesado
+
+| Latencia de interrupción
+| Muy baja (microsegundos a milisegundos)
+| Variable, puede ser alta
+
+| Ejemplos típicos
+| FreeRTOS, Zephyr, ThreadX, VxWorks
+| Windows, Linux, macOS
+
+| Aplicaciones
+| Automoción, robótica, IoT, control industrial
+| PCs, servidores, smartphones
+|===
+
+
 == FreeRTOS
 
 FreeRTOS es un kernel de sistema operativo en tiempo real (RTOS) 
@@ -316,6 +368,23 @@ más complejas y de mayor escala.
 - https://www.arduinolibraries.info/libraries/rt-thread
 - https://www.rt-thread.io/
 
+=== VxWorks
+
+VxWorks es un sistema operativo de tiempo real desarrollado como software 
+propietario por Wind River Systems. Se puso a la venta la primera versión en 1987.
+Es utilizado para sistemas incrustados que habitualmente necesitan una respuesta 
+rápida del orden de ms o microsegundos ante interrupciones en su funcionamiento,
+una reconocida estabilidad y una seguridad certificada. Forma parte, junto con otros 
+sistemas operativos alternativos, de millones de dispositivos electrónicos como 
+cajeros automáticos, impresoras, cámaras fotográficas y en sistemas 
+críticos de complejos productos aeroespaciales como el avión de pasajeros Boeing 787,
+del robot Curiosity de la NASA, o del avión militar Northrop Grumman X-47B, entre otros. 
+
+==== Recursos 
+
+- https://www.windriver.com/products/embedded/vxworks
+- https://es.wikipedia.org/wiki/VxWorks
+
 === Apache Nuttx
 
 Apache Nuttx es un RTOS que se enfoca en el cumplimiento de estándares, 
@@ -373,68 +442,3 @@ int main(int argc, char *argv[])
 ==== Recursos
 
 - https://nuttx.apache.org/
-
-== ROS (Robot Operating System)
-
-Robot Operating System (ROS) es un conjunto de bibliotecas de 
-software y herramientas que facilitan el desarrollo de robots. 
-Incluye desde *drivers* hasta algoritmos, es multiplataforma y soporta 
-Linux, macOS, Windows, así como plataformas embebidas a través de micro-ROS.
-
-*ROS 1* fue la primera versión ampliamente adoptada y se diseñó 
-principalmente para investigación y prototipado en robótica.
-
-*ROS 2* es la evolución de ROS, rediseñado desde cero para uso industrial, 
-comercial y en sistemas críticos.
-
-Características principales de ROS 2:
-
-- Arquitectura descentralizada (sin master).
-- Basado en DDS (Data Distribution Service) para la comunicación.
-- Soporte nativo para tiempo real.
-- Funciona en múltiples sistemas operativos: Linux, Windows, macOS, RTOS (FreeRTOS, Zephyr, ThreadX, etc.).
-- Seguridad integrada (autenticación, cifrado, control de acceso).
-- Mejor soporte para sistemas distribuidos y escalables.
-
-ROS 2 sí puede usarse con Zephyr y otros RTOS, 
-pero no de la misma forma que en Linux. La integración está pensada para 
-microcontroladores y sistemas con recursos limitados. Para esto se utiliza micro-ROS.
-
-. Zephyr ejecuta el micro-ROS client.
-. El micro-ROS Agent corre en un PC o SBC (Linux).
-. La comunicación usa DDS de ROS 2 a través del agente.
-
-.Conexión entre ROS2 y Zephyr
-[source, text]
-----
-┌────────────────────────────┐
-│        ROS 2 (PC / SBC)    │
-│   Linux / Windows / etc.   │
-└───────────┬────────────────┘
-            │ DDS
-┌───────────▼────────────────┐
-│     micro-ROS Agent        │
-│   (Linux / PC / SBC)      │
-└───────────┬────────────────┘
-            │ Serial / UDP
-┌───────────▼────────────────┐
-│ micro-ROS Client           │
-│ Zephyr RTOS                │
-│ MCU (Cortex-M, RISC-V)     │
-└────────────────────────────┘
-----
-
-Plataformas como https://developer.nvidia.com/isaac[Nvidia Isaac] están basadas
-en ROS2.
-
-=== Recursos
-
-- https://www.ros.org/
-
-== Beam Bots
-
-Una alternativa del ecosistema Elixir a ROS2 es Beam Bots. Ya que la máquina virtual
-de Erlang proporciona todos los componentes necesarios para la creación de complejas
-orquestaciones de movimientos en robots.
-
-Puedes leer el tutorial para saber más de xref:advanced:beambots.adoc[Beam Bots].

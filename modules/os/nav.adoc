@@ -1,2 +1,3 @@
-.Sistemas Operativos en Tiempo Real (RTOS)
+.Sistemas Operativos
 * xref:rtos.adoc[]
+* xref:ros.adoc[]
