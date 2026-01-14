@@ -250,9 +250,9 @@ de FreeRTOS, Zephyr y ThreadX.
 | RTOS comercial/industrial
 
 | Enfoque principal
-| Sistemas embebidos simples
-| IoT y sistemas embebidos complejos
-| Sistemas embebidos críticos y de alto rendimiento
+| Sistemas incrustados simples
+| IoT y sistemas incrustados complejos
+| Sistemas incrustados críticos y de alto rendimiento
 
 | Licencia
 | MIT
@@ -297,7 +297,7 @@ de FreeRTOS, Zephyr y ThreadX.
 | Casos de uso típicos
 | Sensores, controladores simples
 | IoT industrial, dispositivos conectados
-| Sistemas embebidos críticos, controladores de dispositivos, robots industriales
+| Sistemas incrustados críticos, controladores de dispositivos, robots industriales
 
 | Lenguajes principales
 | C

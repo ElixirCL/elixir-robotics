@@ -6,7 +6,7 @@
     <title>Sistemas Operativos en Tiempo Real :: Electrónica, Robótica e IOT con Elixir</title>
     <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/os/rtos.html">
     <link rel="prev" href="../tools/stores.html">
-    <link rel="next" href="../atomvm/atomvm.html">
+    <link rel="next" href="ros.html">
     <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -164,10 +164,13 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Sistemas Operativos en Tiempo Real (RTOS)</span>
+    <span class="nav-text">Sistemas Operativos</span>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="rtos.html">Sistemas Operativos en Tiempo Real</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ros.html">Robot Operating System</a>
   </li>
 </ul>
   </li>
@@ -258,7 +261,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
-    <li>Sistemas Operativos en Tiempo Real (RTOS)</li>
+    <li>Sistemas Operativos</li>
     <li><a href="rtos.html">Sistemas Operativos en Tiempo Real</a></li>
   </ul>
 </nav>
@@ -270,14 +273,149 @@
 </aside>
 <article class="doc">
 <h1 class="page">Sistemas Operativos en Tiempo Real</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Un sistema operativo en tiempo real (RTOS, Real-Time Operating System)
+es un tipo de sistema operativo diseñado para responder a eventos y ejecutar
+tareas dentro de plazos estrictos y deterministas. La clave no es solo ejecutar
+tareas correctamente, sino garantizar que se ejecuten a tiempo.</p>
+</div>
+<div class="paragraph">
+<p>En contraste, un sistema operativo tradicional (como Windows, Linux de escritorio o macOS)
+se centra en rendimiento y multitarea general, pero no garantiza
+tiempos de respuesta deterministas.</p>
+</div>
+<div class="paragraph">
+<p>Un RTOS garantiza "hacer lo correcto y a tiempo",
+mientras que un OS tradicional garantiza "hacer lo correcto eventualmente".</p>
+</div>
+<div class="paragraph">
+<p><strong>Ejemplo</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>RTOS: control de un motor, parpadeo de un LED crítico, sistema de frenos ABS en un automóvil.</p>
+</li>
+<li>
+<p>OS tradicional: abrir un navegador, reproducir música, ejecutar software de oficina.</p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Comparación entre RTOS y OS</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Característica</th>
+<th class="tableblock halign-left valign-top">RTOS</th>
+<th class="tableblock halign-left valign-top">Sistema Operativo Tradicional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Objetivo principal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cumplimiento de tiempos estrictos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rendimiento general y multitarea</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determinismo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Garantizado</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No determinista</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Planificador (scheduler)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prioridad estricta, preemptivo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Basado en tiempo compartido / fairness</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uso de recursos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optimizado, bajo consumo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Flexible, más pesado</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Latencia de interrupción</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muy baja (microsegundos a milisegundos)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Variable, puede ser alta</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ejemplos típicos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FreeRTOS, Zephyr, ThreadX, VxWorks</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Windows, Linux, macOS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aplicaciones</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Automoción, robótica, IoT, control industrial</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PCs, servidores, smartphones</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div class="sect1">
 <h2 id="freertos"><a class="anchor" href="#freertos"></a>FreeRTOS</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>FreeRTOS es un kernel de sistema operativo en tiempo real (RTOS) diseñado específicamente para sistemas embebidos. Se ha adaptado a más de 40 arquitecturas de microcontroladores (incluyendo el ESP32) y se distribuye bajo licencia MIT.</p>
+<p>FreeRTOS es un kernel de sistema operativo en tiempo real (RTOS)
+diseñado específicamente para sistemas incrustado. Se ha adaptado a más de
+40 arquitecturas de microcontroladores (incluyendo el ESP32) y se distribuye bajo licencia MIT.</p>
 </div>
 <div class="paragraph">
-<p>Está diseñado para ser compacto y sencillo, y está escrito principalmente en C. FreeRTOS proporciona mecanismos para la gestión de múltiples hilos (tareas), mutexes, semáforos y temporizadores, manteniendo un bajo consumo de memoria y tiempos de ejecución rápidos.</p>
+<p>Está diseñado para ser compacto y sencillo, y está escrito principalmente en C.
+FreeRTOS proporciona mecanismos para la gestión de múltiples hilos (tareas), mutexes,
+semáforos y temporizadores, manteniendo un bajo consumo de memoria y
+tiempos de ejecución rápidos.</p>
+</div>
+<div class="paragraph">
+<p><strong>Este es el framework usado por AtomVM</strong></p>
+</div>
+<div class="listingblock">
+<div class="title">Ejemplo de LED con FreeRTOS</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include "FreeRTOS.h"
+#include "task.h"
+
+/* Funciones dependientes del hardware */
+void LED_Init(void);
+void LED_Toggle(void);
+
+/* Tarea de parpadeo */
+void vLedTask(void *pvParameters)
+{
+    while (1)
+    {
+        LED_Toggle();
+        vTaskDelay(pdMS_TO_TICKS(500)); // 500 ms
+    }
+}
+
+int main(void)
+{
+    /* Inicialización del hardware */
+    LED_Init();
+
+    /* Crear la tarea */
+    xTaskCreate(
+        vLedTask,          // Función de la tarea
+        "LED Task",        // Nombre
+        128,               // Tamaño del stack (words)
+        NULL,              // Parámetro
+        1,                 // Prioridad
+        NULL               // Handle
+    );
+
+    /* Iniciar el scheduler */
+    vTaskStartScheduler();
+
+    /* Nunca debería llegar aquí */
+    while (1) {}
+}</code></pre>
+</div>
 </div>
 <div class="sect2">
 <h3 id="recursos"><a class="anchor" href="#recursos"></a>Recursos</h3>
@@ -304,26 +442,72 @@
 <h2 id="zephyr"><a class="anchor" href="#zephyr"></a>Zephyr</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Zephyr es un RTOS compacto y escalable que ofrece un mayor control sobre el sistema a cambio de una mayor complejidad. Soporta más de 170 dispositivos y es altamente configurable y modular. Permite desarrollar aplicaciones para diversas arquitecturas mediante Device Trees, utilizados para describir el hardware y la información de configuración.</p>
+<p>Zephyr es un RTOS compacto y escalable que ofrece un mayor control
+sobre el sistema a cambio de una mayor complejidad. Soporta más de 170
+dispositivos y es altamente configurable y modular. Permite desarrollar
+aplicaciones para diversas arquitecturas mediante Device Trees,
+utilizados para describir el hardware y la información de configuración.</p>
 </div>
 <div class="paragraph">
-<p>El proyecto se beneficia de un ciclo de vida de desarrollo seguro, que incluye validación de seguridad, fuzz testing, penetration testing y análisis de código estático.</p>
+<p>El proyecto se beneficia de un ciclo de vida de desarrollo seguro, que
+incluye validación de seguridad, fuzz testing, penetration testing y análisis de código estático.</p>
+</div>
+<div class="paragraph">
+<p>Es más completo que FreeRTOS y proporciona abstracciones que permiten
+migrar fácilmente el código de una plataforma a otra. Es decir que las aplicaciones
+pueden ser trasladadas entre microcontroladores sin muchos cambios.</p>
+</div>
+<div class="listingblock">
+<div class="title">Ejemplo de LED con Zephyr</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include &lt;zephyr/kernel.h&gt;
+#include &lt;zephyr/device.h&gt;
+#include &lt;zephyr/drivers/gpio.h&gt;
+
+/* Obtener el LED desde el DeviceTree */
+#define LED0_NODE DT_ALIAS(led0)
+
+#if !DT_NODE_HAS_STATUS(LED0_NODE, okay)
+#error "No hay un alias led0 en el DeviceTree"
+#endif
+
+static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
+
+int main(void)
+{
+    int ret;
+
+    if (!device_is_ready(led.port)) {
+        return 0;
+    }
+
+    ret = gpio_pin_configure_dt(&amp;led, GPIO_OUTPUT_ACTIVE);
+    if (ret &lt; 0) {
+        return 0;
+    }
+
+    while (1) {
+        gpio_pin_toggle_dt(&amp;led);
+        k_sleep(K_MSEC(500));  // 500 ms
+    }
+}</code></pre>
+</div>
 </div>
 <div class="sect2">
 <h3 id="recursos-2"><a class="anchor" href="#recursos-2"></a>Recursos</h3>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://www.youtube.com/watch?v=Z_7y_4O7yTw" class="bare">https://www.youtube.com/watch?v=Z_7y_4O7yTw</a></p>
+<p>Hola Mundo en Zephyr y ESP32: <a href="https://www.youtube.com/watch?v=Z_7y_4O7yTw" class="bare">https://www.youtube.com/watch?v=Z_7y_4O7yTw</a></p>
 </li>
 <li>
-<p><a href="https://www.youtube.com/watch?v=jR5E5Kz9A-k" class="bare">https://www.youtube.com/watch?v=jR5E5Kz9A-k</a></p>
+<p>Introducción a Zephyr: <a href="https://www.youtube.com/watch?v=jR5E5Kz9A-k" class="bare">https://www.youtube.com/watch?v=jR5E5Kz9A-k</a></p>
 </li>
 <li>
-<p><a href="https://sirinsoftware.com/blog/rtos-wars-freertos-vs-zephyr-a-decision-you-cant-afford-to-get-wrong" class="bare">https://sirinsoftware.com/blog/rtos-wars-freertos-vs-zephyr-a-decision-you-cant-afford-to-get-wrong</a></p>
+<p>FreeRTOS vs Zephyr: <a href="https://sirinsoftware.com/blog/rtos-wars-freertos-vs-zephyr-a-decision-you-cant-afford-to-get-wrong" class="bare">https://sirinsoftware.com/blog/rtos-wars-freertos-vs-zephyr-a-decision-you-cant-afford-to-get-wrong</a></p>
 </li>
 <li>
-<p><a href="https://www.youtube.com/watch?v=Qq5qD8OxTtY" class="bare">https://www.youtube.com/watch?v=Qq5qD8OxTtY</a></p>
+<p>Fundamentos de Zephyr: <a href="https://www.youtube.com/watch?v=Qq5qD8OxTtY" class="bare">https://www.youtube.com/watch?v=Qq5qD8OxTtY</a></p>
 </li>
 </ul>
 </div>
@@ -331,21 +515,255 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="mbed-os"><a class="anchor" href="#mbed-os"></a>Mbed OS</h2>
+<h2 id="eclipse-thread-x"><a class="anchor" href="#eclipse-thread-x"></a>Eclipse Thread-X</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Mbed OS es un sistema operativo para dispositivos IoT diseñado para un desarrollo rápido, basado en microcontroladores Arm Cortex-M de 32 bits y mantenido por Arm. La plataforma alcanzará su fin de vida (EOL) en julio de 2026, momento a partir del cual dejará de recibir mantenimiento por parte de Arm.</p>
+<p>Eclipse Thread-X es un RTOS diseñado para sistemas profundamente
+incrustado que utiliza una arquitectura de picokernel. Ofrece
+scheduling avanzado, message passing, gestión de interrupciones y
+servicios de mensajería. Cuenta con certificaciones para aplicaciones
+donde la seguridad es crítica.</p>
+</div>
+<div class="paragraph">
+<p>Microsoft ha contribuido con la tecnología Azure RTOS a la Eclipse Foundation.
+Con la Eclipse Foundation como su nuevo hogar, Azure RTOS pasa a convertirse en
+Eclipse ThreadX, un conjunto avanzado de herramientas para el desarrollo incrustado
+que incluye un sistema operativo pequeño pero potente, capaz de ofrecer un
+rendimiento fiable y ultrarrápido para dispositivos con recursos limitados.</p>
+</div>
+<div class="paragraph">
+<p>Eclipse ThreadX ofrece un sistema operativo de código abierto,
+neutral respecto a proveedores y con certificación de seguridad para
+aplicaciones en tiempo real, todo bajo una licencia permisiva. Se distingue como
+el primer y único RTOS que combina de forma única estas características
+para satisfacer una amplia gama de necesidades, beneficiando por igual a
+adoptantes industriales, desarrolladores y usuarios finales.</p>
+</div>
+<div class="listingblock">
+<div class="title">Ejemplo de LED con ThreadX</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include "tx_api.h"
+
+/* Definiciones */
+#define LED_THREAD_STACK_SIZE  1024
+#define LED_THREAD_PRIORITY    1
+
+TX_THREAD led_thread;
+ULONG led_thread_stack[LED_THREAD_STACK_SIZE / sizeof(ULONG)];
+
+/* Funciones dependientes del hardware */
+void LED_Init(void);
+void LED_Toggle(void);
+
+/* Thread del LED */
+void led_thread_entry(ULONG thread_input)
+{
+    while (1)
+    {
+        LED_Toggle();
+        tx_thread_sleep(TX_TIMER_TICKS_PER_SECOND / 2); // 500 ms
+    }
+}
+
+int main(void)
+{
+    /* Inicialización del hardware */
+    LED_Init();
+
+    /* Inicializar ThreadX */
+    tx_kernel_enter();
+}</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="recursos-3"><a class="anchor" href="#recursos-3"></a>Recursos</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://threadx.io/" class="bare">https://threadx.io/</a></p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="rt-thread"><a class="anchor" href="#rt-thread"></a>RT-Thread</h2>
+<h2 id="freertos-vs-zephyr-vs-threadx"><a class="anchor" href="#freertos-vs-zephyr-vs-threadx"></a>FreeRTOS vs Zephyr vs ThreadX</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>RT-Thread es un RTOS para dispositivos IoT basado en C, que cuenta con un amplio ecosistema con soporte para diversos paquetes de software, incluyendo componentes externos. Esto se facilita por el diseño modular de su kernel, donde los paquetes se compilan por separado del kernel y luego se cargan directamente durante la ejecución. Es ideal para aplicaciones más complejas y de mayor escala.</p>
+<p>La siguiente es una tabla comparativa que ilustra los puntos claves entre las alternativas
+de FreeRTOS, Zephyr y ThreadX.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Comparación de FreeRTOS, Zephyr y ThreadX</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Característica</th>
+<th class="tableblock halign-left valign-top">FreeRTOS</th>
+<th class="tableblock halign-left valign-top">Zephyr</th>
+<th class="tableblock halign-left valign-top">ThreadX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tipo de proyecto</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RTOS ligero</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RTOS completo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RTOS comercial/industrial</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enfoque principal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sistemas incrustados simples</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IoT y sistemas incrustados complejos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sistemas incrustados críticos y de alto rendimiento</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Licencia</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MIT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apache 2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comercial con opción de licencia abierta (Eclipse ThreadX)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Soporte de hardware</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muy amplio (MCUs)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Amplio (MCUs y SoCs)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Amplio (MCUs, SoCs y DSPs)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Huella de memoria</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muy baja</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Baja–media</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Baja–media</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Planificación RT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sí (preemptiva/cooperativa)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sí (configurable)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sí (determinista, preemptiva)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Networking</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Básico (TCP/IP opcional)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Avanzado (IPv6, BLE, Thread, etc.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Opcional, integrable mediante middleware</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Seguridad</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limitada (depende de librerías)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integrada (TLS, secure boot, etc.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integrable, soporte para seguridad en tiempo real</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ecosistema</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muy maduro y estable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">En rápido crecimiento</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Estable, usado en industria crítica</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Facilidad de uso</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alta</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Media</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Media</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Casos de uso típicos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sensores, controladores simples</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IoT industrial, dispositivos conectados</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sistemas incrustados críticos, controladores de dispositivos, robots industriales</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lenguajes principales</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C, C++</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ventajas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Muy ligero, fácil de aprender, gran documentación</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Modular, portable, soporte de IoT, integración con Bluetooth y redes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determinista, confiable, ampliamente usado en industria, soporte comercial</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Desventajas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Limitado para sistemas complejos, no pensado para tiempo real crítico en grandes proyectos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Curva de aprendizaje más alta, algunas funciones requieren configuración detallada</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Licencia comercial, ecosistema menos abierto que FreeRTOS/Zephyr</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Soporte de tiempo real</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Básico / configurable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Avanzado, con threads y temporizadores</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determinista, preemptivo y altamente confiable</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Herramientas de desarrollo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IDEs estándar (Eclipse, VSCode, PlatformIO), depuradores JTAG/SWD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">West, CMake, Zephyr SDK, IDEs compatibles</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IDEs comerciales (IAR, Keil, STM32CubeIDE con ThreadX), depuración profesional</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compatibilidad ROS 2 / micro-ROS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">micro-ROS soportado, ideal para MCUs pequeños</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">micro-ROS nativo, recomendado para IoT y sensores</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">micro-ROS posible vía integración externa, menos documentación que Zephyr</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="otros-rtos"><a class="anchor" href="#otros-rtos"></a>Otros RTOS</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Otras alternativas relevantes.</p>
 </div>
 <div class="sect2">
-<h3 id="recursos-3"><a class="anchor" href="#recursos-3"></a>Recursos</h3>
+<h3 id="mbed-os"><a class="anchor" href="#mbed-os"></a>Mbed OS</h3>
+<div class="paragraph">
+<p>Mbed OS es un sistema operativo para dispositivos IoT diseñado para un
+desarrollo rápido, basado en microcontroladores Arm Cortex-M de 32 bits y
+mantenido por Arm. La plataforma alcanzará su fin de vida (EOL) en julio de 2026,
+momento a partir del cual dejará de recibir mantenimiento por parte de Arm.</p>
+</div>
+<div class="paragraph">
+<p>Mbed ha sido un proyecto enormemente popular desde 2009, ayudando a desarrolladores
+profesionales, usuarios del ámbito educativo y a la comunidad maker a crear,
+asegurar, desplegar y actualizar miles de aplicaciones en hardware basado en Arm,
+desarrollado por socios y colaboradores de Mbed.</p>
+</div>
+<div class="paragraph">
+<p>Un fork comunitario de Mbed OS: Mbed CE, se encuentra en
+desarrollo activo.</p>
+</div>
+<div class="sect3">
+<h4 id="recursos-4"><a class="anchor" href="#recursos-4"></a>Recursos</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/mbed-ce" class="bare">https://github.com/mbed-ce</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="rt-thread"><a class="anchor" href="#rt-thread"></a>RT-Thread</h3>
+<div class="paragraph">
+<p>RT-Thread es un RTOS para dispositivos IoT basado en C,
+que cuenta con un amplio ecosistema con soporte para diversos paquetes de
+software, incluyendo componentes externos. Esto se facilita por el diseño
+modular de su kernel, donde los paquetes se compilan por separado del kernel
+y luego se cargan directamente durante la ejecución. Es ideal para aplicaciones
+más complejas y de mayor escala.</p>
+</div>
+<div class="sect3">
+<h4 id="recursos-5"><a class="anchor" href="#recursos-5"></a>Recursos</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -358,51 +776,90 @@
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="eclipse-thread-x"><a class="anchor" href="#eclipse-thread-x"></a>Eclipse Thread-X</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Eclipse Thread-X es un RTOS diseñado para sistemas profundamente embebidos que utiliza una arquitectura de picokernel. Ofrece scheduling avanzado, message passing, gestión de interrupciones y servicios de mensajería. Cuenta con certificaciones para aplicaciones donde la seguridad es crítica.</p>
-</div>
 <div class="sect2">
-<h3 id="recursos-4"><a class="anchor" href="#recursos-4"></a>Recursos</h3>
+<h3 id="vxworks"><a class="anchor" href="#vxworks"></a>VxWorks</h3>
+<div class="paragraph">
+<p>VxWorks es un sistema operativo de tiempo real desarrollado como software
+propietario por Wind River Systems. Se puso a la venta la primera versión en 1987.
+Es utilizado para sistemas incrustados que habitualmente necesitan una respuesta
+rápida del orden de ms o microsegundos ante interrupciones en su funcionamiento,
+una reconocida estabilidad y una seguridad certificada. Forma parte, junto con otros
+sistemas operativos alternativos, de millones de dispositivos electrónicos como
+cajeros automáticos, impresoras, cámaras fotográficas y en sistemas
+críticos de complejos productos aeroespaciales como el avión de pasajeros Boeing 787,
+del robot Curiosity de la NASA, o del avión militar Northrop Grumman X-47B, entre otros.</p>
+</div>
+<div class="sect3">
+<h4 id="recursos-6"><a class="anchor" href="#recursos-6"></a>Recursos</h4>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://threadx.io/" class="bare">https://threadx.io/</a></p>
+<p><a href="https://www.windriver.com/products/embedded/vxworks" class="bare">https://www.windriver.com/products/embedded/vxworks</a></p>
+</li>
+<li>
+<p><a href="https://es.wikipedia.org/wiki/VxWorks" class="bare">https://es.wikipedia.org/wiki/VxWorks</a></p>
 </li>
 </ul>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="ros-robot-operating-system"><a class="anchor" href="#ros-robot-operating-system"></a>ROS (Robot Operating System)</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Robot Operating System (ROS) es un conjunto de bibliotecas de software y herramientas que facilitan el desarrollo de robots. Incluye desde <strong>drivers</strong> hasta algoritmos, es multiplataforma y soporta Linux, macOS, Windows, así como plataformas embebidas a través de micro-ROS.</p>
-</div>
 <div class="sect2">
-<h3 id="recursos-5"><a class="anchor" href="#recursos-5"></a>Recursos</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://www.ros.org/" class="bare">https://www.ros.org/</a></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="apache-nuttx"><a class="anchor" href="#apache-nuttx"></a>Apache Nuttx</h2>
-<div class="sectionbody">
+<h3 id="apache-nuttx"><a class="anchor" href="#apache-nuttx"></a>Apache Nuttx</h3>
 <div class="paragraph">
-<p>Apache Nuttx es un RTOS que se enfoca en el cumplimiento de estándares, principalmente POSIX y ANSI C. También adopta funcionalidades de otras APIs estándar de Unix y de otros RTOS. Al ofrecer un entorno compatible con POSIX, es un sistema RTOS más completo (y por ende, potencialmente más pesado) que otras alternativas más minimalistas.</p>
+<p>Apache Nuttx es un RTOS que se enfoca en el cumplimiento de estándares,
+principalmente POSIX y ANSI C. También adopta funcionalidades de otras
+APIs estándar de Unix y de otros RTOS. Al ofrecer un entorno compatible
+con POSIX, es un sistema RTOS más completo (y por ende, potencialmente más pesado)
+que otras alternativas más minimalistas.</p>
 </div>
-<div class="sect2">
-<h3 id="recursos-6"><a class="anchor" href="#recursos-6"></a>Recursos</h3>
+<div class="listingblock">
+<div class="title">Parpadear LED en Apache Nuttx</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include &lt;nuttx/config.h&gt;
+#include &lt;nuttx/init.h&gt;
+#include &lt;nuttx/board.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;nuttx/irq.h&gt;
+#include &lt;nuttx/gpio/gpio.h&gt;
+#include &lt;arch/board/board.h&gt;
+#include &lt;pthread.h&gt;
+
+/* Dependiente del hardware */
+#define LED_PIN PIN_LED1  // Por ejemplo, en la placa NuttX define PIN_LED1
+
+void *led_task(void *arg)
+{
+    gpio_direction_out(LED_PIN, 0); // Configurar como salida
+
+    while (1)
+    {
+        gpio_write(LED_PIN, 1);   // LED encendido
+        usleep(500000);           // 500 ms
+        gpio_write(LED_PIN, 0);   // LED apagado
+        usleep(500000);           // 500 ms
+    }
+
+    return NULL;
+}
+
+int main(int argc, char *argv[])
+{
+    pthread_t thread_id;
+    pthread_create(&amp;thread_id, NULL, led_task, NULL);
+
+    /* Main puede hacer otras cosas o simplemente dormir */
+    while (1)
+    {
+        sleep(1);
+    }
+
+    return 0;
+}</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="recursos-7"><a class="anchor" href="#recursos-7"></a>Recursos</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -413,33 +870,10 @@
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://en.wikipedia.org/wiki/FreeRTOS" class="bare">https://en.wikipedia.org/wiki/FreeRTOS</a></p>
-</li>
-<li>
-<p><a href="https://www.freertos.org/" class="bare">https://www.freertos.org/</a></p>
-</li>
-<li>
-<p><a href="https://www.zephyrproject.org/learn-about/" class="bare">https://www.zephyrproject.org/learn-about/</a></p>
-</li>
-<li>
-<p><a href="https://os.mbed.com/" class="bare">https://os.mbed.com/</a></p>
-</li>
-<li>
-<p><a href="https://github.com/eclipse-threadx/threadx" class="bare">https://github.com/eclipse-threadx/threadx</a></p>
-</li>
-</ul>
-</div>
-</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="../tools/stores.html">Tiendas</a></span>
-  <span class="next"><a href="../atomvm/atomvm.html">AtomVM</a></span>
+  <span class="next"><a href="ros.html">Robot Operating System</a></span>
 </nav>
 </article>
   </div>

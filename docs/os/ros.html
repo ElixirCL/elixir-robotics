@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>¿Qué es la Energía Solar? :: Electrónica, Robótica e IOT con Elixir</title>
-    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/solar/solar.html">
-    <link rel="prev" href="../advanced/grisp.html">
-    <link rel="next" href="components.html">
+    <title>Robot Operating System :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/os/ros.html">
+    <link rel="prev" href="rtos.html">
+    <link rel="next" href="../atomvm/atomvm.html">
     <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -167,10 +167,10 @@
     <span class="nav-text">Sistemas Operativos</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../os/rtos.html">Sistemas Operativos en Tiempo Real</a>
+    <a class="nav-link" href="rtos.html">Sistemas Operativos en Tiempo Real</a>
   </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../os/ros.html">Robot Operating System</a>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="ros.html">Robot Operating System</a>
   </li>
 </ul>
   </li>
@@ -229,11 +229,11 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Energía Solar</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="solar.html">¿Qué es la Energía Solar?</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/solar.html">¿Qué es la Energía Solar?</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="components.html">Componentes</a>
+    <a class="nav-link" href="../solar/components.html">Componentes</a>
   </li>
 </ul>
   </li>
@@ -261,117 +261,113 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
-    <li>Energía Solar</li>
-    <li><a href="solar.html">¿Qué es la Energía Solar?</a></li>
+    <li>Sistemas Operativos</li>
+    <li><a href="ros.html">Robot Operating System</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="file:///antora/./modules/solar/pages/solar.adoc">Editar esta página</a></div>
+<div class="edit-this-page"><a href="file:///antora/./modules/os/pages/ros.adoc">Editar esta página</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contenidos" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">¿Qué es la Energía Solar?</h1>
+<h1 class="page">Robot Operating System</h1>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>La energía solar es una de las alternativas ecológicamente sostenibles
-más populares de la actualidad, con opciones para todos los presupuestos.</p>
+<p>Robot Operating System (ROS) es un conjunto de bibliotecas de
+software y herramientas que facilitan el desarrollo de robots.
+Incluye desde <strong>drivers</strong> hasta algoritmos, es multiplataforma y soporta
+Linux, macOS, Windows, así como plataformas incrustadas a través de micro-ROS.</p>
 </div>
 <div class="paragraph">
-<p>Es muy útil para la alimentación de equipos en situaciones donde
-no se encuentra acceso a energía tradicional, por ejemplo
-lugares remotos, de difícil acceso o también como una alternativa
-para disminuir los costos operativos complementando con la fuente
-de energía tradicional.</p>
+<p><strong>ROS 1</strong> fue la primera versión ampliamente adoptada y se diseñó
+principalmente para investigación y prototipado en robótica.</p>
 </div>
 <div class="paragraph">
-<p>Para la robótica y domótica existen diversas alternativas
-de pequeño tamaño que permiten alimentar dispositivos
-que consumen baja cantidad de voltaje. Lo que permite elaborar
-soluciones autónomas y autosuficientes.</p>
+<p><strong>ROS 2</strong> es la evolución de ROS, rediseñado desde cero para uso industrial,
+comercial y en sistemas críticos.</p>
 </div>
 <div class="paragraph">
-<p>Los paneles solares son una solución excelente y transformadora para
-ubicaciones rurales, ofreciendo independencia energética,
-especialmente donde la red eléctrica es escasa, mediante sistemas autónomos (off-grid)
-con baterías y, en algunos casos, agrovoltaica para uso agrícola,
-reduciendo costos y mejorando la sostenibilidad; aunque requieren
-permisos de construcción y la elección correcta del kit solar (paneles, inversor y baterías)
-según el consumo.</p>
+<p>Características principales de ROS 2:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Arquitectura descentralizada (sin master).</p>
+</li>
+<li>
+<p>Basado en DDS (Data Distribution Service) para la comunicación.</p>
+</li>
+<li>
+<p>Soporte nativo para tiempo real.</p>
+</li>
+<li>
+<p>Funciona en múltiples sistemas operativos: Linux, Windows, macOS, RTOS (FreeRTOS, Zephyr, ThreadX, etc.).</p>
+</li>
+<li>
+<p>Seguridad integrada (autenticación, cifrado, control de acceso).</p>
+</li>
+<li>
+<p>Mejor soporte para sistemas distribuidos y escalables.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>El uso de energía solar en el campo no se limita al riego.
-Muchos predios requieren electricidad para sistemas de monitoreo, iluminación,
-galpones, bodegas, cercos eléctricos, casas patronales e incluso centros de acopio.
-Contar con una fuente limpia, renovable y de bajo mantenimiento permite
-operar con mayor eficiencia y sin depender completamente de la red eléctrica.</p>
+<p>ROS 2 sí puede usarse con Zephyr y otros RTOS,
+pero no de la misma forma que en Linux. La integración está pensada para
+microcontroladores y sistemas con recursos limitados. Para esto se utiliza micro-ROS.</p>
 </div>
-<div class="paragraph">
-<p>Además del ahorro a mediano plazo, los paneles solares aportan
-un beneficio estratégico: incrementan el valor del campo. Hoy, un predio que
-genera parte de su propia energía es más atractivo para el arriendo, la venta o
-para presentar proyectos a fondos públicos o privados que exigen
-sustentabilidad como eje central.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Zephyr ejecuta el micro-ROS client.</p>
+</li>
+<li>
+<p>El micro-ROS Agent corre en un PC o SBC (Linux).</p>
+</li>
+<li>
+<p>La comunicación usa DDS de ROS 2 a través del agente.</p>
+</li>
+</ol>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="ley-netbilling-de-chile"><a class="anchor" href="#ley-netbilling-de-chile"></a>Ley Netbilling de Chile</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>La generación distribuida, instaurada bajo el Artículo 149 bis de la Ley
-General de Servicios Eléctricos, también conocida como Ley de Net -Billing o Ley
-de Generación, que entró en vigencia el año 2014, establece para hogares, escuelas,
-negocios, entre otros (los llamados clientes regulados), el derecho a autoabastecer
-su consumo eléctrico a través de equipos de generación propia e inyectar los
-excedentes de energía a la red, recibiendo una compensación económica por ello.</p>
-</div>
-<div class="paragraph">
-<p>Consiste en la instalación de paneles fotovoltaicos  que generan energía
-eléctrica y, al  estar conectados a la red, permiten inyectar excedentes
-de la energía no consumida, significando un ahorro en su cuenta de la luz.</p>
-</div>
-<div class="paragraph">
-<p>Para contar con este sistema se debe contactar a alguna Empresa o Profesional
-autorizado por la SEC que realizará la instalación y el proceso de inscripción.</p>
-</div>
-<div class="imageblock">
+<div class="listingblock">
+<div class="title">Conexión entre ROS2 y Zephyr</div>
 <div class="content">
-<img src="_images/netbilling.png" alt="netbilling">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">┌────────────────────────────┐
+│        ROS 2 (PC / SBC)    │
+│   Linux / Windows / etc.   │
+└───────────┬────────────────┘
+            │ DDS
+┌───────────▼────────────────┐
+│     micro-ROS Agent        │
+│   (Linux / PC / SBC)      │
+└───────────┬────────────────┘
+            │ Serial / UDP
+┌───────────▼────────────────┐
+│ micro-ROS Client           │
+│ Zephyr RTOS                │
+│ MCU (Cortex-M, RISC-V)     │
+└────────────────────────────┘</code></pre>
 </div>
-<div class="title">Figure 1. Generación Autoconsumo Distribuido</div>
+</div>
+<div class="paragraph">
+<p>Plataformas como <a href="https://developer.nvidia.com/isaac">Nvidia Isaac</a> están basadas
+en ROS2.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="otras-fuentes-de-energías-renovables"><a class="anchor" href="#otras-fuentes-de-energías-renovables"></a>Otras Fuentes de Energías Renovables</h2>
+<h2 id="beam-bots"><a class="anchor" href="#beam-bots"></a>Beam Bots</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Las energías renovables son aquellas que provienen de fuentes consideradas inagotables,
-y que se caracterizan porque en sus procesos de transformación y
-aprovechamiento no se consumen a escala humana, ya sea por la inmensa cantidad
-de energía que contienen o porque son capaces de regenerarse en el tiempo. Entre estas
-fuentes de energía se consideran la hidráulica, la solar, la eólica y la de los océanos.
-De igual forma, dependiendo de su modo de explotación, también pueden ser
-catalogadas como renovables la energía proveniente de la biomasa, la energía geotérmica
-y los biocombustibles.</p>
+<p>Una alternativa del ecosistema Elixir a ROS2 es Beam Bots. Ya que la máquina virtual
+de Erlang proporciona todos los componentes necesarios para la creación de complejas
+orquestaciones de movimientos en robots.</p>
 </div>
 <div class="paragraph">
-<p>Las energías renovables suelen clasificarse en convencionales y no convencionales,
-según sea el grado de desarrollo de las tecnologías para su aprovechamiento y
-la predominancia en los mercados energéticos en que presenten.</p>
-</div>
-<div class="paragraph">
-<p>Dentro de las convencionales, la más importante hasta la fecha es la hidráulica a
-gran escala. Por otra parte, en el ámbito nacional, se definen como fuentes de
-Energías Renovables No Convencionales (ERNC) a la eólica, la pequeña hidroeléctrica
-(centrales hasta 20 MW), la biomasa, el biogás, la geotermia, la solar y la
-energía de los mares. Si bien es una concepción muy establecida en la actualidad,
-no es de extrañar que dada la notable entrada y establecimiento de algunas de
-las antes mencionadas, es posible que en algún momento se conviertan en convencionales,
-como puede ser el caso solar, de amplio desarrollo en los últimos años.</p>
+<p>Puedes leer el tutorial para saber más de <a href="../advanced/beambots.html" class="xref page">Beam Bots</a>.</p>
 </div>
 </div>
 </div>
@@ -381,24 +377,15 @@ como puede ser el caso solar, de amplio desarrollo en los últimos años.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://generaciondistribuida.minenergia.cl/" class="bare">https://generaciondistribuida.minenergia.cl/</a></p>
-</li>
-<li>
-<p><a href="https://exploradores.minenergia.cl/" class="bare">https://exploradores.minenergia.cl/</a></p>
-</li>
-<li>
-<p><a href="https://www.energia.gob.cl/educacion/que-son-las-energia-renovables" class="bare">https://www.energia.gob.cl/educacion/que-son-las-energia-renovables</a></p>
-</li>
-<li>
-<p><a href="https://autoconsumo.minenergia.cl/" class="bare">https://autoconsumo.minenergia.cl/</a></p>
+<p><a href="https://www.ros.org/" class="bare">https://www.ros.org/</a></p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../advanced/grisp.html">GRiSP</a></span>
-  <span class="next"><a href="components.html">Componentes</a></span>
+  <span class="prev"><a href="rtos.html">Sistemas Operativos en Tiempo Real</a></span>
+  <span class="next"><a href="../atomvm/atomvm.html">AtomVM</a></span>
 </nav>
 </article>
   </div>

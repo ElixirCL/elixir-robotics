@@ -3,7 +3,7 @@
 Robot Operating System (ROS) es un conjunto de bibliotecas de 
 software y herramientas que facilitan el desarrollo de robots. 
 Incluye desde *drivers* hasta algoritmos, es multiplataforma y soporta 
-Linux, macOS, Windows, así como plataformas embebidas a través de micro-ROS.
+Linux, macOS, Windows, así como plataformas incrustadas a través de micro-ROS.
 
 *ROS 1* fue la primera versión ampliamente adoptada y se diseñó 
 principalmente para investigación y prototipado en robótica.
