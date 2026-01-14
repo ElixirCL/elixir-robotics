@@ -2,35 +2,65 @@
 
 == FreeRTOS
 
-- https://www.youtube.com/watch?v=kcsHsoWmbDI
-- https://www.espressif.com/en/products/sdks/esp-idf
-- https://www.youtube.com/watch?v=s5DnmeOwkxo
-- https://www.youtube.com/watch?v=F321087yYy4
+FreeRTOS es un kernel de sistema operativo en tiempo real (RTOS) diseñado específicamente para sistemas embebidos. Se ha adaptado a más de 40 arquitecturas de microcontroladores (incluyendo el ESP32) y se distribuye bajo licencia MIT.
+
+Está diseñado para ser compacto y sencillo, y está escrito principalmente en C. FreeRTOS proporciona mecanismos para la gestión de múltiples hilos (tareas), mutexes, semáforos y temporizadores, manteniendo un bajo consumo de memoria y tiempos de ejecución rápidos.
+
+=== Recursos
+* Tutorial en video sobre FreeRTOS: https://www.youtube.com/watch?v=kcsHsoWmbDI
+* Documentación ESP-IDF (con FreeRTOS): https://www.espressif.com/en/products/sdks/esp-idf
+* Otro tutorial en video sobre FreeRTOS: https://www.youtube.com/watch?v=s5DnmeOwkxo
+* Introducción a las tareas en FreeRTOS: https://www.youtube.com/watch?v=F321087yYy4
 
 == Zephyr
 
-- https://www.youtube.com/watch?v=Z_7y_4O7yTw&list=PLEQVp_6G_y4iFfemAbFsKw6tsGABarTwp&index=1
-- https://www.youtube.com/watch?v=jR5E5Kz9A-k
-- https://sirinsoftware.com/blog/rtos-wars-freertos-vs-zephyr-a-decision-you-cant-afford-to-get-wrong
-- https://www.youtube.com/watch?v=Qq5qD8OxTtY
+Zephyr es un RTOS compacto y escalable que ofrece un mayor control sobre el sistema a cambio de una mayor complejidad. Soporta más de 170 dispositivos y es altamente configurable y modular. Permite desarrollar aplicaciones para diversas arquitecturas mediante Device Trees, utilizados para describir el hardware y la información de configuración.
 
-== Mbed
+El proyecto se beneficia de un ciclo de vida de desarrollo seguro, que incluye validación de seguridad, fuzz testing, penetration testing y análisis de código estático.
 
-- https://os.mbed.com/
+=== Recursos
+* https://www.youtube.com/watch?v=Z_7y_4O7yTw
+* https://www.youtube.com/watch?v=jR5E5Kz9A-k
+* https://sirinsoftware.com/blog/rtos-wars-freertos-vs-zephyr-a-decision-you-cant-afford-to-get-wrong
+* https://www.youtube.com/watch?v=Qq5qD8OxTtY
 
-== R-Thread
+== Mbed OS
 
-- https://www.arduinolibraries.info/libraries/rt-thread
-- https://www.rt-thread.io/
+Mbed OS es un sistema operativo para dispositivos IoT diseñado para un desarrollo rápido, basado en microcontroladores Arm Cortex-M de 32 bits y mantenido por Arm. La plataforma alcanzará su fin de vida (EOL) en julio de 2026, momento a partir del cual dejará de recibir mantenimiento por parte de Arm.
+
+== RT-Thread
+
+RT-Thread es un RTOS para dispositivos IoT basado en C, que cuenta con un amplio ecosistema con soporte para diversos paquetes de software, incluyendo componentes externos. Esto se facilita por el diseño modular de su kernel, donde los paquetes se compilan por separado del kernel y luego se cargan directamente durante la ejecución. Es ideal para aplicaciones más complejas y de mayor escala.
+
+=== Recursos
+* https://www.arduinolibraries.info/libraries/rt-thread
+* https://www.rt-thread.io/
 
 == Eclipse Thread-X
 
-- https://threadx.io/
+Eclipse Thread-X es un RTOS diseñado para sistemas profundamente embebidos que utiliza una arquitectura de picokernel. Ofrece scheduling avanzado, message passing, gestión de interrupciones y servicios de mensajería. Cuenta con certificaciones para aplicaciones donde la seguridad es crítica.
 
-== ROS
+=== Recursos
+* https://threadx.io/
 
-- https://www.ros.org/
+== ROS (Robot Operating System)
 
-== Nuttx
+Robot Operating System (ROS) es un conjunto de bibliotecas de software y herramientas que facilitan el desarrollo de robots. Incluye desde *drivers* hasta algoritmos, es multiplataforma y soporta Linux, macOS, Windows, así como plataformas embebidas a través de micro-ROS.
 
-- https://nuttx.apache.org/
+=== Recursos
+* https://www.ros.org/
+
+== Apache Nuttx
+
+Apache Nuttx es un RTOS que se enfoca en el cumplimiento de estándares, principalmente POSIX y ANSI C. También adopta funcionalidades de otras APIs estándar de Unix y de otros RTOS. Al ofrecer un entorno compatible con POSIX, es un sistema RTOS más completo (y por ende, potencialmente más pesado) que otras alternativas más minimalistas.
+
+=== Recursos
+* https://nuttx.apache.org/
+
+== Referencias
+
+* https://en.wikipedia.org/wiki/FreeRTOS
+* https://www.freertos.org/
+* https://www.zephyrproject.org/learn-about/
+* https://os.mbed.com/
+* https://github.com/eclipse-threadx/threadx

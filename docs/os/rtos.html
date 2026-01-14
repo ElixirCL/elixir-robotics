@@ -273,31 +273,48 @@
 <div class="sect1">
 <h2 id="freertos"><a class="anchor" href="#freertos"></a>FreeRTOS</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>FreeRTOS es un kernel de sistema operativo en tiempo real (RTOS) diseñado específicamente para sistemas embebidos. Se ha adaptado a más de 40 arquitecturas de microcontroladores (incluyendo el ESP32) y se distribuye bajo licencia MIT.</p>
+</div>
+<div class="paragraph">
+<p>Está diseñado para ser compacto y sencillo, y está escrito principalmente en C. FreeRTOS proporciona mecanismos para la gestión de múltiples hilos (tareas), mutexes, semáforos y temporizadores, manteniendo un bajo consumo de memoria y tiempos de ejecución rápidos.</p>
+</div>
+<div class="sect2">
+<h3 id="recursos"><a class="anchor" href="#recursos"></a>Recursos</h3>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://www.youtube.com/watch?v=kcsHsoWmbDI" class="bare">https://www.youtube.com/watch?v=kcsHsoWmbDI</a></p>
+<p>Tutorial en video sobre FreeRTOS: <a href="https://www.youtube.com/watch?v=kcsHsoWmbDI" class="bare">https://www.youtube.com/watch?v=kcsHsoWmbDI</a></p>
 </li>
 <li>
-<p><a href="https://www.espressif.com/en/products/sdks/esp-idf" class="bare">https://www.espressif.com/en/products/sdks/esp-idf</a></p>
+<p>Documentación ESP-IDF (con FreeRTOS): <a href="https://www.espressif.com/en/products/sdks/esp-idf" class="bare">https://www.espressif.com/en/products/sdks/esp-idf</a></p>
 </li>
 <li>
-<p><a href="https://www.youtube.com/watch?v=s5DnmeOwkxo" class="bare">https://www.youtube.com/watch?v=s5DnmeOwkxo</a></p>
+<p>Otro tutorial en video sobre FreeRTOS: <a href="https://www.youtube.com/watch?v=s5DnmeOwkxo" class="bare">https://www.youtube.com/watch?v=s5DnmeOwkxo</a></p>
 </li>
 <li>
-<p><a href="https://www.youtube.com/watch?v=F321087yYy4" class="bare">https://www.youtube.com/watch?v=F321087yYy4</a></p>
+<p>Introducción a las tareas en FreeRTOS: <a href="https://www.youtube.com/watch?v=F321087yYy4" class="bare">https://www.youtube.com/watch?v=F321087yYy4</a></p>
 </li>
 </ul>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="zephyr"><a class="anchor" href="#zephyr"></a>Zephyr</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Zephyr es un RTOS compacto y escalable que ofrece un mayor control sobre el sistema a cambio de una mayor complejidad. Soporta más de 170 dispositivos y es altamente configurable y modular. Permite desarrollar aplicaciones para diversas arquitecturas mediante Device Trees, utilizados para describir el hardware y la información de configuración.</p>
+</div>
+<div class="paragraph">
+<p>El proyecto se beneficia de un ciclo de vida de desarrollo seguro, que incluye validación de seguridad, fuzz testing, penetration testing y análisis de código estático.</p>
+</div>
+<div class="sect2">
+<h3 id="recursos-2"><a class="anchor" href="#recursos-2"></a>Recursos</h3>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://www.youtube.com/watch?v=Z_7y_4O7yTw&amp;list=PLEQVp_6G_y4iFfemAbFsKw6tsGABarTwp&amp;index=1" class="bare">https://www.youtube.com/watch?v=Z_7y_4O7yTw&amp;list=PLEQVp_6G_y4iFfemAbFsKw6tsGABarTwp&amp;index=1</a></p>
+<p><a href="https://www.youtube.com/watch?v=Z_7y_4O7yTw" class="bare">https://www.youtube.com/watch?v=Z_7y_4O7yTw</a></p>
 </li>
 <li>
 <p><a href="https://www.youtube.com/watch?v=jR5E5Kz9A-k" class="bare">https://www.youtube.com/watch?v=jR5E5Kz9A-k</a></p>
@@ -312,21 +329,23 @@
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="mbed"><a class="anchor" href="#mbed"></a>Mbed</h2>
+<h2 id="mbed-os"><a class="anchor" href="#mbed-os"></a>Mbed OS</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><a href="https://os.mbed.com/" class="bare">https://os.mbed.com/</a></p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Mbed OS es un sistema operativo para dispositivos IoT diseñado para un desarrollo rápido, basado en microcontroladores Arm Cortex-M de 32 bits y mantenido por Arm. La plataforma alcanzará su fin de vida (EOL) en julio de 2026, momento a partir del cual dejará de recibir mantenimiento por parte de Arm.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="r-thread"><a class="anchor" href="#r-thread"></a>R-Thread</h2>
+<h2 id="rt-thread"><a class="anchor" href="#rt-thread"></a>RT-Thread</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>RT-Thread es un RTOS para dispositivos IoT basado en C, que cuenta con un amplio ecosistema con soporte para diversos paquetes de software, incluyendo componentes externos. Esto se facilita por el diseño modular de su kernel, donde los paquetes se compilan por separado del kernel y luego se cargan directamente durante la ejecución. Es ideal para aplicaciones más complejas y de mayor escala.</p>
+</div>
+<div class="sect2">
+<h3 id="recursos-3"><a class="anchor" href="#recursos-3"></a>Recursos</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -339,9 +358,15 @@
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
 <h2 id="eclipse-thread-x"><a class="anchor" href="#eclipse-thread-x"></a>Eclipse Thread-X</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Eclipse Thread-X es un RTOS diseñado para sistemas profundamente embebidos que utiliza una arquitectura de picokernel. Ofrece scheduling avanzado, message passing, gestión de interrupciones y servicios de mensajería. Cuenta con certificaciones para aplicaciones donde la seguridad es crítica.</p>
+</div>
+<div class="sect2">
+<h3 id="recursos-4"><a class="anchor" href="#recursos-4"></a>Recursos</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -351,9 +376,15 @@
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="ros"><a class="anchor" href="#ros"></a>ROS</h2>
+<h2 id="ros-robot-operating-system"><a class="anchor" href="#ros-robot-operating-system"></a>ROS (Robot Operating System)</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Robot Operating System (ROS) es un conjunto de bibliotecas de software y herramientas que facilitan el desarrollo de robots. Incluye desde <strong>drivers</strong> hasta algoritmos, es multiplataforma y soporta Linux, macOS, Windows, así como plataformas embebidas a través de micro-ROS.</p>
+</div>
+<div class="sect2">
+<h3 id="recursos-5"><a class="anchor" href="#recursos-5"></a>Recursos</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -363,13 +394,44 @@
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="nuttx"><a class="anchor" href="#nuttx"></a>Nuttx</h2>
+<h2 id="apache-nuttx"><a class="anchor" href="#apache-nuttx"></a>Apache Nuttx</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Apache Nuttx es un RTOS que se enfoca en el cumplimiento de estándares, principalmente POSIX y ANSI C. También adopta funcionalidades de otras APIs estándar de Unix y de otros RTOS. Al ofrecer un entorno compatible con POSIX, es un sistema RTOS más completo (y por ende, potencialmente más pesado) que otras alternativas más minimalistas.</p>
+</div>
+<div class="sect2">
+<h3 id="recursos-6"><a class="anchor" href="#recursos-6"></a>Recursos</h3>
 <div class="ulist">
 <ul>
 <li>
 <p><a href="https://nuttx.apache.org/" class="bare">https://nuttx.apache.org/</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/FreeRTOS" class="bare">https://en.wikipedia.org/wiki/FreeRTOS</a></p>
+</li>
+<li>
+<p><a href="https://www.freertos.org/" class="bare">https://www.freertos.org/</a></p>
+</li>
+<li>
+<p><a href="https://www.zephyrproject.org/learn-about/" class="bare">https://www.zephyrproject.org/learn-about/</a></p>
+</li>
+<li>
+<p><a href="https://os.mbed.com/" class="bare">https://os.mbed.com/</a></p>
+</li>
+<li>
+<p><a href="https://github.com/eclipse-threadx/threadx" class="bare">https://github.com/eclipse-threadx/threadx</a></p>
 </li>
 </ul>
 </div>
