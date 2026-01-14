@@ -41,7 +41,7 @@ image::arduino/arduino_uno.webp[]
 
 La familia Uno incluye placas como el conocido Arduino UNO R3 o el UNO R4 WiFi. Estas placas se consideran el pilar del proyecto Arduino y han disfrutado de un gran éxito durante muchos años.
 
-== Arduino
+== Arduino IDE
 
 Arduino también ofrece un Entorno de Desarrollo Integrado (IDE), que permite compilar y cargar programas, compatible con una amplia gama de dispositivos. Para obtener detalles sobre su instalación, visita la https://support.arduino.cc/hc/en-us/articles/360019833020-Download-and-install-Arduino-IDE[página de instalación oficial].
 
@@ -70,6 +70,20 @@ void loop() {
 2. Selecciona la placa y el puerto: En el menú `Herramientas > Placa`, selecciona tu modelo específico de ESP32 (por ejemplo, "ESP32 Dev Module"). Asegúrate de seleccionar el puerto serial correcto en `Herramientas > Puerto`. Este suele ser un puerto `COMx` en Windows o `/dev/ttyUSBx` en Linux/macOS.
 
 3. Carga el programa: Haz clic en el botón "Subir" (el icono de flecha hacia la derecha) en la barra de herramientas del IDE. El IDE compilará el código y lo cargará.
+
+++++
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/BQBFJ8qc3z4?si=XJbw-YJtTfAB7aGy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
+
+== Arduino IOT Cloud 
+
+https://cloud.arduino.cc/[Arduino IOT Cloud] es una solución IoT todo en 
+uno que permite a los creadores construir desde cualquier lugar, controlar los
+dispositivos con impresionantes paneles de control y compartir proyectos con cualquiera.
+
+++++
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/pC5W88NTJ1U?si=dPukIOZIeh4ze4Ki" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
 
 == Referencias
 

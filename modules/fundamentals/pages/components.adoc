@@ -1,7 +1,15 @@
 = Componentes Electrónicos
 
 Un breve vistazo a los distintos componentes electrónicos 
-y su uso común.
+y su uso común. Hay una multitud de opciones, solo se verán 
+los más comunes. Sin embargo se dispone de la siguiente tabla de componentes
+y su simbología.
+
+.Tabla Períodica de Símbolos Electrónicos
+image::components/tabla_periodica.jpg[https://www.simbologia-electronica.com/simbologia-electrica-electronica/tabla-simbolos-electronicos.htm]
+
+- https://www.simbologia-electronica.com/simbologia-electrica-electronica/simbolos-electricos-electronicos-basicos.htm
+
 
 == Resistencias
 
@@ -232,7 +240,6 @@ Por lo que se debe usar una resistencia por cada LED si están en paralelo.
 +V ── R2 ── LED2 ── GND
 ----
 
-
 === Referencias
 
 - https://www.logicbus.com.mx/codigo-de-colores-de-resistencias
@@ -259,3 +266,48 @@ Por lo que se debe usar una resistencia por cada LED si están en paralelo.
 == Servomotor
 
 == Capacitor
+
+== Relé (Relay)
+
+== Oscilador
+
+Un oscilador es un
+dispositivo o circuito electrónico que genera una señal periódica 
+repetitiva (como una onda senoidal o cuadrada) sin necesidad de una señal de 
+entrada externa, convirtiendo corriente continua (CC) en alterna (CA) mediante 
+retroalimentación positiva, fundamental para relojes, radios y comunicaciones. 
+Su función principal es crear una base de tiempo estable, 
+produciendo frecuencias específicas para diversas aplicaciones.
+
+El IC555 es un temporizador / oscilador 555 común. Un clásico para todos esos 
+proyectos de circuitos de primer año en los 
+que necesita parpadear un LED, generar tono y miles de otros grandes proyectos iniciales.
+
+.Temporizador / Oscilador 555
+image::components/555.webp[]
+
+=== Referencias 
+
+- https://mcielectronics.cl/shop/product/circuito-integrado-timer-555/
+
+== Piezoeléctrico
+
+Un piezoeléctrico se refiere a un material o componente que genera una 
+carga eléctrica al aplicarle presión mecánica (efecto piezoeléctrico), y 
+viceversa, se deforma al aplicarle voltaje, convirtiendo energía mecánica en 
+eléctrica y viceversa, usándose en sensores de vibración, micrófonos, 
+encendedores y más. Estos cristales naturales (cuarzo, turmalina) o 
+sintéticos (cerámicas PZT) responden a la presión con una tensión 
+que se puede usar para generar una chispa o una señal eléctrica. 
+
+Los piezoeléctricos son útiles cuando se necesita detectar vibraciones o golpes. 
+Se puede utilizar para grifos o sensores de impacto muy fácilmente mediante 
+la lectura de la tensión en la salida. 
+También se puede utilizar para un transductor de audio muy pequeña tal como un zumbador.
+
+.Piezoeléctrico
+image::components/piezo.jpg[]
+
+=== Referencias 
+
+- https://mcielectronics.cl/shop/product/piezoelectrico-10437/
