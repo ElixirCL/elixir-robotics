@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Elixir PopCorn :: Electrónica, Robótica e IOT con Elixir</title>
+    <title>PopCorn :: Electrónica, Robótica e IOT con Elixir</title>
     <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/atomvm/popcorn.html">
     <link rel="prev" href="atomvm.html">
-    <link rel="next" href="devenv.html">
+    <link rel="next" href="nif.html">
     <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -182,7 +182,10 @@
     <a class="nav-link" href="atomvm.html">AtomVM</a>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="popcorn.html">Elixir PopCorn</a>
+    <a class="nav-link" href="popcorn.html">PopCorn</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="nif.html">Crear un NIF</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="devenv.html">Entorno de Desarrollo</a>
@@ -262,7 +265,7 @@
   <ul>
     <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
     <li>AtomVM</li>
-    <li><a href="popcorn.html">Elixir PopCorn</a></li>
+    <li><a href="popcorn.html">PopCorn</a></li>
   </ul>
 </nav>
 <div class="edit-this-page"><a href="file:///antora/./modules/atomvm/pages/popcorn.adoc">Editar esta página</a></div>
@@ -272,14 +275,39 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Elixir PopCorn</h1>
+<h1 class="page">PopCorn</h1>
 <div class="paragraph">
 <p>Popcorn es una biblioteca que te permite ejecutar Elixir del lado del
 cliente en navegadores, con interoperabilidad con JavaScript. Utilizando la tecnología
 Web Assembly.</p>
 </div>
 <div class="paragraph">
-<p>Internamente, Popcorn ejecuta AtomVM, una pequeña máquina virtual de Erlang.</p>
+<p>Internamente, Popcorn ejecuta AtomVM, una pequeña máquina virtual de Erlang.
+Actualmente está en beta por lo que puede tener algunos errores en versiones
+diferentes a Elixir 1.17.3 y Erlang 26.0.2.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir"># lib/my_app/worker.ex
+
+defmodule MyApp.Worker do
+  use GenServer
+
+  @process_name :main
+
+  def start_link(args) do
+    GenServer.start_link(__MODULE__, args, name: @process_name)
+  end
+
+  @impl true
+  def init(_init_arg) do
+    Popcorn.Wasm.register(@process_name)
+    IO.puts("Hello from WASM!")
+    state = %{}
+    {:ok, state}
+  end
+end</code></pre>
+</div>
 </div>
 <div class="ulist">
 <ul>
@@ -290,7 +318,7 @@ Web Assembly.</p>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="atomvm.html">AtomVM</a></span>
-  <span class="next"><a href="devenv.html">Entorno de Desarrollo</a></span>
+  <span class="next"><a href="nif.html">Crear un NIF</a></span>
 </nav>
 </article>
   </div>

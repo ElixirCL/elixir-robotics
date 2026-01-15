@@ -1,7 +1,9 @@
-= Crear un NIF (Native Implemented Function) para AtomVM
+= Crear un NIF
 
-En esta sección, se explicará cómo crear una extensión simple en C para implementar la función "add" en AtomVM. La estructura del proyecto será la siguiente:
+En esta sección, se explicará cómo crear una extensión simple en C (Native Implemented Function) 
+para implementar la función "add" en AtomVM. La estructura del proyecto será la siguiente:
 
+[source, text]
 ----
 ├── CMakeLists.txt
 ├── component.mk
@@ -116,6 +118,14 @@ El código anterior incluye la implementación principal de la función `add`, u
 
 == Compilación de la Imagen de AtomVM
 
-Una vez que el componente del NIF esté listo, se debe incluir en el directorio `src/platforms/esp32/components` de AtomVM. Al colocarlo allí, se incorporará automáticamente durante el proceso de compilación, siguiendo los pasos detallados en la página xref:atomvm:devenv.adoc#compilar-atomvm[Entorno de Desarrollo].
+Una vez que el componente del NIF esté listo, se debe incluir en el 
+directorio `src/platforms/esp32/components` de AtomVM. Al colocarlo allí, se 
+incorporará automáticamente durante el proceso de compilación, siguiendo los 
+pasos detallados en la página xref:atomvm:devenv.adoc#compilar-atomvm[Entorno de Desarrollo].
 
-Es crucial ejecutar el comando `idf.py reconfigure` antes de `idf.py build` para que el ESP-IDF detecte y reconozca el nuevo componente.
+Es crucial ejecutar el comando `idf.py reconfigure` antes de `idf.py build` 
+para que el ESP-IDF detecte y reconozca el nuevo componente.
+
+Puedes también ver un ejemplo en el siguiente repositorio:
+
+https://github.com/ElixirCL/hello_atomvm_nif
