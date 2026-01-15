@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Crear un NIF (Native Implemented Function) para AtomVM :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/atomvm/nif.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos e Historia</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/history.html">Historia de la Robótica y Automatización</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/circuits.html">Fundamentos de Circuitos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/tools.html">Herramientas</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/basicstamp.html">Parallax Basic Stamp</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/stm32.html">STM32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/jetson.html">Nvidia Jetson &amp; AMD Kria</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/fpga.html">FPGA</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/asic.html">ASIC</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/iot.html">IOT</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/grafana.html">Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/dashboards.html">Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/cad.html">Herramientas de Computer Asisted Design (CAD)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/stores.html">Tiendas</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sistemas Operativos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../os/rtos.html">Sistemas Operativos en Tiempo Real</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../os/ros.html">Robot Operating System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="popcorn.html">Elixir PopCorn</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="remote.html">Conexión Remota</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="tagboard.html">Proyecto: Tagboard</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware Avanzado</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/circuits.html">Elixir Circuits</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/soleil.html">Soleil</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/beambots.html">Beam Bots</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/grisp.html">GRiSP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Energía Solar</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/solar.html">¿Qué es la Energía Solar?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/components.html">Componentes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li><a href="nif.html">Crear un NIF (Native Implemented Function) para AtomVM</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/atomvm/pages/nif.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Crear un NIF (Native Implemented Function) para AtomVM</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>En esta sección, se explicará cómo crear una extensión simple en C para implementar la función "add" en AtomVM. La estructura del proyecto será la siguiente:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>├── CMakeLists.txt
+├── component.mk
+└── nifs
+    ├── include
+    │   └── my_nif.h
+    └── my_nif.c</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuración-de-cmake-y-el-componente"><a class="anchor" href="#configuración-de-cmake-y-el-componente"></a>Configuración de CMake y el Componente</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Primero, configuraremos CMake con el archivo <code>CMakeLists.txt</code> para que encuentre los archivos necesarios para compilar el componente:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmake hljs" data-lang="cmake">set(ATOMVM_MY_NIF_COMPONENT_SRCS
+    "nifs/my_nif.c"
+)
+
+idf_component_register(
+    SRCS ${ATOMVM_MY_NIF_COMPONENT_SRCS}
+    INCLUDE_DIRS "nifs/include"
+    PRIV_REQUIRES "libatomvm" "avm_sys"
+)
+
+idf_build_set_property(
+    LINK_OPTIONS "-Wl,--whole-archive;${CMAKE_CURRENT_BINARY_DIR}/lib${COMPONENT_NAME}.a;-Wl,--no-whole-archive"
+    APPEND
+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Luego, añadiremos las siguientes líneas en <code>component.mk</code> para garantizar que se pasen los argumentos correctos al compilador cuando se compile la imagen de AtomVM:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-make hljs" data-lang="make">COMPONENT_ADD_INCLUDEDIRS := nifs/include
+COMPONENT_ADD_LDFLAGS = -Wl,--whole-archive -l$(COMPONENT_NAME) -Wl,--no-whole-archive
+COMPONENT_SRCDIRS := nifs
+CXXFLAGS += -fno-rtti</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="archivos-de-headers-del-nif"><a class="anchor" href="#archivos-de-headers-del-nif"></a>Archivos de Headers del NIF</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El siguiente paso es definir los archivos de headers del NIF. En <code>nifs/include/my_nif.h</code>, se escribe el siguiente contenido:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#ifndef __ATOMVM_MY_NIF_H__
+#define __ATOMVM_MY_NIF_H__
+
+#include "context.h"
+#include "nifs.h"
+
+const struct Nif *my_nif_get_nif(const char *nifname); // función para obtener la implementación del NIF
+
+#endif</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Este archivo contiene las declaraciones de las funciones principales para la implementación y registro de nuestro <strong>NIF</strong>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="implementación-del-nif"><a class="anchor" href="#implementación-del-nif"></a>Implementación del NIF</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Finalmente, crearemos el archivo <code>nifs/my_nif.c</code> con la implementación que se utilizará en AtomVM:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">#include &lt;my_nif.h&gt;
+#include &lt;context.h&gt;
+#include &lt;defaultatoms.h&gt;
+#include &lt;esp32_sys.h&gt;
+#include &lt;interop.h&gt;
+#include &lt;nifs.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;term.h&gt;
+
+static term nif_add(Context *ctx, int argc, term argv[])
+{
+    // verifica si hay 2 argumentos y si ambos son enteros
+    if (argc != 2 || !term_is_any_integer(argv[0]) || !term_is_any_integer(argv[1])) {
+        RAISE_ERROR(BADARG_ATOM);
+    }
+
+    int32_t a = term_to_int(argv[0]);
+    int32_t b = term_to_int(argv[1]);
+
+    int32_t result = a + b;
+
+    return term_from_int(result);
+}
+
+// struct que describe el NIF 'add'
+static const struct Nif add_nif =
+{
+    .base.type = NIFFunctionType,
+    .nif_ptr = nif_add
+};
+
+// busca la implementación del NIF por su nombre en Erlang
+const struct Nif *my_nif_get_nif(const char *nifname)
+{
+    if (strcmp("my_nif:add/2", nifname) == 0) {
+        return &amp;add_nif;
+    }
+
+    return NULL;
+}
+
+REGISTER_NIF_COLLECTION(my_nif, NULL, NULL, my_nif_get_nif);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>El código anterior incluye la implementación principal de la función <code>add</code>, un struct necesario para asociar el nombre del NIF con su función de implementación en C, y la función <code>my_nif_get_nif</code> para resolver las llamadas a NIFs desde Erlang. Finalmente, se invoca una macro para registrar esta colección de NIFs en AtomVM, haciéndolos disponibles para el código Elixir/Erlang.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="compilación-de-la-imagen-de-atomvm"><a class="anchor" href="#compilación-de-la-imagen-de-atomvm"></a>Compilación de la Imagen de AtomVM</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Una vez que el componente del NIF esté listo, se debe incluir en el directorio <code>src/platforms/esp32/components</code> de AtomVM. Al colocarlo allí, se incorporará automáticamente durante el proceso de compilación, siguiendo los pasos detallados en la página <a href="devenv.html#compilar-atomvm" class="xref page">Entorno de Desarrollo</a>.</p>
+</div>
+<div class="paragraph">
+<p>Es crucial ejecutar el comando <code>idf.py reconfigure</code> antes de <code>idf.py build</code> para que el ESP-IDF detecte y reconozca el nuevo componente.</p>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

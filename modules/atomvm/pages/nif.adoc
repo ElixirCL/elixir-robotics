@@ -1,0 +1,121 @@
+= Crear un NIF (Native Implemented Function) para AtomVM
+
+En esta sección, se explicará cómo crear una extensión simple en C para implementar la función "add" en AtomVM. La estructura del proyecto será la siguiente:
+
+----
+├── CMakeLists.txt
+├── component.mk
+└── nifs
+    ├── include
+    │   └── my_nif.h
+    └── my_nif.c
+----
+
+== Configuración de CMake y el Componente
+
+Primero, configuraremos CMake con el archivo `CMakeLists.txt` para que encuentre los archivos necesarios para compilar el componente:
+
+[source, cmake]
+----
+set(ATOMVM_MY_NIF_COMPONENT_SRCS
+    "nifs/my_nif.c"
+)
+
+idf_component_register(
+    SRCS ${ATOMVM_MY_NIF_COMPONENT_SRCS}
+    INCLUDE_DIRS "nifs/include"
+    PRIV_REQUIRES "libatomvm" "avm_sys"
+)
+
+idf_build_set_property(
+    LINK_OPTIONS "-Wl,--whole-archive;${CMAKE_CURRENT_BINARY_DIR}/lib${COMPONENT_NAME}.a;-Wl,--no-whole-archive"
+    APPEND
+)
+----
+
+Luego, añadiremos las siguientes líneas en `component.mk` para garantizar que se pasen los argumentos correctos al compilador cuando se compile la imagen de AtomVM:
+
+[source, make]
+----
+COMPONENT_ADD_INCLUDEDIRS := nifs/include
+COMPONENT_ADD_LDFLAGS = -Wl,--whole-archive -l$(COMPONENT_NAME) -Wl,--no-whole-archive
+COMPONENT_SRCDIRS := nifs
+CXXFLAGS += -fno-rtti
+----
+
+== Archivos de Headers del NIF
+
+El siguiente paso es definir los archivos de headers del NIF. En `nifs/include/my_nif.h`, se escribe el siguiente contenido:
+
+[source, c]
+----
+#ifndef __ATOMVM_MY_NIF_H__
+#define __ATOMVM_MY_NIF_H__
+
+#include "context.h"
+#include "nifs.h"
+
+const struct Nif *my_nif_get_nif(const char *nifname); // función para obtener la implementación del NIF
+
+#endif
+----
+
+Este archivo contiene las declaraciones de las funciones principales para la implementación y registro de nuestro *NIF*.
+
+== Implementación del NIF
+
+Finalmente, crearemos el archivo `nifs/my_nif.c` con la implementación que se utilizará en AtomVM:
+
+[source, c]
+----
+#include <my_nif.h>
+#include <context.h>
+#include <defaultatoms.h>
+#include <esp32_sys.h>
+#include <interop.h>
+#include <nifs.h>
+#include <stdlib.h>
+#include <term.h>
+
+static term nif_add(Context *ctx, int argc, term argv[])
+{
+    // verifica si hay 2 argumentos y si ambos son enteros
+    if (argc != 2 || !term_is_any_integer(argv[0]) || !term_is_any_integer(argv[1])) {
+        RAISE_ERROR(BADARG_ATOM);
+    }
+
+    int32_t a = term_to_int(argv[0]);
+    int32_t b = term_to_int(argv[1]);
+
+    int32_t result = a + b;
+
+    return term_from_int(result);
+}
+
+// struct que describe el NIF 'add'
+static const struct Nif add_nif =
+{
+    .base.type = NIFFunctionType,
+    .nif_ptr = nif_add
+};
+
+// busca la implementación del NIF por su nombre en Erlang
+const struct Nif *my_nif_get_nif(const char *nifname)
+{
+    if (strcmp("my_nif:add/2", nifname) == 0) {
+        return &add_nif;
+    }
+
+    return NULL;
+}
+
+REGISTER_NIF_COLLECTION(my_nif, NULL, NULL, my_nif_get_nif);
+----
+
+El código anterior incluye la implementación principal de la función `add`, un struct necesario para asociar el nombre del NIF con su función de implementación en C, y la función `my_nif_get_nif` para resolver las llamadas a NIFs desde Erlang. Finalmente, se invoca una macro para registrar esta colección de NIFs en AtomVM, haciéndolos disponibles para el código Elixir/Erlang.
+
+== Compilación de la Imagen de AtomVM
+
+Una vez que el componente del NIF esté listo, se debe incluir en el directorio `src/platforms/esp32/components` de AtomVM. Al colocarlo allí, se incorporará automáticamente durante el proceso de compilación, siguiendo los pasos detallados en la página xref:atomvm:devenv.adoc#compilar-atomvm[Entorno de Desarrollo].
+
+Es crucial ejecutar el comando `idf.py reconfigure` antes de `idf.py build` para que el ESP-IDF detecte y reconozca el nuevo componente.
