@@ -1,6 +1,7 @@
 .Protocolos de Comunicación
 //* xref:meshtastic.adoc[]
 * xref:iot.adoc[]
+* xref:i2c.adoc[]
 // * xref:lorawan.adoc[]
 //* xref:sigfox.adoc[]
 //* xref:zigbee.adoc[]

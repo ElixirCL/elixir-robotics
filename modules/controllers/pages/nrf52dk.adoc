@@ -1,0 +1,29 @@
+= nRF52 DK
+
+El **nRF52 DK** es un versátil kit de desarrollo de 
+placa única para **Bluetooth Low Energy**, **Bluetooth mesh**, **NFC**, **ANT** y 
+desarrollos propietarios de **2,4 GHz** sobre los SoC **nRF52805**, **nRF52810** y **nRF52832**.
+
+Facilita el desarrollo aprovechando todas las funciones de los SoC 
+nRF52805, nRF52810 y nRF52832. Incluye una **antena NFC** que 
+permite habilitar rápidamente el uso del periférico **NFC-A tag** del nRF52832. 
+
+Todos los **GPIO** están disponibles a través de conectores de 
+borde y pines, y **4 botones** y **4 LED** simplifican la entrada y salida 
+de datos hacia y desde el SoC.
+
+Es **compatible con Arduino Uno Revisión 3**, lo que permite montar 
+shields de terceros con facilidad. Incorpora un **depurador SEGGER J-Link** 
+integrado que permite programar y depurar tanto el SoC de la placa como 
+SoC externos mediante el encabezado de salida de depuración. También se puede 
+conectar directamente al **Power Profiler Kit** y al **Power Profiler Kit II**.
+
+Puede alimentarse por **USB**, pero también incluye un 
+**portapila CR2032**, lo que permite realizar pruebas de prototipos en campo.
+
+.nRF52 DK
+image::nRF52.png[]
+
+== Referencias
+
+- https://www.nordicsemi.com/Products/Development-hardware/nRF52-DK

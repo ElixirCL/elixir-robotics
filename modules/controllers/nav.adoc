@@ -6,6 +6,8 @@
 * xref:raspberry.adoc[]
 * xref:esp32.adoc[]
 * xref:stm32.adoc[]
+* xref:nrf52dk.adoc[]
 * xref:jetson.adoc[]
 * xref:fpga.adoc[]
 * xref:asic.adoc[]
+* xref:howtochoose.adoc[]

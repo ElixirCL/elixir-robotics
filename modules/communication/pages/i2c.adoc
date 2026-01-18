@@ -1,0 +1,202 @@
+= Protocolo I2C
+
+El Circuito inter-integrado (I²C, del inglés Inter-Integrated Circuit) es un 
+bus serie de datos desarrollado en 1982 por Philips Semiconductors. Se utiliza principalmente 
+internamente para la comunicación entre diferentes partes de un circuito, 
+por ejemplo, entre un controlador y circuitos periféricos integrados.
+El sistema original fue desarrollado por Philips a principios de 1980 
+con el fin de controlar varios chips en televisores de manera sencilla. 
+
+El protocolo I2C es compatible con diversas placas de desarrollo. 
+Permite conectar varios dispositivos periféricos, como sensores, pantallas, 
+controladores de motores, etc., utilizando solo unos pocos cables. Esto 
+brinda mucha flexibilidad y acelera la creación de prototipos, sin una 
+abundancia de cables. 
+
+== ¿Qué es I2C?
+
+El protocolo I2C implica el uso de dos líneas para enviar y recibir datos: 
+una línea de reloj serie (**SCL**) que la placa controladora
+hace oscilar a intervalos regulares, y una línea de datos serie (**SDA**) 
+por la cual se transmiten los datos entre los dos dispositivos.
+
+En I2C, existe un dispositivo controlador y uno o más 
+dispositivos periféricos conectados a las líneas SCL y SDA del controlador.
+
+Cuando la línea de reloj cambia de bajo a alto 
+(lo que se conoce como el **flanco de subida** del pulso de reloj), 
+se transfiere un solo bit de información desde la placa hacia el dispositivo 
+I2C a través de la línea SDA. A medida que la línea de reloj continúa 
+generando pulsos, se envían más bits hasta que se forma una secuencia que 
+incluye una dirección de 7 u 8 bits y un comando o dato. Cuando esta 
+información se envía —bit a bit—, el dispositivo llamado ejecuta la solicitud 
+y transmite sus datos de vuelta —si es necesario— a la placa por la misma línea, 
+utilizando la señal de reloj que sigue siendo generada por el controlador en SCL 
+como referencia temporal.
+
+Cada dispositivo en el bus I2C es funcionalmente independiente del 
+controlador, pero responderá con información cuando sea solicitado por este.
+
+Debido a que el protocolo I2C permite que cada dispositivo 
+habilitado tenga su propia dirección única, y a que tanto el controlador 
+como los dispositivos periféricos se turnan para comunicarse a través 
+de una sola línea, es posible que tu placa Arduino se comunique (por turnos) 
+con muchos dispositivos u otras placas utilizando solo dos pines del microcontrolador.
+
+Un mensaje I2C a nivel de bits más bajo se ve aproximadamente así:
+
+.Mensaje I2C
+image::i2c/i2c.png[]
+
+El controlador envía instrucciones a través del bus I2C por el pin de datos (SDA), y 
+dichas instrucciones van precedidas por la dirección, de modo que solo el dispositivo 
+correcto las escuche.
+
+Luego hay un bit que indica si el controlador desea leer o escribir.
+Cada mensaje debe ser confirmado para evitar resultados inesperados; una 
+vez que el receptor ha reconocido la información previa, se lo indica al 
+controlador para que pueda pasar al siguiente conjunto de bits.
+
+- 8 bits de datos
+- Otro bit de confirmación (acknowledgement)
+- 8 bits de datos
+- Otro bit de confirmación
+
+Pero, ¿cómo saben el controlador y los periféricos dónde 
+comienzan y terminan la dirección, los mensajes, etc.? Para eso sirve el cable SCL. 
+Este sincroniza el reloj del controlador con el de los dispositivos, 
+asegurando que todos avancen a la siguiente instrucción al mismo tiempo.
+
+== Estándares Qwiic, Stemma QT y Grove
+
+Existen múltiples estándares creados utilizando el protocolo I2C.
+Ejemplos de estos estándares son Qwiic, desarrollado por SparkFun, y STEMMA QT, 
+desarrollado por Adafruit®. 
+
+Tanto Qwiic como STEMMA QT utilizan un 
+conector *JST* SH de 4 pines para dispositivos I2C, lo que facilita 
+que terceros diseñen hardware con una amplia compatibilidad. Al contar con un 
+conector estandarizado, sabrás que si ves la palabra Qwiic o STEMMA QT 
+asociada a un producto, este funcionará junto con una placa 
+que tenga un conector Qwiic o STEMMA QT.
+
+.Conector JST 4 Pines
+image::i2c/jst.jpg[]
+
+Tanto Qwiic como STEMMA QT agrupan en un solo 
+cable los conductores de alimentación, tierra (GND) y las líneas SDA y SCL para I2C, 
+lo que los convierte en un kit completo: un único cable que integra todo.
+
+La principal diferencia es que Qwiic incorpora adaptación de niveles y 
+regulación de voltaje en el controlador (pero no en los periféricos). 
+Esto significa que Qwiic utiliza únicamente lógica de 3.3 V. Esto facilita su uso, 
+ya que para el usuario final hay una cosa menos que puede 
+salir mal al diseñar y montar el circuito.
+
+STEMMA QT, por otro lado, no cuenta con estas características. 
+Esto permite utilizar módulos tanto de lógica a 3.3 V como a 5 V. También 
+implica que hay un aspecto adicional que se debe tener en cuenta al 
+crear el circuito, pero a cambio ofrece mayor flexibilidad en los 
+requisitos de alimentación y lógica.
+
+El orden de los pines de STEMMA QT está diseñado para coincidir 
+con el orden de pines de Qwiic, lo que permite la compatibilidad 
+cruzada entre ambos estándares.
+
+Grove es otro estándar de conector, desarrollado por Seeed Studio. 
+Puedes encontrar una gran variedad de módulos con conector Grove; 
+sin embargo, solo algunos de ellos utilizan I2C.
+
+.Conexión de Placa a Dispositivo I2C con Qwiic
+image::i2c/qwiic.png[]
+
+== Conectar Múltiples Placas
+
+En algunas situaciones, puede ser útil configurar dos (¡o más!) 
+placas para que compartan información entre sí. En este ejemplo, 
+dos placas Arduino están programadas para comunicarse entre ellas en una 
+configuración de Controlador lector / Periférico emisor mediante el protocolo 
+serie síncrono I2C. Para lograr esto se utilizan varias funciones de la biblioteca _Wire_ 
+de Arduino.
+
+.Conexión de dos Placas por I2C
+image::i2c/i2c-placa.png[]
+
+El Controlador, está programado para solicitar y 
+luego leer 6 bytes de datos enviados desde el Arduino Periférico, 
+que tiene una dirección única. Una vez que se recibe ese mensaje, 
+puede visualizarse en la ventana del monitor serie del software Arduino (IDE).
+
+.Arduino Lector I2C
+[source, c]
+----
+// Wire Controller Reader
+// by Nicholas Zambetti [http://www.zambetti.com](http://www.zambetti.com)
+
+// Demonstrates use of the Wire library
+// Reads data from an I2C/TWI peripheral device
+// Refer to the "Wire Peripheral Sender" example for use with this
+
+// Created 29 March 2006
+
+// This example code is in the public domain.
+
+
+#include <Wire.h>
+
+void setup() {
+  Wire.begin();        // join i2c bus (address optional for master)
+  Serial.begin(9600);  // start serial for output
+}
+
+void loop() {
+  Wire.requestFrom(8, 6);    // request 6 bytes from peripheral device #8
+
+  while (Wire.available()) { // peripheral may send less than requested
+    char c = Wire.read(); // receive a byte as character
+    Serial.print(c);         // print the character
+  }
+
+  delay(500);
+}
+----
+
+.Arduino Escritor I2C
+[source, c]
+----
+// Wire Peripheral Sender
+// by Nicholas Zambetti [http://www.zambetti.com](http://www.zambetti.com)
+
+// Demonstrates use of the Wire library
+// Sends data as an I2C/TWI peripheral device
+// Refer to the "Wire Master Reader" example for use with this
+
+// Created 29 March 2006
+
+// This example code is in the public domain.
+
+
+#include <Wire.h>
+
+void setup() {
+  Wire.begin(8);                // join i2c bus with address #8
+  Wire.onRequest(requestEvent); // register event
+}
+
+void loop() {
+  delay(100);
+}
+
+// function that executes whenever data is requested by master
+// this function is registered as an event, see setup()
+void requestEvent() {
+  Wire.write("hello "); // respond with message of 6 bytes
+  // as expected by master
+}
+----
+
+== Referencias
+
+- https://docs.arduino.cc/learn/communication/wire/
+- https://www.electroart.cl/178/4x-pack-par-de-conectores-jst-2-5mm-4-pines-8-piezas/
+- https://en.wikipedia.org/wiki/I2C

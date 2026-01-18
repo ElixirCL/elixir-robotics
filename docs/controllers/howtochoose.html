@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>¿Cúal Usar? :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/controllers/howtochoose.html">
+    <link rel="prev" href="asic.html">
+    <link rel="next" href="../communication/iot.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos e Historia</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/history.html">Historia de la Robótica y Automatización</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/circuits.html">Fundamentos de Circuitos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/tools.html">Herramientas</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="basicstamp.html">Parallax Basic Stamp</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="nrf52dk.html">nRF52 DK</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="jetson.html">Nvidia Jetson &amp; AMD Kria</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="fpga.html">FPGA</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="asic.html">ASIC</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="howtochoose.html">¿Cúal Usar?</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/iot.html">Introducción a IOT</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/i2c.html">Protocolo I2C</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/grafana.html">Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/dashboards.html">Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/cad.html">Herramientas de Computer Asisted Design (CAD)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/stores.html">Tiendas</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sistemas Operativos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../os/rtos.html">Sistemas Operativos en Tiempo Real</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../os/ros.html">Robot Operating System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/popcorn.html">PopCorn</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/nif.html">Crear un NIF</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/remote.html">Conexión Remota</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/tagboard.html">Proyecto: Tagboard</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware Avanzado</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/circuits.html">Elixir Circuits</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/soleil.html">Soleil</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/beambots.html">Beam Bots</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/grisp.html">GRiSP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Energía Solar</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/solar.html">¿Qué es la Energía Solar?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/components.html">Componentes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>IC y Controladores</li>
+    <li><a href="howtochoose.html">¿Cúal Usar?</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/controllers/pages/howtochoose.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">¿Cúal Usar?</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>La mayoría de los productos no necesitan ni el microcontrolador
+más barato ni el más potente, sino el que ofrezca <strong>mejor relación costo–beneficio total</strong>,
+considerando no solo el precio del chip, sino también el tiempo de
+desarrollo, depuración, herramientas, ecosistema, disponibilidad a largo
+plazo y la facilidad de pasar de prototipo a producción.</p>
+</div>
+<div class="paragraph">
+<p>Elegir el microcontrolador correcto puede
+marcar la diferencia entre el éxito y el fracaso de un diseño, y el
+verdadero valor está en el <strong>costo total del producto</strong>, no solo en el precio del chip.</p>
+</div>
+<div class="paragraph">
+<p>Al desarrollar un nuevo producto electrónico,
+una de las decisiones más importantes es elegir el microcontrolador.
+Entre las muchas opciones disponibles, cuatro familias destacan por su
+uso en productos reales: ESP32, STM32, Nordic nRF52 y Raspberry Pi RP2350.
+Cada una tiene ventajas, desventajas y casos de uso ideales.</p>
+</div>
+<div class="paragraph">
+<p><strong>ESP32</strong></p>
+</div>
+<div class="paragraph">
+<p>Destaca por su conectividad inalámbrica integrada (Wi-Fi y Bluetooth)
+y su bajo costo. Es fácil de usar, ideal para prototipos rápidos y
+productos conectados. Sus principales desventajas son el
+mayor consumo energético, las certificaciones inalámbricas y una
+seguridad menos robusta que otras plataformas.</p>
+</div>
+<div class="paragraph">
+<p><strong>STM32</strong></p>
+</div>
+<div class="paragraph">
+<p>Es la familia más versátil y profesional. Ofrece una enorme variedad
+de modelos que cubren desde ultra bajo consumo hasta alto rendimiento.
+Tiene un ecosistema maduro y estable, ideal para productos sin
+conectividad inalámbrica integrada o que requieran control fino de
+potencia y rendimiento. Su principal
+desventaja es la complejidad para elegir el modelo adecuado.</p>
+</div>
+<div class="paragraph">
+<p><strong>nRF52 (Nordic)</strong></p>
+</div>
+<div class="paragraph">
+<p>Está optimizado para Bluetooth Low Energy y
+ultra bajo consumo, lo que lo hace ideal para dispositivos
+alimentados por batería como wearables y sensores.
+Ofrece excelente eficiencia energética y una pila BLE muy
+madura, aunque es menos flexible como microcontrolador de
+propósito general y algo más caro que el ESP32.</p>
+</div>
+<div class="paragraph">
+<p><strong>RP2350 (Raspberry Pi)</strong></p>
+</div>
+<div class="paragraph">
+<p>Se caracteriza por su precio muy bajo y buen rendimiento con doble núcleo.
+Es popular en la comunidad maker y fácil de desarrollar,
+pero no incluye flash interna ni conectividad inalámbrica,
+por lo que requiere componentes externos.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Tabla de Recomendaciones</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Necesidad</th>
+<th class="tableblock halign-left valign-top">Recomendación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conexión Inalámbrica</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>Wi-Fi: ESP32</p>
+</li>
+<li>
+<p>Bluetooth de bajo consumo: nRF52</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">¿La duración de batería es crítica?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nRF52 o STM32 de bajo consumo</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">¿Presupuesto muy ajustado?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RP2350 (sin inalámbrico) o ESP32 (con inalámbrico)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">¿Escalabilidad y largo plazo?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STM32</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">¿Nivel de experiencia del equipo?</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>Principiantes: ESP32 o RP2350</p>
+</li>
+<li>
+<p>Entornos profesionales: STM32 o nRF52</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>En conclusión, no existe un microcontrolador "mejor"
+en general: la elección correcta depende de los requisitos del producto,
+como conectividad, consumo, costo, escalabilidad y experiencia del equipo.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="recomendaciones"><a class="anchor" href="#recomendaciones"></a>Recomendaciones</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La siguiente es una pequeña selección de dispositivos
+que podrían ser recomendados por su adecuado balance
+de costo y beneficios.</p>
+</div>
+<div class="sect2">
+<h3 id="gd32v-gigadevice"><a class="anchor" href="#gd32v-gigadevice"></a>GD32V (GigaDevice)</h3>
+<div class="paragraph">
+<p>Microcontrolador basado en <strong>RISC-V</strong>, enfocado en diseños
+sensibles al costo. Ofrece periféricos estándar y bajo precio al
+evitar licencias ARM, pero su ecosistema, documentación y comunidad son más limitados.
+Es adecuado cuando el costo es crítico y el equipo tiene experiencia.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.gigadevice.com/product/mcu/main-stream-mcus/gd32vf103-series" class="bare">https://www.gigadevice.com/product/mcu/main-stream-mcus/gd32vf103-series</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="nrf52-nordic-semiconductor"><a class="anchor" href="#nrf52-nordic-semiconductor"></a>nRF52 (Nordic Semiconductor)</h3>
+<div class="paragraph">
+<p>Excelente opción para productos <strong>Bluetooth Low Energy</strong> alimentados por batería.
+Destaca por su bajo consumo, radio integrada, pilas BLE maduras y gran fiabilidad.
+No es barato, pero su valor total es muy alto para aplicaciones BLE.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.nordicsemi.com/Products/Development-hardware/nRF52-DK" class="bare">https://www.nordicsemi.com/Products/Development-hardware/nRF52-DK</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="rp2350-raspberry-pi"><a class="anchor" href="#rp2350-raspberry-pi"></a>RP2350 (Raspberry Pi)</h3>
+<div class="paragraph">
+<p>Ofrece gran capacidad por su precio: núcleos <strong>Cortex-M33</strong> y <strong>RISC-V</strong>,
+mucha SRAM, buenas prestaciones, y funciones de seguridad.
+Es flexible, potente y reduce riesgos de rediseño futuro.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.raspberrypi.com/products/rp2350/" class="bare">https://www.raspberrypi.com/products/rp2350/</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="stm32g0-stmicroelectronics"><a class="anchor" href="#stm32g0-stmicroelectronics"></a>STM32G0 (STMicroelectronics)</h3>
+<div class="paragraph">
+<p>Considerado el <strong>microcontrolador "por defecto" profesional</strong> para
+productos sin conectividad inalámbrica. Equilibra costo, capacidades y
+madurez del ecosistema. Es estable, bien documentado, fácil de
+conseguir y con larga vida útil.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.st.com/en/microcontrollers-microprocessors/stm32g0-series.html" class="bare">https://www.st.com/en/microcontrollers-microprocessors/stm32g0-series.html</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="esp32-s3-espressif"><a class="anchor" href="#esp32-s3-espressif"></a>ESP32-S3 (Espressif)</h3>
+<div class="paragraph">
+<p>El que ofrece mayor valor global. Integra <strong>Wi-Fi y Bluetooth</strong>,
+doble núcleo, buen soporte y bajo costo. Es muy popular, acelera el
+desarrollo y se adapta a muchos tipos de productos, aunque se debe
+tener cuidado con el consumo energético.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.espressif.com/en/products/socs/esp32-s3" class="bare">https://www.espressif.com/en/products/socs/esp32-s3</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.youtube.com/watch?v=njp-IC0s3-I" class="bare">https://www.youtube.com/watch?v=njp-IC0s3-I</a></p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=EGqLTQIbsOg" class="bare">https://www.youtube.com/watch?v=EGqLTQIbsOg</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="asic.html">ASIC</a></span>
+  <span class="next"><a href="../communication/iot.html">Introducción a IOT</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

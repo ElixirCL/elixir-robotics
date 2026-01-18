@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Protocolo I2C :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/communication/i2c.html">
+    <link rel="prev" href="iot.html">
+    <link rel="next" href="../tools/platformio.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos e Historia</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/history.html">Historia de la Robótica y Automatización</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/circuits.html">Fundamentos de Circuitos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/tools.html">Herramientas</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/basicstamp.html">Parallax Basic Stamp</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/stm32.html">STM32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/nrf52dk.html">nRF52 DK</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/jetson.html">Nvidia Jetson &amp; AMD Kria</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/fpga.html">FPGA</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/asic.html">ASIC</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/howtochoose.html">¿Cúal Usar?</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="iot.html">Introducción a IOT</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="i2c.html">Protocolo I2C</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/grafana.html">Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/dashboards.html">Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/cad.html">Herramientas de Computer Asisted Design (CAD)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/stores.html">Tiendas</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sistemas Operativos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../os/rtos.html">Sistemas Operativos en Tiempo Real</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../os/ros.html">Robot Operating System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/popcorn.html">PopCorn</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/nif.html">Crear un NIF</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/remote.html">Conexión Remota</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/tagboard.html">Proyecto: Tagboard</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware Avanzado</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/circuits.html">Elixir Circuits</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/soleil.html">Soleil</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/beambots.html">Beam Bots</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/grisp.html">GRiSP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Energía Solar</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/solar.html">¿Qué es la Energía Solar?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/components.html">Componentes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Protocolos de Comunicación</li>
+    <li><a href="i2c.html">Protocolo I2C</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/communication/pages/i2c.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Protocolo I2C</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>El Circuito inter-integrado (I²C, del inglés Inter-Integrated Circuit) es un
+bus serie de datos desarrollado en 1982 por Philips Semiconductors. Se utiliza principalmente
+internamente para la comunicación entre diferentes partes de un circuito,
+por ejemplo, entre un controlador y circuitos periféricos integrados.
+El sistema original fue desarrollado por Philips a principios de 1980
+con el fin de controlar varios chips en televisores de manera sencilla.</p>
+</div>
+<div class="paragraph">
+<p>El protocolo I2C es compatible con diversas placas de desarrollo.
+Permite conectar varios dispositivos periféricos, como sensores, pantallas,
+controladores de motores, etc., utilizando solo unos pocos cables. Esto
+brinda mucha flexibilidad y acelera la creación de prototipos, sin una
+abundancia de cables.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="qué-es-i2c"><a class="anchor" href="#qué-es-i2c"></a>¿Qué es I2C?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El protocolo I2C implica el uso de dos líneas para enviar y recibir datos:
+una línea de reloj serie (<strong>SCL</strong>) que la placa controladora
+hace oscilar a intervalos regulares, y una línea de datos serie (<strong>SDA</strong>)
+por la cual se transmiten los datos entre los dos dispositivos.</p>
+</div>
+<div class="paragraph">
+<p>En I2C, existe un dispositivo controlador y uno o más
+dispositivos periféricos conectados a las líneas SCL y SDA del controlador.</p>
+</div>
+<div class="paragraph">
+<p>Cuando la línea de reloj cambia de bajo a alto
+(lo que se conoce como el <strong>flanco de subida</strong> del pulso de reloj),
+se transfiere un solo bit de información desde la placa hacia el dispositivo
+I2C a través de la línea SDA. A medida que la línea de reloj continúa
+generando pulsos, se envían más bits hasta que se forma una secuencia que
+incluye una dirección de 7 u 8 bits y un comando o dato. Cuando esta
+información se envía —bit a bit—, el dispositivo llamado ejecuta la solicitud
+y transmite sus datos de vuelta —si es necesario— a la placa por la misma línea,
+utilizando la señal de reloj que sigue siendo generada por el controlador en SCL
+como referencia temporal.</p>
+</div>
+<div class="paragraph">
+<p>Cada dispositivo en el bus I2C es funcionalmente independiente del
+controlador, pero responderá con información cuando sea solicitado por este.</p>
+</div>
+<div class="paragraph">
+<p>Debido a que el protocolo I2C permite que cada dispositivo
+habilitado tenga su propia dirección única, y a que tanto el controlador
+como los dispositivos periféricos se turnan para comunicarse a través
+de una sola línea, es posible que tu placa Arduino se comunique (por turnos)
+con muchos dispositivos u otras placas utilizando solo dos pines del microcontrolador.</p>
+</div>
+<div class="paragraph">
+<p>Un mensaje I2C a nivel de bits más bajo se ve aproximadamente así:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/i2c/i2c.png" alt="i2c">
+</div>
+<div class="title">Figure 1. Mensaje I2C</div>
+</div>
+<div class="paragraph">
+<p>El controlador envía instrucciones a través del bus I2C por el pin de datos (SDA), y
+dichas instrucciones van precedidas por la dirección, de modo que solo el dispositivo
+correcto las escuche.</p>
+</div>
+<div class="paragraph">
+<p>Luego hay un bit que indica si el controlador desea leer o escribir.
+Cada mensaje debe ser confirmado para evitar resultados inesperados; una
+vez que el receptor ha reconocido la información previa, se lo indica al
+controlador para que pueda pasar al siguiente conjunto de bits.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>8 bits de datos</p>
+</li>
+<li>
+<p>Otro bit de confirmación (acknowledgement)</p>
+</li>
+<li>
+<p>8 bits de datos</p>
+</li>
+<li>
+<p>Otro bit de confirmación</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Pero, ¿cómo saben el controlador y los periféricos dónde
+comienzan y terminan la dirección, los mensajes, etc.? Para eso sirve el cable SCL.
+Este sincroniza el reloj del controlador con el de los dispositivos,
+asegurando que todos avancen a la siguiente instrucción al mismo tiempo.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="estándares-qwiic-stemma-qt-y-grove"><a class="anchor" href="#estándares-qwiic-stemma-qt-y-grove"></a>Estándares Qwiic, Stemma QT y Grove</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Existen múltiples estándares creados utilizando el protocolo I2C.
+Ejemplos de estos estándares son Qwiic, desarrollado por SparkFun, y STEMMA QT,
+desarrollado por Adafruit®.</p>
+</div>
+<div class="paragraph">
+<p>Tanto Qwiic como STEMMA QT utilizan un
+conector <strong>JST</strong> SH de 4 pines para dispositivos I2C, lo que facilita
+que terceros diseñen hardware con una amplia compatibilidad. Al contar con un
+conector estandarizado, sabrás que si ves la palabra Qwiic o STEMMA QT
+asociada a un producto, este funcionará junto con una placa
+que tenga un conector Qwiic o STEMMA QT.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/i2c/jst.jpg" alt="jst">
+</div>
+<div class="title">Figure 2. Conector JST 4 Pines</div>
+</div>
+<div class="paragraph">
+<p>Tanto Qwiic como STEMMA QT agrupan en un solo
+cable los conductores de alimentación, tierra (GND) y las líneas SDA y SCL para I2C,
+lo que los convierte en un kit completo: un único cable que integra todo.</p>
+</div>
+<div class="paragraph">
+<p>La principal diferencia es que Qwiic incorpora adaptación de niveles y
+regulación de voltaje en el controlador (pero no en los periféricos).
+Esto significa que Qwiic utiliza únicamente lógica de 3.3 V. Esto facilita su uso,
+ya que para el usuario final hay una cosa menos que puede
+salir mal al diseñar y montar el circuito.</p>
+</div>
+<div class="paragraph">
+<p>STEMMA QT, por otro lado, no cuenta con estas características.
+Esto permite utilizar módulos tanto de lógica a 3.3 V como a 5 V. También
+implica que hay un aspecto adicional que se debe tener en cuenta al
+crear el circuito, pero a cambio ofrece mayor flexibilidad en los
+requisitos de alimentación y lógica.</p>
+</div>
+<div class="paragraph">
+<p>El orden de los pines de STEMMA QT está diseñado para coincidir
+con el orden de pines de Qwiic, lo que permite la compatibilidad
+cruzada entre ambos estándares.</p>
+</div>
+<div class="paragraph">
+<p>Grove es otro estándar de conector, desarrollado por Seeed Studio.
+Puedes encontrar una gran variedad de módulos con conector Grove;
+sin embargo, solo algunos de ellos utilizan I2C.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/i2c/qwiic.png" alt="qwiic">
+</div>
+<div class="title">Figure 3. Conexión de Placa a Dispositivo I2C con Qwiic</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conectar-múltiples-placas"><a class="anchor" href="#conectar-múltiples-placas"></a>Conectar Múltiples Placas</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>En algunas situaciones, puede ser útil configurar dos (¡o más!)
+placas para que compartan información entre sí. En este ejemplo,
+dos placas Arduino están programadas para comunicarse entre ellas en una
+configuración de Controlador lector / Periférico emisor mediante el protocolo
+serie síncrono I2C. Para lograr esto se utilizan varias funciones de la biblioteca <em>Wire</em>
+de Arduino.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/i2c/i2c-placa.png" alt="i2c placa">
+</div>
+<div class="title">Figure 4. Conexión de dos Placas por I2C</div>
+</div>
+<div class="paragraph">
+<p>El Controlador, está programado para solicitar y
+luego leer 6 bytes de datos enviados desde el Arduino Periférico,
+que tiene una dirección única. Una vez que se recibe ese mensaje,
+puede visualizarse en la ventana del monitor serie del software Arduino (IDE).</p>
+</div>
+<div class="listingblock">
+<div class="title">Arduino Lector I2C</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">// Wire Controller Reader
+// by Nicholas Zambetti [http://www.zambetti.com](http://www.zambetti.com)
+
+// Demonstrates use of the Wire library
+// Reads data from an I2C/TWI peripheral device
+// Refer to the "Wire Peripheral Sender" example for use with this
+
+// Created 29 March 2006
+
+// This example code is in the public domain.
+
+
+#include &lt;Wire.h&gt;
+
+void setup() {
+  Wire.begin();        // join i2c bus (address optional for master)
+  Serial.begin(9600);  // start serial for output
+}
+
+void loop() {
+  Wire.requestFrom(8, 6);    // request 6 bytes from peripheral device #8
+
+  while (Wire.available()) { // peripheral may send less than requested
+    char c = Wire.read(); // receive a byte as character
+    Serial.print(c);         // print the character
+  }
+
+  delay(500);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Arduino Escritor I2C</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">// Wire Peripheral Sender
+// by Nicholas Zambetti [http://www.zambetti.com](http://www.zambetti.com)
+
+// Demonstrates use of the Wire library
+// Sends data as an I2C/TWI peripheral device
+// Refer to the "Wire Master Reader" example for use with this
+
+// Created 29 March 2006
+
+// This example code is in the public domain.
+
+
+#include &lt;Wire.h&gt;
+
+void setup() {
+  Wire.begin(8);                // join i2c bus with address #8
+  Wire.onRequest(requestEvent); // register event
+}
+
+void loop() {
+  delay(100);
+}
+
+// function that executes whenever data is requested by master
+// this function is registered as an event, see setup()
+void requestEvent() {
+  Wire.write("hello "); // respond with message of 6 bytes
+  // as expected by master
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.arduino.cc/learn/communication/wire/" class="bare">https://docs.arduino.cc/learn/communication/wire/</a></p>
+</li>
+<li>
+<p><a href="https://www.electroart.cl/178/4x-pack-par-de-conectores-jst-2-5mm-4-pines-8-piezas/" class="bare">https://www.electroart.cl/178/4x-pack-par-de-conectores-jst-2-5mm-4-pines-8-piezas/</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/I2C" class="bare">https://en.wikipedia.org/wiki/I2C</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="iot.html">Introducción a IOT</a></span>
+  <span class="next"><a href="../tools/platformio.html">PlatformIO IDE</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>
