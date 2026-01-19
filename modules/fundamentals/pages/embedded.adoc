@@ -1,0 +1,132 @@
+= Introducción a los Sistemas Incrustados
+
+Los sistemas incrustados están presentes en casi todos los sectores: 
+automoción, dispositivos médicos, IoT, industria 4.0, robótica, 
+aeroespacial y electrónica de consumo. La demanda sigue creciendo 
+impulsada por vehículos eléctricos, dispositivos conectados, edge 
+computing y chips de IA. Aunque algunos sectores tradicionales atraviesen 
+dificultades, los roles de sistemas incrustados continúan en expansión.
+
+Un sistema incrustado es un sistema basado en un microcontrolador o 
+microprocesador diseñado para realizar una tarea específica, 
+ya sea de forma independiente o como parte de un sistema mayor. Dispositivos cotidianos y 
+críticos como controles remotos, electrodomésticos, automóviles, aviones y 
+relojes inteligentes son ejemplos de sistemas incrustados.
+
+El desarrollo de un sistema incrustado comienza con el 
+diseño del sistema, donde se seleccionan el tipo de procesador, 
+memoria, sensores, motores, requisitos de energía y presupuesto, 
+basándose en hojas de datos (datasheets). A partir de esto se crean 
+el diagrama de bloques y la lista de materiales (BOM).
+
+Luego, el trabajo se divide en dos áreas principales:
+
+- Ingeniería de hardware incrustado, que diseña esquemáticos, PCB, controladores de potencia, considera EMI/EMC y selecciona componentes adecuados.
+- Ingeniería de software incrustado, que programa el microcontrolador para interactuar con sensores y actuadores, entendiendo a fondo el hardware.
+
+== Ingeniero en Software Incrustado
+
+El perfil del ingeniero de software incrustado está evolucionando. 
+Ya no basta con saber programar en C a bajo nivel. Hoy se valoran habilidades híbridas, como:
+
+- C y C++ para código crítico
+- Elixir u similar para pruebas y automatización
+- Uso de RTOS (FreeRTOS, Zephyr, etc.)
+- Conocimiento de protocolos (SPI, I²C, Ethernet, BLE)
+- Depuración con herramientas de hardware
+- Buenas prácticas de ingeniería de software y sistemas
+- Ciberseguridad, cada vez más esencial
+
+El trabajo en sistemas incrustados es desafiante: plazos ajustados, 
+depuración compleja, hardware incompleto y necesidad de coordinación 
+entre equipos. Aunque los salarios pueden parecer 
+más bajos que en áreas de software "de moda", en sectores 
+especializados pueden ser muy competitivos.
+
+A largo plazo, es una de las carreras más a prueba de 
+futuro, ya que las habilidades fundamentales (trabajar cerca del hardware, 
+optimizar recursos, garantizar fiabilidad, seguridad y tiempo real)
+no se vuelven obsoletas. Además, son difíciles de 
+reemplazar por herramientas automáticas o IA.
+
+El consejo para estudiantes y jóvenes ingenieros es 
+apostar por sistemas incrustados con mentalidad de crecimiento: 
+entender profundamente la interacción hardware-software, aprender 
+redes y seguridad, usar plataformas abiertas y construir 
+proyectos reales. Los ingenieros incrustados seguirán siendo 
+clave para conectar el mundo físico con el digital.
+
+La carrera de ingeniero de software incrustado, 
+está orientada a quienes desean trabajar en empresas como Tesla, BMW, Airbus, Apple o SpaceX.
+
+Los sistemas incrustados son computadoras integradas en 
+sistemas mecánicos o electrónicos que cumplen una función específica. 
+Están presentes en objetos cotidianos como cafeteras, luces inteligentes, 
+automóviles, aviones, dispositivos médicos, GPS y auriculares inalámbricos. 
+El software incrustado está muy ligado al hardware y suele ser 
+crítico para la seguridad y el funcionamiento del sistema.
+
+Algunas habilidades necesarias para software incrustado:
+
+- *Aprender el lenguaje C*: Es la base del software incrustado. Permite un control cercano del hardware y sienta las bases para otros lenguajes como C++. Se recomienda aprenderlo primero en un PC antes de trabajar con hardware real.
+- *Aprender los fundamentos de electrónica*: Comprender conceptos como resistencias, conversión analógico-digital y las limitaciones del hardware es esencial para trabajar eficazmente con sistemas incrustados.
+- *Empezar con Arduino o ESP32*: Arduino y ESP32 facilitan el aprendizaje gracias a sus bibliotecas, abstracciones de hardware y una comunidad enorme que ofrece proyectos, kits y soluciones a problemas comunes.
+- *Pasar a microcontroladores más "bare-metal"*: Usar placas como STM32 permite mayor control del hardware, uso de depuradores profesionales y una experiencia más cercana a la industria, aunque con mayor complejidad.
+
+Hacer proyectos simples con Arduino no es suficiente para trabajar en la industria, 
+aunque sí puede servir como punto de inicio.
+
+Un ingeniero de sistemas incrustados debe pensar en el sistema completo, 
+desde la interacción con servidores, redes y otros dispositivos, 
+hasta el nivel más bajo del hardware en la placa (sensores, buses y circuitos integrados). 
+Siendo el debugging (depuración) una habilidad crítica, ya que los errores suelen 
+ser complejos y ocurren a muy bajo nivel.
+
+En cuanto a la plataforma técnica, el lenguaje C es 
+fundamental en sistemas incrustados. Es clave dominar conceptos como bits, 
+máscaras, interrupciones y control directo del hardware.
+
+También se debe dominar los periféricos hardware (GPIO, timers, watchdogs, ADC/DAC, IMU), 
+los protocolos de comunicación cableados (I2C, SPI, UART, CAN) e 
+inalámbricos (BLE, MQTT, Zigbee), y conceptos clave como memoria incrustada, 
+MMIO, DMA, SRAM y Flash, enfatizando el uso eficiente de 
+recursos y la mínima dependencia del heap.
+
+Debe conocer la importancia de elegir correctamente el 
+microcontrolador (STM32, nRF52, ESP32, etc.) según los periféricos necesarios, 
+y analizar una decisión central en el diseño: bare metal vs RTOS. 
+La mayoría de aplicaciones simples funcionan en bare metal, mientras que 
+sistemas críticos pueden requerir un RTOS.
+
+Además un ingeniero de software incrustado debe tener 
+conocimientos básicos de electrónica, como:
+
+- Ley de Ohm y divisores resistivos
+- ADC y señales analógicas
+- Capacitores, inductores y filtrado
+- Transistores, niveles de voltaje y protección del hardware
+- Lectura de esquemáticos y datasheets
+
+== Conclusiones
+
+El progreso se logra construyendo proyectos cada vez más complejos, 
+explorando nuevas áreas como robótica, automatización o vehículos autónomos, y 
+perfeccionando continuamente las habilidades.
+
+La ingeniería de sistemas incrustados es un campo amplio, exigente y 
+multidisciplinario que combina software, hardware y electrónica. 
+Requiere una mentalidad de sistema completo, bases sólidas en C, 
+comprensión profunda del hardware y aprendizaje continuo orientado a 
+proyectos reales de nivel industrial.
+
+En conclusión, los sistemas incrustados son un campo muy interesante, 
+práctico y con grandes oportunidades profesionales. Aprenderlos requiere 
+constancia, proyectos reales y curiosidad, pero ofrece una carrera sólida y 
+estimulante en la intersección entre software y hardware.
+
+== Referencias
+
+- https://www.youtube.com/watch?v=vkgGmkR7gIo
+- https://www.youtube.com/watch?v=IOs6QDI-2MY
+- https://www.youtube.com/watch?v=Dzn0woX-WW0
+- https://www.youtube.com/watch?v=_tBFaWR7gnA

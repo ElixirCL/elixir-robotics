@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Electrónica, Robótica e IOT con Elixir</title>
-    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/fundamentals/scientists.html">
+    <title>Introducción a los Sistemas Incrustados :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/fundamentals/embedded.html">
+    <link rel="prev" href="circuits.html">
+    <link rel="next" href="components.html">
     <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -80,7 +82,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="circuits.html">Fundamentos de Circuitos</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="embedded.html">Introducción a los Sistemas Incrustados</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -272,63 +274,247 @@
 <button class="nav-toggle"></button>
   <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>Fundamentos e Historia</li>
+    <li><a href="embedded.html">Introducción a los Sistemas Incrustados</a></li>
+  </ul>
 </nav>
-<div class="edit-this-page"><a href="file:///antora/./modules/fundamentals/pages/scientists.adoc">Editar esta página</a></div>
+<div class="edit-this-page"><a href="file:///antora/./modules/fundamentals/pages/embedded.adoc">Editar esta página</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contenidos" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<div class="sect1">
-<h2 id="científicos-destacados"><a class="anchor" href="#científicos-destacados"></a>Científicos Destacados</h2>
+<h1 class="page">Introducción a los Sistemas Incrustados</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>La siguiente es una pequeña lista de los científicos que dan nombre
-a las distintas unidades que se utilizan en electrónica y electricidad.</p>
+<p>Los sistemas incrustados están presentes en casi todos los sectores:
+automoción, dispositivos médicos, IoT, industria 4.0, robótica,
+aeroespacial y electrónica de consumo. La demanda sigue creciendo
+impulsada por vehículos eléctricos, dispositivos conectados, edge
+computing y chips de IA. Aunque algunos sectores tradicionales atraviesen
+dificultades, los roles de sistemas incrustados continúan en expansión.</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Nombre</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Descripción</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/Alessandro_Volta">Alessandro Volta</a> (18 de febrero de 1745, 5 de marzo de 1827)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un químico y físico italiano​ famoso principalmente por el descubrimiento del metano en 1776 y la invención y desarrollo de la pila eléctrica en 1799. La unidad de fuerza electromotriz del Sistema Internacional de Unidades ha llevado el nombre de voltio en su honor desde 1881.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/Andr%C3%A9-Marie_Amp%C3%A8re">André-Marie Ampère</a> (20 de enero de 1775, 10 de junio de 1836)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un matemático y físico francés. Formuló en 1827 la teoría de la electrodinámica, esencial al desarrollo del electromagnetismo, inventó el solenoide, e imaginó la primera teoría microscópica del magnetismo de materiales y una teoría del magnetismo terrestre. El amperio (en francés ampère) se llama así en su honor.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/James_Prescott_Joule">James Prescott Joule</a> (24 de diciembre de 1818, 11 de octubre de 1889)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un físico inglés, conocido sobre todo por sus investigaciones en termodinámica. Descubrió su relación con el trabajo mecánico, lo cual le condujo a la teoría de la energía. La unidad internacional de energía, calor y trabajo, el joule, fue bautizada en su honor.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/Michael_Faraday">Michael Faraday</a> (22 de septiembre de 1791, 25 de agosto de 1867)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un científico británico que estudió el electromagnetismo y la electroquímica. Sus principales descubrimientos incluyen la inducción electromagnética, el diamagnetismo y la electrólisis. La unidad nombrada en su honor se denomina faradio, La cual es la unidad de capacidad eléctrica del Sistema Internacional de Unidades (SI).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/Heinrich_Rudolf_Hertz">Heinrich Rudolf Hertz</a> (22 de febrero de 1857, 1 de enero de 1894)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un físico alemán que descubrió el efecto fotoeléctrico, la propagación de las ondas electromagnéticas y las formas para producirlas y detectarlas. La unidad de medida de la frecuencia, el hercio (Hertz, en la mayoría de los idiomas), lleva ese nombre en su honor.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/James_Watt">James Watt</a> (19 de enero de 1736, 25 de agosto de 1819)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un ingeniero mecánico, inventor y químico escocés. El vatio o watt​ (símbolo: W) es la unidad para la potencia. Es igual a 1 julio por segundo (1 J/s).</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://es.wikipedia.org/wiki/Georg_Simon_Ohm">Georg Simon Ohm</a> (16 de marzo de 1789, 6 de julio de 1854)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fue un físico y matemático alemán que aportó a la teoría de la electricidad la ley de Ohm. Conocido principalmente por su investigación sobre las corrientes eléctricas. La unidad de resistencia eléctrica, el ohmio, recibe este nombre en su honor.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Un sistema incrustado es un sistema basado en un microcontrolador o
+microprocesador diseñado para realizar una tarea específica,
+ya sea de forma independiente o como parte de un sistema mayor. Dispositivos cotidianos y
+críticos como controles remotos, electrodomésticos, automóviles, aviones y
+relojes inteligentes son ejemplos de sistemas incrustados.</p>
+</div>
+<div class="paragraph">
+<p>El desarrollo de un sistema incrustado comienza con el
+diseño del sistema, donde se seleccionan el tipo de procesador,
+memoria, sensores, motores, requisitos de energía y presupuesto,
+basándose en hojas de datos (datasheets). A partir de esto se crean
+el diagrama de bloques y la lista de materiales (BOM).</p>
+</div>
+<div class="paragraph">
+<p>Luego, el trabajo se divide en dos áreas principales:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ingeniería de hardware incrustado, que diseña esquemáticos, PCB, controladores de potencia, considera EMI/EMC y selecciona componentes adecuados.</p>
+</li>
+<li>
+<p>Ingeniería de software incrustado, que programa el microcontrolador para interactuar con sensores y actuadores, entendiendo a fondo el hardware.</p>
+</li>
+</ul>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="ingeniero-en-software-incrustado"><a class="anchor" href="#ingeniero-en-software-incrustado"></a>Ingeniero en Software Incrustado</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El perfil del ingeniero de software incrustado está evolucionando.
+Ya no basta con saber programar en C a bajo nivel. Hoy se valoran habilidades híbridas, como:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>C y C++ para código crítico</p>
+</li>
+<li>
+<p>Elixir u similar para pruebas y automatización</p>
+</li>
+<li>
+<p>Uso de RTOS (FreeRTOS, Zephyr, etc.)</p>
+</li>
+<li>
+<p>Conocimiento de protocolos (SPI, I²C, Ethernet, BLE)</p>
+</li>
+<li>
+<p>Depuración con herramientas de hardware</p>
+</li>
+<li>
+<p>Buenas prácticas de ingeniería de software y sistemas</p>
+</li>
+<li>
+<p>Ciberseguridad, cada vez más esencial</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>El trabajo en sistemas incrustados es desafiante: plazos ajustados,
+depuración compleja, hardware incompleto y necesidad de coordinación
+entre equipos. Aunque los salarios pueden parecer
+más bajos que en áreas de software "de moda", en sectores
+especializados pueden ser muy competitivos.</p>
+</div>
+<div class="paragraph">
+<p>A largo plazo, es una de las carreras más a prueba de
+futuro, ya que las habilidades fundamentales (trabajar cerca del hardware,
+optimizar recursos, garantizar fiabilidad, seguridad y tiempo real)
+no se vuelven obsoletas. Además, son difíciles de
+reemplazar por herramientas automáticas o IA.</p>
+</div>
+<div class="paragraph">
+<p>El consejo para estudiantes y jóvenes ingenieros es
+apostar por sistemas incrustados con mentalidad de crecimiento:
+entender profundamente la interacción hardware-software, aprender
+redes y seguridad, usar plataformas abiertas y construir
+proyectos reales. Los ingenieros incrustados seguirán siendo
+clave para conectar el mundo físico con el digital.</p>
+</div>
+<div class="paragraph">
+<p>La carrera de ingeniero de software incrustado,
+está orientada a quienes desean trabajar en empresas como Tesla, BMW, Airbus, Apple o SpaceX.</p>
+</div>
+<div class="paragraph">
+<p>Los sistemas incrustados son computadoras integradas en
+sistemas mecánicos o electrónicos que cumplen una función específica.
+Están presentes en objetos cotidianos como cafeteras, luces inteligentes,
+automóviles, aviones, dispositivos médicos, GPS y auriculares inalámbricos.
+El software incrustado está muy ligado al hardware y suele ser
+crítico para la seguridad y el funcionamiento del sistema.</p>
+</div>
+<div class="paragraph">
+<p>Algunas habilidades necesarias para software incrustado:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Aprender el lenguaje C</strong>: Es la base del software incrustado. Permite un control cercano del hardware y sienta las bases para otros lenguajes como C++. Se recomienda aprenderlo primero en un PC antes de trabajar con hardware real.</p>
+</li>
+<li>
+<p><strong>Aprender los fundamentos de electrónica</strong>: Comprender conceptos como resistencias, conversión analógico-digital y las limitaciones del hardware es esencial para trabajar eficazmente con sistemas incrustados.</p>
+</li>
+<li>
+<p><strong>Empezar con Arduino o ESP32</strong>: Arduino y ESP32 facilitan el aprendizaje gracias a sus bibliotecas, abstracciones de hardware y una comunidad enorme que ofrece proyectos, kits y soluciones a problemas comunes.</p>
+</li>
+<li>
+<p><strong>Pasar a microcontroladores más "bare-metal"</strong>: Usar placas como STM32 permite mayor control del hardware, uso de depuradores profesionales y una experiencia más cercana a la industria, aunque con mayor complejidad.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Hacer proyectos simples con Arduino no es suficiente para trabajar en la industria,
+aunque sí puede servir como punto de inicio.</p>
+</div>
+<div class="paragraph">
+<p>Un ingeniero de sistemas incrustados debe pensar en el sistema completo,
+desde la interacción con servidores, redes y otros dispositivos,
+hasta el nivel más bajo del hardware en la placa (sensores, buses y circuitos integrados).
+Siendo el debugging (depuración) una habilidad crítica, ya que los errores suelen
+ser complejos y ocurren a muy bajo nivel.</p>
+</div>
+<div class="paragraph">
+<p>En cuanto a la plataforma técnica, el lenguaje C es
+fundamental en sistemas incrustados. Es clave dominar conceptos como bits,
+máscaras, interrupciones y control directo del hardware.</p>
+</div>
+<div class="paragraph">
+<p>También se debe dominar los periféricos hardware (GPIO, timers, watchdogs, ADC/DAC, IMU),
+los protocolos de comunicación cableados (I2C, SPI, UART, CAN) e
+inalámbricos (BLE, MQTT, Zigbee), y conceptos clave como memoria incrustada,
+MMIO, DMA, SRAM y Flash, enfatizando el uso eficiente de
+recursos y la mínima dependencia del heap.</p>
+</div>
+<div class="paragraph">
+<p>Debe conocer la importancia de elegir correctamente el
+microcontrolador (STM32, nRF52, ESP32, etc.) según los periféricos necesarios,
+y analizar una decisión central en el diseño: bare metal vs RTOS.
+La mayoría de aplicaciones simples funcionan en bare metal, mientras que
+sistemas críticos pueden requerir un RTOS.</p>
+</div>
+<div class="paragraph">
+<p>Además un ingeniero de software incrustado debe tener
+conocimientos básicos de electrónica, como:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ley de Ohm y divisores resistivos</p>
+</li>
+<li>
+<p>ADC y señales analógicas</p>
+</li>
+<li>
+<p>Capacitores, inductores y filtrado</p>
+</li>
+<li>
+<p>Transistores, niveles de voltaje y protección del hardware</p>
+</li>
+<li>
+<p>Lectura de esquemáticos y datasheets</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusiones"><a class="anchor" href="#conclusiones"></a>Conclusiones</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El progreso se logra construyendo proyectos cada vez más complejos,
+explorando nuevas áreas como robótica, automatización o vehículos autónomos, y
+perfeccionando continuamente las habilidades.</p>
+</div>
+<div class="paragraph">
+<p>La ingeniería de sistemas incrustados es un campo amplio, exigente y
+multidisciplinario que combina software, hardware y electrónica.
+Requiere una mentalidad de sistema completo, bases sólidas en C,
+comprensión profunda del hardware y aprendizaje continuo orientado a
+proyectos reales de nivel industrial.</p>
+</div>
+<div class="paragraph">
+<p>En conclusión, los sistemas incrustados son un campo muy interesante,
+práctico y con grandes oportunidades profesionales. Aprenderlos requiere
+constancia, proyectos reales y curiosidad, pero ofrece una carrera sólida y
+estimulante en la intersección entre software y hardware.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="referencias"><a class="anchor" href="#referencias"></a>Referencias</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.youtube.com/watch?v=vkgGmkR7gIo" class="bare">https://www.youtube.com/watch?v=vkgGmkR7gIo</a></p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=IOs6QDI-2MY" class="bare">https://www.youtube.com/watch?v=IOs6QDI-2MY</a></p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=Dzn0woX-WW0" class="bare">https://www.youtube.com/watch?v=Dzn0woX-WW0</a></p>
+</li>
+<li>
+<p><a href="https://www.youtube.com/watch?v=_tBFaWR7gnA" class="bare">https://www.youtube.com/watch?v=_tBFaWR7gnA</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="circuits.html">Fundamentos de Circuitos</a></span>
+  <span class="next"><a href="components.html">Componentes Electrónicos</a></span>
+</nav>
 </article>
   </div>
 </main>
