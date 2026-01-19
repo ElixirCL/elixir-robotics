@@ -24,6 +24,99 @@ Luego, el trabajo se divide en dos áreas principales:
 - Ingeniería de hardware incrustado, que diseña esquemáticos, PCB, controladores de potencia, considera EMI/EMC y selecciona componentes adecuados.
 - Ingeniería de software incrustado, que programa el microcontrolador para interactuar con sensores y actuadores, entendiendo a fondo el hardware.
 
+== Ingeniería de Hardware Incrustado
+
+El ingeniero de hardware incrustado no solo es capaz de llevar la teoría a la realidad, sino 
+también aplicarla mediante herramientas de software y cumplir con las normativas. 
+Esto resulta fundamental al llevar un producto al mercado, sobre todo cuando se desea distribuirlo nacional e internacionalmente. 
+Ya que el producto puede ser inspeccionado y aprobado por algún ente regulador.
+
+El ingeniero de hardware incrustado tiene una visión general de cómo se estructura la 
+industria electrónica. Conoce los servicios a los que se dedican los 
+diferentes actores que operan en el rubro. Desde el diseño de PCB hasta la manufactura y los 
+costos, que en general es crucial conocer para éxito de un proyecto u organización.
+
+El diseño de PCB no es una actividad aislada. Se inserta en una organización 
+funcional y debe coordinarse con otras áreas internas y servicios externos. 
+Por que los diseños deben cumplir con requisitos 
+rigurosos de manufactura y costos. 
+
+Entre los temas que debe conocer son las curvas en las pistas, el ancho de las pistas 
+según corriente, la separación entre pistas, cómo realizar diseños que disminuyan
+los tiempos y costos de la manufactura, tecnologías de montaje superficial, 
+enrutamiento, hasta consideraciones de impedancia para circuitos RF y 
+como controlarla, entre otros temas. 
+
+=== Certificaciones
+
+La certificacion IPC CID (Certified Interconnect Designer) es el 
+programa profesional para el diseñador de PCB, más reconocido en la 
+industria electrónica mundial, desarrollado por el 
+https://www.electronics.org/[Global Electronics Association] (anteriormente conocido como IPC) de Estados Unidos de América.
+
+Comprende los aspectos de planeación, diseño, colocación de componentes, 
+trazado o enrutamiento, layout, ensamble,  fabricación y pruebas, 
+para lograr un producto de calidad.
+
+Los mejores y más grandes en el mundo confían e implementan los 
+Normas IPC en sus líneas de producción para competir con calidad mundial 
+y con ello, crecer su negocio.
+
+https://www.electronics.org/[Global Electronics Association] es una asociación industrial sin 
+fines de lucro, comprometida con la excelencia en la industria electrónica. 
+
+.Normas IPC
+[cols="1,3,6", options="header"]
+|===
+| Código norma | Título corto | Descripción
+
+| IPC-A-610
+| Aceptabilidad de Ensamblajes Electrónicos
+| Norma utilizada para determinar la aceptabilidad visual de los ensamblajes electrónicos, estableciendo criterios claros para inspección visual de soldaduras y otros aspectos críticos para asegurar calidad y rendimiento.
+
+| IPC J-STD-001
+| Requisitos de Soldadura en Ensamblajes Eléctricos y Electrónicos
+| Establece criterios de aceptabilidad y mejores prácticas para soldaduras de alta calidad, incluyendo preparación de superficies y técnicas de soldadura manual y automática.
+
+| IPC/WHMA-A-620
+| Requisitos y Aceptabilidad de Ensamblajes de Cables y Arneses
+| Define criterios para la fabricación de ensamblajes de cables y arneses, detallando procedimientos de preparación, ensamblaje y terminación de cables y conectores.
+
+| IPC-A-600
+| Aceptabilidad de Tarjetas de Circuito Impreso
+| Norma de referencia para la aceptabilidad de PCB, con directrices sobre características que deben cumplir para considerarse de alta calidad (acabado, tolerancias, orificios).
+
+| IPC-7711
+| Retrabajo, Modificación y Reparación de Ensamblajes Electrónicos
+| Proporciona procedimientos para retrabajo, modificación y reparación de ensamblajes electrónicos, como remoción/reemplazo de componentes y reparación de pistas. 
+
+| IPC-2221
+| Norma Genérica de Diseño de Interconexión y Empaque de Circuitos Impresos
+| Establece los principios generales de diseño de PCB, incluyendo disposición de capas, tolerancias y materiales.
+
+| IPC-2231
+| Guía de Diseño de Conectores para Tableros de Circuito Impreso
+| Ofrece directrices específicas para diseño de conectores en PCB, cubriendo selección de materiales y técnicas de montaje.
+|===
+
+==== Referencias
+
+- https://www.aldeltatec.com/[Capacitación en Normas IPC]
+- https://mexico.electronics.org/normas/[Listado de Normas IPC]
+
+=== Software
+
+Entre las distintas opciones de software se pueden mencionar:
+
+- https://www.kicad.org/[KiCad]: El software de código libre para diseño de PCB más potente y gratuito (Recomendado).
+- https://resources.altium.com/es/circuitmaker[Altium Circuit Maker]: Una versión gratuita del software de diseño PCB profesional Altium.
+- https://easyeda.com/es[EasyEda]: Un software online para diseño y simulación de circuitos.
+
+=== Lenguajes de Programación
+
+Se deben conocer principalmente los lenguajes de programación C, Assembler y https://en.wikipedia.org/wiki/Verilog[Verilog].
+Aunque existen alternativas modernas a Verilog como https://www.chisel-lang.org/[Chisel].
+
 == Ingeniero en Software Incrustado
 
 El perfil del ingeniero de software incrustado está evolucionando. 
