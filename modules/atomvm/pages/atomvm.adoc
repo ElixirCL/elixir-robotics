@@ -14,7 +14,7 @@ Erlang tradicional no puede correr por ser demasiado pesada.
 
 == Historia
 
-*AtomVM* comenzó su desarrollo en el año 2018 por *Pascal Gigler* con el objetivo de llevar Elixir y Erlang a un hardware más pequeño. 
+*AtomVM* comenzó su desarrollo en el año 2018 por *Davide Bettio* con el objetivo de llevar Elixir y Erlang a un hardware más pequeño. 
 La comunidad fue creciendo, sumando desarrolladores que aportaron soporte para nuevos dispositivos y bibliotecas, 
 llegando a poder realizarse proyectos industriales de IoT que necesitaban de un dispositivo con tolerancia a fallos,  y 
 concurrencia, las cuales tenia  el dispositivo.
@@ -91,7 +91,7 @@ monitoreo sin depender de lenguajes más difíciles como C o C++, y aprovechando
 
 == Referencias
 
-- Atomvm. (n.d.). GitHub - atomvm/AtomVM: Tiny Erlang VM. GitHub. https://github.com/atomvm/AtomVM?utm_source=chatgpt.com
+- Atomvm. (n.d.). GitHub - atomvm/AtomVM: Tiny Erlang VM. GitHub. https://github.com/atomvm/AtomVM
 - atomvm.net. (n.d.). AtomVM. AtomVM. https://www.atomvm.net/
-- Sifoni, L. (2023, November 16). Lucas Sifoni - Hello AtomVM — Elixir & Erlang on ESP32. Lucas Sifoni. https://lucassifoni.info/blog/hello-atomvm/?utm_source=chatgpt.com
-- Getting Started Guide — AtomVM 0.7.0-dev+git.65f16e87 documentation. (n.d.). https://www.atomvm.net/doc/master/getting-started-guide.html?utm_source=chatgpt.com
+- Sifoni, L. (2023, November 16). Lucas Sifoni - Hello AtomVM — Elixir & Erlang on ESP32. Lucas Sifoni. https://lucassifoni.info/blog/hello-atomvm/
+- Getting Started Guide — AtomVM 0.7.0-dev+git.65f16e87 documentation. (n.d.). https://www.atomvm.net/doc/master/getting-started-guide.html
