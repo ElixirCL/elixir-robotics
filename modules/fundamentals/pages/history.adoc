@@ -4,6 +4,21 @@ En este capítulo se dará un vistazo general a los hitos relevantes para la rob
 desde los primeros autómatas hasta la actualidad con sistemas que utilizan machine learning para tomar decisiones
 y analizar su entorno.
 
+La palabra Autómata (del latín automăta y este del griego αὐτόματος autómatos, 'espontáneo' o 'con movimiento propio'. Según la RAE, "máquina que imita la figura y los movimientos de un ser animado") es un equivalente tecnológico de lo que en la actualidad serían los robots autónomos. Si el robot es antropomorfo se conoce como androide.
+
+== Seres Artificiales
+
+La palabra hebrea "golem" (גלם), se refiere a la materia sin forma, como un trozo de arcilla. De acuerdo con el Talmud, un golem es también un cuerpo con forma humana, pero sin alma ni capacidad de hablar. 
+El Golem es hecho tradicionalmente de arcilla y cobra vida a través de diversas técnicas místicas meditativas, o de alguna otra forma misteriosa. La creación de un golem presenta entonces ventajas y desventajas, el golem es fuerte, pero no inteligente; si se le ordena llevar a cabo una tarea, la llevará a cabo de un modo sistemático, lento y ejecutando las instrucciones de modo literal, sin cuestionamiento ninguno. Famosa en este sentido es una anécdota según la cual la esposa del rabino le pidió al golem que fuera "al río a sacar agua" a lo que el golem accedió, pero al pie de la letra: fue al río y comenzó a sacar agua del mismo sin parar, hasta que terminó por inundar la ciudad. 
+
+.Golem de Arcilla
+image::history/golem.jpg[]
+
+De acuerdo con la leyenda, en el siglo XVI, Rav Iehudá ben Betzalel Loew, más conocido como el Maharal de Praga, creó un golem para que patrullara las calles de la ciudad y protegiera a la comunidad judía. De una u otra manera, eventualmente el Golem se salió de control y tuvieron que matarlo. De acuerdo con la leyenda, su cuerpo fue escondido en el ático de la antigua sinagoga en Praga (el Altneuschul en el Barrio Judío de Praga, República Checa). Se rumorea que soldados nazis entraron al ático en la época de la ocupación alemana de Checoslovaquia durante la Segunda Guerra Mundial, y nunca salieron. Además del supuesto Golem de Rav Loew, hubo rumores de que también otros Rabinos crearon golems, como el Gaón de Vilna en el siglo XVIII (Rav Eliahu Kramer de Vilna, Lituania), y otros. En la cultura popular, algunos sostienen que las historias del Golem influyeron en el "Frankenstein" de Mary Shelly.
+
+.El Altneuschul en el Barrio Judío de Praga.
+image::history/altneschul.jpg[]
+
 == La creación del reloj mecánico
 
 El ser humano ha ideado mecanismos que permitan automatizar tareas cotidianas o laboriosas
@@ -42,6 +57,18 @@ si la campana debía sonar a una hora convenía que fuera lo más exacta posible
 
 Con la invención del reloj mecánico se establecieron las bases para mecanismos cada vez más diminutos y portátiles, 
 que sin necesidad de electricidad podían trasladarse y efectuar sofisticados movimientos.
+
+== Mecanismos de Banu Musa
+
+Tres sabios musulmanes, que además eran hermanos y vivieron en Bagdad en el siglo IX, no sólo fueron los autores de una veintena de obras que incluían importantes tratados de geometría, astronomía y matemáticas, sino que también idearon montones de ingenios mecánicos, unos de aplicación práctica y otros lúdica, que dejaron descritos en otro de sus libros y constituyen algunos de los antecedentes conocidos más antiguos del concepto de robot.
+Se apellidaban Banu Musa y se llamaban, de mayor a menor, Abu Ya’far Muhammad, Abu al-Qasim Ahmad y Al-Hasan.
+
+La más famosa de sus obras se titulaba Kitab al-hiyal (Libro de mecanismos ingeniosos). La escribió básicamente Ahmad, el segundo de la saga, y describía aproximadamente un centenar de autómatas e inventos, algunos tan insólitos como una lámpara que se apagaba sola o un instrumento musical que tocaba también por sí mismo. Parte de esos diseños se basaban en originales griegos de Herón de Alejandría y Filón de Bizancio, más otros procedentes de China y Persia; pero los demás eran propios y mucho más avanzados desde el punto de vista tecnológico.
+
+Unos funcionaban por la presión del agua y se aplicaban fundamentalmente a fuentes, para las que también idearon una válvula de hélice. Otros recurrían a sistemas de equilibrio de pesos. Había máscaras antigás, válvulas que se autoabrían y cerraban en caso de incendio, juguetes móviles e incluso un autómata-odalisca que servía el té, en lo que quizá fue el primer robot de la historia. No está nada mal para el siglo IX.
+
+.Bosquejo de la lámpara autoapagable 
+image::history/Banu_musa_mechanical-2.jpg[]
 
 == Autómatas Karakuri
 
@@ -165,6 +192,10 @@ image::history/rur.jpg[]
 realmente no quieres hacer o trabajo tedioso. Su obra ha sido representada en todo el mundo, 
 y la palabra “robot” fue posteriormente hecha realmente famosa por Isaac Asimov en la 
 década de 1940 (relatos recopilados como **Yo, robot** en 1950).*
+
+++++
+<iframe width="100%" height="515" src="https://www.youtube.com/embed/T7xiR_x0Hwo?si=fx7s3SEvtXrdvj78" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+++++
 
 == Máquinas de Zuse
 
@@ -318,6 +349,53 @@ mercado ya había avanzado cuatro bits más.
 .TMS1000 Arquitectura
 image::history/tms1000-architecture.webp[]
 
+== Años 90s: Masificación de Electrónica Doméstica
+
+La década de los 90s estuvo marcada por la proliferación de aparatos electrónicos, 
+especialmente en el mercado de juguetes.
+Entre los que se pueden destacar el Tamagotchi y el Furby.
+
+Un Tamagotchi es un aparato electrónico con la forma y el tamaño de un huevo, y con una pantalla en blanco y negro pixelada, en donde aparece una mascota virtual. Debajo de la pantalla hay 3 botones (A -seleccionar-, B -aceptar- y C -cancelar-) que permiten moverse por el menú. Fue creado por Aki Maita y comercializada en Japón por Bandai el 23 de noviembre de 1996. 
+
+.Tamagotchi
+image::history/tamagotchi.jpg[]
+
+Furby (derivado del inglés furball —'bola de pelos'— y baby —'bebé'—) es un juguete animatrónico fabricado actualmente por la compañía Hasbro y que se asemeja a un hámster o un búho. Fue originalmente lanzado en 1998 por Tiger Electronics.
+Los Furbys fueron el primer intento exitoso de producir y vender un robot dirigido al mercado doméstico.
+
+Un motor eléctrico sencillo y un sistema de levas y engranajes activan el movimiento de ojos y boca del Furby, mueven sus orejas y lo levantan del suelo en una simulación de movilidad.
+
+Esta edición de Furbys ha resultado de interés entre hackers dedicados al circuit bending para su disección y experimentación con sus capacidades de audio avanzadas y diversas interfaces sensoriales.
+
+.Furby Original
+image::history/furby.jpg[]
+
+== Años 2000s: Internet
+
+En la década del 2000 el internet llegó a una gran cantidad de hogares y los dispositivos electrónicos
+como celulares y otros aparatos fueron conectándose a la red.
+
+La primera placa Arduino comercial fue introducida en el año 2005, ofreciendo un bajo costo económico y facilidad de uso para novatos y profesionales.
+
+== Años 2010s: Smartphones
+
+En la década del 2010 se masificaron los "smartphones", teléfonos con la capacidad de conectarse a internet, 
+pero también con múltiples funciones adicionales como cámaras, giroscopio, magnetrómetro y gps.
+
+Las empresas utilizaron estas capacidades para conectar y manipular dispositivos, comunmente enviándo
+datos a una "nube".
+
+== Años 2020s: IA y LLMs
+
+La llegada de los LLM (Large Language Models) como ChatGPT en los primeros años de la década del 2020, logró realizar un cambio rotundo en la forma de interactuar con los sistemas informáticos y la industria en general, como también concientizar sobre la protección de los datos
+privados. 
+
+Los sistemas de robótica, domótica y aparatos domésticos e industriales del futuro
+podrán ser más complejos y realizar tareas nunca antes posible gracias a las capacidades de los LLM, 
+los cuales son mejorados y optimizados cada día. Algunos de estos modelos 
+pueden ser ejecutados de forma local (sin acceder a la "nube") con pocos recursos. 
+Sin embargo siempre se debe considerar las consecuencias ambientales y de privacidad asociadas.
+
 == Referencias
 
 - https://historia.nationalgeographic.com.es/a/inventos-medievales_6644
@@ -337,3 +415,9 @@ image::history/tms1000-architecture.webp[]
 - https://www.arrow.com/es-mx/research-and-events/articles/the-transistor-revolution-how-transistors-changed-the-world
 - https://hackaday.com/2020/02/18/the-tms1000-the-first-commercially-available-microcontroller/
 - https://people.idsia.ch/~juergen/who-invented-the-transistor.html
+- https://aishlatino.com/que-es-un-golem/
+- https://es.wikipedia.org/wiki/G%C3%B3lem
+- https://www.labrujulaverde.com/2016/06/banu-musa-los-tres-hermanos-persas-que-ideaban-automatas-en-el-siglo-ix
+- https://es.wikipedia.org/wiki/Aut%C3%B3mata_(mec%C3%A1nico)
+- https://es.wikipedia.org/wiki/Tamagotchi
+- https://es.wikipedia.org/wiki/Furby
