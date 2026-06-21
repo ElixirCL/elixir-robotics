@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Proyecto 3: Robot de Batalla :: Electrónica, Robótica e IOT con Elixir</title>
+    <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/uvm-2026/project3.html">
+    <link rel="prev" href="introduction.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://elixircl.github.io/elixir-robotics">Electrónica, Robótica e IOT con Elixir</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Buscar en documentos">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <!--
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    -->
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="ROOT" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Fundamentos e Historia</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/history.html">Historia de la Robótica y Automatización</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/introduction.html">Introducción a la Electrónica</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/electricity.html">Fundamentos de Electricidad</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/circuits.html">Fundamentos de Circuitos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/embedded.html">Introducción a los Sistemas Incrustados</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/tools.html">Herramientas</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../fundamentals/programming.html">Lenguajes de Programación</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IC y Controladores</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/ic555.html">IC555</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/pic16f877a.html">PIC16F877a</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/basicstamp.html">Parallax Basic Stamp</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/arduino.html">Arduino</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/raspberry.html">Raspberry Pi</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/esp32.html">ESP32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/stm32.html">STM32</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/nrf52dk.html">nRF52 DK</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/jetson.html">Nvidia Jetson &amp; AMD Kria</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/fpga.html">FPGA</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/asic.html">ASIC</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../controllers/howtochoose.html">¿Cúal Usar?</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Protocolos de Comunicación</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/iot.html">Introducción a IOT</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../communication/i2c.html">Protocolo I2C</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Herramientas</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/platformio.html">PlatformIO IDE</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/home-assistant.html">Home Assistant</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/grafana.html">Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/dashboards.html">Dashboards</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/cad.html">Herramientas de Computer Asisted Design (CAD)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../tools/stores.html">Tiendas</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sistemas Operativos</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../os/rtos.html">Sistemas Operativos en Tiempo Real</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../os/ros.html">Robot Operating System</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AtomVM</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/atomvm.html">AtomVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/popcorn.html">PopCorn</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/nif.html">Crear un NIF</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/devenv.html">Entorno de Desarrollo</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/components.html">Componentes Electrónicos</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/remote.html">Conexión Remota</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/colosseo.html">Coliseo Atómico</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/arcade.html">Proyecto: Videojuego Arcade</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../atomvm/tagboard.html">Proyecto: Tagboard</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hardware Avanzado</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/nerves.html">Nerves</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/circuits.html">Elixir Circuits</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/soleil.html">Soleil</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/beambots.html">Beam Bots</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced/grisp.html">GRiSP</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Energía Solar</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/solar.html">¿Qué es la Energía Solar?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../solar/components.html">Componentes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">UVM: Robótica e IOT 2026</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="introduction.html">Introducción</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="project3.html">Proyecto 3: Robot de Batalla</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Electrónica, Robótica e IOT con Elixir</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>UVM: Robótica e IOT 2026</li>
+    <li><a href="project3.html">Proyecto 3: Robot de Batalla</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///antora/./modules/uvm-2026/pages/project3.adoc">Editar esta página</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contenidos" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Proyecto 3: Robot de Batalla</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Este informe documenta el desarrollo de un robot móvil controlado de forma
+inalámbrica, construido como parte del curso de robótica. El robot consiste en
+un vehículo de dos motores controlado mediante un microcontrolador ESP32,
+programado en el lenguaje Elixir sobre la máquina virtual AtomVM.</p>
+</div>
+<div class="paragraph">
+<p>El robot se controla a distancia desde un teléfono celular a través de una red
+WiFi, sin necesidad de instalar ninguna aplicación: el propio robot genera una
+página web con botones de dirección a la que se accede desde el navegador.</p>
+</div>
+<div class="paragraph">
+<p>El proyecto se planteó como una competencia entre dos robots idénticos. Cada
+robot lleva montada una aguja en su parte frontal y un globo adherido en su
+parte trasera; el objetivo del enfrentamiento es maniobrar para reventar el
+globo del robot contrario mientras se protege el propio.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="lista-de-componentes"><a class="anchor" href="#lista-de-componentes"></a>Lista de Componentes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A continuación se detallan los componentes utilizados en la construcción de
+un robot. Ambas unidades construidas son idénticas.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 60%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Componente</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+<th class="tableblock halign-left valign-top">Cantidad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Microcontrolador ESP32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Placa de desarrollo con WiFi integrado. Funciona como el "cerebro" del robot:
+  ejecuta el programa, se conecta a la red y controla los motores.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Driver de motores L298N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Puente H que recibe las señales de control del ESP32 y entrega la corriente
+  necesaria para alimentar los motores. El ESP32 no puede mover los motores
+  directamente, por lo que este componente actúa como intermediario.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Motores DC con reductora</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dos motores de corriente continua, uno por cada lado del chasis, que impulsan
+  las ruedas del robot.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Ruedas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Acopladas a los motores para el desplazamiento del robot.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Chasis</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Estructura física donde se montan todos los componentes.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Batería / fuente de alimentación</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provee energía a los motores y a la electrónica del robot.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Aguja</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Montada en la parte frontal del robot, utilizada para reventar el globo del
+  robot contrario durante el enfrentamiento.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Globo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adherido en la parte trasera del robot. Constituye el objetivo a proteger
+  durante el enfrentamiento.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cables de conexión (jumpers)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Para realizar las conexiones entre el ESP32, el driver y los motores.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Varios</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="diagrama-de-cableado"><a class="anchor" href="#diagrama-de-cableado"></a>Diagrama de Cableado</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El siguiente esquema describe las conexiones eléctricas entre el ESP32,
+el driver de motores L298N y los motores DC.</p>
+</div>
+<div class="sect2">
+<h3 id="conexiones-esp32-driver-l298n"><a class="anchor" href="#conexiones-esp32-driver-l298n"></a>Conexiones ESP32 → Driver L298N</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pin ESP32</th>
+<th class="tableblock halign-left valign-top">Pin L298N</th>
+<th class="tableblock halign-left valign-top">Función</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPIO 13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IN1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Control del motor izquierdo (sentido A)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPIO 14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IN2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Control del motor izquierdo (sentido B)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPIO 27</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IN3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Control del motor derecho (sentido A)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPIO 26</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IN4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Control del motor derecho (sentido B)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tierra común entre ambas placas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="conexiones-de-alimentación-y-motores"><a class="anchor" href="#conexiones-de-alimentación-y-motores"></a>Conexiones de alimentación y motores</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 37.5%;">
+<col style="width: 62.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Conexión</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Batería (+) → L298N (12V / VCC)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alimentación de potencia para los motores.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Batería (−) → L298N (GND)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tierra de la alimentación.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L298N (OUT1, OUT2) → Motor izquierdo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Salida de potencia hacia el motor del lado izquierdo.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">L298N (OUT3, OUT4) → Motor derecho</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Salida de potencia hacia el motor del lado derecho.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Los pines GPIO 13, 14, 27 y 26 del ESP32 están definidos directamente en
+el código como <code>@in1</code>, <code>@in2</code>, <code>@in3</code> e <code>@in4</code>. Cada par de pines controla el
+sentido de giro de un motor: una combinación hace girar la rueda hacia adelante
+y la inversa hacia atrás.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="código-utilizado"><a class="anchor" href="#código-utilizado"></a>Código Utilizado</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El robot fue programado en lenguaje Elixir, ejecutándose sobre la máquina
+virtual AtomVM, que permite correr código Elixir/Erlang en microcontroladores
+como el ESP32.</p>
+</div>
+<div class="paragraph">
+<p>A continuación se presentan los fragmentos más relevantes del programa. El
+código fuente completo se encuentra disponible en el repositorio del proyecto
+(ver sección <a href="#repositorio-del-proyecto">Repositorio del Proyecto</a>).</p>
+</div>
+<div class="sect2">
+<h3 id="definición-de-pines-y-configuración"><a class="anchor" href="#definición-de-pines-y-configuración"></a>Definición de pines y configuración</h3>
+<div class="paragraph">
+<p>Al inicio del módulo se definen los pines GPIO conectados al driver de motores
+y los parámetros de la red WiFi a la que el robot se conecta.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">@in1 13
+@in2 14
+@in3 27
+@in4 26
+@wifi_ssid "mauricio"
+@wifi_psk  "mauricapo123"
+@listen_port 80</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="control-de-los-motores"><a class="anchor" href="#control-de-los-motores"></a>Control de los motores</h3>
+<div class="paragraph">
+<p>Cada función de movimiento activa los pines en una combinación específica.
+El sentido de giro de cada motor depende de qué pin esté en alto (<code>:high</code>)
+y cuál en bajo (<code>:low</code>).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">def forward do
+  :gpio.digital_write(@in1, :high); :gpio.digital_write(@in2, :low)
+  :gpio.digital_write(@in3, :high); :gpio.digital_write(@in4, :low)
+end
+
+def left do
+  :gpio.digital_write(@in1, :low);  :gpio.digital_write(@in2, :high)
+  :gpio.digital_write(@in3, :high); :gpio.digital_write(@in4, :low)
+end
+
+def stop do
+  :gpio.digital_write(@in1, :low); :gpio.digital_write(@in2, :low)
+  :gpio.digital_write(@in3, :low); :gpio.digital_write(@in4, :low)
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Para avanzar, ambos motores giran en el mismo sentido. Para girar, los motores
+giran en sentidos opuestos, lo que hace rotar el robot sobre su propio eje.
+Para detenerse, todos los pines se ponen en bajo.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="recepción-de-comandos-por-wifi"><a class="anchor" href="#recepción-de-comandos-por-wifi"></a>Recepción de comandos por WiFi</h3>
+<div class="paragraph">
+<p>El robot levanta un servidor web que interpreta las órdenes recibidas desde
+el navegador del celular. Según el comando recibido en la URL, ejecuta el
+movimiento correspondiente.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-elixir hljs" data-lang="elixir">defp handle_command_request(socket, request_line) do
+  motion =
+    cond do
+      contains_bin?(request_line, "move=forward")  -&gt; "forward"
+      contains_bin?(request_line, "move=backward") -&gt; "backward"
+      contains_bin?(request_line, "move=left")     -&gt; "left"
+      contains_bin?(request_line, "move=right")    -&gt; "right"
+      contains_bin?(request_line, "move=stop")     -&gt; "stop"
+      true -&gt; nil
+    end
+
+  case motion do
+    "forward" -&gt; forward(); send_json(socket, motion)
+    "left"    -&gt; left();    send_json(socket, motion)
+    "stop"    -&gt; stop();    send_json(socket, motion)
+    nil       -&gt; send_bad_request(socket, "invalid_move")
+  end
+end</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="posibles-usos-de-esta-tecnología"><a class="anchor" href="#posibles-usos-de-esta-tecnología"></a>Posibles Usos de esta Tecnología</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Si bien este proyecto fue desarrollado con fines académicos y recreativos, la
+tecnología empleada —un microcontrolador con conectividad WiFi capaz de
+controlar motores de forma remota— tiene múltiples aplicaciones prácticas en
+el mundo real:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Robótica educativa:</strong> plataforma de bajo costo para enseñar conceptos de
+programación, electrónica y control de motores en colegios y universidades.</p>
+</li>
+<li>
+<p><strong>Vehículos de exploración:</strong> robots que acceden a lugares peligrosos o de
+difícil acceso, como tuberías, zonas con riesgo de derrumbe o ambientes
+contaminados.</p>
+</li>
+<li>
+<p><strong>Domótica y automatización del hogar:</strong> el mismo principio de controlar
+dispositivos por WiFi desde el celular puede aplicarse a cortinas, puertas,
+luces o sistemas de riego automático.</p>
+</li>
+<li>
+<p><strong>Agricultura de precisión:</strong> pequeños robots que recorren cultivos para
+monitorear plantas, medir humedad del suelo o detectar plagas.</p>
+</li>
+<li>
+<p><strong>Vigilancia y monitoreo:</strong> añadiendo una cámara, el robot podría recorrer
+un espacio y transmitir video en tiempo real para tareas de seguridad.</p>
+</li>
+<li>
+<p><strong>Logística en interiores:</strong> transporte automatizado de pequeños objetos
+dentro de bodegas, oficinas o laboratorios.</p>
+</li>
+<li>
+<p><strong>Prototipado de productos IoT:</strong> la combinación ESP32 + control remoto es
+una base habitual para el desarrollo de productos del Internet de las Cosas.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="repositorio-del-proyecto"><a class="anchor" href="#repositorio-del-proyecto"></a>Repositorio del Proyecto</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>El código fuente completo del robot, junto con la documentación y los archivos
+del proyecto, se encuentra disponible en el siguiente repositorio de GitHub:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/javoq/robot-esp32-wifi">github.com/javoq/robot-esp32-wifi</a></p>
+</div>
+<div class="paragraph">
+<p>El repositorio incluye:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>El código fuente completo en Elixir (<code>auto1.ex</code> y <code>auto2.ex</code>).</p>
+</li>
+<li>
+<p>El archivo de configuración del proyecto (<code>mix.exs</code>).</p>
+</li>
+<li>
+<p>Las dependencias necesarias para compilar y cargar el programa en el ESP32.</p>
+</li>
+<li>
+<p>Instrucciones de instalación y uso.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="lista-de-costos"><a class="anchor" href="#lista-de-costos"></a>Lista de Costos</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Los siguientes valores corresponden al costo total de los materiales utilizados
+para construir los dos robots del proyecto.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 44.4444%;">
+<col style="width: 11.1111%;">
+<col style="width: 22.2222%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Ítem</th>
+<th class="tableblock halign-left valign-top">Cantidad</th>
+<th class="tableblock halign-left valign-top">Precio unitario</th>
+<th class="tableblock halign-left valign-top">Subtotal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Microcontrolador ESP32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$7.490 CLP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$14.980 CLP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Driver de motores L298N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$3.250 CLP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">$6.500 CLP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Bolsa de globos (látex, ~50 un.)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">~$1.500 CLP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">~$1.500 CLP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Agujas</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">~$300 CLP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">~$600 CLP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pliego de goma eva (40×60 cm)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">~$750 CLP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">~$1.500 CLP</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pliego de cartulina</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">~$390 CLP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">~$780 CLP</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 80%;">
+<col style="width: 20%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Costo total del proyecto</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>~$25.860 CLP</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="galería-fotográfica"><a class="anchor" href="#galería-fotográfica"></a>Galería Fotográfica</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>En esta sección se presenta evidencia visual del robot construido y del equipo
+de trabajo al término del proyecto.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/project3/Foto1.jpeg" alt="Equipo de trabajo con robots" width="600">
+</div>
+<div class="title">Figure 1. Equipo de trabajo</div>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/project3/Foto2.jpeg" alt="Equipo de trabajo" width="600">
+</div>
+<div class="title">Figure 2. Equipo de trabajo</div>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/project3/Foto3.jpeg" alt="Equipo de trabajo con robots" width="600">
+</div>
+<div class="title">Figure 3. Equipo de trabajo con robots</div>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/project3/Robots.jpeg" alt="Equipo de trabajo" width="600">
+</div>
+<div class="title">Figure 4. Robots Pepe y Pancho</div>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/project3/Robots2.jpeg" alt="Equipo de trabajo" width="600">
+</div>
+<div class="title">Figure 5. Robots</div>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="_images/project3/Robotsfuncionando.jpeg" alt="Equipo de trabajo" width="600">
+</div>
+<div class="title">Figure 6. Robots - Prueba de movimiento</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="introduction.html">Introducción</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>Creado por miembros de <a href="https://elixircl.github.io">Elixir Chile</a></p>
+</footer>
+<script id="site-script" src="../_/js/site.js" data-ui-root-path="../_"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script type="text/javascript">
+  // Add custom scripts
+</script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>
