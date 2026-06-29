@@ -40,3 +40,7 @@
 - https://ing.mcielectronics.cl/circuito-impreso-placa-pcb/
 - https://sltech.cl/services/pcb/pcb.html
 - https://www.ciga.cl/
+
+== Material Didáctico
+
+- https://circuitdigest.com/

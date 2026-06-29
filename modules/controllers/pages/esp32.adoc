@@ -79,6 +79,20 @@ Disponibilidad en: https://www.mechatronicstore.cl/esp32-c6-devkit-pro-tipo-c/
 - Boards con LoRa (TTGO T-Beam, Heltec) – combinan ESP32 con transceptores LoRa para comunicaciones de largo alcance
 - ESP32-P4: No es una placa típica con Wi-Fi/Bluetooth, sino un SoC (chip). Está más orientada a tareas de procesamiento y conectividad por cable/periféricos.
 
+Es importante destacar que hay dos arquitecturas principales en ESP32. La _Xtensa_ y la _RISC-V_, esto es relevante para la elección de los lenguajes de programación a utilizar y componentes compatibles. Algunos lenguajes como https://developer.espressif.com/blog/integrating-embedded-swift-and-sdl3-on-esp32/[Swift] (y otros que usan LLVM) solo funcionan en arquitectura _RISC-V_.
+
+Los diseños más recientes de Espressif utilizan _RISC-V_. Hay un punto de transición: el ESP32-S2 y el ESP32-S3 son diseños relativamente recientes que todavía usan _Xtensa_, y fueron lanzados aproximadamente al mismo tiempo que el ESP32-C3.
+
+Los S2 y S3 son más potentes y ofrecen más capacidades que los microcontroladores _RISC-V_ de Espressif disponibles actualmente. Son el punto más alto de la línea de chips _Xtensa_ de Espressif. Sin embargo, el futuro claramente apunta a _RISC-V_. Sin embargo, todavía existen algunas carencias en la gama de microcontroladores _RISC-V_ de Espressif (por ejemplo, no cuentan con controlador LCD ni con USB OTG), lo que significa que aún no pueden cubrir todos los casos de uso de los modelos basados en _Xtensa_.
+
+.Arquitectura por dispositivos
+|====
+|Dispositivo|Arquitectura
+
+|ESP32 DevKitC V4, ESP32, S2, S3 | _Xtensa_
+|ESP32-C3, H2, C6, P4 | _RISC-V_
+|====
+
 == Proyecto Gladiadores Robots
 
 include::esp32/gladiators.adoc[]

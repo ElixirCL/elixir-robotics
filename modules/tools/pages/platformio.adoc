@@ -46,3 +46,9 @@ Se recomienda el uso de _VSCode_
 
 .PlatformIO para VSCode
 image::platformio-ide-vscode.png[]
+
+== Wokwi
+
+https://docs.wokwi.com/vscode/getting-started[Wokwi] para Visual Studio Code proporciona una solución de simulación para ingenieros de sistemas incrustados e IoT. La extensión se integra con tu entorno de desarrollo existente, permitiéndote simular tus proyectos directamente desde el editor de código.
+
+Puedes usar Wokwi para VS Code con Zephyr Project, PlatformIO, ESP-IDF, Pi Pico SDK, NuttX, Rust, Arduino CLI, MicroPython y otros frameworks y cadenas de herramientas para el desarrollo de sistemas incrustados.
