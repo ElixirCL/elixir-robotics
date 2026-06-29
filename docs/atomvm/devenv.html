@@ -254,7 +254,7 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">UVM: Robótica e IOT 2026</span>
+    <span class="nav-text">Proyectos 2026</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../uvm-2026/introduction.html">Introducción</a>
@@ -368,6 +368,36 @@ y compilar AtomVM para ser ejecutado en la ESP32 utilizando un sistema operativo
 $ pipx --version
 $ mise use -g pipx:esptool
 $ esptool version</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="idf-py"><a class="anchor" href="#idf-py"></a>idf.py</h3>
+<div class="paragraph">
+<p>Para instalar <code>idf.py</code> se puede utilizar los siguientes comandos</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mkidr -p ~/.espressif`
+$ cd ~/.espressif
+$ git clone --recursive https://github.com/espressif/esp-idf.git
+$ cd esp-idf
+$ ./install.sh</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ahora se puede iniciar en <code>.bashrc</code> o <code>.zshrc</code>
+para que este disponible la herramienta <code>idf.py</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">. $HOME/.espressif/esp-idf/export.sh &amp;&gt; /dev/null</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ idf.py --version
+ESP-IDF v6.1-dev-5824-gfa8039b5ca-dirty</code></pre>
 </div>
 </div>
 </div>

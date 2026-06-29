@@ -254,7 +254,7 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">UVM: Robótica e IOT 2026</span>
+    <span class="nav-text">Proyectos 2026</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../uvm-2026/introduction.html">Introducción</a>
@@ -489,6 +489,38 @@ remoto hasta soluciones industriales y de hogar inteligente.</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Es importante destacar que hay dos arquitecturas principales en ESP32. La <em>Xtensa</em> y la <em>RISC-V</em>, esto es relevante para la elección de los lenguajes de programación a utilizar y componentes compatibles. Algunos lenguajes como <a href="https://developer.espressif.com/blog/integrating-embedded-swift-and-sdl3-on-esp32/">Swift</a> (y otros que usan LLVM) solo funcionan en arquitectura <em>RISC-V</em>.</p>
+</div>
+<div class="paragraph">
+<p>Los diseños más recientes de Espressif utilizan <em>RISC-V</em>. Hay un punto de transición: el ESP32-S2 y el ESP32-S3 son diseños relativamente recientes que todavía usan <em>Xtensa</em>, y fueron lanzados aproximadamente al mismo tiempo que el ESP32-C3.</p>
+</div>
+<div class="paragraph">
+<p>Los S2 y S3 son más potentes y ofrecen más capacidades que los microcontroladores <em>RISC-V</em> de Espressif disponibles actualmente. Son el punto más alto de la línea de chips <em>Xtensa</em> de Espressif. Sin embargo, el futuro claramente apunta a <em>RISC-V</em>. Sin embargo, todavía existen algunas carencias en la gama de microcontroladores <em>RISC-V</em> de Espressif (por ejemplo, no cuentan con controlador LCD ni con USB OTG), lo que significa que aún no pueden cubrir todos los casos de uso de los modelos basados en <em>Xtensa</em>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Arquitectura por dispositivos</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Dispositivo</th>
+<th class="tableblock halign-left valign-top">Arquitectura</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ESP32 DevKitC V4, ESP32, S2, S3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Xtensa</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ESP32-C3, H2, C6, P4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>RISC-V</em></p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect1">
@@ -590,7 +622,7 @@ Your browser does not support the video tag.
 <div class="title">Figure 5. Diagrama de conexión entre componentes</div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Tabla de conexiones</caption>
+<caption class="title">Table 2. Tabla de conexiones</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -1320,7 +1352,7 @@ con un personaje animado y controlado remotamente.</p>
 <p>El robot será controlado por una ESP32 que recibirá comandos por USB desde la Raspberry PI.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Lista de posibles componentes</caption>
+<caption class="title">Table 3. Lista de posibles componentes</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1383,7 +1415,7 @@ cuyas alas, cabeza y patas tienen movimiento mediante servomotores.</p>
 <div class="title">Figure 18. Lego Búho (#31125)</div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Tabla de Componentes</caption>
+<caption class="title">Table 4. Tabla de Componentes</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
