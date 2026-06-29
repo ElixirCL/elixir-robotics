@@ -1,4 +1,4 @@
-.UVM: Robótica e IOT 2026 
+.Proyectos 2026
 * xref:introduction.adoc[]
 // * xref:project1.adoc[]
 // * xref:project2.adoc[]

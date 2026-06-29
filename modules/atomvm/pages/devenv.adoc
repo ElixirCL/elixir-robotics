@@ -60,6 +60,33 @@ $ mise use -g pipx:esptool
 $ esptool version
 ----
 
+=== idf.py
+
+Para instalar `idf.py` se puede utilizar los siguientes comandos
+
+[source, bash]
+----
+$ mkidr -p ~/.espressif`
+$ cd ~/.espressif
+$ git clone --recursive https://github.com/espressif/esp-idf.git
+$ cd esp-idf
+$ ./install.sh
+----
+
+Ahora se puede iniciar en `.bashrc` o `.zshrc`
+para que este disponible la herramienta `idf.py`
+
+[source, bash]
+----
+. $HOME/.espressif/esp-idf/export.sh &> /dev/null
+----
+
+[source, bash]
+----
+$ idf.py --version
+ESP-IDF v6.1-dev-5824-gfa8039b5ca-dirty
+----
+
 === Windows 
 
 Para Windows se recomienda la instalación de una máquina virtual con Linux o utilizar https://learn.microsoft.com/en-us/windows/wsl/install[WSL].
