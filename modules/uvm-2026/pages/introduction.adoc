@@ -1,14 +1,6 @@
 = Introducción
 
-El ramo de Robótica e IOT de la Universidad de Viña del Mar, 
-está enfocado en enseñar conceptos introductorios de robótica e IOT
-para alumnos de cuarto año de la carrera de Ingeniería civil
-informática.
-
-El ramo está basado en el aprendizaje por proyectos con la herramienta
-ESP32.
-
-Se recomienda que los proyectos sean realizados en grupos de máximo 3 integrantes.
+Los siguientes son proyectos sugeridos para un ramo de robótica introductoria enfocado en el microcontrolador ESP32. Se recomienda que los proyectos sean realizados en grupos de máximo 3 integrantes.
 
 == Proyecto 1: Comunicación bi-direccional
 

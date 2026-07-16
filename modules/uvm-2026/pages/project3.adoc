@@ -1,5 +1,8 @@
 = Proyecto 3: Robot de Batalla
 
+Proyecto elaborado por Mauricio Zuñiga, Javier Arredondo y Jeremías Carrasco
+de la Universidad de Viña del Mar en junio 2026.
+
 Este informe documenta el desarrollo de un robot móvil controlado de forma
 inalámbrica, construido como parte del curso de robótica. El robot consiste en
 un vehículo de dos motores controlado mediante un microcontrolador ESP32,

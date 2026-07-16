@@ -1,0 +1,4 @@
+= Proyecto 2
+
+Proyecto elaborado por Mauricio Zuñiga, Javier Arredondo y Jeremías Carrasco
+de la Universidad de Viña del Mar en mayo 2026.

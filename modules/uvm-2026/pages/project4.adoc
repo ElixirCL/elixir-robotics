@@ -1,0 +1,1855 @@
+= Proyecto 4: Sistema GPS de Tiempo de Llegada con ESP32
+
+Proyecto elaborado por Mauricio Zuñiga, Javier Arredondo y Jeremías Carrasco
+de la Universidad de Viña del Mar en julio 2026.
+
+== Introducción
+
+Este informe documenta el desarrollo de un sistema de rastreo GPS para un
+autobús universitario, construido como parte del curso de robótica. El
+sistema permite conocer en tiempo real la posición del bus y estimar cuánto
+tiempo falta para que llegue a un paradero fijo, sin depender de que un
+operador reporte manualmente su ubicación.
+
+El proyecto se compone de dos módulos ESP32 independientes:
+
+* Un módulo instalado en el bus, que obtiene su posición mediante GNSS y la
+  reporta periódicamente a un servidor a través de una conexión celular 4G.
+* Un módulo instalado en el paradero, que consulta ese servidor y muestra en
+  una pantalla LCD el tiempo estimado de llegada del próximo bus.
+
+Ambos módulos ejecutan su lógica sobre FreeRTOS, un sistema operativo en
+tiempo real que permite correr varias tareas de forma concurrente dentro del
+mismo microcontrolador (justificación detallada en
+<<Justificación del Uso de FreeRTOS>>).
+
+Como servidor de almacenamiento y API se utilizó Supabase, una decisión que
+se explica con más detalle en <<Backend: Supabase>>.
+
+
+== Arquitectura General del Sistema
+
+El sistema completo está compuesto por cinco piezas que se comunican en
+cadena:
+
+[cols="2,5", options="header"]
+|===
+| Componente | Rol
+
+| Módulo Bus (LilyGO T-A7670)
+| Obtiene la posición GNSS del bus y la envía por red celular (LTE) a
+  Supabase cada 10 segundos. Además escucha SMS entrantes y responde con la
+  ubicación actual.
+
+| Módulo Paradero (ESP32 DevKit V1 + LCD 1602)
+| Consulta Supabase por WiFi cada 10 segundos y muestra en la pantalla LCD el
+  tiempo estimado de llegada del bus y la hora de la próxima salida.
+
+| Supabase (PostgreSQL + PostGIS)
+| Backend en la nube. Almacena las posiciones reportadas y expone una API
+  REST que consumen tanto el módulo del paradero como el frontend web.
+
+| Frontend web (React + Leaflet)
+| Mapa que muestra la posición del bus en vivo, desarrollado en una fase
+  anterior del proyecto y conectado a Supabase mediante su función Realtime.
+
+| Grafana
+| Panel de monitoreo con el histórico de posiciones, filtrable por bus.
+|===
+
+De estos cinco componentes, este informe se centra en los dos módulos ESP32
+(bus y paradero) y en su integración con Supabase, que es la parte
+correspondiente al alcance del curso de robótica.
+
+
+== Justificación del Uso de FreeRTOS
+
+El enunciado exige programar la ESP32 en C/C++ usando un sistema operativo
+en tiempo real, entre FreeRTOS o Zephyr. El equipo optó por **FreeRTOS**
+por las siguientes razones:
+
+* *Ya viene integrado en el core de Arduino para ESP32.* No fue necesario
+  instalar un toolchain ni un SDK adicional: el equipo pudo seguir
+  trabajando desde Arduino IDE, que ya conocía de proyectos anteriores.
+
+* *El módulo del bus necesita hacer tres cosas a la vez sin bloquearse entre
+  sí:* leer el GNSS cada 5 segundos, escuchar SMS entrantes en cualquier
+  momento, y enviar la posición por HTTP cada 10 segundos (una operación que
+  puede tardar varios segundos en responder por red celular). Con un único
+  `loop()` secuencial, una llamada HTTP lenta retrasaría la lectura del GPS
+  o la atención de un SMS. FreeRTOS permite correr cada tarea de forma
+  independiente.
+
+* *El ESP32-WROVER-E es dual-core.* FreeRTOS permite fijar tareas a un
+  núcleo específico con `xTaskCreatePinnedToCore`. Esto se usó para separar
+  la tarea HTTP (núcleo 0), que puede demorarse varios segundos esperando
+  respuesta de la red, de las tareas de GNSS y SMS (núcleo 1), que deben
+  mantenerse responsivas.
+
+* *Las tres tareas comparten el mismo UART físico hacia el módem A7670SA.*
+  Sin un mecanismo de sincronización, dos tareas enviando comandos AT al
+  mismo tiempo corrompen la respuesta que llega por el puerto serial. Se
+  usó un mutex (`mutexModem`) para serializar el acceso, y otro
+  (`mutexPosicion`) para proteger la estructura compartida donde se guarda
+  la última posición leída.
+
+Se descartó Zephyr porque exige salir del ecosistema Arduino (build system
+propio basado en `west`/CMake, drivers distintos), lo que se evaluó como una
+complejidad adicional no justificada para el alcance y los tiempos del
+curso, considerando que el equipo ya tenía experiencia previa con Arduino
+IDE.
+
+
+== Lista de Componentes
+
+[cols="3,6,1", options="header"]
+|===
+| Componente | Descripción | Cantidad
+
+| LilyGO T-A7670 (ESP32-WROVER-E + módem A7670SA)
+| Placa con ESP32 y módem celular LTE + GNSS integrados en la misma PCB
+  (no requiere cableado externo entre el ESP32 y el módem). Es el "cerebro"
+  del módulo instalado en el bus.
+| 1
+
+| ESP32 DevKit V1
+| Placa de desarrollo con WiFi integrado. Controla la pantalla LCD del
+  módulo del paradero y hace las consultas HTTP a Supabase.
+| 1
+
+| Pantalla LCD 1602 (modo 4 bits)
+| Pantalla de 16x2 caracteres donde se muestra el tiempo estimado de llegada
+  y la próxima hora de salida.
+| 1
+
+| Chip SIM prepago con datos (Entel)
+| Provee la conexión celular 4G que usa el módulo del bus para enviar su
+  posición a Supabase. APN utilizado: `bam.entelpcs.cl`.
+| 1
+
+| Batería externa / power bank
+| Alimenta al módulo del bus, conectado al puerto USB del vehículo.
+| 1
+
+| Cables de conexión (jumpers)
+| Para las conexiones entre el ESP32 DevKit V1 y la pantalla LCD.
+| Varios
+|===
+
+NOTE: El módem A7670SA de la LilyGO T-A7670 está integrado en la misma placa
+que el ESP32, por lo que no requirió el cableado externo, la fuente de
+alimentación dedicada ni el capacitor de respaldo que se habían evaluado
+inicialmente para una implementación con ESP32 y módulo A7670SA por
+separado.
+
+
+== Esquemático y Tablas de Conexión
+
+=== Módulo Bus — LilyGO T-A7670
+
+El módem está conectado internamente en la PCB de la LilyGO T-A7670 (revisión
+v1.4), por lo que estos pines son fijos de fábrica y no requieren cableado
+por parte del usuario. Se documentan aquí como referencia, ya que fueron
+necesarios para escribir el firmware:
+
+[cols="3,2,5", options="header"]
+|===
+| Función | GPIO ESP32 | Descripción
+
+| UART hacia el módem (RX) | GPIO 26 | Recibe datos desde el A7670SA (TX del módem)
+| UART hacia el módem (TX) | GPIO 27 | Envía datos hacia el A7670SA (RX del módem)
+| PWRKEY / POWER_EN        | GPIO 4  | Controla el encendido del módem
+| MODEM_RESET              | GPIO 5  | Reset por hardware del módem
+| LED indicador             | GPIO 12 | LED integrado, usado para indicar que el código está corriendo
+| Batería (ADC)             | GPIO 35 | Lectura del voltaje de batería
+|===
+
+Adicionalmente, la SIM se inserta en el slot inferior de la placa y se deben
+conectar las antenas externas: la antena LTE (conector IPEX más grande) y la
+antena GPS (conector IPEX más pequeño). El módem nunca debe encenderse sin la
+antena LTE conectada, ya que transmitir sin carga puede dañar el
+amplificador de potencia.
+
+=== Módulo Paradero — ESP32 DevKit V1 + LCD 1602
+
+[cols="2,2,4", options="header"]
+|===
+| Pin LCD 1602 | Pin ESP32 (GPIO) | Función
+
+| RS | 19 | Selección de registro
+| E  | 23 | Habilitación (enable)
+| D4 | 18 | Bus de datos (bit 4)
+| D5 | 5  | Bus de datos (bit 5)
+| D6 | 26 | Bus de datos (bit 6)
+| D7 | 27 | Bus de datos (bit 7)
+| RW | GND (fijo) | Modo escritura permanente
+|===
+
+NOTE: La pantalla se maneja en modo de 4 bits, por lo que solo se usan las
+líneas D4-D7 del bus de datos del LCD (D0-D3 quedan sin conectar).
+
+
+== Backend: Supabase
+
+Aunque el enunciado original del proyecto no especifica el uso de Supabase
+—deja abierta la elección del servidor y sugiere alternativas como un
+servidor REST propio con PostgreSQL y PostGIS—, el equipo adoptó Supabase
+por recomendación del profesor durante el desarrollo. La decisión priorizó
+reducir el tiempo de implementación del backend para enfocar el esfuerzo en
+lograr que la cadena GPS → base de datos → pantalla funcionara de punta a
+punta, en lugar de construir y desplegar un servidor propio desde cero.
+
+Supabase entrega una base PostgreSQL con la extensión PostGIS habilitada, más
+una API REST autogenerada y un canal de datos en tiempo real (Realtime) sin
+necesidad de escribir un servidor aparte. Se definieron tres tablas:
+
+[cols="2,5", options="header"]
+|===
+| Tabla | Propósito
+
+| `gps`
+| Guarda cada posición reportada por el módulo del bus (`bus_id`, `lat`,
+  `lon`, marca de tiempo generada por el propio servidor).
+
+| `horarios`
+| Almacena los horarios de salida programados, usados para mostrar la
+  próxima salida en el LCD del paradero.
+
+| `servicio`
+| Bandera de estado general (`activo`/`mensaje`), usada para mostrar
+  "sin servicio hoy" cuando corresponde, sin depender de que existan o no
+  registros GPS recientes.
+|===
+
+El frontend web (mapa en vivo) consume estas tablas mediante Supabase
+Realtime, por lo que la posición del bus se actualiza en el navegador sin
+recargar la página. El módulo del paradero, en cambio, hace una consulta
+HTTP `GET` simple cada 10 segundos en lugar de mantener una conexión
+persistente, ya que implementar un cliente WebSocket en el ESP32 no se
+justificaba para una pantalla que solo necesita refrescarse cada pocos
+segundos.
+
+La API key incluida en el firmware es la clave pública ("publishable"/anon)
+del proyecto, pensada para exponerse en clientes como este; el control de
+qué se puede leer o escribir en cada tabla queda a cargo de las políticas de
+Row Level Security (RLS) de Supabase, que a la fecha de este informe siguen
+en revisión por el equipo.
+
+
+== Código Utilizado
+
+El código fuente completo de ambos módulos se entrega junto con este
+informe. A continuación se documentan los fragmentos más relevantes.
+
+=== Módulo Bus — Lectura de posición GNSS
+
+Una tarea de FreeRTOS dedicada consulta el módem cada 5 segundos con el
+comando `AT+CGNSSINFO` (específico de la familia SIMCOM A76XX; los módulos
+más antiguos como el SIM800/SIM7000 usan `AT+CGPSINF`, que no aplica aquí) y
+guarda la posición bajo un mutex para que otras tareas puedan leerla de
+forma segura:
+
+[source,cpp]
+----
+void tareaGNSS(void *parametro) {
+  enviarAT("AT+CGNSSPWR=1,1", 2000); // enciende el receptor GNSS
+  delay(2000);
+
+  for (;;) {
+    String resp = enviarAT("AT+CGNSSINFO", 3000);
+
+    double latBuf = 0, lonBuf = 0;
+    if (parsearGPS(resp, latBuf, lonBuf)) {
+      if (xSemaphoreTake(mutexPosicion, pdMS_TO_TICKS(200)) == pdTRUE) {
+        posicionActual.lat = latBuf;
+        posicionActual.lon = lonBuf;
+        posicionActual.valida = true;
+        posicionActual.timestamp = millis();
+        xSemaphoreGive(mutexPosicion);
+      }
+    }
+    vTaskDelay(pdMS_TO_TICKS(INTERVALO_GNSS_MS));
+  }
+}
+----
+
+El parseo de `AT+CGNSSINFO` requiere buscar los campos "N"/"S" y "E"/"W" en
+la respuesta, ya que la posición del signo de la coordenada depende de cuál
+de esas letras aparece justo después:
+
+[source,cpp]
+----
+if (idxNS < 1 || idxEW < 1) return false;  // sin fix
+
+lat = campos[idxNS - 1].toDouble();
+lon = campos[idxEW - 1].toDouble();
+
+if (campos[idxNS] == "S") lat = -lat;
+if (campos[idxEW] == "W") lon = -lon;
+----
+
+=== Módulo Bus — Envío de posición a Supabase
+
+Otra tarea, en un núcleo distinto, calcula la distancia del bus a ambos
+paraderos con la fórmula de Haversine y envía la posición por HTTP `POST`
+usando comandos AT sobre la red celular:
+
+[source,cpp]
+----
+double distanciaMetros(double lat1, double lon1, double lat2, double lon2) {
+  const double R = 6371000.0;
+  double dLat = (lat2 - lat1) * DEG_TO_RAD;
+  double dLon = (lon2 - lon1) * DEG_TO_RAD;
+  double a = sin(dLat / 2) * sin(dLat / 2) +
+             cos(lat1 * DEG_TO_RAD) * cos(lat2 * DEG_TO_RAD) *
+             sin(dLon / 2) * sin(dLon / 2);
+  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+  return R * c;
+}
+----
+
+[source,cpp]
+----
+String json = "{";
+json += "\"bus_id\":\"" + String(BUS_ID) + "\",";
+json += "\"lat\":" + String(copia.lat, 6) + ",";
+json += "\"lon\":" + String(copia.lon, 6) + ",";
+json += "\"dist_paradero_abajo_m\":" + String(distAbajo, 1) + ",";
+json += "\"dist_paradero_arriba_m\":" + String(distArriba, 1);
+json += "}";
+
+enviarAT("AT+HTTPINIT", 3000);
+enviarAT("AT+HTTPPARA=\"URL\",\"" + urlConApikey + "\"", 2000);
+enviarAT("AT+HTTPPARA=\"CONTENT\",\"application/json\"", 1000);
+enviarAT("AT+HTTPDATA=" + String(json.length()) + ",10000", 2000);
+Modem.print(json);
+String resp = enviarAT("AT+HTTPACTION=1", 10000); // 1 = POST
+enviarAT("AT+HTTPTERM", 1000);
+----
+
+La marca de tiempo (`ts`) no se envía desde el ESP32: se genera
+automáticamente en el servidor al insertar el registro, lo que evita
+depender de que el módulo tenga la hora correcta.
+
+=== Módulo Bus — Respuesta por SMS
+
+La tercera tarea escucha SMS entrantes. Si el mensaje recibido contiene la
+palabra "ubicacion", responde al mismo número con un link de Google Maps
+apuntando a la última posición GPS válida:
+
+[source,cpp]
+----
+void procesarComandoSMS(const String &numero, const String &cuerpo) {
+  String texto = normalizarTexto(cuerpo);
+
+  if (texto.indexOf("ubicacion") != -1) {
+    responderConUbicacion(numero);
+  } else {
+    enviarSMS(numero, "Comando no reconocido. Envia UBICACION para recibir la posicion del bus.");
+  }
+}
+----
+
+=== Módulo Paradero — Cálculo de ETA y actualización del LCD
+
+El ESP32 del paradero consulta tres tablas de Supabase en cada ciclo: primero
+revisa si el servicio está activo, luego busca la última posición del bus y,
+si hay datos, calcula el tiempo estimado de llegada localmente usando la
+distancia Haversine y una velocidad promedio asumida:
+
+[source,cpp]
+----
+int calcularETA(double busLat, double busLon) {
+  double distRestante = distanciaMetros(busLat, busLon,
+                                         PARADERO_ARRIBA_LAT, PARADERO_ARRIBA_LON);
+  if (distRestante < 50) return 0;
+
+  double velMs = VELOCIDAD_PROMEDIO_KMH * 1000.0 / 3600.0;
+  int etaMin = (int)(distRestante / velMs / 60.0);
+  return (etaMin < 1) ? 1 : etaMin;
+}
+----
+
+[source,cpp]
+----
+void realizarConsulta() {
+  if (!consultarServicioActivo()) return;
+
+  double busLat, busLon;
+  if (!consultarUltimaPosicion(busLat, busLon)) {
+    mostrarError("Sin datos bus");
+    return;
+  }
+
+  int etaMinutos = calcularETA(busLat, busLon);
+  String proximaSalida = consultarProximaSalida();
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Llega en ");
+  lcd.print(etaMinutos);
+  lcd.print(" min   ");
+
+  lcd.setCursor(0, 1);
+  lcd.print("Sale: ");
+  lcd.print(proximaSalida);
+}
+----
+
+El WiFi se reconecta automáticamente con backoff exponencial (1s, 2s, 4s...
+hasta un máximo de 60s) si la conexión se cae, para que el cartel no quede
+colgado indefinidamente sin datos.
+
+
+== Desviaciones respecto al enunciado original
+
+Con fines de transparencia, se documentan los puntos donde la implementación
+final difiere de lo pedido en el enunciado del proyecto:
+
+* *Pantalla LCD 1602 en vez de OLED.* El enunciado especifica una pantalla
+  OLED para el módulo del paradero; por disponibilidad de hardware del
+  equipo se usó una LCD 1602, que cumple la misma función de mostrar el
+  mensaje de tiempo de llegada.
+
+* *Respuesta por SMS con link de Google Maps en vez del formato de dos
+  líneas del enunciado* (`GPS: ...` / `SERVER: 200 OK`). Se optó por un
+  comando por palabra clave ("ubicacion") que responde con un link directo
+  y accionable en vez de coordenadas crudas. No se implementó una consulta
+  explícita a un endpoint `/status` de salud del servidor dentro de la
+  respuesta SMS; la validación de conectividad queda registrada en el log
+  serial de cada intento de `POST`.
+
+* *ETA calculado con velocidad promedio fija (20 km/h) en vez de velocidad
+  real entre registros consecutivos.* El enunciado sugiere calcular la
+  velocidad a partir de dos posiciones consecutivas con una consulta SQL
+  (`LAG` sobre la tabla `gps`). El equipo priorizó tener un ETA funcionando
+  de punta a punta y dejó ese cálculo más preciso como mejora futura.
+
+* *Uso de Supabase en vez de un servidor REST propio.* El enunciado no
+  menciona Supabase; se adoptó después de iniciado el desarrollo, por
+  sugerencia del profesor, para reducir el tiempo de implementación del
+  backend.
+
+
+== Posibles Usos de esta Tecnología
+
+Si bien este proyecto fue desarrollado con fines académicos, la combinación
+de GNSS, conectividad celular y bases de datos en tiempo real tiene
+aplicaciones directas en la industria:
+
+* *Transporte público:* sistemas de seguimiento de buses o metros que
+  informan a los pasajeros el tiempo real de espera, reduciendo la
+  incertidumbre en los paraderos.
+
+* *Transporte escolar:* apps que permiten a los apoderados ver en tiempo
+  real dónde está el bus del colegio y a qué hora llegará.
+
+* *Logística y flotas de reparto:* seguimiento de camiones o vehículos de
+  entrega para estimar tiempos de llegada a destino y optimizar rutas.
+
+* *Turismo:* seguimiento en vivo de buses turísticos o de excursión para
+  que los pasajeros sepan cuándo abordar.
+
+* *Gestión de emergencias:* despacho y seguimiento de vehículos de
+  emergencia (ambulancias, bomberos) con tiempo estimado de llegada.
+
+* *Agricultura y minería:* monitoreo de maquinaria o vehículos en zonas sin
+  cobertura WiFi, donde la conectividad celular es la única opción viable.
+
+* *Prototipado de productos IoT:* la combinación ESP32 + GNSS + LTE es una
+  base habitual y de bajo costo para el desarrollo de productos de
+  seguimiento de activos (asset tracking).
+
+== Código fuente
+
+Guía de instalación — LilyGO T-A7670 (ESP32 + A7670SA LTE/GNSS)
+
+Sigue estos pasos en orden. Están pensados para que cualquiera del equipo pueda cargar el código.
+
+=== 1. Instalar Arduino IDE
+
+Descarga la versión más reciente desde arduino.cc/en/software e instálala.
+
+=== 2. Agregar soporte para placas ESP32
+
+1. Abre Arduino IDE → `Archivo` → `Preferencias`.
+2. En "Gestor de URLs Adicionales de Tarjetas", pega:
+   ```
+   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+   ```
+3. Ve a `Herramientas` → `Placa` → `Gestor de tarjetas`, busca "esp32" (por Espressif Systems) e instala.
+
+=== 3. Instalar el driver USB
+
+La LilyGO T-A7670 usa chip **CP2102** o **CH340** (depende de la revisión). Instala ambos por si acaso:
+
+- **CP2102**: https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers
+- **CH340**: buscar "CH340 driver" + tu sistema operativo
+
+Sin este driver, el puerto no aparece en `Herramientas` → `Puerto`.
+
+=== 4. Preparar la LilyGO T-A7670
+
+**Orden importante (¡no saltarse!):**
+
+1. Inserta la **SIM** en el slot del A7670SA (en la parte inferior de la placa).
+2. Conecta la **antena LTE** al conector IPEX (más grande).
+3. Conecta la **antena GPS** al conector IPEX (más pequeño).
+   → **Nunca enciendas el módem sin antena LTE puesta** (puede dañarlo).
+4. Conecta la LilyGO a la compu por **USB-C**.
+
+⚠️ **La LilyGO T-A7670 tiene el módem integrado en la PCB.**
+   No necesita cableado externo ni alimentación separada para el módem.
+   Los pines UART ya vienen conectados internamente (GPIO26=RX, GPIO27=TX).
+
+=== 5. Configurar el código (credenciales ya están puestas)
+
+Abre `lilygo_T-A7670_bus.ino` en Arduino IDE.
+
+Las credenciales ya vienen configuradas:
+- ✅ **URL Supabase**: https://idyzqzftkavuqunlozxj.supabase.co/rest/v1/gps
+- ✅ **API Key**: sb_publishable_nWNQbxZbrc1eo7az0EF26g_CyzQTeX0
+- ✅ **APN**: bam.entelpcs.cl (Entel Chile)
+- ✅ **BUS_ID**: bus_1
+
+Solo si quieres cambiar el nombre del bus, edita:
+   `const char* BUS_ID = "bus_1";`
+
+=== 6. Instalar las librerías necesarias
+
+En Arduino IDE → `Herramientas` → `Administrar bibliotecas`, busca e instala:
+
+- **ArduinoJson** (by Benoit Blanchon) — para el LCD
+- **LiquidCrystal** (viene por defecto) — para el LCD
+
+(El código de la LilyGO no necesita librerías externas; usa HardwareSerial y FreeRTOS que vienen en el core ESP32).
+
+=== 7. Seleccionar la placa y el puerto
+
+1. `Herramientas` → `Placa` → `ESP32 Arduino` → **ESP32 Wrover Module**
+2. `Herramientas` → `Puerto` → selecciona el COM que apareció al conectar la LilyGO
+3. `Herramientas` → `Velocidad de subida` → **115200** (si falla, baja a 921600)
+
+=== 8. Subir el código
+
+1. Presiona el botón **→ (Subir)** en Arduino IDE.
+2. Si se queda pegado en "Connecting...":
+- Mantén presionado **BOOT** (GPIO0) en la LilyGO.
+- Cuando veas que empieza a transferir, suelta BOOT.
+
+=== 9. Verificar que funciona
+
+1. Abre `Herramientas` → `Monitor Serie`, configúralo a **115200 baudios**.
+2. Deberías ver en orden:
+
+[source, text]
+----
+Bus Tracker — LilyGO T-A7670
+[MODEM] Encendiendo A7670SA...
+[MODEM] Módem responde OK
+[RED] Configurando APN...
+[RED] Registrado en la red LTE
+[GNSS] Receptor encendido, esperando fix...
+----
+
+3. Después de 10-30s (depende de la señal GPS):
+
+[source, text]
+----
+[GNSS] Fix: -33.071234, -71.553456
+[HTTP] Enviando posición a Supabase...
+[HTTP] ✓ Datos enviados a Supabase (HTTP 201)
+----
+
+=== 10. Probar desde Supabase
+
+1. Ve a https://supabase.com/dashboard/project/idyzqzftkavuqunlozxj
+2. Panel izquierdo → **Table Editor** → **gps**
+3. Deberían aparecer filas nuevas cada 10s con lat, lon, distancias.
+
+=== 11. Posibles problemas
+
+[cols="1,2,2", options="header"]
+|===
+| Síntoma | Causa posible | Solución
+
+| No responde "OK" al AT
+| Módem no encendió
+| Revisar antena LTE + SIM
+
+| No se registra en red
+| APN incorrecto
+| Verificar que sea `bam.entelpcs.cl`
+
+| Sin fix GPS
+| Sin antena GPS o sin cielo
+| Llevar la placa a una ventana/exterior
+
+| Error HTTP 401 al enviar
+| API key incorrecta
+| Verificar `SUPABASE_KEY`
+
+| Error HTTP 0 al enviar
+| Sin contexto PDP
+| Verificar que haya saldo en la SIM
+
+| No aparece el puerto COM
+| Driver USB no instalado
+| Revisar paso 3
+|===
+
+=== Fuentes
+
+.lcd_test.ino
+[source, c]
+----
+/*
+ * Prueba minima de LCD 1602 (modo 4 bits) - sin WiFi ni Supabase.
+ * Sirve para descartar si el problema es de wiring/hardware del LCD
+ * o del sketch principal (lcd_completo).
+ *
+ * Mismo pinout que lcd_completo.ino:
+ *   RS -> GPIO 19   E  -> GPIO 23
+ *   D4 -> GPIO 18   D5 -> GPIO 5
+ *   D6 -> GPIO 26   D7 -> GPIO 27
+ *   RW -> GND (fijo)
+ */
+
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(19, 23, 18, 5, 26, 27);
+
+void setup() {
+  Serial.begin(115200);
+  delay(500);
+  Serial.println("[TEST] Iniciando LCD...");
+
+  lcd.begin(16, 2);
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("HOLA MUNDO");
+  lcd.setCursor(0, 1);
+  lcd.print("Prueba LCD OK");
+
+  Serial.println("[TEST] Texto enviado al LCD.");
+}
+
+void loop() {
+  // Parpadeo de cursor visible cada segundo para confirmar
+  // que el ESP32 sigue vivo y mandando datos al LCD.
+  static bool on = true;
+  static unsigned long ultimo = 0;
+  if (millis() - ultimo >= 1000) {
+    ultimo = millis();
+    on = !on;
+    lcd.setCursor(15, 1);
+    lcd.print(on ? "*" : " ");
+    Serial.println("[TEST] tick");
+  }
+}
+----
+
+.lcd.ino
+[source, c]
+----
+/*
+ * Paradero LCD — ESP32 DevKit V1 + LCD 1602 (modo 4 bits)
+ * Proyecto: Sistema IoT de tiempo de llegada de buses (UVM)
+ *
+ * ═══════════════════════════════════════════════════════════
+ *  PINOUT LCD 1602:
+ * ═══════════════════════════════════════════════════════════
+ *   RS -> GPIO 19   E  -> GPIO 23
+ *   D4 -> GPIO 18   D5 -> GPIO 5
+ *   D6 -> GPIO 26   D7 -> GPIO 27
+ *   RW -> GND (fijo)
+ *
+ * ═══════════════════════════════════════════════════════════
+ *  FLUJO DE CONSULTA (cada 10s):
+ * ═══════════════════════════════════════════════════════════
+ *   1. Consulta tabla "servicio" → si activo=false, muestra
+ *      "No hay buses disponibles hoy".
+ *   2. Consulta tabla "gps" (última posición del bus).
+ *   3. Consulta tabla "horarios" (próxima salida).
+ *   4. Calcula ETA localmente y actualiza LCD.
+ *
+ * ═══════════════════════════════════════════════════════════
+ *  LIBRERÍAS (Arduino IDE → Administrar bibliotecas):
+ * ═══════════════════════════════════════════════════════════
+ *   - LiquidCrystal (built-in)
+ *   - ArduinoJson (by Benoit Blanchon)
+ *   - WiFi.h + HTTPClient.h (built-in core ESP32)
+ * ═══════════════════════════════════════════════════════════
+ */
+
+#include <LiquidCrystal.h>
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <ArduinoJson.h>
+
+// ═══════════════════════════════════════════════════════════
+//  CONFIGURACIÓN — AJUSTA ESTOS VALORES ⬇
+// ═══════════════════════════════════════════════════════════
+
+const char* WIFI_SSID     = "XXXXX";
+const char* WIFI_PASSWORD = "XXXXXXX";
+
+// ─── Supabase ───
+const char* SUPABASE_URL = "https://idyzqzftkavuqunlozxj.supabase.co";
+const char* SUPABASE_KEY = "sb_publishable_nWNQbxZbrc1eo7az0EF26g_CyzQTeX0";
+
+// ID del bus que monitorea este paradero
+const char* BUS_ID = "bus_1";
+
+// Coordenadas de los paraderos
+const double PARADERO_ABAJO_LAT  = -33.0260826;   // Paradero salida
+const double PARADERO_ABAJO_LON  = -71.5631777;
+const double PARADERO_ARRIBA_LAT = -33.0712075;   // Universidad
+const double PARADERO_ARRIBA_LON = -71.5539618;
+
+// Velocidad promedio estimada del bus (km/h) para cálculo de ETA
+const float VELOCIDAD_PROMEDIO_KMH = 20.0;
+
+const unsigned long INTERVALO_CONSULTA_MS = 10000; // cada 10s
+
+// ═══════════════════════════════════════════════════════════
+//  GLOBALES
+// ═══════════════════════════════════════════════════════════
+
+LiquidCrystal lcd(19, 23, 18, 5, 26, 27);
+unsigned long ultimaConsulta = 0;
+unsigned long ultimoIntentoReconexion = 0;
+unsigned long reconexionEsperaMs = 1000;
+bool wifiConectado = false;
+
+// ═══════════════════════════════════════════════════════════
+//  HAVERSINE
+// ═══════════════════════════════════════════════════════════
+
+double distanciaMetros(double lat1, double lon1, double lat2, double lon2) {
+  const double R = 6371000.0;
+  double dLat = (lat2 - lat1) * DEG_TO_RAD;
+  double dLon = (lon2 - lon1) * DEG_TO_RAD;
+  double a = sin(dLat / 2) * sin(dLat / 2) +
+             cos(lat1 * DEG_TO_RAD) * cos(lat2 * DEG_TO_RAD) *
+             sin(dLon / 2) * sin(dLon / 2);
+  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+  return R * c;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  SUPABASE REST HELPER
+// ═══════════════════════════════════════════════════════════
+
+String consultarSupabase(const String &tabla, const String &params) {
+  if (WiFi.status() != WL_CONNECTED) return "";
+
+  HTTPClient http;
+  String url = String(SUPABASE_URL) + "/rest/v1/" + tabla + "?" + params;
+
+  http.begin(url);
+  http.addHeader("apikey", SUPABASE_KEY);
+  http.addHeader("Authorization", String("Bearer ") + SUPABASE_KEY);
+
+  int codigoHttp = http.GET();
+  String respuesta = "";
+
+  if (codigoHttp == 200) {
+    respuesta = http.getString();
+  } else {
+    Serial.println("[HTTP] Error " + String(codigoHttp) + " en " + tabla);
+  }
+
+  http.end();
+  return respuesta;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CONSULTAR SERVICIO — tabla "servicio"
+// ═══════════════════════════════════════════════════════════
+
+bool consultarServicioActivo() {
+  String json = consultarSupabase("servicio", "select=activo,mensaje&limit=1");
+
+  if (json.length() == 0) return true;
+
+  StaticJsonDocument<256> doc;
+  DeserializationError err = deserializeJson(doc, json);
+
+  if (err || doc.size() == 0) return true;
+
+  bool activo = doc[0]["activo"] | true;
+
+  if (!activo) {
+    const char* mensaje = doc[0]["mensaje"] | "No hay buses hoy";
+    mostrarServicioInactivo(mensaje);
+  }
+
+  return activo;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CONSULTAR GPS — última posición del bus
+// ═══════════════════════════════════════════════════════════
+
+bool consultarUltimaPosicion(double &lat, double &lon) {
+  String json = consultarSupabase("gps",
+    "select=lat,lon&bus_id=eq." + String(BUS_ID) +
+    "&order=created_at.desc&limit=1"
+  );
+
+  if (json.length() == 0) return false;
+
+  StaticJsonDocument<256> doc;
+  DeserializationError err = deserializeJson(doc, json);
+
+  if (err || doc.size() == 0) return false;
+
+  lat = doc[0]["lat"] | 0.0;
+  lon = doc[0]["lon"] | 0.0;
+
+  return (lat != 0 && lon != 0);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CONSULTAR HORARIOS — próxima salida
+// ═══════════════════════════════════════════════════════════
+
+String consultarProximaSalida() {
+  String json = consultarSupabase("horarios",
+    "select=salida&bus=eq." + String(BUS_ID) +
+    "&order=salida.asc&limit=1"
+  );
+
+  if (json.length() == 0) return "--:--";
+
+  StaticJsonDocument<256> doc;
+  DeserializationError err = deserializeJson(doc, json);
+
+  if (err || doc.size() == 0) return "--:--";
+
+  const char* salida = doc[0]["salida"] | "--:--";
+  return String(salida);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CALCULAR ETA (minutos para llegar a la universidad)
+// ═══════════════════════════════════════════════════════════
+
+int calcularETA(double busLat, double busLon) {
+  double distRestante = distanciaMetros(busLat, busLon,
+                                         PARADERO_ARRIBA_LAT, PARADERO_ARRIBA_LON);
+  if (distRestante < 50) return 0;
+
+  double velMs = VELOCIDAD_PROMEDIO_KMH * 1000.0 / 3600.0;
+  int etaMin = (int)(distRestante / velMs / 60.0);
+  return (etaMin < 1) ? 1 : etaMin;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CONSULTA COMPLETA
+// ═══════════════════════════════════════════════════════════
+
+void realizarConsulta() {
+  if (!consultarServicioActivo()) return;
+
+  double busLat, busLon;
+  if (!consultarUltimaPosicion(busLat, busLon)) {
+    mostrarError("Sin datos bus");
+    return;
+  }
+
+  int etaMinutos = calcularETA(busLat, busLon);
+  String proximaSalida = consultarProximaSalida();
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Llega en ");
+  lcd.print(etaMinutos);
+  lcd.print(" min   ");
+
+  lcd.setCursor(0, 1);
+  lcd.print("Sale: ");
+  lcd.print(proximaSalida);
+  lcd.print("       ");
+}
+
+// ═══════════════════════════════════════════════════════════
+//  FUNCIONES LCD
+// ═══════════════════════════════════════════════════════════
+
+void mostrarServicioInactivo(const char* mensaje) {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Servicio:");
+  lcd.setCursor(0, 1);
+  int len = strlen(mensaje);
+  for (int i = 0; i < 16; i++) {
+    lcd.print((i < len) ? mensaje[i] : ' ');
+  }
+}
+
+void mostrarError(const char* mensaje) {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Error:");
+  lcd.setCursor(0, 1);
+  int len = strlen(mensaje);
+  for (int i = 0; i < 16; i++) {
+    lcd.print((i < len) ? mensaje[i] : ' ');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  WIFI
+// ═══════════════════════════════════════════════════════════
+
+void conectarWiFi() {
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Conectando...");
+
+  int intentos = 0;
+  while (WiFi.status() != WL_CONNECTED && intentos < 30) {
+    delay(500);
+    Serial.print(".");
+    intentos++;
+  }
+
+  if (WiFi.status() == WL_CONNECTED) {
+    wifiConectado = true;
+    reconexionEsperaMs = 1000;
+    Serial.println("\n[WiFi] OK. IP: " + WiFi.localIP().toString());
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("WiFi OK");
+    delay(1000);
+  } else {
+    wifiConectado = false;
+    Serial.println("\n[WiFi] Fallo conexion");
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  SETUP
+// ═══════════════════════════════════════════════════════════
+
+void setup() {
+  Serial.begin(115200);
+  lcd.begin(16, 2);
+
+  conectarWiFi();
+
+  if (wifiConectado) {
+    realizarConsulta();
+  } else {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Sin WiFi");
+  }
+
+  ultimaConsulta = millis();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  LOOP
+// ═══════════════════════════════════════════════════════════
+
+void loop() {
+  if (WiFi.status() != WL_CONNECTED) {
+    wifiConectado = false;
+    if (millis() - ultimoIntentoReconexion >= reconexionEsperaMs) {
+      ultimoIntentoReconexion = millis();
+      reconexionEsperaMs *= 2;
+      if (reconexionEsperaMs > 60000) reconexionEsperaMs = 60000;
+      conectarWiFi();
+    }
+    return;
+  }
+
+  if (!wifiConectado) {
+    wifiConectado = true;
+    reconexionEsperaMs = 1000;
+    ultimaConsulta = 0;
+  }
+
+  if (millis() - ultimaConsulta >= INTERVALO_CONSULTA_MS) {
+    realizarConsulta();
+    ultimaConsulta = millis();
+  }
+}
+----
+
+.lilygo_T-A7670_bus.ino
+[source, c]
+----
+/*
+ * Módulo de bus — LilyGO T-A7670 (ESP32 + A7670SA LTE + GNSS)
+ * Proyecto: Sistema IoT de tiempo de llegada de buses (UVM)
+ *
+ * ═══════════════════════════════════════════════════════════════
+ *  PINOUT LILYGO T-A7670 v1.4 (XY-A7670 GPS+ADC):
+ * ═══════════════════════════════════════════════════════════════
+ *   UART hacia módem:  GPIO 26 (RX ← A7670 TX)
+ *                       GPIO 27 (TX → A7670 RX)
+ *   PWRKEY/POWER_EN:   GPIO 4
+ *   MODEM_RESET:       GPIO 5
+ *   LED indicador:     GPIO 12
+ *   Botón BOOT:        GPIO 0
+ *   Batería ADC:       GPIO 35
+ *   Módem:             SIMCOM A7670SA (LTE + GNSS integrado)
+ *   NOTA: El módem está conectado internamente en la PCB.
+ *         NO requiere cableado externo.
+ *         GPIO26/27 corresponde a esta revisión v1.4.
+ *
+ * ═══════════════════════════════════════════════════════════════
+ *  LO QUE HACE:
+ * ═══════════════════════════════════════════════════════════════
+ *   1. Enciende el módem A7670SA vía PWRKEY.
+ *   2. Configura APN y espera registro en la red LTE.
+ *   3. Tarea FreeRTOS GNSS: lee posición cada 5s con AT+CGNSSINFO.
+ *   4. Tarea FreeRTOS HTTP: envía posición a Supabase cada 10s.
+ *   5. Tarea FreeRTOS SMS: si el SMS recibido contiene "ubicacion",
+ *      responde al mismo número con un link de Google Maps de la
+ *      posición GPS actual. Si no reconoce el comando, envía ayuda.
+ *   6. Compatible con multiplexor UART (no usa SoftwareSerial).
+ *
+ * ═══════════════════════════════════════════════════════════════
+ *  LIBRERÍAS NECESARIAS (Arduino IDE → Administrar bibliotecas):
+ * ═══════════════════════════════════════════════════════════════
+ *   - Ninguna extra; usa HardwareSerial (built-in) y FreeRTOS
+ *     (built-in en core ESP32).
+ *
+ * ═══════════════════════════════════════════════════════════════
+ *  CONFIGURACIÓN ANTES DE SUBIR:
+ * ═══════════════════════════════════════════════════════════════
+ *   Ajusta las constantes marcadas con "AJUSTAR" abajo.
+ *
+ *   Placa en Arduino IDE: "ESP32 Wrover Module"
+ *   Puerto: COMx (con LilyGO conectada por USB)
+ *   Velocidad subida: 115200 (si falla, bajar a 921600)
+ *
+ * ═══════════════════════════════════════════════════════════════
+ *  COMANDOS AT DE REFERENCIA (A7670SA / SIMCOM):
+ * ═══════════════════════════════════════════════════════════════
+ *   AT+CGNSSPWR=1,1     → Enciende GNSS (NO usar CGPSPWR, es de SIM808/SIM7000)
+ *   AT+CGNSSINFO        → Obtiene posición (lat/lon en grados+minutos, NO CGPSINF)
+ *   AT+HTTPINIT         → Inicia HTTP
+ *   AT+HTTPPARA="URL"   → Configura URL
+ *   AT+HTTPPARA="CONTENT" → Content-Type
+ *   AT+HTTPDATA=len,10000 → Envía body
+ *   AT+HTTPACTION=1     → Ejecuta POST
+ *   AT+HTTPTERM         → Termina HTTP
+ *   AT+CMGF=1           → SMS modo texto
+ *   AT+CNMI=2,2,0,0,0   → SMS directo por UART
+ *   AT+CMGS="numero"    → Envía SMS (cuerpo termina con Ctrl+Z / 0x1A)
+ *   AT+CREG?            → Verifica registro en red
+ *   AT+CGACT?           → Verifica contexto PDP activo
+ */
+
+#include <Arduino.h>
+#include <HardwareSerial.h>
+#include <esp_system.h>
+
+// ═══════════════════════════════════════════════════════════════
+//  CONFIGURACIÓN — AJUSTA ESTOS VALORES ⬇
+// ═══════════════════════════════════════════════════════════════
+
+// Identificador único de este bus (debe coincidir con Supabase)
+const char* BUS_ID = "bus_1";
+
+// APN de la SIM (pregunta al operador; ej: "imovil.entelpcs.cl", "bam.entelpcs.cl", "web.tele2.cl")
+const char* APN = "bam.entelpcs.cl";
+
+// Datos del proyecto Supabase (Project Settings → API)
+const char* SUPABASE_URL    = "https://idyzqzftkavuqunlozxj.supabase.co/rest/v1/gps";
+const char* SUPABASE_KEY    = "sb_publishable_nWNQbxZbrc1eo7az0EF26g_CyzQTeX0";
+
+// Coordenadas de los paraderos (se usan para calcular distancias desde el bus)
+const double PARADERO_ABAJO_LAT  = -33.0260826;   // Paradero de salida
+const double PARADERO_ABAJO_LON  = -71.5631777;
+const double PARADERO_ARRIBA_LAT = -33.0712075;   // Universidad (llegada)
+const double PARADERO_ARRIBA_LON = -71.5539618;
+
+// Intervalos de operación (ms)
+const unsigned long INTERVALO_GNSS_MS = 5000;    // Cada 5s leer GPS
+const unsigned long INTERVALO_HTTP_MS = 10000;   // Cada 10s enviar a Supabase
+
+// ═══════════════════════════════════════════════════════════════
+//  PINOUT LILYGO T-A7670 v1.4
+// ═══════════════════════════════════════════════════════════════
+
+
+//  CONFIRMADO: responde en GPIO26/27 (UART1)
+//  UART hacia módem:  GPIO 26 (RX ← A7670 TX)
+//                      GPIO 27 (TX → A7670 RX)
+//  PWRKEY/POWER_EN:   GPIO 4
+//  MODEM_RESET:       GPIO 5
+//  LED indicador:     GPIO 12
+
+
+
+#define MODEM_RX_PIN    27
+#define MODEM_TX_PIN    26
+#define PWRKEY_PIN      4
+#define MODEM_RESET_PIN 5
+#define MODEM_RESET_LEVEL HIGH
+#define MODEM_BAUD      115200
+
+HardwareSerial Modem(1);        // UART1 (v1.4 confirmado)
+
+typedef struct {
+  double lat;
+  double lon;
+  bool   valida;
+  unsigned long timestamp;  // millis() de cuando se leyó
+} PosicionGPS;
+
+PosicionGPS posicionActual = {0, 0, false, 0};
+SemaphoreHandle_t mutexPosicion;   // Protege acceso a posicionActual
+SemaphoreHandle_t mutexModem;      // Serializa el acceso al UART del módem (GNSS/HTTP/SMS corren en tareas distintas)
+
+// ─── Prototipos ───
+String enviarAT(const String &comando, unsigned long timeoutMs, bool echo);
+bool encenderModem();
+bool configurarRed();
+void tareaGNSS(void *parametro);
+void tareaSMS(void *parametro);
+void tareaHTTP(void *parametro);
+
+const char* causaResetToString(esp_reset_reason_t reason) {
+  switch (reason) {
+    case ESP_RST_POWERON: return "POWERON";
+    case ESP_RST_EXT: return "EXT";
+    case ESP_RST_SW: return "SW";
+    case ESP_RST_PANIC: return "PANIC";
+    case ESP_RST_INT_WDT: return "INT_WDT";
+    case ESP_RST_TASK_WDT: return "TASK_WDT";
+    case ESP_RST_WDT: return "WDT";
+    case ESP_RST_DEEPSLEEP: return "DEEPSLEEP";
+    case ESP_RST_BROWNOUT: return "BROWNOUT";
+    case ESP_RST_SDIO: return "SDIO";
+    default: return "OTHER";
+  }
+}
+
+void imprimirDiagnosticoArranque() {
+  esp_reset_reason_t reason = esp_reset_reason();
+  Serial.println("[DIAG] Reset reason: " + String(causaResetToString(reason)));
+
+  pinMode(35, INPUT);
+  analogReadResolution(12);
+  analogSetPinAttenuation(35, ADC_11db);
+  int batRaw = analogRead(35);
+  int batMv = analogReadMilliVolts(35);
+  Serial.println("[DIAG] Battery ADC raw(GPIO35): " + String(batRaw));
+  Serial.println("[DIAG] Battery ADC pin mV(GPIO35): " + String(batMv));
+  Serial.println("[DIAG] Si el reset fue BROWNOUT o el ADC cae mucho al encender el modem, el problema es alimentacion.");
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  UTILIDAD: enviar comando AT y leer respuesta
+// ═══════════════════════════════════════════════════════════════
+
+String enviarAT(const String &comando, unsigned long timeoutMs = 2000, bool echo = false) {
+  // Serializa el acceso al UART: evita que otra tarea (GNSS/HTTP/SMS)
+  // escriba/lea el módem al mismo tiempo y corrompa la respuesta.
+  if (mutexModem != NULL) xSemaphoreTake(mutexModem, portMAX_DELAY);
+
+  // Vacía buffer de entrada
+  while (Modem.available()) Modem.read();
+
+  Modem.println(comando);
+  if (echo) Serial.println(">> " + comando);
+
+  String respuesta = "";
+  unsigned long inicio = millis();
+
+  while (millis() - inicio < timeoutMs) {
+    while (Modem.available()) {
+      char c = (char)Modem.read();
+      respuesta += c;
+    }
+    vTaskDelay(1);
+  }
+
+  if (echo) {
+    Serial.println("<< " + respuesta);
+  }
+
+  if (mutexModem != NULL) xSemaphoreGive(mutexModem);
+  return respuesta;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ENCENDIDO DEL MÓDEM — 3 estrategias en cascada
+// ═══════════════════════════════════════════════════════════════
+//  La LilyGO T-A7670 tiene diferentes revisiones de PCB que
+//  responden a distintas secuencias PWRKEY. Probamos 3 métodos.
+
+bool encenderModem() {
+  Serial.println("[MODEM] Encendiendo A7670SA...");
+  pinMode(PWRKEY_PIN, OUTPUT);
+
+  // ─── Estrategia A: POWER_EN = HIGH (algunas revisiones) ───
+  // En lugar de pulsar PWRKEY, esta revisión usa GPIO4 como
+  // habilitador de alimentación del módem (POWER_EN).
+  // HIGH = enciende, LOW = apaga.
+  Serial.println("[MODEM] Estrategia A: POWER_EN=HIGH...");
+  digitalWrite(PWRKEY_PIN, HIGH);
+  delay(5000);  // esperar que bootee
+
+  for (int i = 0; i < 5; i++) {
+    String r = enviarAT("AT", 1000);
+    if (r.indexOf("OK") != -1) {
+      Serial.println("[MODEM] Estrategia A OK (POWER_EN).");
+      return true;
+    }
+    delay(200);
+  }
+
+  // ─── Estrategia B: pulso LOW 3s (PWRKEY clásico) ───
+  Serial.println("[MODEM] Estrategia B: pulso LOW 3s...");
+  digitalWrite(PWRKEY_PIN, HIGH);
+  delay(100);
+  digitalWrite(PWRKEY_PIN, LOW);
+  delay(3000);
+  digitalWrite(PWRKEY_PIN, HIGH);
+
+  for (int i = 0; i < 5; i++) {
+    String r = enviarAT("AT", 1000);
+    if (r.indexOf("OK") != -1) {
+      Serial.println("[MODEM] Estrategia B OK.");
+      return true;
+    }
+    delay(200);
+  }
+
+  // ─── Estrategia C: mantener LOW (transistor siempre activo) ───
+  Serial.println("[MODEM] Estrategia C: LOW permanente...");
+  digitalWrite(PWRKEY_PIN, LOW);
+  delay(5000);
+
+  for (int i = 0; i < 10; i++) {
+    String r = enviarAT("AT", 1000);
+    if (r.indexOf("OK") != -1) {
+      Serial.println("[MODEM] Estrategia C OK.");
+      return true;
+    }
+    Serial.print(".");
+    delay(500);
+  }
+
+  // ─── Estrategia D: alternar HIGH/LOW cada 500ms ───
+  Serial.println("\n[MODEM] Estrategia D: alternando cada 500ms...");
+  for (int ciclo = 0; ciclo < 6; ciclo++) {
+    digitalWrite(PWRKEY_PIN, HIGH);
+    delay(500);
+    digitalWrite(PWRKEY_PIN, LOW);
+    delay(500);
+
+    String r = enviarAT("AT", 800);
+    if (r.indexOf("OK") != -1) {
+      Serial.println("[MODEM] Estrategia D OK.");
+      return true;
+    }
+    Serial.print(".");
+  }
+
+  Serial.println("\n[MODEM] ¡No responde tras 4 estrategias!");
+  Serial.println("═ Posibles causas ═");
+  Serial.println("1. ALIMENTACIÓN: USB de PC da ≤500mA. Usa power bank o fuente 5V/2A.");
+  Serial.println("2. SIM: ¿está bien insertada? ¿tiene saldo? ¿no está bloqueada con PIN?");
+  Serial.println("3. ANTENA LTE: debe estar conectada para que el módem bootee.");
+  Serial.println("4. REVISIÓN: algunas LilyGO T-A7670 v1.1 usan GPIO4 al revés.");
+  Serial.println("5. PRUEBA MANUAL: toca PWRKEY (botón físico) 2s mientras ves el monitor.");
+  return false;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  CONFIGURACIÓN DE RED CELULAR
+// ═══════════════════════════════════════════════════════════════
+
+bool configurarRed() {
+  Serial.println("[RED] Configurando APN...");
+
+  // Configurar contexto PDP
+  String cmd = "AT+CGDCONT=1,\"IP\",\"" + String(APN) + "\"";
+  String r = enviarAT(cmd, 3000, true);
+  if (r.indexOf("OK") == -1) {
+    Serial.println("[RED] Fallo al configurar contexto PDP");
+    return false;
+  }
+
+  // Autenticación PAP (Entel Chile requiere usuario/contraseña)
+  // Usuario y contraseña típicos de Entel: entelpcs / entelpcs
+  // AT+CGAUTH=<cid>,<auth_type 1=PAP>,<usuario>,<contraseña>
+  Serial.println("[RED] Configurando autenticación PAP...");
+  r = enviarAT("AT+CGAUTH=1,1,\"entelpcs\",\"entelpcs\"", 3000, true);
+  if (r.indexOf("OK") == -1) {
+    Serial.println("[RED] PAP puede no ser necesario, continuando...");
+  }
+
+  // Esperar registro en la red LTE ANTES de activar el contexto PDP
+  // (AT+CGACT falla si el módem aún no encontró/registró la red)
+  Serial.println("[RED] Esperando registro en la red...");
+  bool registrado = false;
+  for (int i = 0; i < 30; i++) {  // hasta 30s
+    if (i % 5 == 0) {
+      String csq = enviarAT("AT+CSQ", 1000);
+      // +CSQ: <rssi>,<ber>  rssi=0..31 (mas alto=mejor senal), 99=sin senal/no medible
+      Serial.println("[RED] " + csq);
+    }
+    r = enviarAT("AT+CREG?", 2000);
+    // +CREG: <n>,<stat>  donde stat=1 (home) o 5 (roaming)
+    if (r.indexOf("+CREG:") != -1) {
+      if (r.indexOf(",1") != -1 || r.indexOf(",5") != -1) {
+        Serial.println("[RED] Registrado en la red LTE");
+        registrado = true;
+        break;
+      }
+    }
+    Serial.print(".");
+    delay(1000);
+  }
+  if (!registrado) {
+    Serial.println("\n[RED] No se pudo registrar en la red. ¿SIM valida? ¿Antena conectada?");
+    return false;
+  }
+
+  // Activar contexto PDP (ya con red registrada)
+  r = enviarAT("AT+CGACT=1,1", 10000, true);
+  if (r.indexOf("OK") == -1 && r.indexOf("ALREADY") == -1) {
+    Serial.println("[RED] Fallo al activar contexto PDP");
+    return false;
+  }
+
+  return true;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  FÓRMULA HAVERSINE — distancia en metros entre dos coordenadas
+// ═══════════════════════════════════════════════════════════════
+
+double distanciaMetros(double lat1, double lon1, double lat2, double lon2) {
+  const double R = 6371000.0;  // Radio terrestre en metros
+  double dLat = (lat2 - lat1) * DEG_TO_RAD;
+  double dLon = (lon2 - lon1) * DEG_TO_RAD;
+  double a = sin(dLat / 2) * sin(dLat / 2) +
+             cos(lat1 * DEG_TO_RAD) * cos(lat2 * DEG_TO_RAD) *
+             sin(dLon / 2) * sin(dLon / 2);
+  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+  return R * c;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  PARSEO DE RESPUESTA AT+CGNSSINFO (formato real SIMCOM A76XX)
+// ═══════════════════════════════════════════════════════════════
+// Ejemplo de respuesta con fix:
+// +CGNSSINFO: 2,10,,,3304.339394,S,07133.259871,W,090126,103245.0,45.0,0.12,,
+//                    ^lat(DDMM.MMMMMM) ^N/S  ^lon(DDDMM.MMMMMM) ^E/W
+// Sin fix, todos los campos vienen vacíos:
+// +CGNSSINFO: ,,,,,,,,
+//
+// Nota: en este firmware lat/lon vienen YA en grados decimales
+// (ej. "33.0708008"), no en formato grados+minutos. Solo hay que
+// aplicar el signo segun N/S, E/W. (Confirmado con fix real en terreno.)
+
+bool parsearGPS(const String &resp, double &lat, double &lon) {
+  int idx = resp.indexOf("+CGNSSINFO:");
+  if (idx == -1) return false;
+
+  int inicio = idx + 11;
+
+  // Separar todos los campos por coma
+  String campos[20];
+  int numCampos = 0;
+  int desde = inicio;
+  for (int i = desde; i <= resp.length() && numCampos < 20; i++) {
+    if (i == resp.length() || resp.charAt(i) == ',' || resp.charAt(i) == '\r' || resp.charAt(i) == '\n') {
+      String token = resp.substring(desde, i);
+      token.trim();
+      campos[numCampos++] = token;
+      desde = i + 1;
+      if (i == resp.length()) break;
+      if (resp.charAt(i) == '\n' && numCampos > 1) break;  // fin de la linea de datos
+    }
+  }
+
+  // Buscar el campo "N" o "S" (marca la latitud justo antes) y "E"/"W" (marca la longitud justo antes)
+  int idxNS = -1, idxEW = -1;
+  for (int i = 0; i < numCampos; i++) {
+    if (campos[i] == "N" || campos[i] == "S") idxNS = i;
+    if (campos[i] == "E" || campos[i] == "W") idxEW = i;
+  }
+
+  if (idxNS < 1 || idxEW < 1) return false;  // sin fix: campos vacios, no hay N/S ni E/W
+
+  String latToken = campos[idxNS - 1];
+  String lonToken = campos[idxEW - 1];
+  if (latToken.length() == 0 || lonToken.length() == 0) return false;
+
+  lat = latToken.toDouble();
+  lon = lonToken.toDouble();
+
+  if (campos[idxNS] == "S") lat = -lat;
+  if (campos[idxEW] == "W") lon = -lon;
+
+  // Validación básica: coordenadas de Chile están alrededor de -33, -71
+  return (lat > -90 && lat < 0 && lon > -100 && lon < -30);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  TAREA 1: GNSS — lee posición periódicamente
+// ═══════════════════════════════════════════════════════════════
+
+void tareaGNSS(void *parametro) {
+  // Enciende el receptor GNSS (comando correcto para A76XX: CGNSSPWR, no CGPSPWR)
+  enviarAT("AT+CGNSSPWR=1,1", 2000);
+  delay(2000);  // tiempo para que arranque el GNSS
+
+  Serial.println("[GNSS] Receptor encendido, esperando fix...");
+
+  for (;;) {
+    // AT+CGNSSINFO devuelve datos de fix (comando correcto para A76XX, no CGPSINF)
+    String resp = enviarAT("AT+CGNSSINFO", 3000);
+
+    double latBuf = 0, lonBuf = 0;
+    if (parsearGPS(resp, latBuf, lonBuf)) {
+      if (xSemaphoreTake(mutexPosicion, pdMS_TO_TICKS(200)) == pdTRUE) {
+        posicionActual.lat = latBuf;
+        posicionActual.lon = lonBuf;
+        posicionActual.valida = true;
+        posicionActual.timestamp = millis();
+        xSemaphoreGive(mutexPosicion);
+
+        Serial.print("[GNSS] Fix: ");
+        Serial.print(latBuf, 6);
+        Serial.print(", ");
+        Serial.println(lonBuf, 6);
+      }
+    } else {
+      Serial.println("[GNSS] Sin fix aún");
+    }
+
+    vTaskDelay(pdMS_TO_TICKS(INTERVALO_GNSS_MS));
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  TAREA 2: SMS — al recibir cualquier SMS, responde con la
+//  ubicación GPS actual como link de Google Maps
+// ═══════════════════════════════════════════════════════════════
+
+// Extrae el número remitente de la línea de cabecera +CMT:
+// Formato: +CMT: "+569XXXXXXXX","","25/01/12,20:30:00-16"
+String extraerNumeroCMT(const String &lineaCMT) {
+  int idx = lineaCMT.indexOf("+CMT:");
+  if (idx == -1) return "";
+  int q1 = lineaCMT.indexOf('"', idx);
+  if (q1 == -1) return "";
+  int q2 = lineaCMT.indexOf('"', q1 + 1);
+  if (q2 == -1) return "";
+  return lineaCMT.substring(q1 + 1, q2);
+}
+
+// Arma el link de Google Maps con la última posición GPS válida.
+// Devuelve "" si aún no hay fix.
+String generarLinkUbicacion() {
+  PosicionGPS copia;
+  bool hayDatos = false;
+
+  if (xSemaphoreTake(mutexPosicion, pdMS_TO_TICKS(200)) == pdTRUE) {
+    copia = posicionActual;
+    hayDatos = posicionActual.valida;
+    xSemaphoreGive(mutexPosicion);
+  }
+
+  if (!hayDatos) return "";
+  return "https://maps.google.com/?q=" + String(copia.lat, 6) + "," + String(copia.lon, 6);
+}
+
+// Envía un SMS de texto plano vía AT+CMGS (modo texto, requiere AT+CMGF=1 previo)
+void enviarSMS(const String &numero, const String &mensaje) {
+  if (mutexModem != NULL) xSemaphoreTake(mutexModem, portMAX_DELAY);
+
+  while (Modem.available()) Modem.read();  // vacía buffer previo
+
+  Modem.print("AT+CMGS=\"" + numero + "\"\r");
+
+  // Esperar el prompt '>' donde el módem espera el cuerpo del mensaje
+  unsigned long inicio = millis();
+  bool prompt = false;
+  while (millis() - inicio < 5000) {
+    if (Modem.available()) {
+      char c = (char)Modem.read();
+      if (c == '>') { prompt = true; break; }
+    }
+  }
+  if (!prompt) {
+    Serial.println("[SMS] No se recibió el prompt '>' para enviar SMS");
+    if (mutexModem != NULL) xSemaphoreGive(mutexModem);
+    return;
+  }
+
+  Modem.print(mensaje);
+  Modem.write(0x1A);  // Ctrl+Z: termina el mensaje y dispara el envío
+
+  String resp = "";
+  inicio = millis();
+  while (millis() - inicio < 10000) {
+    while (Modem.available()) {
+      resp += (char)Modem.read();
+    }
+    if (resp.indexOf("+CMGS:") != -1 || resp.indexOf("ERROR") != -1) break;
+    vTaskDelay(pdMS_TO_TICKS(50));
+  }
+
+  if (resp.indexOf("+CMGS:") != -1) {
+    Serial.println("[SMS] Ubicación enviada a " + numero);
+  } else {
+    Serial.println("[SMS] Fallo al enviar SMS a " + numero + ": " + resp);
+  }
+
+  if (mutexModem != NULL) xSemaphoreGive(mutexModem);
+}
+
+void responderConUbicacion(const String &numero) {
+  String link = generarLinkUbicacion();
+  String mensaje;
+
+  if (link.length() > 0) {
+    mensaje = "Ubicacion actual del bus: " + link;
+  } else {
+    mensaje = "Aun no hay fix de GPS, intenta de nuevo en unos segundos.";
+  }
+
+  Serial.println("[SMS] Respondiendo a " + numero + ": " + mensaje);
+  enviarSMS(numero, mensaje);
+}
+
+// Quita tildes básicas para que "ubicación" también matchee "ubicacion"
+String normalizarTexto(const String &texto) {
+  String out = texto;
+  out.toLowerCase();
+  out.replace("á", "a");
+  out.replace("é", "e");
+  out.replace("í", "i");
+  out.replace("ó", "o");
+  out.replace("ú", "u");
+  return out;
+}
+
+// Interpreta el texto del SMS y responde según el comando reconocido
+void procesarComandoSMS(const String &numero, const String &cuerpo) {
+  String texto = normalizarTexto(cuerpo);
+
+  if (texto.indexOf("ubicacion") != -1) {
+    responderConUbicacion(numero);
+  } else {
+    Serial.println("[SMS] Comando no reconocido de " + numero);
+    enviarSMS(numero, "Comando no reconocido. Envia UBICACION para recibir la posicion del bus.");
+  }
+}
+
+void tareaSMS(void *parametro) {
+  // Configurar SMS en modo texto
+  enviarAT("AT+CMGF=1", 1000);
+  // Configurar para que SMS entrantes se reciban por UART como +CMT
+  enviarAT("AT+CNMI=2,2,0,0,0", 1000);
+
+  String buffer = "";
+
+  for (;;) {
+    // Toma el mutex solo mientras drena bytes ya disponibles; si otra tarea
+    // está a mitad de un comando AT, se salta este ciclo y reintenta en 200ms.
+    bool tieneLock = (mutexModem == NULL) || (xSemaphoreTake(mutexModem, pdMS_TO_TICKS(50)) == pdTRUE);
+
+    bool huboMensaje = false;
+    String numeroRecibido, cuerpoRecibido;
+
+    if (tieneLock) {
+      while (Modem.available()) {
+        char c = (char)Modem.read();
+        buffer += c;
+
+        // Detecta indicación de SMS entrante: +CMT: "+569XXXXXXXX","","25/01/12,20:30:00-16"
+        if (buffer.indexOf("+CMT:") != -1 && c == '\n') {
+          numeroRecibido = extraerNumeroCMT(buffer);
+
+          // El siguiente bloque hasta '\n' es el cuerpo del mensaje
+          unsigned long inicio = millis();
+          String cuerpo = "";
+          while (millis() - inicio < 3000) {
+            if (Modem.available()) {
+              char c2 = (char)Modem.read();
+              cuerpo += c2;
+              if (c2 == '\n') break;
+            }
+          }
+          cuerpo.trim();
+          cuerpoRecibido = cuerpo;
+          huboMensaje = true;
+          buffer = "";
+        }
+
+        // Evita que el buffer crezca sin control
+        if (buffer.length() > 500) {
+          buffer = "";
+        }
+      }
+
+      if (mutexModem != NULL) xSemaphoreGive(mutexModem);
+    }
+
+    // Procesar el comando FUERA del mutex: procesarComandoSMS() llama a
+    // enviarSMS(), que vuelve a tomar el mutex (evita deadlock).
+    if (huboMensaje && numeroRecibido.length() > 0) {
+      Serial.println("[SMS] Recibido de " + numeroRecibido + ": " + cuerpoRecibido);
+      procesarComandoSMS(numeroRecibido, cuerpoRecibido);
+    }
+
+    vTaskDelay(pdMS_TO_TICKS(200));
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  TAREA 3: HTTP — envía posición a Supabase vía LTE
+// ═══════════════════════════════════════════════════════════════
+
+void tareaHTTP(void *parametro) {
+  vTaskDelay(pdMS_TO_TICKS(5000));  // Esperar a que GNSS tenga fix
+
+  for (;;) {
+    PosicionGPS copia;
+    bool hayDatos = false;
+
+    if (xSemaphoreTake(mutexPosicion, pdMS_TO_TICKS(200)) == pdTRUE) {
+      copia = posicionActual;
+      hayDatos = posicionActual.valida;
+      xSemaphoreGive(mutexPosicion);
+    }
+
+    if (!hayDatos) {
+      Serial.println("[HTTP] Sin posición GPS aún, omitiendo envío.");
+      vTaskDelay(pdMS_TO_TICKS(INTERVALO_HTTP_MS));
+      continue;
+    }
+
+    // Calcular distancias a los paraderos
+    double distAbajo  = distanciaMetros(copia.lat, copia.lon,
+                                        PARADERO_ABAJO_LAT, PARADERO_ABAJO_LON);
+    double distArriba = distanciaMetros(copia.lat, copia.lon,
+                                        PARADERO_ARRIBA_LAT, PARADERO_ARRIBA_LON);
+
+    // Construir payload JSON
+    String json = "{";
+    json += "\"bus_id\":\"" + String(BUS_ID) + "\",";
+    json += "\"lat\":" + String(copia.lat, 6) + ",";
+    json += "\"lon\":" + String(copia.lon, 6) + ",";
+    json += "\"dist_paradero_abajo_m\":" + String(distAbajo, 1) + ",";
+    json += "\"dist_paradero_arriba_m\":" + String(distArriba, 1);
+    json += "}";
+
+    Serial.println("[HTTP] Enviando posición a Supabase...");
+    Serial.println("[HTTP] Payload: " + json);
+
+    // ─────────────────────────────────────────────────────────
+    //  Secuencia HTTP vía AT (SIMCOM A7670SA)
+    // ─────────────────────────────────────────────────────────
+
+    // 1. Inicializar HTTP
+    String resp = enviarAT("AT+HTTPINIT", 3000, true);
+    if (resp.indexOf("OK") == -1 && resp.indexOf("ALREADY") == -1) {
+      Serial.println("[HTTP] Fallo AT+HTTPINIT");
+      vTaskDelay(pdMS_TO_TICKS(INTERVALO_HTTP_MS));
+      continue;
+    }
+
+    // 2. Configurar URL. El apikey va como query param (Supabase/PostgREST
+    // lo acepta igual que en header) para evitar AT+HTTPPARA="USERDATA",
+    // que falla en este firmware al mandar varias cabeceras multilinea.
+    String urlConApikey = String(SUPABASE_URL) + "?apikey=" + String(SUPABASE_KEY);
+    resp = enviarAT("AT+HTTPPARA=\"URL\",\"" + urlConApikey + "\"", 2000, true);
+    if (resp.indexOf("OK") == -1) {
+      Serial.println("[HTTP] Fallo al configurar URL");
+      enviarAT("AT+HTTPTERM", 500);
+      vTaskDelay(pdMS_TO_TICKS(INTERVALO_HTTP_MS));
+      continue;
+    }
+
+    // 3. Configurar Content-Type
+    resp = enviarAT("AT+HTTPPARA=\"CONTENT\",\"application/json\"", 1000, true);
+    if (resp.indexOf("OK") == -1) {
+      Serial.println("[HTTP] Fallo al configurar Content-Type");
+      enviarAT("AT+HTTPTERM", 500);
+      vTaskDelay(pdMS_TO_TICKS(INTERVALO_HTTP_MS));
+      continue;
+    }
+
+    // 5. Enviar el body con HTTPDATA
+    String dataCmd = "AT+HTTPDATA=" + String(json.length()) + ",10000";
+    resp = enviarAT(dataCmd, 2000, true);
+    if (resp.indexOf("DOWNLOAD") == -1 && resp.indexOf(">") == -1) {
+      Serial.println("[HTTP] Fallo en HTTPDATA (no recibe datos)");
+      enviarAT("AT+HTTPTERM", 500);
+      vTaskDelay(pdMS_TO_TICKS(INTERVALO_HTTP_MS));
+      continue;
+    }
+
+    // Enviar el JSON como datos
+    Modem.print(json);
+    delay(500);
+
+    // 6. Ejecutar POST (HTTPACTION=1)
+    resp = enviarAT("AT+HTTPACTION=1", 10000, true);
+    // Buscar código de respuesta HTTP
+    // +HTTPACTION: 1,200,123  → 1=POST, 200=OK, 123=bytes
+
+    int httpCode = 0;
+    int idx = resp.indexOf("+HTTPACTION: 1,");
+    if (idx != -1) {
+      String resto = resp.substring(idx + 15);
+      httpCode = resto.substring(0, resto.indexOf(',')).toInt();
+    }
+
+    if (httpCode == 200 || httpCode == 201) {
+      Serial.println("[HTTP] ✓ Datos enviados a Supabase (HTTP " + String(httpCode) + ")");
+    } else {
+      Serial.println("[HTTP] ✗ Error HTTP " + String(httpCode));
+      // Leer cuerpo de respuesta para diagnóstico
+      String bodyResp = enviarAT("AT+HTTPREAD", 2000);
+      Serial.println("[HTTP] Cuerpo respuesta: " + bodyResp);
+    }
+
+    // 7. Terminar sesión HTTP
+    enviarAT("AT+HTTPTERM", 1000);
+
+    vTaskDelay(pdMS_TO_TICKS(INTERVALO_HTTP_MS));
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SETUP
+// ═══════════════════════════════════════════════════════════════
+
+void setup() {
+  // Mutex del módem: crearlo antes de la primera llamada a enviarAT()
+  mutexModem = xSemaphoreCreateMutex();
+
+  // LED indicador: GPIO12 en LilyGO T-A7670
+  pinMode(12, OUTPUT);
+  digitalWrite(12, HIGH);  // enciendo LED rojo (indica código ejecutándose)
+
+  Serial.begin(115200);
+  delay(1000);
+  Serial.println("\n\n══════════════════════════════");
+  Serial.println(" Bus Tracker — LilyGO T-A7670");
+  Serial.println("══════════════════════════════");
+  Serial.println("[SETUP] LED_BUILTIN encendido = código ejecutándose");
+  imprimirDiagnosticoArranque();
+
+  // Inicializar UART hacia el módem en el pinout fijo de esta revisión.
+  Modem.begin(MODEM_BAUD, SERIAL_8N1, MODEM_RX_PIN, MODEM_TX_PIN);
+  delay(500);
+
+  // Dejar el reset del módem en un estado conocido antes de tocar PWRKEY.
+#ifdef MODEM_RESET_PIN
+  pinMode(MODEM_RESET_PIN, OUTPUT);
+  digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+  delay(100);
+  digitalWrite(MODEM_RESET_PIN, MODEM_RESET_LEVEL);
+  delay(2600);
+  digitalWrite(MODEM_RESET_PIN, !MODEM_RESET_LEVEL);
+#endif
+
+  // Encender módem A7670SA (si no responde aún)
+  bool modemListo = encenderModem();
+
+  // Si ninguna estrategia de encendido confirmó respuesta, reintentamos
+  // el test UART unas veces más antes de rendirnos (boot lento por SIM/red).
+  Serial.println("[SETUP] Test UART: enviando AT en GPIO26/27 tras encender módem...");
+  for (int intento = 0; intento < 5 && !modemListo; intento++) {
+    String r = enviarAT("AT", 1500);
+    if (r.indexOf("OK") != -1) {
+      modemListo = true;
+      break;
+    }
+    vTaskDelay(pdMS_TO_TICKS(1000));
+  }
+
+  if (modemListo) {
+    Serial.println("[SETUP] ✅ Módem responde en GPIO26/27.");
+  } else {
+    Serial.println("[SETUP] ⚠ Sin respuesta tras encendido. Revisar PWRKEY, reset y alimentación.");
+    Serial.println("[FATAL] Módem no responde, no tiene sentido configurar la red. Reiniciando en 30s...");
+    delay(30000);
+    ESP.restart();
+  }
+
+  // Configurar red celular (solo si el módem realmente responde a AT)
+  if (!configurarRed()) {
+    Serial.println("[FATAL] No se pudo conectar a la red. Reiniciando en 30s...");
+    delay(30000);
+    ESP.restart();
+  }
+
+  // Crear mutex para compartir posición entre tareas
+  mutexPosicion = xSemaphoreCreateMutex();
+  if (mutexPosicion == NULL) {
+    Serial.println("[FATAL] No se pudo crear mutex. Reiniciando...");
+    delay(1000);
+    ESP.restart();
+  }
+
+  // Crear tareas FreeRTOS
+  // Tarea GNSS: core 1 (ESP32-WROVER-E tiene 2 cores)
+  xTaskCreatePinnedToCore(
+    tareaGNSS,      // función
+    "TareaGNSS",    // nombre
+    4096,           // stack size
+    NULL,           // parámetros
+    2,              // prioridad (más alta que HTTP para tener posiciones frescas)
+    NULL,           // handle
+    1               // core 1 (pro)
+  );
+
+  // Tarea SMS: core 1
+  xTaskCreatePinnedToCore(
+    tareaSMS,
+    "TareaSMS",
+    4096,
+    NULL,
+    1,
+    NULL,
+    1
+  );
+
+  // Tarea HTTP: core 0 (no tan crítica como GNSS)
+  xTaskCreatePinnedToCore(
+    tareaHTTP,
+    "TareaHTTP",
+    6144,           // stack más grande por uso de String
+    NULL,
+    1,
+    NULL,
+    0
+  );
+
+  Serial.println("[SETUP] Tareas FreeRTOS creadas. Iniciando operación.");
+  Serial.println("[SETUP] Bus ID: " + String(BUS_ID));
+  Serial.println("[SETUP] APN: " + String(APN));
+  Serial.println("[SETUP] Intervalo GNSS: " + String(INTERVALO_GNSS_MS) + "ms");
+  Serial.println("[SETUP] Intervalo HTTP: " + String(INTERVALO_HTTP_MS) + "ms");
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  LOOP — todo el trabajo lo hacen las tareas FreeRTOS
+// ═══════════════════════════════════════════════════════════════
+
+void loop() {
+  vTaskDelay(pdMS_TO_TICKS(5000));
+}
+----

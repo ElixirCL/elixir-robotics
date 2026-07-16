@@ -1,6 +1,6 @@
-.Proyectos 2026
+.ESP32
 * xref:introduction.adoc[]
-// * xref:project1.adoc[]
+* xref:project1.adoc[]
 // * xref:project2.adoc[]
 * xref:project3.adoc[]
-// * xref:project4.adoc[]
+* xref:project4.adoc[]

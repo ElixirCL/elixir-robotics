@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Electrónica, Robótica e IOT con Elixir</title>
+    <title>Proyecto 1: Comunicación Bi-direccional ESP32 - Computador :: Electrónica, Robótica e IOT con Elixir</title>
     <link rel="canonical" href="https://elixircl.github.io/elixir-robotics/uvm-2026/project1.html">
+    <link rel="prev" href="introduction.html">
+    <link rel="next" href="project3.html">
     <meta name="generator" content="Antora 3.1.14">
     <link rel="stylesheet" href="../_/css/site.css">
     <link rel="stylesheet" href="../_/js/vendor/styles/monokai.css">
@@ -252,13 +254,19 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Proyectos 2026</span>
+    <span class="nav-text">ESP32</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="introduction.html">Introducción</a>
   </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="project1.html">Proyecto 1: Comunicación Bi-direccional ESP32 - Computador</a>
+  </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="project3.html">Proyecto 3: Robot de Batalla</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="project4.html">Proyecto 4: Sistema GPS de Tiempo de Llegada con ESP32</a>
   </li>
 </ul>
   </li>
@@ -284,6 +292,11 @@
 <button class="nav-toggle"></button>
   <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Electrónica, Robótica e IOT con Elixir</a></li>
+    <li>ESP32</li>
+    <li><a href="project1.html">Proyecto 1: Comunicación Bi-direccional ESP32 - Computador</a></li>
+  </ul>
 </nav>
 <div class="edit-this-page"><a href="file:///antora/./modules/uvm-2026/pages/project1.adoc">Editar esta página</a></div>
 </div>
@@ -292,7 +305,377 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
+<h1 class="page">Proyecto 1: Comunicación Bi-direccional ESP32 - Computador</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Proyecto elaborado por Mauricio Zuñiga, Javier Arredondo y Jeremías Carrasco
+de la Universidad de Viña del Mar en abril 2026.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="introducción"><a class="anchor" href="#introducción"></a>Introducción</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Este proyecto consiste en establecer una comunicación bi-direccional entre
+una placa ESP32 y un computador a través del puerto serial (USB). El
+objetivo es que un evento físico en el ESP32 (presionar un botón) dispare
+una acción en el computador, y que el computador pueda a su vez responder
+con una señal que el ESP32 traduce en una acción física (encender un LED).</p>
+</div>
+<div class="paragraph">
+<p>En nuestra implementación, al presionar el botón el ESP32 avisa al
+computador por serial; la aplicación puente en el computador baja el
+brillo de la pantalla y, una vez hecho esto, le indica al ESP32 que
+encienda el LED como confirmación visual de que la acción se ejecutó
+correctamente.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="aprendizajes"><a class="anchor" href="#aprendizajes"></a>Aprendizajes</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Instalación y configuración del IDE y el SDK de ESP32.</p>
+</li>
+<li>
+<p>Circuitos básicos de entrada (botón con pull-up) y salida (LED con
+resistencia limitadora).</p>
+</li>
+<li>
+<p>Comunicación serial bi-direccional (UART sobre USB) entre un
+microcontrolador y un computador.</p>
+</li>
+<li>
+<p>Lectura de botones con debounce para evitar falsos disparos.</p>
+</li>
+<li>
+<p>Automatización de tareas del sistema operativo (control de brillo)
+desde una aplicación externa.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="descripción-del-funcionamiento"><a class="anchor" href="#descripción-del-funcionamiento"></a>Descripción del Funcionamiento</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>El usuario presiona el botón conectado al ESP32.</p>
+</li>
+<li>
+<p>El ESP32 detecta el flanco de bajada (con debounce) y envía el mensaje
+<code>BTN_PRESS</code> por el puerto serial.</p>
+</li>
+<li>
+<p>La aplicación puente, corriendo en el computador y escuchando ese
+puerto serial, recibe el mensaje y ejecuta la acción correspondiente:
+bajar el brillo de la pantalla.</p>
+</li>
+<li>
+<p>La aplicación puente responde al ESP32 con el mensaje <code>LED_ON</code>.</p>
+</li>
+<li>
+<p>El ESP32 recibe el mensaje y enciende el LED, confirmando visualmente
+que el ciclo se completó.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+El protocolo es de mensajes de una línea terminados en <code>\n</code>
+(<code>BTN_PRESS</code>, <code>LED_ON</code>, <code>LED_OFF</code>), a <em>115200</em> baudios. Esto permite
+extender fácilmente el sistema a otras acciones sin cambiar la lógica
+base.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="lista-de-componentes"><a class="anchor" href="#lista-de-componentes"></a>Lista de Componentes</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 60%;">
+<col style="width: 10%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Componente</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+<th class="tableblock halign-left valign-top">Cantidad</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ESP32 (DevKit)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Microcontrolador encargado de leer el botón y controlar el LED,
+  comunicado con el computador por USB.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicador visual que se enciende cuando el computador confirma la
+  acción (brillo bajado).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Botón pulsador</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Genera el evento que dispara la comunicación hacia el computador.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resistencia limitadora (~220-330 Ω)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Protege al LED de una corriente excesiva desde el GPIO.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Protoboard</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Soporte para armar el circuito del botón y el LED.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cables dupont</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conexiones entre el ESP32, el botón y el LED.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Varios</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cable USB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conexión física y alimentación entre el ESP32 y el computador; por
+  este mismo cable viaja la comunicación serial.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="esquemático-y-tabla-de-conexión"><a class="anchor" href="#esquemático-y-tabla-de-conexión"></a>Esquemático y Tabla de Conexión</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 27.2727%;">
+<col style="width: 18.1818%;">
+<col style="width: 54.5455%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Función</th>
+<th class="tableblock halign-left valign-top">GPIO ESP32</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Botón pulsador</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPIO 4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entrada digital (<code>INPUT_PULLUP</code>). Un extremo
+  va al GPIO, el otro a GND; al presionar, el pin pasa de HIGH a LOW.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LED indicador</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPIO 2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Salida digital. Ánodo al GPIO a través de la
+  resistencia limitadora, cátodo a GND.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Al usar <code>INPUT_PULLUP</code> en el botón no se necesita resistencia
+externa para esa entrada; el pull-up interno del ESP32 mantiene el pin
+en HIGH hasta que el botón lo conecta a GND.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="código"><a class="anchor" href="#código"></a>Código</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="firmware-del-esp32"><a class="anchor" href="#firmware-del-esp32"></a>Firmware del ESP32</h3>
+<div class="paragraph">
+<p>Sketch completo (<code>proyecto1_esp32.ino</code>) que implementa la lectura del
+botón con debounce y el control del LED según los comandos recibidos
+por serial.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="aplicación-puente-computador"><a class="anchor" href="#aplicación-puente-computador"></a>Aplicación Puente (Computador)</h3>
+<div class="paragraph">
+<p>Aplicación puente (<code>proyecto1_puente.py</code>) desarrollada en Python para
+Windows. Escucha el puerto serial del ESP32; al recibir <code>BTN_PRESS</code>
+alterna el brillo de la pantalla entre normal y bajo usando la
+librería <code>screen-brightness-control</code>, y responde al ESP32 con
+<code>LED_ON</code> o <code>LED_OFF</code> según corresponda.</p>
+</div>
+<div class="paragraph">
+<p>Dependencias (instalar antes de ejecutar):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pip install pyserial screen-brightness-control</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Antes de ejecutar, ajustar la constante <code>PUERTO</code> al puerto COM
+real donde el sistema operativo reconoce al ESP32 (visible en el
+Administrador de dispositivos de Windows).
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="posibles-usos-en-la-industria"><a class="anchor" href="#posibles-usos-en-la-industria"></a>Posibles Usos en la Industria</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Indicadores físicos de estado en estaciones de trabajo (por ejemplo,
+un LED que señala "modo no molestar" o "grabando" activado desde
+software).</p>
+</li>
+<li>
+<p>Automatización de oficina: gatillar acciones sobre luces o
+dispositivos físicos a partir de eventos del computador.</p>
+</li>
+<li>
+<p>Interfaces físicas de accesibilidad: botones grandes que ejecutan
+funciones del sistema operativo para usuarios con movilidad reducida.</p>
+</li>
+<li>
+<p>Confirmación visual en paneles de control industrial: un LED que
+confirma que el sistema recibió y procesó una orden.</p>
+</li>
+<li>
+<p>Prototipado rápido de sistemas IoT/domótica que combinan hardware
+simple con lógica en el computador o en la nube.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="código-del-proyecto"><a class="anchor" href="#código-del-proyecto"></a>Código del proyecto</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">project.ino</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">/*
+  Proyecto 1: Comunicación bi-direccional ESP32 &lt;-&gt; Computador
+  ---------------------------------------------------------------
+  Flujo:
+    1. El usuario presiona el botón conectado al ESP32.
+    2. El ESP32 envía "BTN_PRESS" por el puerto serial (USB).
+    3. La aplicación puente en el computador recibe el aviso, baja
+       el brillo de la pantalla y responde con "LED_ON".
+    4. El ESP32 enciende el LED al recibir "LED_ON".
+    5. Un segundo click vuelve todo a su estado normal: el puente
+       sube el brillo de nuevo y envía "LED_OFF".
 
+  Protocolo serial (115200 baudios, mensajes de una línea, '\n' al final):
+    ESP32 -&gt; PC : "BTN_PRESS"
+    PC -&gt; ESP32 : "LED_ON" | "LED_OFF"
+*/
+
+const int PIN_BOTON = 4;   // Botón entre GPIO4 y GND (usa pull-up interno)
+const int PIN_LED   = 2;   // LED + resistencia limitadora (~220-330 ohm) a GND
+
+const unsigned long DEBOUNCE_MS = 50;
+
+int estadoBotonAnterior = HIGH;
+unsigned long ultimoCambio = 0;
+
+String bufferSerial = "";
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(PIN_BOTON, INPUT_PULLUP);
+  pinMode(PIN_LED, OUTPUT);
+  digitalWrite(PIN_LED, LOW);
+}
+
+void loop() {
+  leerBoton();
+  leerSerial();
+}
+
+// Detecta el flanco de bajada del botón (con debounce por tiempo)
+// y avisa al computador.
+void leerBoton() {
+  int lectura = digitalRead(PIN_BOTON);
+
+  if (lectura != estadoBotonAnterior) {
+    ultimoCambio = millis();
+  }
+
+  if ((millis() - ultimoCambio) &gt; DEBOUNCE_MS) {
+    if (lectura == LOW &amp;&amp; estadoBotonAnterior == HIGH) {
+      Serial.println("BTN_PRESS");
+    }
+  }
+
+  estadoBotonAnterior = lectura;
+}
+
+// Arma línea por línea lo que llega desde el computador y ejecuta
+// el comando correspondiente sobre el LED.
+void leerSerial() {
+  while (Serial.available() &gt; 0) {
+    char c = Serial.read();
+
+    if (c == '\n') {
+      bufferSerial.trim();
+
+      if (bufferSerial == "LED_ON") {
+        digitalWrite(PIN_LED, HIGH);
+      } else if (bufferSerial == "LED_OFF") {
+        digitalWrite(PIN_LED, LOW);
+      }
+
+      bufferSerial = "";
+    } else if (c != '\r') {
+      bufferSerial += c;
+    }
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="introduction.html">Introducción</a></span>
+  <span class="next"><a href="project3.html">Proyecto 3: Robot de Batalla</a></span>
+</nav>
 </article>
   </div>
 </main>
