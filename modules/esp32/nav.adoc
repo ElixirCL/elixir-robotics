@@ -1,4 +1,4 @@
-.ESP32
+.Proyectos con ESP32
 * xref:introduction.adoc[]
 * xref:project1.adoc[]
 // * xref:project2.adoc[]

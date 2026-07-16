@@ -507,6 +507,7 @@ Sin este driver, el puerto no aparece en `Herramientas` → `Puerto`.
 Abre `lilygo_T-A7670_bus.ino` en Arduino IDE.
 
 Las credenciales ya vienen configuradas:
+
 - ✅ **URL Supabase**: https://idyzqzftkavuqunlozxj.supabase.co/rest/v1/gps
 - ✅ **API Key**: sb_publishable_nWNQbxZbrc1eo7az0EF26g_CyzQTeX0
 - ✅ **APN**: bam.entelpcs.cl (Entel Chile)
