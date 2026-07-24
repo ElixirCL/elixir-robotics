@@ -1,4 +1,969 @@
-= Proyecto 2
+= Proyecto 2: Lectura de Sensores con ESP32, Home Assistant y Grafana
 
 Proyecto elaborado por Mauricio Zuñiga, Javier Arredondo y Jeremías Carrasco
 de la Universidad de Viña del Mar en mayo 2026.
+
+== Introducción
+
+Este informe documenta el desarrollo de un prototipo de alarma de proximidad
+construido como parte del curso de electrónica, robótica e IoT. El sistema
+detecta la presencia de un objeto cercano mediante un sensor de distancia,
+emite una señal sonora local cuando el objeto entra en la zona de alerta, y
+publica cada lectura hacia un servidor domótico donde queda registrada y
+visualizada.
+
+El proyecto integra cuatro capas que van desde el hardware hasta la
+visualización de datos históricos:
+
+* Una *ESP32* que lee el sensor de proximidad, gatilla el parlante y controla
+  un servomotor, comunicándose exclusivamente por WiFi.
+* Un servidor *Home Assistant* local, que recibe las lecturas del sensor,
+  las expone como entidades y permite al usuario mover el servomotor de forma
+  remota desde su interfaz.
+* La base de datos *MariaDB* que Home Assistant usa como _recorder_, donde
+  queda persistido el histórico de estados.
+* Un servidor *Grafana*, también local, que consulta esa misma base de datos
+  y grafica la evolución de las lecturas en el tiempo.
+
+La ESP32 fue programada en C/C++ sobre el core de Arduino para ESP32, tal
+como exige el enunciado, y no envía datos por USB: toda la comunicación
+ocurre sobre WiFi.
+
+== Arquitectura General del Sistema
+
+El sistema está compuesto por cinco piezas que se comunican en cadena:
+
+[cols="1,3", options="header"]
+|===
+| Componente | Rol
+
+| ESP32 DevKit V1
+| Mide la distancia al objeto cada 500 ms, activa el parlante cuando la
+  distancia cae bajo el umbral configurado, publica la lectura por MQTT y
+  escucha comandos entrantes para posicionar el servomotor.
+
+| Broker MQTT (Mosquitto)
+| Intermediario de mensajería entre la ESP32 y Home Assistant. Corre en el
+  mismo computador que Home Assistant, en el puerto 1883.
+
+| Home Assistant
+| Servidor domótico local. Descubre automáticamente el sensor y el servo
+  mediante MQTT Discovery, muestra la distancia en un _dashboard_ y expone un
+  control deslizante que publica el ángulo deseado del servomotor.
+
+| MariaDB (recorder de Home Assistant)
+| Base de datos donde Home Assistant persiste el histórico de estados de
+  todas sus entidades, incluido el sensor de distancia.
+
+| Grafana
+| Panel de visualización. Se conecta a la MariaDB de Home Assistant mediante
+  un _datasource_ MySQL y grafica el histórico de lecturas del sensor.
+|===
+
+El flujo completo de un dato es el siguiente:
+
+. La ESP32 dispara el sensor y calcula la distancia en centímetros.
+. Si la distancia es menor al umbral, activa el parlante durante un tiempo
+  acotado.
+. Publica el valor en el _topic_ MQTT `casa/alarma/distancia`.
+. Mosquitto entrega el mensaje a Home Assistant, que actualiza la entidad
+  `sensor.distancia_alarma`.
+. Home Assistant escribe el nuevo estado en la tabla `states` de MariaDB.
+. Grafana consulta esa tabla y dibuja la serie de tiempo.
+
+En sentido inverso, cuando el usuario mueve el _slider_ del servo en Home
+Assistant, este publica el ángulo en `casa/alarma/servo/set`, la ESP32 lo
+recibe y mueve el servomotor a esa posición.
+
+[[justificacion-de-decisiones-tecnicas]]
+== Justificación de Decisiones Técnicas
+
+=== Por qué MQTT y no HTTP directo a la API de Home Assistant
+
+Home Assistant expone una API REST que permite actualizar el estado de una
+entidad mediante un `POST` autenticado con un token de larga duración. Se
+optó igualmente por MQTT por tres razones:
+
+* *El flujo es bidireccional.* El enunciado exige que el servomotor sea
+  controlado _desde_ Home Assistant. Con la API REST la ESP32 solo puede
+  empujar datos hacia el servidor; para recibir comandos tendría que hacer
+  _polling_ constante. MQTT permite que la ESP32 se suscriba a un _topic_ y
+  reciba el comando en el momento en que se emite.
+
+* *MQTT Discovery evita editar `configuration.yaml`.* Publicando un mensaje
+  retenido en `homeassistant/sensor/.../config`, Home Assistant crea la
+  entidad automáticamente con su nombre, unidad e ícono. Esto reduce el
+  trabajo de configuración manual y hace el montaje reproducible.
+
+* *Menor costo por mensaje.* Publicar una lectura cada medio segundo por
+  HTTP implica abrir y cerrar una conexión TCP con handshake TLS en cada
+  envío. MQTT mantiene una única conexión persistente, lo que es
+  notoriamente más liviano para un microcontrolador.
+
+=== Por qué el parlante se maneja localmente y no desde Home Assistant
+
+La alarma sonora se dispara dentro del `loop()` de la ESP32, sin consultar al
+servidor. Esto es deliberado: una alarma de proximidad debe seguir
+funcionando aunque el WiFi se caiga o el servidor esté apagado. La lógica de
+detección es local y autónoma; Home Assistant solo observa y registra.
+
+=== Por qué Grafana lee de MariaDB y no de InfluxDB
+
+La documentación habitual de Home Assistant recomienda InfluxDB para
+visualización en Grafana. En este proyecto se usó directamente la MariaDB que
+Home Assistant ya emplea como _recorder_, evitando desplegar una segunda base
+de datos y un segundo canal de escritura. La contrapartida es que las
+consultas son algo más complejas: los estados se guardan como texto en la
+tabla `states` y deben convertirse a número, y el nombre de la entidad vive
+en una tabla aparte (`states_meta`) desde la versión 2023.4 de Home
+Assistant.
+
+[[lista-de-componentes]]
+== Lista de Componentes
+
+[cols="2,4,1,1", options="header"]
+|===
+| Componente | Descripción | Cantidad | Costo aprox. (CLP)
+
+| ESP32 DevKit V1
+| Placa de desarrollo con WiFi y Bluetooth integrados, doble núcleo. Es el
+  controlador central del prototipo.
+| 1
+| $6.000
+
+| Sensor de proximidad HC-SR04
+| Sensor ultrasónico de distancia, rango útil de 2 cm a 400 cm. Opera a 5 V y
+  entrega el resultado como el ancho de un pulso en el pin ECHO.
+| 1
+| $2.500
+
+| Parlante 8 Ω / buzzer pasivo
+| Emite el tono de alarma. Al ser pasivo permite controlar la frecuencia del
+  tono desde el firmware mediante PWM.
+| 1
+| $1.500
+
+| Servomotor SG90
+| Micro servo de 180° controlado por PWM. Representa el actuador que se
+  comanda de forma remota desde Home Assistant.
+| 1
+| $3.500
+
+| Protoboard 830 puntos
+| Soporte de montaje sin soldadura para todo el circuito.
+| 1
+| $3.500
+
+| Cables dupont macho-macho / macho-hembra
+| Interconexión entre la ESP32, el sensor, el parlante y el servo.
+| ~20
+| $2.500
+
+| Resistencias 1 kΩ y 2 kΩ
+| Divisor de tensión para adaptar el pin ECHO del HC-SR04 (5 V) a la entrada
+  de 3,3 V de la ESP32.
+| 1 c/u
+| $500
+
+| Batería externa / power bank 5 V
+| Alimenta el conjunto de forma autónoma, sin depender del USB del computador.
+| 1
+| $8.000
+
+| *Total* | | | *≈ $28.000*
+|===
+
+[NOTE]
+====
+Los valores son referenciales, tomados de tiendas de electrónica chilenas
+(Sandorobotics, MCI Electronics, AFEL) a la fecha de elaboración del informe.
+No incluyen despacho.
+====
+
+[[esquematico-y-tablas-de-conexion]]
+== Esquemático y Tablas de Conexión
+
+=== Sensor de proximidad HC-SR04
+
+[cols="1,1,3", options="header"]
+|===
+| Pin HC-SR04 | Pin ESP32 | Función
+
+| VCC  | VIN (5 V) | Alimentación del sensor. *No usar el pin de 3,3 V*: el
+                     transductor no genera suficiente potencia acústica a esa
+                     tensión y el alcance cae drásticamente.
+| TRIG | GPIO 5    | Entrada de disparo. Un pulso de 10 µs inicia una medición.
+| ECHO | GPIO 18   | Salida del sensor. *Debe pasar por un divisor de tensión*,
+                     ya que entrega 5 V y los GPIO de la ESP32 toleran 3,3 V.
+| GND  | GND       | Tierra común.
+|===
+
+El divisor de tensión para ECHO se arma así:
+
+[source,text]
+----
+ECHO (5V) ──[ 1 kΩ ]──┬── GPIO 18 (3.3 V)
+                      │
+                   [ 2 kΩ ]
+                      │
+                     GND
+----
+
+Con esos valores, la tensión que llega al GPIO es
+`5 V x 2k / (1k + 2k) = 3,33 V`, dentro del rango seguro.
+
+=== Parlante / buzzer
+
+[cols="1,1,3", options="header"]
+|===
+| Pin | Pin ESP32 | Función
+
+| (+) | GPIO 25 | Señal PWM que genera el tono. Se usa el periférico LEDC de
+                  la ESP32 configurado en modo tono.
+| (-) | GND     | Tierra común.
+|===
+
+[WARNING]
+====
+Un GPIO de la ESP32 entrega como máximo unos 40 mA, suficiente para un buzzer
+pasivo pequeño pero *insuficiente para un parlante de 8 Ω a volumen audible*.
+Si se usa un parlante en vez de un buzzer, debe intercalarse una etapa de
+amplificación: un transistor NPN (2N2222 o BC547) con una resistencia de base
+de 1 kΩ, o bien un módulo amplificador PAM8403. Conectar un parlante de 8 Ω
+directamente al GPIO puede dañar la placa.
+====
+
+=== Servomotor SG90
+
+[cols="1,1,3", options="header"]
+|===
+| Cable servo | Pin ESP32 | Función
+
+| Naranjo (señal) | GPIO 13   | Señal PWM de 50 Hz que define el ángulo.
+| Rojo (VCC)      | VIN (5 V) | Alimentación. Ver advertencia abajo.
+| Café (GND)      | GND       | Tierra común.
+|===
+
+[WARNING]
+====
+El SG90 puede demandar picos de 500-700 mA al arrancar el movimiento. Si se
+alimenta desde el pin 5 V de la ESP32 estando esta conectada al USB del
+computador, la caída de tensión suele provocar reinicios por _brownout_. En
+el montaje final se alimentó el servo desde la batería externa, manteniendo
+la *tierra común* con la ESP32, que es la condición indispensable para que la
+señal PWM sea interpretada correctamente.
+====
+
+=== Resumen de GPIO utilizados
+
+[cols="1,2", options="header"]
+|===
+| GPIO | Uso
+
+| 5  | TRIG del sensor de proximidad
+| 18 | ECHO del sensor (vía divisor de tensión)
+| 25 | Salida de audio hacia el parlante/buzzer
+| 13 | Señal PWM del servomotor
+|===
+
+== Configuración de Home Assistant
+
+=== Instalación
+
+Home Assistant se ejecutó de forma local en un computador, tal como exige el
+enunciado, mediante Docker:
+
+[source,bash]
+----
+docker run -d \
+  --name homeassistant \
+  --restart=unless-stopped \
+  -v /ruta/local/config:/config \
+  --network=host \
+  ghcr.io/home-assistant/home-assistant:stable
+----
+
+La interfaz queda disponible en `http://localhost:8123`.
+
+=== Broker MQTT
+
+Se levantó un broker Mosquitto en el mismo equipo:
+
+[source,bash]
+----
+docker run -d \
+  --name mosquitto \
+  --restart=unless-stopped \
+  -p 1883:1883 \
+  -v /ruta/local/mosquitto:/mosquitto/config \
+  eclipse-mosquitto
+----
+
+Luego, en Home Assistant se agregó la integración *MQTT* desde
+`Ajustes → Dispositivos y servicios → Añadir integración → MQTT`, indicando
+la IP del broker, el puerto 1883 y las credenciales configuradas.
+
+=== Descubrimiento automático de entidades
+
+En lugar de declarar las entidades a mano en `configuration.yaml`, la ESP32
+publica dos mensajes retenidos de configuración al conectarse. Home Assistant
+los interpreta y crea las entidades por sí solo:
+
+[source,json]
+----
+Topic: homeassistant/sensor/alarma_distancia/config
+{
+  "name": "Distancia Alarma",
+  "state_topic": "casa/alarma/distancia",
+  "unit_of_measurement": "cm",
+  "device_class": "distance",
+  "unique_id": "alarma_distancia_01",
+  "icon": "mdi:ruler"
+}
+----
+
+[source,json]
+----
+Topic: homeassistant/number/alarma_servo/config
+{
+  "name": "Servo Alarma",
+  "command_topic": "casa/alarma/servo/set",
+  "state_topic": "casa/alarma/servo/estado",
+  "min": 0,
+  "max": 180,
+  "step": 1,
+  "unique_id": "alarma_servo_01",
+  "icon": "mdi:angle-acute"
+}
+----
+
+Tras esto aparecen en Home Assistant las entidades
+`sensor.distancia_alarma` y `number.servo_alarma`. La segunda se muestra como
+un control deslizante: al moverlo, Home Assistant publica el valor en
+`casa/alarma/servo/set` y la ESP32 mueve el servomotor a ese ángulo.
+
+=== Persistencia en MariaDB
+
+Para que Grafana pueda leer el histórico, el _recorder_ de Home Assistant se
+apuntó a MariaDB en vez de la base SQLite por defecto, agregando en
+`configuration.yaml`:
+
+[source,yaml]
+----
+recorder:
+  db_url: mysql://usuario:password@localhost/homeassistant?charset=utf8mb4
+  purge_keep_days: 30
+  include:
+    entities:
+      - sensor.distancia_alarma
+----
+
+El bloque `include` limita lo que se guarda solo a la entidad de interés, lo
+que mantiene la base de datos pequeña considerando que el sensor reporta
+cada pocos segundos.
+
+== Configuración de Grafana
+
+=== Instalación
+
+[source,bash]
+----
+docker run -d \
+  --name grafana \
+  --restart=unless-stopped \
+  -p 3000:3000 \
+  grafana/grafana-oss
+----
+
+La interfaz queda en `http://localhost:3000` (usuario y clave iniciales
+`admin` / `admin`).
+
+=== Conexión con la base de datos de Home Assistant
+
+En `Connections → Add new connection → MySQL` se configuró:
+
+[cols="1,2", options="header"]
+|===
+| Campo | Valor
+
+| Host     | `localhost:3306`
+| Database | `homeassistant`
+| User     | usuario con permiso de solo lectura sobre la base
+| Password | (la definida al crear el usuario)
+|===
+
+[TIP]
+====
+Se recomienda crear un usuario MySQL exclusivo para Grafana con permisos
+únicamente de `SELECT`. Grafana no necesita escribir nada, y usar el mismo
+usuario que el _recorder_ de Home Assistant expone innecesariamente la base
+a modificaciones desde el panel.
+====
+
+=== Consulta del histórico
+
+Desde la versión 2023.4 de Home Assistant, la tabla `states` ya no guarda el
+`entity_id` directamente: este vive en `states_meta` y se referencia mediante
+`metadata_id`. La consulta del panel es entonces:
+
+[source,sql]
+----
+SELECT
+  s.last_updated_ts * 1000 AS time_msec,
+  CAST(s.state AS DECIMAL(10,2)) AS distancia_cm
+FROM states s
+JOIN states_meta m ON s.metadata_id = m.metadata_id
+WHERE m.entity_id = 'sensor.distancia_alarma'
+  AND s.state NOT IN ('unknown', 'unavailable', '')
+  AND s.last_updated_ts BETWEEN $__unixEpochFrom() AND $__unixEpochTo()
+ORDER BY s.last_updated_ts;
+----
+
+Puntos a destacar de la consulta:
+
+* `state` se almacena como texto, por lo que el `CAST` a decimal es
+  obligatorio para que Grafana lo trate como serie numérica.
+* El filtro de `unknown` / `unavailable` evita que los momentos en que la
+  ESP32 estuvo desconectada rompan el gráfico con errores de conversión.
+* `$__unixEpochFrom()` y `$__unixEpochTo()` son variables de Grafana que se
+  reemplazan por el rango de tiempo seleccionado en la esquina superior
+  derecha del panel.
+
+El panel se configuró como *Time series* con el eje Y en centímetros, y se
+agregó un _threshold_ visual en el valor del umbral de alarma para que se
+distingan a simple vista los eventos de detección.
+
+[[codigo-utilizado]]
+== Código Utilizado
+
+A continuación se documentan los fragmentos más relevantes del firmware. El
+código fuente completo se incluye en <<codigo-fuente>>.
+
+=== Lectura del sensor de proximidad
+
+La medición del HC-SR04 se basa en medir el tiempo que tarda en volver un
+pulso ultrasónico. Se envía un pulso de 10 µs por TRIG y se mide con
+`pulseIn()` cuánto tiempo permanece ECHO en alto:
+
+[source,cpp]
+----
+float medirDistanciaCm() {
+  digitalWrite(PIN_TRIG, LOW);
+  delayMicroseconds(2);
+  digitalWrite(PIN_TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(PIN_TRIG, LOW);
+
+  // Timeout de 30 ms ~= 5 m de alcance. Sin timeout, pulseIn()
+  // bloquea hasta 1 segundo cuando no hay eco de retorno.
+  unsigned long duracion = pulseIn(PIN_ECHO, HIGH, 30000UL);
+  if (duracion == 0) return -1.0;   // fuera de rango o sin eco
+
+  // 343 m/s = 0.0343 cm/us; se divide por 2 porque el sonido
+  // recorre el trayecto de ida y vuelta.
+  return (duracion * 0.0343f) / 2.0f;
+}
+----
+
+Para evitar que lecturas espurias disparen la alarma, se aplica un filtro de
+mediana sobre tres muestras consecutivas:
+
+[source,cpp]
+----
+float medirConFiltro() {
+  float m[3];
+  for (int i = 0; i < 3; i++) {
+    m[i] = medirDistanciaCm();
+    delay(20);
+  }
+  // Ordenamiento de tres elementos: la mediana descarta el
+  // valor atípico que produce una reflexión sucia.
+  if (m[0] > m[1]) { float t = m[0]; m[0] = m[1]; m[1] = t; }
+  if (m[1] > m[2]) { float t = m[1]; m[1] = m[2]; m[2] = t; }
+  if (m[0] > m[1]) { float t = m[0]; m[0] = m[1]; m[1] = t; }
+  return m[1];
+}
+----
+
+=== Generación del tono de alarma
+
+El tono se genera con el periférico LEDC de la ESP32, que produce una señal
+cuadrada a la frecuencia indicada:
+
+[source,cpp]
+----
+void iniciarAlarma() {
+  ledcWriteTone(PIN_PARLANTE, FRECUENCIA_ALARMA_HZ);  // 2000 Hz
+}
+
+void detenerAlarma() {
+  ledcWriteTone(PIN_PARLANTE, 0);
+}
+----
+
+La alarma incorpora una *histéresis* de 5 cm: se activa cuando la distancia
+baja del umbral, pero solo se apaga cuando supera el umbral más el margen.
+Sin esto, un objeto detenido justo en el límite hace que la alarma se
+encienda y apague repetidamente:
+
+[source,cpp]
+----
+if (!alarmaActiva && distancia > 0 && distancia < UMBRAL_CM) {
+  alarmaActiva = true;
+  iniciarAlarma();
+} else if (alarmaActiva && (distancia < 0 || distancia > UMBRAL_CM + HISTERESIS_CM)) {
+  alarmaActiva = false;
+  detenerAlarma();
+}
+----
+
+=== Publicación por MQTT y recepción de comandos
+
+La lectura se publica en cada ciclo, y el _callback_ de MQTT interpreta los
+comandos entrantes para el servomotor:
+
+[source,cpp]
+----
+void publicarDistancia(float distancia) {
+  char payload[16];
+  dtostrf(distancia, 1, 1, payload);
+  mqtt.publish(TOPIC_DISTANCIA, payload);
+}
+
+void alRecibirMensaje(char* topic, byte* payload, unsigned int length) {
+  String mensaje;
+  for (unsigned int i = 0; i < length; i++) mensaje += (char)payload[i];
+
+  if (String(topic) == TOPIC_SERVO_SET) {
+    int angulo = mensaje.toInt();
+    angulo = constrain(angulo, 0, 180);
+    servo.write(angulo);
+
+    // Se confirma la posición alcanzada para que Home Assistant
+    // refleje el estado real y no solo el comando enviado.
+    mqtt.publish(TOPIC_SERVO_ESTADO, String(angulo).c_str());
+  }
+}
+----
+
+La suscripción al _topic_ de comandos debe rehacerse cada vez que se
+reconecta el cliente MQTT, ya que las suscripciones no sobreviven a la caída
+de la sesión:
+
+[source,cpp]
+----
+void reconectarMQTT() {
+  while (!mqtt.connected()) {
+    if (mqtt.connect(CLIENT_ID, MQTT_USER, MQTT_PASS)) {
+      mqtt.subscribe(TOPIC_SERVO_SET);
+      publicarConfiguracionDiscovery();
+    } else {
+      delay(3000);
+    }
+  }
+}
+----
+
+== Desviaciones respecto al enunciado original
+
+Con fines de transparencia, se documentan los puntos donde la implementación
+final difiere de lo pedido:
+
+* *Grafana lee desde la MariaDB del recorder de Home Assistant, no desde una
+  base de series de tiempo dedicada.* El enunciado solo exige que Grafana
+  muestre el histórico de lecturas, sin especificar la fuente. Se optó por
+  reutilizar la base que Home Assistant ya escribe, evitando desplegar
+  InfluxDB. El costo de esta decisión es una consulta SQL más elaborada y una
+  retención limitada por la política de purga del recorder (30 días).
+
+* *Uso de buzzer pasivo en lugar de parlante amplificado.* El enunciado
+  menciona un "parlante pequeño". Se usó un buzzer pasivo por conectarse
+  directamente al GPIO sin etapa de amplificación, manteniendo la capacidad de
+  variar la frecuencia del tono desde el firmware.
+
+* *El servomotor y el sensor no están acoplados mecánicamente.* El enunciado
+  pide conectar el sensor a un servomotor controlado desde Home Assistant. En
+  la implementación ambos conviven en el mismo dispositivo y comparten el
+  mismo canal de comunicación, pero el ángulo del servo no depende de la
+  lectura del sensor: es comandado exclusivamente por el usuario desde la
+  interfaz, que es lo que el enunciado exige verificar.
+
+== Posibles Usos de esta Tecnología en la Industria
+
+Si bien este proyecto fue desarrollado con fines académicos, la combinación de
+sensor de proximidad, actuador y telemetría hacia una plataforma de
+visualización tiene aplicaciones directas:
+
+* *Seguridad perimetral:* detección de intrusos en accesos, bodegas o
+  perímetros de faena, con registro histórico de eventos para auditoría
+  posterior.
+
+* *Control de nivel en estanques y silos:* un sensor ultrasónico apuntando
+  hacia abajo mide el espacio vacío sobre el contenido, y el histórico en
+  Grafana permite estimar tasas de consumo y planificar reposiciones. Es una
+  de las aplicaciones industriales más comunes del HC-SR04 y sus equivalentes
+  industriales.
+
+* *Conteo de piezas en líneas de producción:* cada objeto que pasa frente al
+  sensor genera un evento; el gráfico de Grafana se convierte en un indicador
+  de productividad por turno.
+
+* *Seguridad en maquinaria:* detención automática o alarma cuando un operario
+  entra en la zona de riesgo de un equipo en movimiento, replicando el
+  principio de las cortinas de luz de seguridad.
+
+* *Estacionamientos inteligentes:* sensores por plaza que reportan
+  ocupación en tiempo real, alimentando paneles de disponibilidad y
+  estadísticas de uso.
+
+* *Agricultura de precisión:* medición de nivel en canales de riego o de
+  altura de cultivos, combinada con actuadores (compuertas, válvulas)
+  comandados remotamente, exactamente como el servo de este prototipo.
+
+* *Domótica y edificios inteligentes:* apertura automática de accesos,
+  iluminación por presencia y monitoreo de aforo, que es el caso de uso
+  nativo de Home Assistant.
+
+[[codigo-fuente]]
+== Código Fuente
+
+=== `alarma_proximidad.ino`
+
+[source,cpp]
+----
+/*
+ * Proyecto 2: Lectura de sensores — Alarma de proximidad IoT
+ * Universidad de Viña del Mar — Curso de Electrónica, Robótica e IoT
+ *
+ * ═══════════════════════════════════════════════════════════════
+ *  PINOUT (ESP32 DevKit V1):
+ * ═══════════════════════════════════════════════════════════════
+ *   HC-SR04 TRIG -> GPIO 5
+ *   HC-SR04 ECHO -> GPIO 18  (¡vía divisor 1k/2k! ECHO entrega 5 V)
+ *   Parlante/buzzer -> GPIO 25
+ *   Servo SG90 (señal) -> GPIO 13
+ *
+ * ═══════════════════════════════════════════════════════════════
+ *  LO QUE HACE:
+ * ═══════════════════════════════════════════════════════════════
+ *   1. Se conecta a WiFi y al broker MQTT local.
+ *   2. Publica su configuración MQTT Discovery para que Home
+ *      Assistant cree las entidades automáticamente.
+ *   3. Mide la distancia cada 500 ms con filtro de mediana.
+ *   4. Activa el parlante si hay un objeto bajo el umbral.
+ *   5. Publica cada lectura por MQTT.
+ *   6. Escucha comandos de ángulo y mueve el servomotor.
+ *
+ * ═══════════════════════════════════════════════════════════════
+ *  LIBRERÍAS (Arduino IDE -> Administrar bibliotecas):
+ * ═══════════════════════════════════════════════════════════════
+ *   - PubSubClient (by Nick O'Leary)
+ *   - ESP32Servo (by Kevin Harrington)
+ *   - WiFi.h (built-in core ESP32)
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+#include <WiFi.h>
+#include <PubSubClient.h>
+#include <ESP32Servo.h>
+
+// ═══════════════════════════════════════════════════════════════
+//  CONFIGURACIÓN — AJUSTAR ESTOS VALORES
+// ═══════════════════════════════════════════════════════════════
+
+const char* WIFI_SSID     = "XXXXX";
+const char* WIFI_PASSWORD = "XXXXX";
+
+const char* MQTT_HOST = "192.168.1.100";   // IP del computador con Mosquitto
+const int   MQTT_PORT = 1883;
+const char* MQTT_USER = "esp32";
+const char* MQTT_PASS = "XXXXX";
+const char* CLIENT_ID = "esp32_alarma_01";
+
+// ─── Topics MQTT ───
+const char* TOPIC_DISTANCIA    = "casa/alarma/distancia";
+const char* TOPIC_SERVO_SET    = "casa/alarma/servo/set";
+const char* TOPIC_SERVO_ESTADO = "casa/alarma/servo/estado";
+const char* TOPIC_DISC_SENSOR  = "homeassistant/sensor/alarma_distancia/config";
+const char* TOPIC_DISC_SERVO   = "homeassistant/number/alarma_servo/config";
+
+// ─── Pines ───
+#define PIN_TRIG     5
+#define PIN_ECHO     18
+#define PIN_PARLANTE 25
+#define PIN_SERVO    13
+
+// ─── Parámetros de operación ───
+const float UMBRAL_CM            = 20.0;   // distancia que gatilla la alarma
+const float HISTERESIS_CM        = 5.0;    // margen para apagarla
+const int   FRECUENCIA_ALARMA_HZ = 2000;   // tono del buzzer
+const unsigned long INTERVALO_MEDICION_MS = 500;
+
+// ═══════════════════════════════════════════════════════════════
+//  GLOBALES
+// ═══════════════════════════════════════════════════════════════
+
+WiFiClient      wifiClient;
+PubSubClient    mqtt(wifiClient);
+Servo           servo;
+
+bool          alarmaActiva   = false;
+unsigned long ultimaMedicion = 0;
+
+// ═══════════════════════════════════════════════════════════════
+//  SENSOR DE PROXIMIDAD
+// ═══════════════════════════════════════════════════════════════
+
+float medirDistanciaCm() {
+  digitalWrite(PIN_TRIG, LOW);
+  delayMicroseconds(2);
+  digitalWrite(PIN_TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(PIN_TRIG, LOW);
+
+  // Timeout de 30 ms (~5 m). Sin él, pulseIn() bloquea hasta 1 s
+  // cada vez que no hay eco de retorno.
+  unsigned long duracion = pulseIn(PIN_ECHO, HIGH, 30000UL);
+  if (duracion == 0) return -1.0;
+
+  // 0.0343 cm/us a 20 °C; se divide por 2 (ida y vuelta).
+  return (duracion * 0.0343f) / 2.0f;
+}
+
+// Mediana de 3 muestras: descarta reflexiones espurias.
+float medirConFiltro() {
+  float m[3];
+  for (int i = 0; i < 3; i++) {
+    m[i] = medirDistanciaCm();
+    delay(20);
+  }
+  if (m[0] > m[1]) { float t = m[0]; m[0] = m[1]; m[1] = t; }
+  if (m[1] > m[2]) { float t = m[1]; m[1] = m[2]; m[2] = t; }
+  if (m[0] > m[1]) { float t = m[0]; m[0] = m[1]; m[1] = t; }
+  return m[1];
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  PARLANTE
+// ═══════════════════════════════════════════════════════════════
+
+void iniciarAlarma() {
+  ledcWriteTone(PIN_PARLANTE, FRECUENCIA_ALARMA_HZ);
+  Serial.println("[ALARMA] Objeto detectado — sonando");
+}
+
+void detenerAlarma() {
+  ledcWriteTone(PIN_PARLANTE, 0);
+  Serial.println("[ALARMA] Zona despejada — silencio");
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  MQTT
+// ═══════════════════════════════════════════════════════════════
+
+// Publica los mensajes de MQTT Discovery. Van RETENIDOS (último
+// parámetro = true) para que Home Assistant recree las entidades
+// aunque se reinicie después que la ESP32.
+void publicarConfiguracionDiscovery() {
+  String sensorCfg = "{"
+    "\"name\":\"Distancia Alarma\","
+    "\"state_topic\":\"casa/alarma/distancia\","
+    "\"unit_of_measurement\":\"cm\","
+    "\"device_class\":\"distance\","
+    "\"unique_id\":\"alarma_distancia_01\","
+    "\"icon\":\"mdi:ruler\""
+  "}";
+  mqtt.publish(TOPIC_DISC_SENSOR, sensorCfg.c_str(), true);
+
+  String servoCfg = "{"
+    "\"name\":\"Servo Alarma\","
+    "\"command_topic\":\"casa/alarma/servo/set\","
+    "\"state_topic\":\"casa/alarma/servo/estado\","
+    "\"min\":0,\"max\":180,\"step\":1,"
+    "\"unique_id\":\"alarma_servo_01\","
+    "\"icon\":\"mdi:angle-acute\""
+  "}";
+  mqtt.publish(TOPIC_DISC_SERVO, servoCfg.c_str(), true);
+
+  Serial.println("[MQTT] Configuración Discovery publicada");
+}
+
+void alRecibirMensaje(char* topic, byte* payload, unsigned int length) {
+  String mensaje;
+  for (unsigned int i = 0; i < length; i++) mensaje += (char)payload[i];
+
+  Serial.println("[MQTT] " + String(topic) + " -> " + mensaje);
+
+  if (String(topic) == TOPIC_SERVO_SET) {
+    int angulo = constrain(mensaje.toInt(), 0, 180);
+    servo.write(angulo);
+    // Confirmar la posición real alcanzada, no solo el comando.
+    mqtt.publish(TOPIC_SERVO_ESTADO, String(angulo).c_str());
+    Serial.println("[SERVO] Movido a " + String(angulo) + " grados");
+  }
+}
+
+void reconectarMQTT() {
+  int intentos = 0;
+  while (!mqtt.connected() && intentos < 5) {
+    Serial.print("[MQTT] Conectando...");
+    if (mqtt.connect(CLIENT_ID, MQTT_USER, MQTT_PASS)) {
+      Serial.println(" OK");
+      // Las suscripciones NO sobreviven a la caída de sesión:
+      // hay que rehacerlas en cada reconexión.
+      mqtt.subscribe(TOPIC_SERVO_SET);
+      publicarConfiguracionDiscovery();
+      return;
+    }
+    Serial.println(" fallo, rc=" + String(mqtt.state()));
+    intentos++;
+    delay(3000);
+  }
+}
+
+void publicarDistancia(float distancia) {
+  char payload[16];
+  dtostrf(distancia, 1, 1, payload);
+  mqtt.publish(TOPIC_DISTANCIA, payload);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  WIFI
+// ═══════════════════════════════════════════════════════════════
+
+void conectarWiFi() {
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("[WiFi] Conectando");
+
+  int intentos = 0;
+  while (WiFi.status() != WL_CONNECTED && intentos < 40) {
+    delay(500);
+    Serial.print(".");
+    intentos++;
+  }
+
+  if (WiFi.status() == WL_CONNECTED) {
+    Serial.println("\n[WiFi] OK. IP: " + WiFi.localIP().toString());
+  } else {
+    Serial.println("\n[WiFi] Sin conexión. La alarma local sigue operativa.");
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  SETUP
+// ═══════════════════════════════════════════════════════════════
+
+void setup() {
+  Serial.begin(115200);
+  delay(500);
+  Serial.println("\n═══════════════════════════════");
+  Serial.println(" Alarma de proximidad IoT — UVM");
+  Serial.println("═══════════════════════════════");
+
+  pinMode(PIN_TRIG, OUTPUT);
+  pinMode(PIN_ECHO, INPUT);
+  digitalWrite(PIN_TRIG, LOW);
+
+  // LEDC en modo tono para el parlante.
+  // NOTA: esta firma corresponde al core ESP32 v3.x.
+  // En el core v2.x se usa: ledcSetup(canal, freq, res) +
+  // ledcAttachPin(pin, canal), y ledcWriteTone(canal, freq).
+  ledcAttach(PIN_PARLANTE, FRECUENCIA_ALARMA_HZ, 8);
+  ledcWriteTone(PIN_PARLANTE, 0);
+
+  servo.setPeriodHertz(50);            // SG90 opera a 50 Hz
+  servo.attach(PIN_SERVO, 500, 2400);  // ancho de pulso en us
+  servo.write(90);                     // posición inicial centrada
+
+  conectarWiFi();
+
+  mqtt.setServer(MQTT_HOST, MQTT_PORT);
+  mqtt.setCallback(alRecibirMensaje);
+  reconectarMQTT();
+
+  Serial.println("[SETUP] Sistema operativo. Umbral: " +
+                 String(UMBRAL_CM) + " cm");
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  LOOP
+// ═══════════════════════════════════════════════════════════════
+
+void loop() {
+  // Mantener viva la conexión MQTT sin bloquear la medición.
+  if (WiFi.status() == WL_CONNECTED) {
+    if (!mqtt.connected()) reconectarMQTT();
+    mqtt.loop();
+  }
+
+  if (millis() - ultimaMedicion < INTERVALO_MEDICION_MS) return;
+  ultimaMedicion = millis();
+
+  float distancia = medirConFiltro();
+
+  // ─── Lógica de alarma: local y autónoma ───
+  // Se ejecuta aunque no haya WiFi ni servidor disponible.
+  if (!alarmaActiva && distancia > 0 && distancia < UMBRAL_CM) {
+    alarmaActiva = true;
+    iniciarAlarma();
+  } else if (alarmaActiva &&
+             (distancia < 0 || distancia > UMBRAL_CM + HISTERESIS_CM)) {
+    alarmaActiva = false;
+    detenerAlarma();
+  }
+
+  // ─── Telemetría ───
+  if (distancia > 0) {
+    Serial.println("[SENSOR] " + String(distancia, 1) + " cm" +
+                   (alarmaActiva ? "  [ALARMA]" : ""));
+    if (mqtt.connected()) publicarDistancia(distancia);
+  } else {
+    Serial.println("[SENSOR] Fuera de rango");
+  }
+}
+----
+
+== Posibles Problemas
+
+[cols="2,2,3", options="header"]
+|===
+| Síntoma | Causa posible | Solución
+
+| El sensor siempre reporta "fuera de rango"
+| Alimentación a 3,3 V en vez de 5 V
+| Conectar VCC del sensor al pin VIN de la ESP32.
+
+| Lecturas erráticas o saltos grandes
+| Superficie blanda o en ángulo, que dispersa el ultrasonido
+| Apuntar a una superficie plana y perpendicular; el filtro de mediana ya
+  mitiga parte del ruido.
+
+| La ESP32 se reinicia al mover el servo
+| Caída de tensión por el consumo del servomotor
+| Alimentar el servo desde una fuente externa, manteniendo tierra común.
+
+| El servo vibra en reposo
+| _Jitter_ de la señal PWM
+| Llamar a `servo.detach()` tras completar el movimiento y `attach()` antes
+  del siguiente.
+
+| El buzzer no suena
+| Buzzer activo en vez de pasivo
+| Un buzzer activo genera su propio tono y solo requiere `digitalWrite(HIGH)`;
+  no responde a `ledcWriteTone()`.
+
+| Las entidades no aparecen en Home Assistant
+| Discovery deshabilitado o prefijo distinto
+| Verificar que la integración MQTT tenga activado "Enable discovery" con
+  prefijo `homeassistant`.
+
+| Grafana muestra el gráfico vacío
+| `entity_id` incorrecto o recorder aún en SQLite
+| Verificar el nombre exacto en Herramientas para desarrolladores de Home
+  Assistant y confirmar que `db_url` apunte a MariaDB.
+
+| Error de conversión en la consulta SQL
+| Estados `unknown` / `unavailable` en la tabla
+| Mantener el filtro `NOT IN` de la consulta documentada.
+|===
